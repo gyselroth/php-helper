@@ -61,7 +61,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "dev-trunk@dev"
+            "dev-master": "0.1.x-dev"
         }
     }
 }
