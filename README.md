@@ -84,7 +84,7 @@ Running Tests
 -------------
 
 ```sh
-php composer.phar test tests/
+composer test tests/
 ```
 
 
