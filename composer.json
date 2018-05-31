@@ -1,5 +1,5 @@
 {
-    "name": "gyselroth/helper",
+    "name": "gyselroth/php-helper",
     "description": "PHP helpers",
     "keywords": ["helper", "array", "date", "file", "html", "image", "numeric", "server", "client", "string", "xml", "zip"],
     "homepage": "https://gyselroth.com",
