@@ -1,7 +1,7 @@
 gyselroth PHP Helper Library
 ============================
 
-PHP helper methods upon various mostly primitive data types.
+Collection of PHP helper methods upon primitive data types and structures.
 
 
 Features
