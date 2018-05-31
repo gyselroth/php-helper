@@ -1,13 +1,13 @@
 gyselroth PHP Helper Library
 ============================
 
-PHP helper methods upon various mostly primitive data types (conversion-/modification-, validation-, extraction-/search-, and more) 
+PHP helper methods upon various mostly primitive data types.
 
 
 Features
 --------
 
-Contains helpers for:
+Contains helpers for conversion-/modification-, validation-, extraction-/search-, and many more for:
 
 * Date/Time handling
 * File I/O
