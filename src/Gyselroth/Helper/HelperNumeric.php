@@ -71,13 +71,13 @@ class HelperNumeric
     /**
      * Split given list of values by given delimiter into a unique array of integers
      *
-     * @param  string $str
-     * @param  string $delimiter
-     * @param  bool   $excludeNullValues Include null values (converted to 0)? Default: true
-     * @param  bool   $unique
+     * @param  string|null $str
+     * @param  string      $delimiter
+     * @param  bool        $excludeNullValues Include null values (converted to 0)? Default: true
+     * @param  bool        $unique
      * @return int[]
      */
-    public static function intExplode(string $str, string $delimiter = ',', bool $excludeNullValues = true, bool $unique = false): array
+    public static function intExplode(?string $str, string $delimiter = ',', bool $excludeNullValues = true, bool $unique = false): array
     {
         if (null === $str) {
             return [];

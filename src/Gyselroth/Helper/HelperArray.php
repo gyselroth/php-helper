@@ -137,12 +137,12 @@ class HelperArray
     /**
      * Convenience-wrapper for HelperNumeric::intExplode
      *
-     * @param  string $str
-     * @param  string $delimiter
-     * @param  bool   $excludeNullValues
+     * @param  string|null $str
+     * @param  string      $delimiter
+     * @param  bool        $excludeNullValues
      * @return int[]
      */
-    public static function intExplode(string $str, string $delimiter = ',', bool $excludeNullValues = true): array
+    public static function intExplode(?string $str, string $delimiter = ',', bool $excludeNullValues = true): array
     {
         return HelperNumeric::intExplode($str, $delimiter, $excludeNullValues);
     }
