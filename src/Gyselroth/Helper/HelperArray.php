@@ -148,14 +148,16 @@ class HelperArray
     }
 
     /**
-     * @param  array  $array
+     * @param  array|int|string  $array
      * @param  string $glue
      * @param  bool   $makeItemsUnique
      * @return string                   List of integers, all other data types out of $array are filtered out
      */
-    public static function intImplode(array $array, string $glue = ',', bool $makeItemsUnique = true): string
+    public static function intImplode($array, string $glue = ',', bool $makeItemsUnique = true): string
     {
-        return implode($glue, self::intVal($array, $makeItemsUnique));
+        return \is_array($array)
+            ? implode($glue, self::intVal($array, $makeItemsUnique))
+            : (int)$array;
     }
 
     /**
