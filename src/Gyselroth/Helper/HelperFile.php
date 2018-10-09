@@ -163,6 +163,15 @@ class HelperFile
     }
 
     /**
+     * @param  string $pathFile
+     * @return string|bool
+     */
+    private static function getMimeType(string $pathFile)
+    {
+        return finfo_file(finfo_open(FILEINFO_MIME_TYPE), $pathFile);
+    }
+
+    /**
      * @return array
      */
     public static function getMimes(): array
@@ -238,8 +247,6 @@ class HelperFile
      * @param  string $content
      * @param  string $mode
      * @return bool
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
     public static function write(string $pathFile, string $content, string $mode = 'w'): bool
@@ -262,8 +269,6 @@ class HelperFile
      * @param  string       $filePath
      * @param  array|string $content
      * @return bool
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
     public static function writeJson(string $filePath, $content): bool
@@ -574,8 +579,6 @@ class HelperFile
      * @param  array $uploadFile
      * @param  int   $options
      * @return string
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
     public static function getUploadFileInfo(array $uploadFile, int $options = FILEINFO_NONE): string
@@ -617,8 +620,6 @@ class HelperFile
      * @param  array $allowedTypes    Empty array = no type restriction
      * @param  int   $maximumFileSize Max. size / -1 for unlimited size
      * @return string                   Error message / empty string if valid
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
     public static function validateUploadFile(array $uploadFile, array $allowedTypes, $maximumFileSize = 2000000): string
@@ -700,11 +701,8 @@ class HelperFile
      * @param  array  $allowedTypes       Array of allowed MIME types, e.g: 'text/plain', 'application/pdf', ...
      * @param  int    $maximumFileSize    Max. size / -1 for unlimited size
      * @return string Filename of uploaded file
-     * @throws \Gyselroth\Helper\Exception\FileExceptionInvalidFile
-     * @throws \Gyselroth\Helper\Exception\FileException
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \Exception
+     * @throws FileException
+     * @throws FileExceptionInvalidFile
      */
     public static function upload(array $file, array $callbackFileExists, array $callbackCreateFile, $fileNamePrefix = '', array $allowedTypes = [], $maximumFileSize = -1): string
     {
