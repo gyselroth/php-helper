@@ -35,7 +35,7 @@ class HelperArray
      * @return bool
      * @note   Only the 1st level of items is checked. For multi-level checking: iterate over all levels (or extend this method)
      */
-    public static function isAssociative(array $array, $allowStringEnumeratedKeys = false): bool
+    public static function isAssociative(array $array, bool $allowStringEnumeratedKeys = false): bool
     {
         if ([] === $array) {
             return false;
@@ -72,12 +72,6 @@ class HelperArray
         return \is_array($value) || $value instanceof \ArrayAccess;
     }
 
-    /**
-     * Check whether the given array has string-based keys
-     *
-     * @param  array $array
-     * @return bool
-     */
     public static function hasStringKeys(array $array): bool
     {
         return \count(array_filter(array_keys($array), 'is_string')) > 0;
@@ -89,7 +83,11 @@ class HelperArray
      * @param  bool  $convertNonNumericValuesToZero
      * @return array Given $array w/ all items converted to integers
      */
-    public static function intVal($array, bool $makeItemsUnique = false, bool $convertNonNumericValuesToZero = false): array
+    public static function intVal(
+        $array,
+        bool $makeItemsUnique = false,
+        bool $convertNonNumericValuesToZero = false
+    ): array
     {
         if (!\is_array($array)) {
             if (is_numeric($array)) {
@@ -160,11 +158,6 @@ class HelperArray
             : (int)$array;
     }
 
-    /**
-     * @param  array $strings
-     * @param  bool  $allowEmpty
-     * @return array
-     */
     public static function trim(array $strings, bool $allowEmpty = false): array
     {
         $trimmed = [];
@@ -204,12 +197,6 @@ class HelperArray
         return null;
     }
 
-    /**
-     * @param  array  $array
-     * @param  string $needleSubString
-     * @param  bool   $caseSensitive
-     * @return bool
-     */
     public static function containsSubstring(array $array, string $needleSubString, bool $caseSensitive = true): bool
     {
         foreach ($array as $item) {
@@ -256,7 +243,14 @@ class HelperArray
      * @param  boolean|string|array $default
      * @return array|float|int|string|Object    Value on sub level(s), identified by given keys, or full array if no keys given. False if a given key doesn't exist
      */
-    public static function getValueByKeyFromSubArrays(array $array, string $keyOnLevel0 = '', string $keyOnLevel1 = '', string $keyOnLevel2 = '', string $keyOnLevel3 = '', $default = false)
+    public static function getValueByKeyFromSubArrays(
+        array $array,
+        string $keyOnLevel0 = '',
+        string $keyOnLevel1 = '',
+        string $keyOnLevel2 = '',
+        string $keyOnLevel3 = '',
+        $default = false
+    )
     {
         $hasKeyOnLevel3 = !empty($keyOnLevel3);
         $hasKeyOnLevel2 = !empty($keyOnLevel2);
@@ -299,11 +293,6 @@ class HelperArray
         return $arrayWithKeys;
     }
 
-    /**
-     * @param  array $arr
-     * @param  array $keys
-     * @return bool        Do ALL given keys exist in given array?
-     */
     public static function keysExist(array $arr, array $keys): bool
     {
         foreach ($keys as $key) {
@@ -360,28 +349,16 @@ class HelperArray
     }
 
     /**
-     * Extract given associative array into a "flat" array, containing just the values of the given key, of all items
-     *
-     * @param  array  $arr
-     * @param  string $key
-     * @return array
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \Exception
-     * @deprecated
-     */
-    public static function flatten(array $arr, string $key): array
-    {
-        LoggerWrapper::warning('Used deprecated HelperArray::flatten() - better: use array_column()', [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
-        return array_column($arr, $key);
-    }
-
-    /**
      * @param  array|string $idsList      Comma separated relation-type prefixed IDs list, i.e.: pe_4016536,pe_4012942,cl_1516,lo_1,co_37794
      * @param  string       $filterPrefix Optional, if given: keep only items with this prefix
      * @param  string       $prefixGlue
      * @return array                        Array of integers from the given (prefixed) relation-IDs, w/o their relation-type prefix
      */
-    public static function getArrayFromRelatedIdsList($idsList, string $filterPrefix = '', string $prefixGlue = '_'): array
+    public static function getArrayFromRelatedIdsList(
+        $idsList,
+        string $filterPrefix = '',
+        string $prefixGlue = '_'
+    ): array
     {
         $relatedIdsWithPrefix = \is_array($idsList) ? $idsList : explode(',', $idsList);
         $relatedIds           = [];
@@ -396,11 +373,6 @@ class HelperArray
         return array_unique($relatedIds);
     }
 
-    /**
-     * @param  array $array
-     * @param  array $values
-     * @return array            $array w/o given $values
-     */
     public static function removeItemsByValue(array $array, array $values): array
     {
         /**
@@ -412,9 +384,9 @@ class HelperArray
     }
 
     /**
-     * @param array  $array
-     * @param array  $values
-     * @param string $itemKey
+     * @param  array  $array
+     * @param  array  $values
+     * @param  string $itemKey
      * @return array
      */
     public static function removeItemsByValues($array, $values, $itemKey): array
@@ -440,7 +412,6 @@ class HelperArray
      * @param  array $dataTypes name/data type pair for each column to be converted
      * @return array
      * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
     public static function convertDataTypesOfQueryResult(array $queryResult, array $dataTypes): array
@@ -474,7 +445,7 @@ class HelperArray
     }
 
     /**
-     * Converts array data by the defined node type
+     * Converts all items' 'value' value into data type declared within items' 'type'
      *
      * @param  array $array
      * @return array
@@ -584,7 +555,12 @@ class HelperArray
      * @param  int                                    $sort
      * @return array
      */
-    public static function arrayMultidimensionalSortByKeyAndCheck(array $array, $key, $check, int $sort = SORT_NATURAL): array
+    public static function arrayMultidimensionalSortByKeyAndCheck(
+        array $array,
+        $key,
+        $check,
+        int $sort = SORT_NATURAL
+    ): array
     {
         $specialCharacter = [];
         $stringBeginsWith = [];
@@ -624,11 +600,6 @@ class HelperArray
         return array_unique($keys);
     }
 
-    /**
-     * @param  array $array
-     * @param  array $keys
-     * @return array
-     */
     public static function addKeysToSubArray(array $array, array $keys): array
     {
         $return = [];
@@ -689,7 +660,12 @@ class HelperArray
      * @param  bool  $strict
      * @return array
      */
-    public static function getValuesByKeys(array $keys, array $array, array $excludes = [], bool $strict = false): array
+    public static function getValuesByKeys(
+        array $keys,
+        array $array,
+        array $excludes = [],
+        bool $strict = false
+    ): array
     {
         $values = [];
         foreach ($keys as $key) {
@@ -791,11 +767,6 @@ class HelperArray
         return implode($glue, $csv);
     }
 
-    /**
-     * @param  string $csv
-     * @param  string $delimiter
-     * @return array
-     */
     public static function getArrayFromCsvInRows(string $csv, string $delimiter = ','): array
     {
         $res      = [];
@@ -828,11 +799,6 @@ class HelperArray
         return $return;
     }
 
-    /**
-     * @param  string $string
-     * @param  array  $replacements
-     * @return string
-     */
     public static function strReplaceAssociative(string $string, array $replacements): string
     {
         foreach ($replacements as $search => $replace) {
@@ -842,14 +808,12 @@ class HelperArray
         return $string;
     }
 
-    /**
-     * @param  array  $items
-     * @param  string $wrapLhs
-     * @param  string $wrapRhs
-     * @param  string $glue
-     * @return string
-     */
-    public static function implodeWrapped(array $items, string $wrapLhs = "'", string $wrapRhs = "'", string $glue = ','): string
+    public static function implodeWrapped(
+        array $items,
+        string $wrapLhs = "'",
+        string $wrapRhs = "'",
+        string $glue = ','
+    ): string
     {
         $itemsWrapped = [];
         foreach ($items as $item) {
@@ -868,7 +832,12 @@ class HelperArray
      * @param  bool   $strict
      * @return int
      */
-    public static function sortByKey(array $a, array $b, string $key = 'time', bool $strict = false): int
+    public static function sortByKey(
+        array $a,
+        array $b,
+        string $key = 'time',
+        bool $strict = false
+    ): int
     {
         if (!$strict) {
             /** @noinspection TypeUnsafeComparisonInspection */
@@ -882,11 +851,6 @@ class HelperArray
         return $a[$key] > $b[$key] ? -1 : 1;
     }
 
-    /**
-     * @param  array  $needles
-     * @param  string $haystack
-     * @return bool
-     */
     public static function arrayStrPos(array $needles, string $haystack): bool
     {
         foreach ($needles as $needle) {
@@ -981,17 +945,6 @@ class HelperArray
     }
 
     /**
-     * @deprecated
-     * @param  \ArrayAccess|array $array
-     * @param  int|string         $key
-     * @return bool
-     */
-    public static function exists($array, $key): bool
-    {
-        return self::keyExists($array, $key);
-    }
-
-    /**
      * Check whether the given key exists in the provided array or ArrayAccess-object
      *
      * @param  \ArrayAccess|array $array
@@ -1043,16 +996,6 @@ class HelperArray
     }
 
     /**
-     * @deprecated
-     * @param array $elements
-     * @return array|bool
-     */
-    public static function sortElementArr(array $elements)
-    {
-        return self::sortElements($elements);
-    }
-
-    /**
      * @param  array $elementsUnsorted
      * @return array|bool
      */
@@ -1091,5 +1034,41 @@ class HelperArray
         }
 
         return $strings;
+    }
+
+    /**
+     * Extract given associative array into a "flat" array, containing just the values of the given key, of all items
+     *
+     * @param  array  $arr
+     * @param  string $key
+     * @return array
+     * @throws \Exception
+     * @deprecated
+     */
+    public static function flatten(array $arr, string $key): array
+    {
+        LoggerWrapper::warning('Used deprecated HelperArray::flatten() - better: use array_column()', [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+        return array_column($arr, $key);
+    }
+
+    /**
+     * @deprecated
+     * @param  \ArrayAccess|array $array
+     * @param  int|string         $key
+     * @return bool
+     */
+    public static function exists($array, $key): bool
+    {
+        return self::keyExists($array, $key);
+    }
+
+    /**
+     * @deprecated
+     * @param array $elements
+     * @return array|bool
+     */
+    public static function sortElementArr(array $elements)
+    {
+        return self::sortElements($elements);
     }
 }
