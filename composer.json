@@ -1,6 +1,5 @@
 {
     "name": "gyselroth/php-helper",
-    "version": "0.1.1",
     "description": "PHP helpers",
     "keywords": ["helper", "array", "date", "file", "html", "image", "numeric", "server", "client", "string", "xml", "zip"],
     "homepage": "https://gyselroth.com",
