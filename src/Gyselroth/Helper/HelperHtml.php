@@ -63,11 +63,6 @@ class HelperHtml
         return preg_replace('/(http[s]?:\/\/\S{4,})\s*/im', '<a href="$1" target="_blank">$1</a> ', $string);
     }
 
-    /**
-     * @param  string $html
-     * @param  bool   $decodeEntity
-     * @return string
-     */
     public static function stripHtmlTags(string $html, bool $decodeEntity = false): string
     {
         $text = htmlspecialchars_decode($html);
@@ -107,7 +102,6 @@ class HelperHtml
      * @param  int|float $widthFactor
      * @param  int|float $heightFactor
      * @return string Given HTML w/ inline style like "width:(\d)+px" and "height:(\d)+px" multiplied by given factors
-     * @todo: The function always replaces with unit px, independent of the given parameter. Even better would be to copy over the unit via the preg_match_all() function and remove the unit parameter
      */
     public static function resizeStyles(string $html, $widthFactor = 1, $heightFactor = 1): string
     {
@@ -125,10 +119,6 @@ class HelperHtml
         return $html;
     }
 
-    /**
-     * @param  string $html
-     * @return string
-     */
     public static function umlautsToHtmlEntities(string $html): string
     {
         return str_replace(
@@ -193,7 +183,7 @@ class HelperHtml
     /**
      * Compacts dump of PHP-array (or object) created e.g. via print_r (removes unnecessary linebreaks)
      *
-     * @param  string $dump
+     * @param string $dump
      * @return string
      */
     public static function formatArrayDump(string $dump): string
@@ -203,10 +193,6 @@ class HelperHtml
         return preg_replace('/\)\s*\n\n/', ")\n", $dump);
     }
 
-    /**
-     * @param  array $columns
-     * @return string
-     */
     public static function renderTableHead(array $columns): string
     {
         $cells = '';

@@ -189,22 +189,25 @@ class HelperFile
      * @param  bool   $generateUniquePostfix Default: true
      * @param  string $fileExtension         Default: ''
      * @return string  filename
-     * @throws \Gyselroth\Helper\Exception\FileExceptionIllegalFilename
+     * @throws FileExceptionIllegalFilename
      */
-    public static function getUniqueFilename(string $leadStr = '', bool $prefixWithDateTime = true, bool $generateUniquePostfix = true, string $fileExtension = ''): string
+    public static function getUniqueFilename(
+        string $leadStr = '',
+        bool $prefixWithDateTime = true,
+        bool $generateUniquePostfix = true,
+        string $fileExtension = ''
+    ): string
     {
         $prefix = $prefixWithDateTime ? date('Ymd-His') : '';
 
-        $filename = $leadStr . ($generateUniquePostfix ? uniqid($prefix, false) : $prefix) . (empty($fileExtension) ? '' : '.' . $fileExtension);
+        $filename = $leadStr .
+            ($generateUniquePostfix
+                ? uniqid($prefix, false)
+                : $prefix) . (empty($fileExtension) ? '' : '.' . $fileExtension);
 
         return self::validateFilename($filename);
     }
 
-    /**
-     * @param  array  $files
-     * @param  string $path
-     * @return array
-     */
     public static function ensureFilenamesStartWithPath(array $files, string $path): array
     {
         if ('' === $path) {
@@ -228,9 +231,13 @@ class HelperFile
      * @param  array  $forbiddenChars
      * @param  array  $replacementChars
      * @return string
-     * @throws \Gyselroth\Helper\Exception\FileExceptionIllegalFilename
+     * @throws FileExceptionIllegalFilename
      */
-    public static function validateFilename(string $filename, array $forbiddenChars = [], array $replacementChars = []): string
+    public static function validateFilename(
+        string $filename,
+        array $forbiddenChars = [],
+        array $replacementChars = []
+    ): string
     {
         $filename = str_replace(DIRECTORY_SEPARATOR, '', $filename);
 
@@ -255,9 +262,6 @@ class HelperFile
      */
     public static function write(string $pathFile, string $content, string $mode = 'w'): bool
     {
-        // @todo    add option to allow scheme otherwise detect and remove scheme from beginning of $pathFile
-        // @todo    detect + log when $pathFile contains no path, there are several occurrences of this in in2, not sure if they're intentional
-
         $handle = fopen($pathFile, $mode);
         if (!$handle) {
             LoggerWrapper::error('fopen failed: ' . $pathFile);
@@ -284,12 +288,6 @@ class HelperFile
         return self::write($filePath, $content);
     }
 
-    /**
-     * @param  array  $rows
-     * @param  array  $headerFields
-     * @param  string $filePath
-     * @return bool
-     */
     public static function writeCsv(array $rows, array $headerFields, string $filePath): bool
     {
         if (0 === \count($rows)) {
@@ -353,14 +351,12 @@ class HelperFile
         return $filesFiltered;
     }
 
-    /**
-     * @param  string $path
-     * @param  string $ext
-     * @param  bool   $recursive
-     * @param  string $leadString
-     * @return array
-     */
-    public static function scanDirByVersionPrefixAndNaturallySort(string $path, string $ext = '', bool $recursive = false, string $leadString = ''): array
+    public static function scanDirByVersionPrefixAndNaturallySort(
+        string $path,
+        string $ext = '',
+        bool $recursive = false,
+        string $leadString = ''
+    ): array
     {
         $filesFiltered = self::scanDir($path, $ext, $recursive, $leadString);
         natsort($filesFiltered);
@@ -437,12 +433,6 @@ class HelperFile
         return $items;
     }
 
-    /**
-     * @param  string $directoryName
-     * @param  string $destinationPath
-     * @param  bool   $overwrite
-     * @return bool
-     */
     public static function copyDirectory(string $directoryName, string $destinationPath, bool $overwrite = true): bool
     {
         if ($overwrite) {
@@ -521,7 +511,6 @@ class HelperFile
     /**
      * Helper function getting files from dir
      *
-     * @todo   compare w/ scanDir()/scandDirRecursive(), if there are any: implement the additional options into scanDir() and remove this method
      * @param  string $path
      * @param  int    $level
      * @return array
@@ -552,31 +541,6 @@ class HelperFile
         closedir($handle);
 
         return $data;
-    }
-
-    /**
-     * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming and remove this additional method
-     * @param  string $path
-     * @return array|bool
-     * @throws \Exception
-     */
-    public static function getXMLFilesFromDir(string $path)
-    {
-        $xmlFiles = self::getDirectory($path);
-        if (0 === \count($xmlFiles)) {
-            return false;
-        }
-
-        asort($xmlFiles);
-        $files = [];
-        foreach ($xmlFiles as $fileName) {
-            $files[] = [
-                'name'  => $fileName,
-                'value' => $fileName
-            ];
-        }
-
-        return $files;
     }
 
     /**
@@ -628,7 +592,11 @@ class HelperFile
      * @return string                   Error message / empty string if valid
      * @throws \Exception
      */
-    public static function validateUploadFile(array $uploadFile, array $allowedTypes, $maximumFileSize = 2000000): string
+    public static function validateUploadFile(
+        array $uploadFile,
+        array $allowedTypes,
+        $maximumFileSize = 2000000
+    ): string
     {
         if (!isset($uploadFile['name'])) {
             // @todo throw exception
@@ -666,12 +634,17 @@ class HelperFile
      * @param  int    $maximumFileSize Max. size / -1 for unlimited size
      * @param  string $storageFilename New filename for stored file, if different from original upload filename
      * @return string                    Path to copied upload file or false on any failure
-     * @throws \Gyselroth\Helper\Exception\FileExceptionFailedTransfer
-     * @throws \Gyselroth\Helper\Exception\FileExceptionInvalidPath
-     * @throws \Gyselroth\Helper\Exception\FileException
-     * @throws \Exception
+     * @throws FileException
+     * @throws FileExceptionFailedTransfer
+     * @throws FileExceptionInvalidPath
+     * @throws FileExceptionPathNotFound
      */
-    public static function storeUploadFile(string $storagePath, array $allowedTypes = [], $maximumFileSize = 3000000, string $storageFilename = ''): string
+    public static function storeUploadFile(
+        string $storagePath,
+        array $allowedTypes = [],
+        $maximumFileSize = 3000000,
+        string $storageFilename = ''
+    ): string
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $message = self::validateUploadFile($_FILES['userfile'], $allowedTypes, $maximumFileSize);
@@ -710,7 +683,14 @@ class HelperFile
      * @throws FileException
      * @throws FileExceptionInvalidFile
      */
-    public static function upload(array $file, array $callbackFileExists, array $callbackCreateFile, $fileNamePrefix = '', array $allowedTypes = [], $maximumFileSize = -1): string
+    public static function upload(
+        array $file,
+        array $callbackFileExists,
+        array $callbackCreateFile,
+        $fileNamePrefix = '',
+        array $allowedTypes = [],
+        $maximumFileSize = -1
+    ): string
     {
         $filename = $fileNamePrefix . $file['name'];
 
@@ -739,13 +719,6 @@ class HelperFile
         throw new FileException('Upload failed');
     }
 
-    /**
-     * Delete given files inside given directory path
-     *
-     * @param  string $path
-     * @param  array  $files
-     * @return bool
-     */
     public static function unlinkFiles(string $path, array $files = []): bool
     {
         foreach ($files as $file) {
@@ -773,8 +746,8 @@ class HelperFile
     /**
      * Deletes given file or directory (including all contained directories and files)
      *
-     * @param  string|array $filename   Filename, or $path empty: full path including filename | Array: multiple filenames
-     * @param  string $path             Path to file, optional
+     * @param  string|array $filename Filename, or $path empty: full path including filename | Array: multiple filenames
+     * @param  string       $path     Path to file, optional
      * @return bool
      * @todo   log deletion failures
      */
@@ -835,10 +808,6 @@ class HelperFile
         return rmdir($path);
     }
 
-    /**
-     * @param string $filename
-     * @param string $contentType
-     */
     public static function sendFileHeaders(string $filename, string $contentType): void
     {
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
@@ -864,12 +833,16 @@ class HelperFile
      * Check/ensure directory at given path exists and is writable
      *
      * @param  string $path
-     * @param  bool $makeWritableIfNot
-     * @param  bool $createIfNotExists
+     * @param  bool   $makeWritableIfNot
+     * @param  bool   $createIfNotExists
      * @return bool
      * @throws FileExceptionPathNotFound
      */
-    public static function isDirectoryWritable(string $path, bool $makeWritableIfNot = true, bool $createIfNotExists = true): bool
+    public static function isDirectoryWritable(
+        string $path,
+        bool $makeWritableIfNot = true,
+        bool $createIfNotExists = true
+    ): bool
     {
         if ($createIfNotExists && !is_dir($path)) {
             /** @noinspection MkdirRaceConditionInspection */
@@ -928,11 +901,6 @@ class HelperFile
         return HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
     }
 
-    /**
-     * @param  array $filePaths
-     * @param  bool  $makeUnique
-     * @return array
-     */
     public static function getBasenames(array $filePaths, bool $makeUnique = true): array
     {
         $baseNames = [];
@@ -943,24 +911,38 @@ class HelperFile
         return $makeUnique ? array_values(array_unique($baseNames)) : $baseNames;
     }
 
-    /**
-     * @param  string $path
-     * @return string
-     */
     public static function ensurePathEndsWithDirectorySeparator(string $path): string
     {
         return $path . (empty($path) || HelperString::endsWith($path, DIRECTORY_SEPARATOR) ? '' : DIRECTORY_SEPARATOR);
     }
 
-    /**
-     * Scan file system
-     *
-     * @param  string $path
-     * @param  string $wildcard
-     * @return array
-     */
     public static function scanFilesystem(string $path, string $wildcard = '*'): array
     {
         return glob($path . DIRECTORY_SEPARATOR . $wildcard);
+    }
+
+    /**
+     * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming and remove this additional method
+     * @param  string $path
+     * @return array|bool
+     * @throws \Exception
+     */
+    public static function getXMLFilesFromDir(string $path)
+    {
+        $xmlFiles = self::getDirectory($path);
+        if (0 === \count($xmlFiles)) {
+            return false;
+        }
+
+        asort($xmlFiles);
+        $files = [];
+        foreach ($xmlFiles as $fileName) {
+            $files[] = [
+                'name'  => $fileName,
+                'value' => $fileName
+            ];
+        }
+
+        return $files;
     }
 }

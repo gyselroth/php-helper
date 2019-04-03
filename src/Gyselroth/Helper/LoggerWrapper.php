@@ -130,9 +130,7 @@ class LoggerWrapper
      *
      * @param  string $method
      * @param  array  $params
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \InvalidArgumentException
-     * @throws \Exception
+     * @throws LoggerException
      */
     public function __call(string $method, array $params): void
     {
@@ -144,9 +142,7 @@ class LoggerWrapper
      *
      * @param  string $method
      * @param  array  $params
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \InvalidArgumentException
-     * @throws \Exception
+     * @throws LoggerException
      */
     private static function call(string $method, array $params): void
     {
@@ -164,13 +160,6 @@ class LoggerWrapper
         self::log($message, $priority, $extras);
     }
 
-    /**
-     * @param  string $message
-     * @param  string $priority
-     * @param  array  $options
-     * @throws \InvalidArgumentException
-     * @throws \Exception
-     */
     public static function log(string $message, string $priority = self::PRIORITY_PSR3_INFO, array $options = []): void
     {
         /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
@@ -189,7 +178,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function alert(string $message, array $options = []): void
@@ -202,7 +190,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function crit(string $message, array $options = []): void
@@ -215,7 +202,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function debug(string $message, array $options = []): void
@@ -228,7 +214,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function emerg(string $message, array $options = []): void
@@ -241,7 +226,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function error(string $message, array $options = []): void
@@ -254,7 +238,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function info(string $message, array $options = []): void
@@ -267,7 +250,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function notice(string $message, array $options = []): void
@@ -280,7 +262,6 @@ class LoggerWrapper
     /**
      * @param  string $message
      * @param  array  $options
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
     public static function warning(string $message, array $options = []): void
@@ -296,10 +277,14 @@ class LoggerWrapper
      * @param  array|bool|int|Object|resource|string $returnValue
      * @param  string                                $logCategory
      * @return array|bool|int|Object|resource|string
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public static function logOrDieOnDev(string $message, bool $logAsError = false, $returnValue = null, string $logCategory = null)
+    public static function logOrDieOnDev(
+        string $message,
+        bool $logAsError = false,
+        $returnValue = null,
+        string $logCategory = null
+    )
     {
         if (self::$isDevEnvironment) {
             die($message . "\n");
@@ -311,10 +296,6 @@ class LoggerWrapper
         return $returnValue;
     }
 
-    /**
-     * @param  string $priority
-     * @return int
-     */
     private static function getZf1PriorityByPsr3(string $priority = ''): int
     {
         return array_key_exists($priority, self::ZF1_PRIORITIES)
@@ -322,10 +303,6 @@ class LoggerWrapper
             : self::ZF1_PRIORITIES[self::PRIORITY_PSR3_INFO];
     }
 
-    /**
-     * @param  string $priority
-     * @return int
-     */
     private static function getMonologLevelByPsr3(string $priority = ''): int
     {
         $priority = strtolower($priority);

@@ -23,10 +23,7 @@ class HelperReflection
      * @param  array|bool|int|Object|string $value
      * @param  string                       $destinationType
      * @return array|bool|float|int|string
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \Gyselroth\Helper\Exception\ReflectionExceptionInvalidType
-     * @throws \Exception
+     * @throws ReflectionExceptionInvalidType
      */
     public static function getTypeCasted($value, string $destinationType)
     {
@@ -53,7 +50,7 @@ class HelperReflection
      * @param  string $className
      * @param  string $config
      * @return Object              Dynamically created object of given class
-     * @throws \Gyselroth\Helper\Exception\ReflectionException
+     * @throws ReflectionException
      */
     public static function constructObject(string $className, $config = null)
     {
@@ -75,10 +72,7 @@ class HelperReflection
      * @param  bool   $logIfNot Write entry into application log if given class name represents no constructable class
      * @param  string $logCategory
      * @return bool
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \Gyselroth\Helper\Exception\ReflectionException
-     * @throws \Exception
+     * @throws ReflectionException
      */
     public static function ensureIsClass(string $className, bool $logIfNot = false, string $logCategory = ''): bool
     {
@@ -99,19 +93,11 @@ class HelperReflection
         return true;
     }
 
-    /**
-     * @param  string $modulePath
-     * @return array
-     */
     public static function getControllerFilenames(string $modulePath): array
     {
         return HelperFile::scanDirRecursive($modulePath, 'Controller.php');
     }
 
-    /**
-     * @param  string $pathController
-     * @return array
-     */
     public static function getActionsFromControllerFile(string $pathController): array
     {
         preg_match_all('/(function) ([a-zA-Z]+)(Action)\(/', file_get_contents($pathController), $matches);
@@ -123,11 +109,9 @@ class HelperReflection
      * Call user function. Works same as call_user_func(), but accepts also a string function reference like 'MyClass::myMethod'
      *
      * @param  string $funcRefString function reference
-     * @note   Additional arbitrary arguments required by called methods can be passed as additional arguments
      * @return array|bool|int|string|Object|null
-     * @throws \Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \Exception
+     * @throws ReflectionExceptionUndefinedFunction
+     * @note   Additional arbitrary arguments required by called methods can be passed as additional arguments
      */
     public static function callUserFunction(string $funcRefString)
     {
@@ -157,7 +141,7 @@ class HelperReflection
      * @param  string $funcRefString
      * @param  array  $funcArgs
      * @return bool|int|float|string|array|Object|null
-     * @throws \Gyselroth\Helper\Exception\ReflectionException
+     * @throws ReflectionException
      */
     public static function callUserFunctionArray(string $funcRefString, array $funcArgs)
     {
@@ -206,10 +190,6 @@ class HelperReflection
         return \defined($constantName) ? eval('return ' . $constantName . ';') : false;
     }
 
-    /**
-     * @param  bool $withClassName
-     * @return string
-     */
     public static function getCallingMethodName(bool $withClassName = true): string
     {
         return ($withClassName ? debug_backtrace()[1]['class'] . '::' : '') . debug_backtrace()[1]['function'];

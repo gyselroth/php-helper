@@ -44,7 +44,7 @@ class HelperString
      *
      * @param  string $haystack
      * @param  array  $needles
-     * @param  bool   $associative  Return as associative array ['needle1' => $offset1, 'needle2' => ...] (default) or as indexed array?
+     * @param  bool   $associative Return as associative array ['needle1' => $offset1, 'needle2' => ...] (default) or as indexed array?
      * @return array|false          Array w/ found offset of each needle or false if none is contained in $haystack
      */
     public static function strPosConsecutive(string $haystack, array $needles, bool $associative = true)
@@ -147,14 +147,6 @@ class HelperString
         return false;
     }
 
-    /**
-     * Replace first occurrence of a substring
-     *
-     * @param  string $subject
-     * @param  string $search
-     * @param  string $replace
-     * @return string
-     */
     public static function replaceFirst(string $subject, string $search, string $replace = ''): string
     {
         if (\strlen($search) > 0) {
@@ -168,12 +160,6 @@ class HelperString
         return $subject;
     }
 
-    /**
-     * @param  string $search
-     * @param  string $replace
-     * @param  string $subject
-     * @return string
-     */
     public static function replaceLast(string $search, string $replace, string $subject): string
     {
         /** @noinspection ReturnFalseInspection */
@@ -205,7 +191,12 @@ class HelperString
      * @param  bool   $excludeNeedle
      * @return string Substring of given string starting from $offsetNeedle'th occurrence of needle
      */
-    public static function removeAllBefore(string $needle, string $str, int $offsetNeedle = 0, bool $excludeNeedle = false): string
+    public static function removeAllBefore(
+        string $needle,
+        string $str,
+        int $offsetNeedle = 0,
+        bool $excludeNeedle = false
+    ): string
     {
         if ($offsetNeedle > \strlen($str)) {
             return $str;
@@ -216,14 +207,12 @@ class HelperString
         return substr($str, $start + ($excludeNeedle ? \strlen($needle) : 0));
     }
 
-    /**
-     * @param  string $needle
-     * @param  string $str
-     * @param  int    $offsetNeedle
-     * @param  bool   $excludeNeedle
-     * @return string
-     */
-    public static function removeAllAfter(string $needle, string $str, int $offsetNeedle = 0, bool $excludeNeedle = false): string
+    public static function removeAllAfter(
+        string $needle,
+        string $str,
+        int $offsetNeedle = 0,
+        bool $excludeNeedle = false
+    ): string
     {
         if ($offsetNeedle > \strlen($str)) {
             return $str;
@@ -272,12 +261,6 @@ class HelperString
         return substr_replace($str, '', $offsetLhs + ($removeDelimiters ? 0 : \strlen($lhs)), $needleLength);
     }
 
-    /**
-     * @param  string $str
-     * @param  string $lhs
-     * @param  string $rhs
-     * @return string
-     */
     public static function unwrap(string $str, string $lhs, string $rhs): string
     {
         /** @noinspection ReturnFalseInspection */
@@ -294,61 +277,21 @@ class HelperString
         return $str;
     }
 
-    /**
-     * @param  int|string $number
-     * @param  int        $digits
-     * @return string
-     * @deprecated
-     */
-    public static function formatAmountDigits($number, int $digits): string
-    {
-        return (string)HelperNumeric::formatAmountDigits($number, $digits);
-    }
-
-    /**
-     * @param  string $string
-     * @return string
-     */
     public static function formatJsonCompatible(string $string): string
     {
         return str_replace(["\n", "\r", "'"], ['', '', '"'], $string);
     }
 
-    /**
-     * @todo  add option/method(s) to allow also dateTime and/or time
-     * @param  string $str
-     * @param  string $delimiter
-     * @param  bool   $isGermanNotation Validate against german notation (dd.mm.yyyy) instead of gregorian (mm.dd.yyyy)
-     * @return bool
-     * @deprecated
-     */
-    public static function isDate(string $str, string $delimiter = '.', bool $isGermanNotation = true): bool
-    {
-        return HelperDate::isDateString($str, $delimiter, $isGermanNotation);
-    }
-
-    /**
-     * @param  string $str
-     * @return bool
-     */
     public static function isXml(string $str): bool
     {
         return HelperXml::isValidXml($str);
     }
 
-    /**
-     * @param  string $str
-     * @return bool
-     */
     public static function isUtf8(string $str): bool
     {
         return \strlen($str) > \strlen(utf8_decode($str));
     }
 
-    /**
-     * @param  string $filename
-     * @return string
-     */
     public static function sanitizeFilename(string $filename): string
     {
         return HelperFile::sanitizeFilename($filename);
@@ -418,8 +361,6 @@ class HelperString
      * @param  string $specialChars
      * @param  bool   $eachSpecialCharOnlyOnce
      * @return string
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
     public static function getRandomString(
@@ -488,7 +429,10 @@ class HelperString
      * @param  string $pool Pool of allowed random characters
      * @return string
      */
-    public static function getRandomLetter(bool $upperCase = false, string $pool = 'abcdefghijklmnopqrstuvwxyz'): string
+    public static function getRandomLetter(
+        bool $upperCase = false,
+        string $pool = 'abcdefghijklmnopqrstuvwxyz'
+    ): string
     {
         if (1 === \strlen($pool)) {
             return $upperCase ? strtoupper($pool) : $pool;
@@ -538,12 +482,6 @@ class HelperString
         return str_replace(['+', '/', '='], ['-', '_', '.'], base64_encode($string));
     }
 
-    /**
-     * Decode string encoded with self::urlSafeB64encode()
-     *
-     * @param  string $string
-     * @return string
-     */
     public static function urlSafeB64Decode(string $string): string
     {
         $data = str_replace(['-', '_', '.'], ['+', '/', '='], $string);
@@ -563,7 +501,12 @@ class HelperString
      * @param  bool       $strict
      * @return bool
      */
-    public static function compareValuesByComparisonOperators($value, $conditionValue, $operatorString = null, bool $strict = false): ?bool
+    public static function compareValuesByComparisonOperators(
+        $value,
+        $conditionValue,
+        $operatorString = null,
+        bool $strict = false
+    ): ?bool
     {
         switch ($operatorString) {
             case self::OPERATOR_LESS_THAN:
@@ -669,32 +612,15 @@ class HelperString
     {
         $serialized = self::serialize_dump($str);
 
-//        echo $serialized;
-//        die();
-
         /** @noinspection UnserializeExploitsInspection */
         return unserialize($serialized);
     }
 
-    /**
-     * @param  string $message
-     * @param  array  $args
-     * @return string
-     * @todo   add dependency-injection to use configurable translation component
-     */
     public static function translate(string $message, array $args = []): string
     {
         return [] === $args ? $message : vsprintf($message, $args);
     }
 
-    /**
-     * @param  string $single
-     * @param  string $multiple
-     * @param  int $amount
-     * @return string
-     * @todo   support different language pluralization strategies (current: german)
-     * @todo   add dependency-injection to use configurable translation component
-     */
     public static function translatePlural(string $single, string $multiple, int $amount): string
     {
         return $amount === 0 || $amount > 1 ? $multiple : $single;
@@ -712,20 +638,11 @@ class HelperString
         return HelperPreg::addPregDelimiters($pattern, $caseInsensitive);
     }
 
-    /**
-     * @param  string $str
-     * @return bool
-     */
     public static function startsNumeric(string $str): bool
     {
         return HelperPreg::startsNumeric($str);
     }
 
-    /**
-     * @param  string $str
-     * @param  bool   $trim
-     * @return string
-     */
     public static function removeNumericChars(string $str, bool $trim = true): string
     {
         return HelperPreg::removeNumericChars($str, $trim);
@@ -746,7 +663,7 @@ class HelperString
     /**
      * @param  string $str
      * @param  string $needlePattern Perl regular expression
-     * @param  int     $offset
+     * @param  int    $offset
      * @return int First offset of $needlePatten in $str or -1 if not found
      * @throws PregExceptionEmptyExpression
      */
@@ -770,7 +687,7 @@ class HelperString
      * @param  string $str
      * @param  string $patternLhs
      * @param  string $patternRhs
-     * @param  string  $replacement
+     * @param  string $replacement
      * @return string Replace 1st occurrence of delimiters matching given regex patterns and their enclosed content by given replacement
      */
     public static function pregReplaceBetween(string $str, string $patternLhs, string $patternRhs, string $replacement): string
@@ -792,12 +709,36 @@ class HelperString
     }
 
     /**
-     * @param  string $pattern
-     * @param  string $string
+     * @param string $pattern
+     * @param string $string $string
      * @return array    Keys: Offsets of matches, Values: matches
      */
     public static function preg_match_all_with_offsets(string $pattern, string $string): array
     {
         return HelperPreg::preg_match_all_with_offsets($pattern, $string);
+    }
+
+    /**
+     * @param  int|string $number
+     * @param  int        $digits
+     * @return string
+     * @deprecated
+     */
+    public static function formatAmountDigits($number, int $digits): string
+    {
+        return HelperNumeric::formatAmountDigits($number, $digits);
+    }
+
+    /**
+     * @todo  add option/method(s) to allow also dateTime and/or time
+     * @param  string $str
+     * @param  string $delimiter
+     * @param  bool   $isGermanNotation Validate against german notation (dd.mm.yyyy) instead of gregorian (mm.dd.yyyy)
+     * @return bool
+     * @deprecated
+     */
+    public static function isDate(string $str, string $delimiter = '.', bool $isGermanNotation = true): bool
+    {
+        return HelperDate::isDateString($str, $delimiter, $isGermanNotation);
     }
 }

@@ -147,11 +147,7 @@ class HelperServerClient
     public const HTTP_STATUS_CODE_INSUFFICIENT_STORAGE            = 507;
     public const HTTP_STATUS_CODE_NOT_EXTENDED                    = 510;
 
-    /**
-     * @param  bool $withProtocol
-     * @return string
-     */
-    public static function getHost($withProtocol = true): string
+    public static function getHost(bool $withProtocol = true): string
     {
         $protocol = $withProtocol
             ? 'http' . (isset($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS'] ? 's' : '') . '://'
@@ -165,7 +161,6 @@ class HelperServerClient
      * @param  \Zend_Date                  $modificationTime
      * @return string
      * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      * @throws \Zend_Date_Exception
      */
@@ -199,7 +194,7 @@ class HelperServerClient
      * @return array Names of fonts installed on server
      * @note   tested and working on Ubuntu 14.04
      */
-    public static function getInstalledFonts($namesOnly = false, $associative = false): array
+    public static function getInstalledFonts(bool $namesOnly = false, bool $associative = false): array
     {
         if ($namesOnly) {
             $associative = true;
@@ -229,18 +224,12 @@ class HelperServerClient
         return $fonts;
     }
 
-    /**
-     * @return string
-     */
     public static function getRequestUrl(): string
     {
         return 'http' . (array_key_exists('HTTPS', $_SERVER) && 'on' === $_SERVER['HTTPS'] ? 's' : '')
             . '://' . $_SERVER['SERVER_NAME'] . (80 !== $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '') . $_SERVER['REQUEST_URI'];
     }
 
-    /**
-     * @return String
-     */
     public static function getClientIP(): string
     {
         if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
@@ -254,9 +243,6 @@ class HelperServerClient
         return $_SERVER['REMOTE_ADDR'];
     }
 
-    /**
-     * @return bool
-     */
     public static function isClientWindows(): bool
     {
         /** @noinspection ReturnFalseInspection */
@@ -271,7 +257,10 @@ class HelperServerClient
      * @return array
      * @todo make $indexesToUnset general applicable instead of IN2 specific
      */
-    public static function prepareAjaxResponseData(array $data, array $indexesToUnset = ['model', 'controller', 'action', 'school']): array
+    public static function prepareAjaxResponseData(
+        array $data,
+        array $indexesToUnset = ['model', 'controller', 'action', 'school']
+    ): array
     {
         if (empty($data)) {
             return $data;

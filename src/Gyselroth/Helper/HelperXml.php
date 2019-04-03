@@ -37,19 +37,25 @@ class HelperXml
      */
     public static function isValidXml(string $str): bool
     {
-        return (bool)simplexml_load_string($str, 'SimpleXmlElement', LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE);
+        return (bool)simplexml_load_string(
+            $str, 'SimpleXmlElement',
+            LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE);
     }
 
     /**
      * @param  string $xml
-     * @param  array  $levels               If empty: all levels
-     * @param  array  $excludeTagNames      Tag names not to be counted
-     * @param  array  $excludeTagTypes      Tag types not to be counted
+     * @param  array  $levels          If empty: all levels
+     * @param  array  $excludeTagNames Tag names not to be counted
+     * @param  array  $excludeTagTypes Tag types not to be counted
      * @return array                        Nodes on given/all levels, not counting elements matching given filters
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public static function getNodes(string $xml, array $levels, array $excludeTagNames = [], array $excludeTagTypes = []): array
+    public static function getNodes(
+        string $xml,
+        array $levels,
+        array $excludeTagNames = [],
+        array $excludeTagTypes = []
+    ): array
     {
         $tags = self::getTagsFromXml($xml);
 
@@ -65,7 +71,12 @@ class HelperXml
      * @param  array $nodes             Array of XML nodes (tags), each having attributes: 'tag', 'type', 'level' (, optionally: 'attributes')
      * @return array
      */
-    public static function getItemsInArrayOfNodes(array $levels, array $excludeTagNames, array $excludeTagTypes, $nodes): array
+    public static function getItemsInArrayOfNodes(
+        array $levels,
+        array $excludeTagNames,
+        array $excludeTagTypes,
+        $nodes
+    ): array
     {
         $nodesFiltered = [];
         $excludeTagNames = array_map('strtoupper', $excludeTagNames);
@@ -82,14 +93,18 @@ class HelperXml
 
     /**
      * @param  string $xml
-     * @param  array  $levels               If empty: all levels
-     * @param  array  $excludeTagNames      Tag names not to be counted
-     * @param  array  $excludeTagTypes      Tag types not to be counted
+     * @param  array  $levels          If empty: all levels
+     * @param  array  $excludeTagNames Tag names not to be counted
+     * @param  array  $excludeTagTypes Tag types not to be counted
      * @return int                          Amount of nodes on given/all levels, not counting elements matching given filters
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public static function getAmountNodes(string $xml, array $levels, array $excludeTagNames = [], array $excludeTagTypes = []):int
+    public static function getAmountNodes(
+        string $xml,
+        array $levels,
+        array $excludeTagNames = [],
+        array $excludeTagTypes = []
+    ):int
     {
         return \count(self::getNodes($xml, $levels, $excludeTagNames, $excludeTagTypes));
     }
@@ -101,7 +116,12 @@ class HelperXml
      * @param  array $nodes             Array of XML nodes (tags), each having attributes: 'tag', 'type', 'level' (, optionally: 'attributes')
      * @return int
      */
-    public static function countItemsInArrayOfNodes(array $levels, array $excludeTagNames, array $excludeTagTypes, $nodes): int
+    public static function countItemsInArrayOfNodes(
+        array $levels,
+        array $excludeTagNames,
+        array $excludeTagTypes,
+        $nodes
+    ): int
     {
         return \count(self::getItemsInArrayOfNodes($levels, $excludeTagNames, $excludeTagTypes, $nodes));
     }
@@ -112,11 +132,14 @@ class HelperXml
      * @param  bool         $includeErrors
      * @param  bool         $includeWarnings
      * @return string Error message
-     * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      */
-    public static function getLibxmlErrorMessage($error, bool $includeFatal = true, bool $includeErrors = false, bool $includeWarnings = false): string
+    public static function getLibxmlErrorMessage(
+        $error,
+        bool $includeFatal = true,
+        bool $includeErrors = false,
+        bool $includeWarnings = false
+    ): string
     {
         $renderErrorMessage = function($error, $message) {
             return "<strong><br/>\n" . $message . trim($error->message) . ' on line <strong>' . $error->line . "</strong>\n</strong>: ";
@@ -153,9 +176,14 @@ class HelperXml
      * @param  string $xmlVersion
      * @param  string $xmlEncoding
      * @return \DOMDocument|bool
-     * @throws \Gyselroth\Helper\Exception\XmlException
+     * @throws XmlException
      */
-    public static function validate(string $pathXml, string $pathXsd, string $xmlVersion = '1.0', string $xmlEncoding = 'UTF-8')
+    public static function validate(
+        string $pathXml,
+        string $pathXsd,
+        string $xmlVersion = '1.0',
+        string $xmlEncoding = 'UTF-8'
+    )
     {
         if (!file_exists($pathXml)) {
             throw new XmlException('Failed loading XML file: ' . $pathXml);
@@ -178,7 +206,7 @@ class HelperXml
      * Print out given DOMDocument nodes
      *
      * @param  \DOMDocument|\DOMNodeList|\DomElement|array $dom
-     * @param  string                                   $key
+     * @param  string                                      $key
      */
     public static function debugPrint($dom, string $key = ''): void
     {
@@ -251,10 +279,6 @@ class HelperXml
         return $data;
     }
 
-    /**
-     * @param  string $xml
-     * @return string
-     */
     public static function formatXmlString(string $xml): string
     {
         $dom                     = new \DOMDocument(self::VERSION_1_0);

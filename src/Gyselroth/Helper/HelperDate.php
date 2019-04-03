@@ -123,7 +123,13 @@ class HelperDate
      * @param  string $separator
      * @return bool   Is in date string format, no check for implausible number values though (e.g. day 32, month 15)
      */
-    public static function isDateStringFormatted($str, $digitsInPart1 = 4, $digitsInPart2 = 2, $digitsInPart3 = 2, $separator = '-'): bool
+    public static function isDateStringFormatted(
+        $str,
+        $digitsInPart1 = 4,
+        $digitsInPart2 = 2,
+        $digitsInPart3 = 2,
+        $separator = '-'
+    ): bool
     {
         return (bool)preg_match('/\d{' . $digitsInPart1 . '}' . $separator . '\d{' . $digitsInPart2 . '}' . $separator . '\d{' . $digitsInPart3 . '}/', $str);
     }
@@ -231,6 +237,7 @@ class HelperDate
     /**
      * @param string|int $time
      * @return \DateTime
+     * @throws \Exception
      */
     public static function getDateTime($time): \DateTime
     {
@@ -399,9 +406,15 @@ class HelperDate
      * @param  bool   $isCurrentDate
      * @return int
      */
-    public static function getSumSecondsOfTimeString($timeStr, $includeMinutes = true, $includeSeconds = true, $isCurrentDate = false): int
+    public static function getSumSecondsOfTimeString(
+        $timeStr,
+        bool $includeMinutes = true,
+        bool $includeSeconds = true,
+        bool $isCurrentDate = false): int
     {
-        return self::getSumSecondsOfTimeParts(self::getTimeStringParts($timeStr, ':', $includeMinutes, $includeSeconds), $isCurrentDate);
+        return self::getSumSecondsOfTimeParts(
+            self::getTimeStringParts($timeStr, ':', $includeMinutes, $includeSeconds),
+            $isCurrentDate);
     }
 
     /**
@@ -475,7 +488,8 @@ class HelperDate
             // Convert to Zend_Date
             $date = empty($date) ? new \Zend_Date() : new \Zend_Date($date);
         } elseif (!\is_object($date) || 'Zend_Date' !== \get_class($date)) {
-            throw new \InvalidArgumentException('Argument 1 passed to ' . __CLASS__ . '::' . __METHOD__ . ' must be an instance of Zend_Date or null or string');
+            throw new \InvalidArgumentException(
+                'Argument 1 passed to ' . __CLASS__ . '::' . __METHOD__ . ' must be an instance of Zend_Date or null or string');
         }
 
         $monday = empty($date) ? new \Zend_Date() : clone $date;
@@ -508,7 +522,8 @@ class HelperDate
             case self::DATE_TIME_PART_HOUR:
                 return (int)($date2->sub($date1)->toValue() / self::SECONDS_HOUR);
             default:
-                LoggerWrapper::warning("Detected unhandled unit $unit", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $unit]);
+                LoggerWrapper::warning(
+                    "Detected unhandled unit $unit", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $unit]);
 
                 return null;
         }
@@ -520,7 +535,6 @@ class HelperDate
      * @param  int $dateFrom UNIX timestamp
      * @param  int $dateTo   UNIX timestamp
      * @return array|bool
-     * @todo: Several problems: startWeek/endWeek is always one week less. endWeek is calculated by adding week difference to startWeek - wrong if startWeek and endWeek are in two separate years. Also, returned startWeek has a leading zero, endWeek not.
      */
     public static function getWeeksBetween($dateFrom, $dateTo)
     {

@@ -47,7 +47,13 @@ class HelperNumeric
      * @param  bool   $onlyPositive
      * @return string Imploded (list of) integers
      */
-    public static function intImplode(array $array, string $glue = ',', bool $sort = true, bool $makeUnique = false, bool $onlyPositive = false): string
+    public static function intImplode(
+        array $array,
+        string $glue = ',',
+        bool $sort = true,
+        bool $makeUnique = false,
+        bool $onlyPositive = false
+    ): string
     {
         $array    = array_unique($array);
         $integers = [];
@@ -77,7 +83,12 @@ class HelperNumeric
      * @param  bool        $unique
      * @return int[]
      */
-    public static function intExplode(?string $str, string $delimiter = ',', bool $excludeNullValues = true, bool $unique = false): array
+    public static function intExplode(
+        ?string $str,
+        string $delimiter = ',',
+        bool $excludeNullValues = true,
+        bool $unique = false
+    ): array
     {
         if (null === $str) {
             return [];
@@ -97,13 +108,18 @@ class HelperNumeric
     /**
      * Split given list of values by given delimiter into a unique array of float values
      *
-     * @param  string $str
-     * @param  string $delimiter
-     * @param  bool   $excludeNullValues Include null values (converted to 0)? Default: true
-     * @param  bool   $unique
+     * @param string $str
+     * @param string $delimiter
+     * @param bool   $excludeNullValues Include null values (converted to 0)? Default: true
+     * @param bool   $unique
      * @return array
      */
-    public static function floatExplode(string $str, string $delimiter = ',', bool $excludeNullValues = true, bool $unique = false): array
+    public static function floatExplode(
+        string $str,
+        string $delimiter = ',',
+        bool $excludeNullValues = true,
+        bool $unique = false
+    ): array
     {
         if (null === $str) {
             return [];

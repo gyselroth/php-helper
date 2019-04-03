@@ -23,7 +23,7 @@ class HelperPreg
     /**
      * @param  string    $pattern
      * @param  bool|null $caseInsensitive
-     * @param  string     $delimiter
+     * @param  string    $delimiter
      * @return string Given pattern wrapped into pattern delimiters and options if any
      * @todo add more option arguments
      */
@@ -37,11 +37,11 @@ class HelperPreg
     /**
      * @param  string $str
      * @param  string $needlePattern Perl regular expression
-     * @param  int     $offset
+     * @param  int    $offset
      * @return int First offset of $needlePatten in $str or -1 if not found
      * @throws PregExceptionEmptyExpression
      */
-    public static function pregStrPos(string $str, string $needlePattern, $offset = 0): int
+    public static function pregStrPos(string $str, string $needlePattern, int $offset = 0): int
     {
         if ('' === $needlePattern) {
             throw new PregExceptionEmptyExpression('Empty regular expression');
@@ -75,10 +75,15 @@ class HelperPreg
      * @param  string $str
      * @param  string $patternLhs
      * @param  string $patternRhs
-     * @param  string  $replacement
+     * @param  string $replacement
      * @return string Replace 1st occurrence of delimiters matching given regex patterns and their enclosed content by given replacement
      */
-    public static function pregReplaceBetween(string $str, string $patternLhs, string $patternRhs, string $replacement): string
+    public static function pregReplaceBetween(
+        string $str,
+        string $patternLhs,
+        string $patternRhs,
+        string $replacement
+    ): string
     {
         // Find consecutive offsets of left- and right-hand-side patterns
         $matchesLhs = self::preg_match_all_with_offsets($patternLhs, $str);
@@ -116,20 +121,11 @@ class HelperPreg
         return substr_replace($str, $replacement, $offsetLhs, $needleLength);
     }
 
-    /**
-     * @param  string $str
-     * @return int
-     */
     public static function startsNumeric(string $str): int
     {
         return 1 === preg_match('/^\d/', $str);
     }
 
-    /**
-     * @param  string $str
-     * @param  bool   $trim
-     * @return string
-     */
     public static function removeNumericChars(string $str, bool $trim = true): string
     {
         $str = preg_replace('/\d/', '', $str);
@@ -165,8 +161,8 @@ class HelperPreg
     }
 
     /**
-     * @param  string $pattern
-     * @param  string $string
+     * @param string $pattern
+     * @param string $string $string
      * @return array    Keys: Offsets of matches, Values: matches
      * @todo add argument: $offset
      */
