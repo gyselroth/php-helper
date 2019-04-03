@@ -42,7 +42,7 @@ class HelperCrypt
     /**
      * @param  string $string
      * @param  string $key
-     * @param  bool   $encodeUrlSafeBase64
+     * @param  boolean   $encodeUrlSafeBase64
      * @return string
      * @throws \Gyselroth\Helper\Exception\OperationFailedException
      * @throws \Gyselroth\Helper\Exception\ArgumentMissingException
