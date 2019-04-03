@@ -32,8 +32,10 @@ class HelperFile
     public const FILE_ENDING_DOCX_FACTORY_TEMPLATE = 'dfw';
     public const FILE_ENDING_PHTML                 = 'phtml';
     public const FILE_ENDING_HTML                  = 'html';
+    public const FILE_ENDING_JAVASCRIPT            = 'js';
     public const FILE_ENDING_JSON                  = 'json';
     public const FILE_ENDING_PDF                   = 'pdf';
+    public const FILE_ENDING_PHP                   = 'php';
     public const FILE_ENDING_TXT                   = 'txt';
     public const FILE_ENDING_XLS                   = 'xls';
     public const FILE_ENDING_XLS_X                 = 'xlsx';
@@ -54,6 +56,8 @@ class HelperFile
     public const MIME_TYPE_IMAGE_JPEG = 'image/jpeg';
     public const MIME_TYPE_IMAGE_PNG  = 'image/png';
 
+    public const MIME_TYPE_JAVASCRIPT = 'text/javascript';
+        
     public const MIME_TYPE_JSON = 'application/json';
     public const MIME_TYPE_PDF  = 'application/pdf';
     public const MIME_TYPE_XML  = 'application/xml';
@@ -590,15 +594,17 @@ class HelperFile
                     return self::MIME_TYPE_CSV;
                 case self::FILE_ENDING_GIF:
                     return self::MIME_TYPE_IMAGE_GIF;
+                case self::FILE_ENDING_JAVASCRIPT:
+                    return self::MIME_TYPE_JAVASCRIPT;
                 case self::FILE_ENDING_JPG:
                 case self::FILE_ENDING_JPEG:
                     return self::MIME_TYPE_IMAGE_JPEG;
-                case self::FILE_ENDING_PNG:
-                    return self::MIME_TYPE_IMAGE_PNG;
                 case self::FILE_ENDING_JSON:
-                    return self::MIME_TYPE_JSON;
+                    return self::MIME_TYPE_JSON;    
                 case self::FILE_ENDING_PDF:
                     return self::MIME_TYPE_PDF;
+                case self::FILE_ENDING_PNG:
+                    return self::MIME_TYPE_IMAGE_PNG;
                 case self::FILE_ENDING_TXT:
                     return self::MIME_TYPE_TEXT;
                 case self::FILE_ENDING_XLS:
