@@ -114,5 +114,5 @@ limitations under the License.
 
 ### Used Open Source Software
 
-Open source packages used by the gyselroth Document Engine are copyright of their vendors, see related licenses within
+Open source packages used by the gyselroth Helper Library are copyright of their vendors, see related licenses within
 the vendor packages.
