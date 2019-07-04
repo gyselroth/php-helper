@@ -768,4 +768,48 @@ class HelperArrayTest extends HelperTestCase
             HelperArray::extendArray($array1, $array4)
         );
     }
+
+    public function testCastValSubItemsByKey(): void
+    {
+        $array = [
+            '1' => ['test1' => '1', 'test2' => '2', 'test3' => false],
+            '2' => ['test1' => '1', 'test2' => 2, 'test3' => '3'],
+            '3' => ['test1' => '1', 'test2' => true, 'test3' => 3.2]
+        ];
+        $keys  = ['test2', 'test3'];
+
+        $this->assertEmpty(HelperArray::castValSubItemsByKey($array, $keys, ''));
+        $this->assertEmpty(HelperArray::castValSubItemsByKey($array, $keys, 'null'));
+        $this->assertEmpty(HelperArray::castValSubItemsByKey($array, $keys, 'array'));
+        $this->assertEmpty(HelperArray::castValSubItemsByKey($array, $keys, 'object'));
+        $this->assertEmpty(HelperArray::castValSubItemsByKey($array, $keys, '123abc'));
+
+        $this->assertInternalType('int', HelperArray::castValSubItemsByKey($array, $keys)['1']['test2']);
+        $this->assertInternalType('int', HelperArray::castValSubItemsByKey($array, $keys)['1']['test3']);
+        $this->assertInternalType('int', HelperArray::castValSubItemsByKey($array, $keys)['2']['test2']);
+        $this->assertInternalType('int', HelperArray::castValSubItemsByKey($array, $keys)['2']['test3']);
+        $this->assertInternalType('int', HelperArray::castValSubItemsByKey($array, $keys)['3']['test2']);
+        $this->assertInternalType('int', HelperArray::castValSubItemsByKey($array, $keys)['3']['test3']);
+
+        $this->assertInternalType('bool', HelperArray::castValSubItemsByKey($array, $keys, 'bool')['1']['test2']);
+        $this->assertInternalType('bool', HelperArray::castValSubItemsByKey($array, $keys, 'bool')['1']['test3']);
+        $this->assertInternalType('bool', HelperArray::castValSubItemsByKey($array, $keys, 'bool')['2']['test2']);
+        $this->assertInternalType('bool', HelperArray::castValSubItemsByKey($array, $keys, 'bool')['2']['test3']);
+        $this->assertInternalType('bool', HelperArray::castValSubItemsByKey($array, $keys, 'bool')['3']['test2']);
+        $this->assertInternalType('bool', HelperArray::castValSubItemsByKey($array, $keys, 'bool')['3']['test3']);
+
+        $this->assertInternalType('float', HelperArray::castValSubItemsByKey($array, $keys, 'float')['1']['test2']);
+        $this->assertInternalType('float', HelperArray::castValSubItemsByKey($array, $keys, 'float')['1']['test3']);
+        $this->assertInternalType('float', HelperArray::castValSubItemsByKey($array, $keys, 'float')['2']['test2']);
+        $this->assertInternalType('float', HelperArray::castValSubItemsByKey($array, $keys, 'float')['2']['test3']);
+        $this->assertInternalType('float', HelperArray::castValSubItemsByKey($array, $keys, 'float')['3']['test2']);
+        $this->assertInternalType('float', HelperArray::castValSubItemsByKey($array, $keys, 'float')['3']['test3']);
+
+        $this->assertInternalType('string', HelperArray::castValSubItemsByKey($array, $keys, 'string')['1']['test2']);
+        $this->assertInternalType('string', HelperArray::castValSubItemsByKey($array, $keys, 'string')['1']['test3']);
+        $this->assertInternalType('string', HelperArray::castValSubItemsByKey($array, $keys, 'string')['2']['test2']);
+        $this->assertInternalType('string', HelperArray::castValSubItemsByKey($array, $keys, 'string')['2']['test3']);
+        $this->assertInternalType('string', HelperArray::castValSubItemsByKey($array, $keys, 'string')['3']['test2']);
+        $this->assertInternalType('string', HelperArray::castValSubItemsByKey($array, $keys, 'string')['3']['test3']);
+    }
 }
