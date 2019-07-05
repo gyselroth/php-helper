@@ -112,6 +112,7 @@ class HelperArray
      * @param  array        $array
      * @param  array|string $keys Multiple keys as array | One key as string
      * @return array
+     * @deprecated use new method castValSubItemsByKey() instead
      */
     public static function intValSubItemsByKey(array $array, $keys): array
     {
