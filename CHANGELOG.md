@@ -1,7 +1,7 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.0 - Released 2019/07/09 
+Version 0.1.2 - Released 2019/07/09 
 -----------------------------------
 
 * Added HelperArray::castSubColumn()
