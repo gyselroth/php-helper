@@ -1077,25 +1077,24 @@ class HelperArray
      * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to given type
      *
      * @param  array        $array
-     * @param  array|string $keys Multiple keys as array | One key as string
+     * @param  array|string $column Multiple keys as array | One key as string
      * @param  string       $type
      * @return array
      */
-    public static function castValSubItemsByKey(array $array, $keys, string $type = 'int'): array
+    public static function castSubColumn(array $array, $column, string $type = 'int'): array
     {
-        if (!\is_array($array)) {
+        if (!\is_array($array) ||
+            !\in_array($type, ['int', 'bool', 'float', 'string'])
+        ) {
             return [];
         }
-        if (!\in_array($type, ['int', 'bool', 'float', 'string'])) {
-            return [];
-        }
-        if (!\is_array($keys)) {
-            $keys = (array)$keys;
+        if (!\is_array($column) && !\is_iterable($column)) {
+            $column = (array)$column;
         }
 
         foreach ($array as $index => $subArray) {
-            foreach ($keys as $key) {
-                settype($subArray[$key], $type);
+            foreach ($column as $key) {
+                \settype($subArray[$key], $type);
             }
             $array[$index] = $subArray;
         }
