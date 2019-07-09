@@ -112,6 +112,7 @@ class HelperArray
      * @param  array        $array
      * @param  array|string $keys Multiple keys as array | One key as string
      * @return array
+     * @deprecated use new method castValSubItemsByKey() instead
      */
     public static function intValSubItemsByKey(array $array, $keys): array
     {
@@ -1070,5 +1071,34 @@ class HelperArray
     public static function sortElementArr(array $elements)
     {
         return self::sortElements($elements);
+    }
+
+    /**
+     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to given type
+     *
+     * @param  array        $array
+     * @param  array|string $column Multiple keys as array | One key as string
+     * @param  string       $type
+     * @return array
+     */
+    public static function castSubColumn(array $array, $column, string $type = 'int'): array
+    {
+        if (!\is_array($array) ||
+            !\in_array($type, ['int', 'bool', 'float', 'string'])
+        ) {
+            return [];
+        }
+        if (!\is_array($column) && !\is_iterable($column)) {
+            $column = (array)$column;
+        }
+
+        foreach ($array as $index => $subArray) {
+            foreach ($column as $key) {
+                \settype($subArray[$key], $type);
+            }
+            $array[$index] = $subArray;
+        }
+
+        return $array;
     }
 }
