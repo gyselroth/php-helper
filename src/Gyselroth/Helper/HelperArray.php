@@ -107,33 +107,6 @@ class HelperArray
     }
 
     /**
-     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to integer
-     *
-     * @param  array        $array
-     * @param  array|string $keys Multiple keys as array | One key as string
-     * @return array
-     * @deprecated use new method castValSubItemsByKey() instead
-     */
-    public static function intValSubItemsByKey(array $array, $keys): array
-    {
-        if (!\is_array($array)) {
-            return [];
-        }
-        if (!\is_array($keys)) {
-            $keys = (array)$keys;
-        }
-
-        foreach ($array as $index => $subArray) {
-            foreach ($keys as $key) {
-                $subArray[$key] = (int)$subArray[$key];
-            }
-            $array[$index] = $subArray;
-        }
-
-        return $array;
-    }
-
-    /**
      * Convenience-wrapper for HelperNumeric::intExplode
      *
      * @param  string|null $str
@@ -1038,6 +1011,35 @@ class HelperArray
     }
 
     /**
+     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to given type
+     *
+     * @param  array        $array
+     * @param  array|string $column Multiple keys as array | One key as string
+     * @param  string       $type
+     * @return array
+     */
+    public static function castSubColumn(array $array, $column, string $type = 'int'): array
+    {
+        if (!\is_array($array) ||
+            !\in_array($type, ['int', 'bool', 'float', 'string'])
+        ) {
+            return [];
+        }
+        if (!\is_array($column) && !\is_iterable($column)) {
+            $column = (array)$column;
+        }
+
+        foreach ($array as $index => $subArray) {
+            foreach ($column as $key) {
+                \settype($subArray[$key], $type);
+            }
+            $array[$index] = $subArray;
+        }
+
+        return $array;
+    }
+
+    /**
      * Extract given associative array into a "flat" array, containing just the values of the given key, of all items
      *
      * @param  array  $arr
@@ -1074,31 +1076,15 @@ class HelperArray
     }
 
     /**
-     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to given type
+     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to integer
      *
      * @param  array        $array
-     * @param  array|string $column Multiple keys as array | One key as string
-     * @param  string       $type
+     * @param  array|string $keys Multiple keys as array | One key as string
      * @return array
+     * @deprecated use new method castValSubItemsByKey() instead
      */
-    public static function castSubColumn(array $array, $column, string $type = 'int'): array
+    public static function intValSubItemsByKey(array $array, $keys): array
     {
-        if (!\is_array($array) ||
-            !\in_array($type, ['int', 'bool', 'float', 'string'])
-        ) {
-            return [];
-        }
-        if (!\is_array($column) && !\is_iterable($column)) {
-            $column = (array)$column;
-        }
-
-        foreach ($array as $index => $subArray) {
-            foreach ($column as $key) {
-                \settype($subArray[$key], $type);
-            }
-            $array[$index] = $subArray;
-        }
-
-        return $array;
+        return self::castSubColumn($array, $keys);
     }
 }
