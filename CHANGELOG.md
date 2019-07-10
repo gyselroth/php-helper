@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 0.1.3 
+-----------------------------------
+
+* Changed return value to given array instead an empty array in HelperArray::castSubColumn()
+
 Version 0.1.2 - Released 2019/07/09 
 -----------------------------------
 
