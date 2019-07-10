@@ -25,6 +25,7 @@
     "require": {
         "php": ">=7.1.0",
         "ext-fileinfo": "*",
+        "ext-imagick": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
@@ -42,7 +43,7 @@
 
     },
     "require-dev": {
-        "phpunit/phpuni t": ">=4.8 < 6.6"
+        "phpunit/phpunit": ">=4.8 < 6.6"
     },
     "autoload": {
         "psr-4": {
