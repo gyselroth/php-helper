@@ -1023,7 +1023,7 @@ class HelperArray
         if (!\is_array($array) ||
             !\in_array($type, ['int', 'bool', 'float', 'string'])
         ) {
-            return [];
+            return $array;
         }
         if (!\is_array($column) && !\is_iterable($column)) {
             $column = (array)$column;
