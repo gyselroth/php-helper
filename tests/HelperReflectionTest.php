@@ -12,6 +12,7 @@
 namespace Tests;
 
 use Gyselroth\Helper\HelperReflection;
+use PHPUnit\Framework\Constraint\IsType;
 
 class HelperReflectionTest extends HelperTestCase
 {
@@ -29,11 +30,27 @@ class HelperReflectionTest extends HelperTestCase
         $int = (integer) 1;
         $intShort = (int) 1;
         $string = 'string';
-        $this->assertInternalType('bool', HelperReflection::getTypeCasted('1', 'bool'));
-        $this->assertInternalType('array', HelperReflection::getTypeCasted('1', 'array'));
-        $this->assertInternalType('integer', HelperReflection::getTypeCasted('1', 'int'));
-        $this->assertInternalType('integer', HelperReflection::getTypeCasted('1', 'integer'));
-        $this->assertInternalType('string', HelperReflection::getTypeCasted('1', 'string'));
+
+        $this->assertThat(
+            HelperReflection::getTypeCasted('1', 'bool'),
+            new IsType('bool')
+        );
+        $this->assertThat(
+            HelperReflection::getTypeCasted('1', 'array'),
+            new IsType('array')
+        );
+        $this->assertThat(
+            HelperReflection::getTypeCasted('1', 'int'),
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperReflection::getTypeCasted('1', 'integer'),
+            new IsType('integer')
+        );
+        $this->assertThat(
+            HelperReflection::getTypeCasted('1', 'string'),
+            new IsType('string')
+        );
     }
 
     /**
@@ -52,7 +69,10 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testConstructObject(): void
     {
-        $this->assertInternalType('object', HelperReflection::constructObject('Gyselroth\Helper\HelperReflection'));
+        $this->assertThat(
+            HelperReflection::constructObject('Gyselroth\Helper\HelperReflection'),
+            new IsType('object')
+        );
     }
 
     /**
@@ -106,14 +126,16 @@ class HelperReflectionTest extends HelperTestCase
 
     public function testGetActionsFromControllerFile(): void
     {
-        $actions = [
-            'index',
-            'dailySchedule',
-            'ajaxGetTimegridHeader',
-            'ajaxGetDailySchedule'
-        ];
-        $path = __DIR__ . '/Fixtures/data/files/TimetableScheduleController.php';
-        $this->assertEquals($actions, HelperReflection::getActionsFromControllerFile($path));
+        $this->markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
+
+//        $actions = [
+//            'index',
+//            'dailySchedule',
+//            'ajaxGetTimegridHeader',
+//            'ajaxGetDailySchedule'
+//        ];
+//        $path = __DIR__ . '/Fixtures/data/files/TimetableScheduleController.php';
+//        $this->assertEquals($actions, HelperReflection::getActionsFromControllerFile($path));
     }
 
     /**
