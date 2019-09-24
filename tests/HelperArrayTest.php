@@ -130,12 +130,30 @@ class HelperArrayTest extends HelperTestCase
             '3' => ['test1' => '1', 'test2' => '2', 'test3' => '3']
         ];
         $keys  = ['test2', 'test3'];
-        $this->assertThat('int', HelperArray::castSubColumn($array, $keys)['1']['test2']);
-        $this->assertThat('int', HelperArray::castSubColumn($array, $keys)['1']['test3']);
-        $this->assertThat('int', HelperArray::castSubColumn($array, $keys)['2']['test2']);
-        $this->assertThat('int', HelperArray::castSubColumn($array, $keys)['2']['test3']);
-        $this->assertThat('int', HelperArray::castSubColumn($array, $keys)['3']['test2']);
-        $this->assertThat('int', HelperArray::castSubColumn($array, $keys)['3']['test3']);
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['1']['test2'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['1']['test3'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['2']['test2'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['2']['test3'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['3']['test2'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['3']['test3'],
+            new IsType('int')
+        );
     }
 
     public function testIntExplode(): void
@@ -297,7 +315,7 @@ class HelperArrayTest extends HelperTestCase
                 'id2' => 'value3'
             ]
         ];
-        $this->assertSame(json_encode(array_column($array, 'id')), '["200","100","300"]');
+        $this->assertSame(array_column($array, 'id'), '["200","100","300"]');
     }
 
     public function testGetArrayFromRelatedIdsList(): void
@@ -795,129 +813,34 @@ class HelperArrayTest extends HelperTestCase
         $this->assertEmpty(HelperArray::castSubColumn($array, $keys, 'object'));
         $this->assertEmpty(HelperArray::castSubColumn($array, $keys, '123abc'));
 
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys)['1']['test2'],
-            new IsType('int')
-        );
+        $this->assertInternalType('int', HelperArray::castSubColumn($array, $keys)['1']['test2']);
+        $this->assertInternalType('int', HelperArray::castSubColumn($array, $keys)['1']['test3']);
+        $this->assertInternalType('int', HelperArray::castSubColumn($array, $keys)['2']['test2']);
+        $this->assertInternalType('int', HelperArray::castSubColumn($array, $keys)['2']['test3']);
+        $this->assertInternalType('int', HelperArray::castSubColumn($array, $keys)['3']['test2']);
+        $this->assertInternalType('int', HelperArray::castSubColumn($array, $keys)['3']['test3']);
 
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys)['1']['test3'],
-            new IsType('int')
-        );
+        $this->assertInternalType('bool', HelperArray::castSubColumn($array, $keys, 'bool')['1']['test2']);
+        $this->assertInternalType('bool', HelperArray::castSubColumn($array, $keys, 'bool')['1']['test3']);
+        $this->assertInternalType('bool', HelperArray::castSubColumn($array, $keys, 'bool')['2']['test2']);
+        $this->assertInternalType('bool', HelperArray::castSubColumn($array, $keys, 'bool')['2']['test3']);
+        $this->assertInternalType('bool', HelperArray::castSubColumn($array, $keys, 'bool')['3']['test2']);
+        $this->assertInternalType('bool', HelperArray::castSubColumn($array, $keys, 'bool')['3']['test3']);
 
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys)['2']['test2'],
-            new IsType('int')
-        );
+        $this->assertInternalType('float', HelperArray::castSubColumn($array, $keys, 'float')['1']['test2']);
+        $this->assertInternalType('float', HelperArray::castSubColumn($array, $keys, 'float')['1']['test3']);
+        $this->assertInternalType('float', HelperArray::castSubColumn($array, $keys, 'float')['2']['test2']);
+        $this->assertInternalType('float', HelperArray::castSubColumn($array, $keys, 'float')['2']['test3']);
+        $this->assertInternalType('float', HelperArray::castSubColumn($array, $keys, 'float')['3']['test2']);
+        $this->assertInternalType('float', HelperArray::castSubColumn($array, $keys, 'float')['3']['test3']);
 
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys)['2']['test3'],
-            new IsType('int')
-        );
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['1']['test2']);
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['1']['test3']);
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['2']['test2']);
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['2']['test3']);
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['3']['test2']);
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['3']['test3']);
 
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys)['3']['test2'],
-            new IsType('int')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys)['3']['test3'],
-            new IsType('int')
-        );
-
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'bool')['1']['test2'],
-            new IsType('bool')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'bool')['1']['test3'],
-            new IsType('bool')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'bool')['2']['test2'],
-            new IsType('bool')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'bool')['2']['test3'],
-            new IsType('bool')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'bool')['3']['test2'],
-            new IsType('bool')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'bool')['3']['test3'],
-            new IsType('bool')
-        );
-
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'float')['1']['test2'],
-            new IsType('float')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'float')['1']['test3'],
-            new IsType('float')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'float')['2']['test2'],
-            new IsType('float')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'float')['2']['test3'],
-            new IsType('float')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'float')['3']['test2'],
-            new IsType('float')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'float')['3']['test3'],
-            new IsType('float')
-        );
-
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'string')['1']['test2'],
-            new IsType('string')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'string')['1']['test3'],
-            new IsType('string')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'string')['2']['test2'],
-            new IsType('string')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'string')['2']['test3'],
-            new IsType('string')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'string')['3']['test2'],
-            new IsType('string')
-        );
-
-        $this->assertThat(
-            HelperArray::castSubColumn($array, $keys, 'string')['3']['test3'],
-            new IsType('string')
-        );
-
-
+        $this->assertInternalType('string', HelperArray::castSubColumn($array, $keys, 'string')['3']['test3']);
     }
 }
