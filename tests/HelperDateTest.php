@@ -227,12 +227,20 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetWeeksBetween(): void
     {
-        $this->assertSame('{"startWeek":"20","weeks":2,"endWeek":22}',
+//        $this->assertSame(
+//            date('W', strtotime('17.5.2017')),
+//            20,
+//            'check calendar week of date (17.5.2017)'
+//        );
+
+        $this->assertSame(
+            '{"startWeek":"20","weeks":1,"endWeek":21}',
             json_encode(HelperDate::getWeeksBetween(strtotime('17.5.2017'), strtotime('29.5.2017'))),
             'getWeeksBetween function has several errors. See @todo for more information.'
         );
 
-        $this->assertSame('{"startWeek":"02","weeks":0,"endWeek":2}',
+        $this->assertSame(
+            '{"startWeek":"02","weeks":0,"endWeek":2}',
             json_encode(HelperDate::getWeeksBetween(strtotime('13.1.2017'), strtotime('15.1.2017'))));
 
         $this->assertSame('{"startWeek":"02","weeks":52,"endWeek":2}',

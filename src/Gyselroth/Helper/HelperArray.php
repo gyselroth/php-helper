@@ -17,6 +17,8 @@ class HelperArray
 {
     public const LOG_CATEGORY = 'arrayhelper';
 
+    private const CASTABLE_TYPES = ['bool', 'float', 'int', 'string'];
+
     /**
      * Constructor (non-public, not meant to be instantiated)
      *
@@ -1020,9 +1022,7 @@ class HelperArray
      */
     public static function castSubColumn(array $array, $column, string $type = 'int'): array
     {
-        if (!\is_array($array) ||
-            !\in_array($type, ['int', 'bool', 'float', 'string'])
-        ) {
+        if (!\in_array($type, self::CASTABLE_TYPES)) {
             return $array;
         }
         if (!\is_array($column) && !\is_iterable($column)) {
