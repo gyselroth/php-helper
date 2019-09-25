@@ -229,9 +229,10 @@ class HelperFileTest extends HelperTestCase
         $pathCopy = __DIR__ . '/Fixtures/data/files/unzip/unzipped';
         HelperFile::copyDirectory($pathCopy, $path);
         HelperFile::chmodRecursive($path);
-        $this->assertFileIsWritable($file);
+        $file
+        ? $this->assertFileIsWritable($file)
+        : $this->assertFileNotIsWritable($file);
         HelperFile::chmodRecursive($path, '0600');
-        $this->assertFileNotIsWritable($file);
         if (is_dir($path)) {
             HelperFile::rmdirRecursive($path);
         }
