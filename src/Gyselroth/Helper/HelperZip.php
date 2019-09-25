@@ -247,12 +247,17 @@ class HelperZip
     }
 
     /**
-     * @param  string $pathArchive
-     * @param  string $filename If in sub directory, prefix w/ path, e.g. "word/document.xml"
+     * @param string $pathArchive
+     * @param string $filenameOrFilePath If in sub directory, prefix w/ path, e.g. "word/document.xml"
+     * @param bool   $reduceToBasename   Optional: return content of 1st matching filename in any sub directory
      * @return bool|string
      * @throws \Exception
      */
-    public static function getContainedFileContents(string $pathArchive, string $filename)
+    public static function getContainedFileContents(
+        string $pathArchive,
+        string $filenameOrFilePath,
+        bool $reduceToBasename = false
+    )
     {
         if (!self::isExtensionInstalled()) {
             return false;
@@ -267,7 +272,11 @@ class HelperZip
 
         $content = false;
         for ($index = 0; $index < $zip->numFiles; $index++) {
-            if ($zip->getNameIndex($index) === $filename) {
+            $filenameAtIndex = $reduceToBasename
+                ? basename($zip->getNameIndex($index))
+                : $zip->getNameIndex($index);
+
+            if ($filenameAtIndex === $filenameOrFilePath) {
                 $content = $zip->getFromIndex($index);
                 break;
             }

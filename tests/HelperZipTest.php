@@ -122,6 +122,12 @@ class HelperZipTest extends HelperTestCase
     {
         $path = __DIR__ . '/Fixtures/data/files/unzip/tobeunzipped.zip';
         $expectedFile = __DIR__ . '/Fixtures/data/files/unzip/unzipped/03.txt';
-        $this->assertStringEqualsFile($expectedFile, HelperZip::getContainedFileContents($path, '03.txt'));
+        $this->assertStringEqualsFile($expectedFile, HelperZip::getContainedFileContents($path, '03.txt', true));
+    }
+
+    public function testGetFilepathInZip(){
+        $path = __DIR__ . '/Fixtures/data/files/unzip/tobeunzipped.zip';
+        $expectedFile = __DIR__ . '/Fixtures/data/files/unzip/unzipped/03.txt';
+        $this->assertStringEqualsFile($expectedFile, HelperZip::getContainedFileContents($path, 'tobeunzipped/03.txt', false));
     }
 }
