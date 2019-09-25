@@ -210,6 +210,6 @@ class HelperReflectionTest extends HelperTestCase
 
     public function testGetCallee(): void
     {
-        $this->assertSame('ReflectionMethod::invokeArgs()', HelperReflection::getCallee());
+        $this->assertSame('PHPUnit\Framework\TestCase::runTest()', HelperReflection::getCallee());
     }
 }

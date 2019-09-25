@@ -532,8 +532,8 @@ class HelperDate
     /**
      * Get array of weeks in time range (keys: 'startWeek', 'weeks', 'endWeek')
      *
-     * @param  int $dateFrom UNIX timestamp
-     * @param  int $dateTo   UNIX timestamp
+     * @param  int  $dateFrom UNIX timestamp
+     * @param  int  $dateTo   UNIX timestamp
      * @return array|bool
      */
     public static function getWeeksBetween($dateFrom, $dateTo)
@@ -550,10 +550,13 @@ class HelperDate
             $diffWeeks++;
         }
 
-        $weeks['weeks']   = $diffWeeks;
-        $weeks['endWeek'] = $weeks['startWeek'] + $diffWeeks;
+        $startWeek = date('W', $fromWeekStart);
 
-        return $weeks;
+        return [
+            'startWeek' => $startWeek,
+            'weeks'     => $diffWeeks,
+            'endWeek'   => $startWeek + $diffWeeks
+        ];
     }
 
     /**
