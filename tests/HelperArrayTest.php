@@ -315,7 +315,8 @@ class HelperArrayTest extends HelperTestCase
                 'id2' => 'value3'
             ]
         ];
-        $this->assertSame(array_column($array, 'id'), '["200","100","300"]');
+
+        $this->assertSame(json_encode(array_column($array, 'id')), '["200","100","300"]');
     }
 
     public function testGetArrayFromRelatedIdsList(): void
