@@ -210,7 +210,7 @@ class HelperFileTest extends HelperTestCase
         $path = __DIR__ . '/Fixtures/data/files/unzip';
         $array = HelperFile::scanDir($path, '', true);
         $this->assertCount(10, $array);
-        $this->assertStringEndsWith('/data/files/unzip/unzipped/01.pdf', $array[3]);
+        $this->assertStringEndsWith('/data/files/unzip/unzipped/01.pdf', $array[7]);
         $this->assertStringEndsWith('/data/files/unzip/tobeunzipped.zip', $array[9]);
     }
 
