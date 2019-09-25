@@ -12,6 +12,7 @@
 namespace Tests;
 
 use Gyselroth\Helper\HelperFile;
+use PHPUnit\Framework\Constraint\IsType;
 
 class HelperFileTest extends HelperTestCase
 {
@@ -41,7 +42,10 @@ class HelperFileTest extends HelperTestCase
 
     public function testGetMimes(): void
     {
-        $this->assertInternalType('array', HelperFile::getMimes());
+        $this->assertThat(
+            HelperFile::getMimes(),
+            new IsType('array')
+        );
     }
 
     /**

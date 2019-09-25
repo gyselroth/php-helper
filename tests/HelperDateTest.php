@@ -12,6 +12,7 @@
 namespace Tests;
 
 use Gyselroth\Helper\HelperDate;
+use PHPUnit\Framework\Constraint\IsType;
 use Zend_Date;
 
 class HelperDateTest extends HelperTestCase
@@ -63,14 +64,20 @@ class HelperDateTest extends HelperTestCase
         // Test: convert date-string to UNIX timestamp
         $dateString = '2015-12-31';
         $result = HelperDate::getUnixTimestampFromDate($dateString);
-        $this->assertInternalType('int', $result);
+        $this->assertThat(
+            $result,
+            new IsType('int')
+        );
         $this->assertGreaterThan(0, $result);
         $this->assertEquals(strtotime($dateString), $result);
 
         // Test: convert dateTime-string to UNIX timestamp
         $dateString = '2015-12-31 12:30:00';
         $result = HelperDate::getUnixTimestampFromDate($dateString);
-        $this->assertInternalType('int', $result);
+        $this->assertThat(
+            $result,
+            new IsType('int')
+        );
         $this->assertGreaterThan(0, $result);
         $this->assertEquals(strtotime($dateString), $result);
 

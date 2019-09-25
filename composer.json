@@ -40,10 +40,9 @@
         "smalot/pdfparser": "0.11.x-dev@dev",
         "zf1/zend-date": "1.12.20",
         "zf1/zend-registry": "^1.12"
-
     },
     "require-dev": {
-        "phpunit/phpunit": ">=4.8 < 6.6"
+        "phpunit/phpunit": "7.5.16"
     },
     "autoload": {
         "psr-4": {

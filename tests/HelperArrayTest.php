@@ -12,6 +12,7 @@
 namespace Tests;
 
 use Gyselroth\Helper\HelperArray;
+use PHPUnit\Framework\Constraint\IsType;
 
 class HelperArrayTest extends HelperTestCase
 {
@@ -90,7 +91,11 @@ class HelperArrayTest extends HelperTestCase
 
         // Test: convert mixed (int and numeric string) array to array of int
         $result = HelperArray::intVal([1, '2', 3]);
-        $this->assertInternalType('array', $result);
+        $this->assertThat(
+            $result,
+            new IsType('array')
+        );
+
         $this->assertNotEmpty($result);
         $this->assertCount(3, $result);
         $this->assertEquals(2, $result[1]);
@@ -98,14 +103,20 @@ class HelperArrayTest extends HelperTestCase
 
         // Test option: array-unique
         $result = HelperArray::intVal([1, '2', 2, 3, 2], true);
-        $this->assertInternalType('array', $result);
+        $this->assertThat(
+            $result,
+            new IsType('array')
+        );
         $this->assertNotEmpty($result);
         $this->assertCount(3, $result);
         $this->assertEquals(6, array_sum($result));
 
         // Test options: 1) array-unique and 2) convert non-numerical to 0
         $result = HelperArray::intVal([1, 'x', '2', 2, 3, 2], true, true);
-        $this->assertInternalType('array', $result);
+        $this->assertThat(
+            $result,
+            new IsType('array')
+            );
         $this->assertNotEmpty($result);
         $this->assertCount(4, $result);
         $this->assertEquals(6, array_sum($result));
@@ -119,12 +130,30 @@ class HelperArrayTest extends HelperTestCase
             '3' => ['test1' => '1', 'test2' => '2', 'test3' => '3']
         ];
         $keys  = ['test2', 'test3'];
-        $this->assertInternalType('int', HelperArray::intValSubItemsByKey($array, $keys)['1']['test2']);
-        $this->assertInternalType('int', HelperArray::intValSubItemsByKey($array, $keys)['1']['test3']);
-        $this->assertInternalType('int', HelperArray::intValSubItemsByKey($array, $keys)['2']['test2']);
-        $this->assertInternalType('int', HelperArray::intValSubItemsByKey($array, $keys)['2']['test3']);
-        $this->assertInternalType('int', HelperArray::intValSubItemsByKey($array, $keys)['3']['test2']);
-        $this->assertInternalType('int', HelperArray::intValSubItemsByKey($array, $keys)['3']['test3']);
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['1']['test2'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['1']['test3'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['2']['test2'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['2']['test3'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['3']['test2'],
+            new IsType('int')
+        );
+        $this->assertThat(
+            HelperArray::castSubColumn($array, $keys)['3']['test3'],
+            new IsType('int')
+        );
     }
 
     public function testIntExplode(): void
@@ -286,7 +315,7 @@ class HelperArrayTest extends HelperTestCase
                 'id2' => 'value3'
             ]
         ];
-        $this->assertSame(json_encode(HelperArray::flatten($array, 'id')), '["200","100","300"]');
+        $this->assertSame(array_column($array, 'id'), '["200","100","300"]');
     }
 
     public function testGetArrayFromRelatedIdsList(): void
@@ -723,9 +752,9 @@ class HelperArrayTest extends HelperTestCase
             'key3' => 3,
             'key4' => 4
         ];
-        $this->assertTrue(HelperArray::exists($array, 'key2'));
-        $this->assertTrue(HelperArray::exists($object, 'key2'));
-        $this->assertFalse(HelperArray::exists($array, 'key5'));
+        $this->assertTrue(HelperArray::keyExists($array, 'key2'));
+        $this->assertTrue(HelperArray::keyExists($object, 'key2'));
+        $this->assertFalse(HelperArray::keyExists($array, 'key5'));
     }
 
     public function testHasStringKeys(): void
