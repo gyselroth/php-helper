@@ -1,7 +1,7 @@
 gyselroth PHP Helper Library
 ============================
 
-Collection of PHP helper methods upon primitive data types and structures.
+Collection of PHP helper methods upon primitive data types and common data structures (e.g. HTML, ZIP, XML etc.).
 
 
 Features
@@ -80,6 +80,12 @@ Minimum Requirements
 * Build-tools: git, composer
 
 
+Contributing
+------------
+
+See [CONTRIBUTING.md](#https://github.com/gyselroth/php-helper/blob/master/CONTRIBUTING.md)
+
+
 Running Tests
 -------------
 
@@ -91,7 +97,7 @@ composer test tests/
 History
 -------
 
-See `CHANGELOG.md`
+See [CHANGELOG.md](#https://github.com/gyselroth/php-helper/blob/master/CHANGELOG.md)
 
 
 Author and License
