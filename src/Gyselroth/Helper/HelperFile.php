@@ -295,7 +295,7 @@ class HelperFile
 
     public static function writeCsv(array $rows, array $headerFields, string $filePath): bool
     {
-        if (0 === \count($rows)) {
+        if ([] === $rows) {
             return false;
         }
 
@@ -631,7 +631,7 @@ class HelperFile
         }
 
         $mimeType = self::getUploadFileInfo($uploadFile, FILEINFO_MIME_TYPE);
-        if (\count($allowedTypes) > 0
+        if ([] !== $allowedTypes
             && !\in_array($mimeType, $allowedTypes, true)
         ) {
             // @todo throw exception
@@ -727,7 +727,7 @@ class HelperFile
         $callbackModelCreateFile        = $callbackCreateFile['model'];
         $callbackFunctionNameCreateFile = $callbackCreateFile['functionName'];
 
-        if (0 === \count($allowedTypes)) {
+        if ([] === $allowedTypes) {
             $allowedTypes = self::DEFAULT_UPLOAD_ALLOWED_MIME_TYPES;
         }
 

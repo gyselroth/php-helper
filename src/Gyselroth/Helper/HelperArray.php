@@ -1028,7 +1028,7 @@ class HelperArray implements DataTypeInterface
             }
         }
 
-        return \count($result) > 0 ? $result : false;
+        return [] === $result ? false : $result;
     }
 
     /**

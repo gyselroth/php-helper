@@ -77,13 +77,12 @@ class HelperZip
             }
         }
 
-        $amountFiles      = \count($files);
-        $amountValidFiles = \count($validFiles);
-        if (0 === $amountValidFiles) {
+        if ([] === $validFiles) {
             self::handleZipError($pathFiles, self::ERROR_CODE_NO_FILES);
             return false;
         }
-        if ($amountValidFiles !== $amountFiles) {
+
+        if (\count($validFiles) !== \count($files)) {
             self::handleZipError($pathFiles, self::ERROR_CODE_HAS_INVALID_FILES, LOG_WARNING);
         }
 
