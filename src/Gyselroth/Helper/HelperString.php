@@ -49,12 +49,12 @@ class HelperString
      */
     public static function strPosConsecutive(string $haystack, array $needles, bool $associative = true)
     {
-        $offsets     = array_flip($needles);
+        $offsets     = \array_flip($needles);
         $hasFoundAny = false;
         foreach ($needles as $needle) {
             /** @noinspection ReturnFalseInspection */
             // @todo currently offsets are not consecutive! check: isn't the following strpos() missing an $offset+1 argument?
-            $offset = strpos($haystack, $needle);
+            $offset = \strpos($haystack, $needle);
             if (false !== $offset) {
                 $offsets[$needle] = $offset;
                 $hasFoundAny      = true;
@@ -65,7 +65,7 @@ class HelperString
             return false;
         }
 
-        return $associative ? $offsets : array_values($offsets);
+        return $associative ? $offsets : \array_values($offsets);
     }
 
     /**
@@ -79,24 +79,29 @@ class HelperString
      */
     public static function getStringBetween(string $string, string $start, string $end, bool $trim = true): string
     {
-        if ('' === $string || '' === $start || '' === $end) {
+        if ('' === $string
+            || '' === $start
+            || '' === $end
+        ) {
             return '';
         }
 
         /** @noinspection ReturnFalseInspection */
-        $offset = strpos($string, $start);
+        $offset = \strpos($string, $start);
         /** @noinspection ReturnFalseInspection */
-        if (false === $offset || false === strpos($string, $end)) {
+        if (false === $offset
+            || false === \strpos($string, $end)
+        ) {
             return '';
         }
 
         $offset  += \strlen($start);
 
         // @todo check if $offset is not contained, $length will be negative. check how this can happen and to what consequence, avoid that possible error.
-        $length  = strpos($string, $end, $offset) - $offset;
-        $between = substr($string, $offset, $length);
+        $length  = \strpos($string, $end, $offset) - $offset;
+        $between = \substr($string, $offset, $length);
 
-        return $trim ? trim($between) : $between;
+        return $trim ? \trim($between) : $between;
     }
 
     /**
@@ -111,14 +116,14 @@ class HelperString
         }
         if (!\is_array($needle)) {
             /** @noinspection ReturnFalseInspection */
-            return 0 === strpos($haystack, $needle);
+            return 0 === \strpos($haystack, $needle);
         }
 
         // Needle is array (of needles): check whether haystack starts with any of them
         /** @noinspection ForeachSourceInspection */
         foreach ($needle as $needleString) {
             /** @noinspection ReturnFalseInspection */
-            if (0 === strpos($haystack, $needleString)) {
+            if (0 === \strpos($haystack, $needleString)) {
                 return true;
             }
         }
@@ -134,7 +139,8 @@ class HelperString
     public static function endsWith(string $haystack, $needles): bool
     {
         if (!\is_array($needles)) {
-            return '' === $needles || substr($haystack, -\strlen($needles)) === $needles;
+            return '' === $needles
+                || \substr($haystack, -\strlen($needles)) === $needles;
         }
 
         /** @noinspection ForeachSourceInspection */
@@ -151,9 +157,9 @@ class HelperString
     {
         if (\strlen($search) > 0) {
             /** @noinspection ReturnFalseInspection */
-            $offset = strpos($subject, $search);
+            $offset = \strpos($subject, $search);
             if (false !== $offset) {
-                return substr_replace($subject, $replace, $offset, \strlen($search));
+                return \substr_replace($subject, $replace, $offset, \strlen($search));
             }
         }
 
@@ -163,10 +169,10 @@ class HelperString
     public static function replaceLast(string $search, string $replace, string $subject): string
     {
         /** @noinspection ReturnFalseInspection */
-        $offset = strrpos($subject, $search);
+        $offset = \strrpos($subject, $search);
 
         return false !== $offset
-            ? substr_replace($subject, $replace, $offset, \strlen($search))
+            ? \substr_replace($subject, $replace, $offset, \strlen($search))
             : $subject;
     }
 
@@ -202,9 +208,9 @@ class HelperString
             return $str;
         }
         // @todo check what happens when $needle is not contained after $offsetNeedle, $start will be false
-        $start = strpos($str, $needle, $offsetNeedle);
+        $start = \strpos($str, $needle, $offsetNeedle);
 
-        return substr($str, $start + ($excludeNeedle ? \strlen($needle) : 0));
+        return \substr($str, $start + ($excludeNeedle ? \strlen($needle) : 0));
     }
 
     public static function removeAllAfter(
@@ -219,9 +225,9 @@ class HelperString
         }
 
         /** @noinspection ReturnFalseInspection */
-        $start = strpos($str, $needle, $offsetNeedle);
+        $start = \strpos($str, $needle, $offsetNeedle);
 
-        return substr($str, 0, $start + ($excludeNeedle ? 0 : \strlen($needle)));
+        return \substr($str, 0, $start + ($excludeNeedle ? 0 : \strlen($needle)));
     }
 
     /**
@@ -237,13 +243,13 @@ class HelperString
             return $str;
         }
         /** @noinspection ReturnFalseInspection */
-        $offsetLhs = strpos($str, $lhs);
+        $offsetLhs = \strpos($str, $lhs);
         if (false === $offsetLhs) {
             return $str;
         }
 
         /** @noinspection ReturnFalseInspection */
-        $offsetRhs = strpos($str, $rhs, $offsetLhs + 1);
+        $offsetRhs = \strpos($str, $rhs, $offsetLhs + 1);
         /** @noinspection PhpUnreachableStatementInspection */
         if (false === $offsetRhs) {
             return $str;
@@ -258,20 +264,25 @@ class HelperString
             : 0
         );
 
-        return substr_replace($str, '', $offsetLhs + ($removeDelimiters ? 0 : \strlen($lhs)), $needleLength);
+        return \substr_replace(
+            $str,
+            '',
+            $offsetLhs + ($removeDelimiters ? 0 : \strlen($lhs)),
+            $needleLength
+        );
     }
 
     public static function unwrap(string $str, string $lhs, string $rhs): string
     {
         /** @noinspection ReturnFalseInspection */
-        if (0 === strpos($str, $lhs)) {
+        if (0 === \strpos($str, $lhs)) {
             // Remove left-hand-side wrap
-            $str = substr($str, \strlen($lhs));
+            $str = \substr($str, \strlen($lhs));
         }
 
         if (self::endsWith($str, $rhs)) {
             // Remove right-hand-side wrap
-            $str = substr($str, 0, -\strlen($rhs));
+            $str = \substr($str, 0, -\strlen($rhs));
         }
 
         return $str;
@@ -279,7 +290,7 @@ class HelperString
 
     public static function formatJsonCompatible(string $string): string
     {
-        return str_replace(["\n", "\r", "'"], ['', '', '"'], $string);
+        return \str_replace(["\n", "\r", "'"], ['', '', '"'], $string);
     }
 
     public static function isXml(string $str): bool
@@ -313,8 +324,8 @@ class HelperString
         } else {
             $double = $characters . $characters;
             /** @noinspection ReturnFalseInspection */
-            while (false !== strpos($string, $double)) {
-                $string = str_replace($double, $characters, $string);
+            while (false !== \strpos($string, $double)) {
+                $string = \str_replace($double, $characters, $string);
             }
         }
 
@@ -331,12 +342,16 @@ class HelperString
     public static function toCamelCase(string $string, bool $upperCaseFirstLetter = false): string
     {
         if ($upperCaseFirstLetter) {
-            $string = ucfirst($string);
+            $string = \ucfirst($string);
         }
 
-        $function = create_function('$c', 'return strtoupper($c[1]);');
-
-        return preg_replace_callback('/-([a-z])/', $function, $string);
+        return \preg_replace_callback(
+            '/-([a-z])/',
+            static function($c) {
+                return \strtoupper($c[1]);
+            },
+            $string
+        );
     }
 
     /**
@@ -346,9 +361,12 @@ class HelperString
      */
     public static function getPathFromCamelCase(string $camelString, string $glue = '-'): string
     {
-        $string = preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', $glue . '$0', lcfirst($camelString));
+        $string = \preg_replace(
+            '/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/',
+            $glue . '$0',
+            \lcfirst($camelString));
 
-        return strtolower($string);
+        return \strtolower($string);
     }
 
     /**
@@ -400,13 +418,13 @@ class HelperString
                     $str .= static::getRandomLetter(true);
                     break;
                 case static::CHAR_TYPE_NUMBER:
-                    $str .= random_int(0, 9);
+                    $str .= \random_int(0, 9);
                     break;
                 case static::CHAR_TYPE_SPECIAL:
                     $specialChar = static::getRandomLetter(false, $specialChars);
 
                     if ($eachSpecialCharOnlyOnce) {
-                        $specialChars = str_replace($specialChar, '', $specialChars);
+                        $specialChars = \str_replace($specialChar, '', $specialChars);
                         if (empty($specialChars)) {
                             unset($charTypes[$typeOffset]);
                             $amountTypes--;
@@ -415,7 +433,9 @@ class HelperString
                     $str .= $specialChar;
                     break;
                 default:
-                    LoggerWrapper::warning(__CLASS__ . '::' . __FUNCTION__ . " - Unknown char type: {$charTypes[$typeOffset]}", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]]);
+                    LoggerWrapper::warning(
+                        __CLASS__ . '::' . __FUNCTION__ . " - Unknown char type: {$charTypes[$typeOffset]}",
+                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]]);
                     break;
             }
             $offset++;
@@ -435,12 +455,17 @@ class HelperString
     ): string
     {
         if (1 === \strlen($pool)) {
-            return $upperCase ? strtoupper($pool) : $pool;
+            return $upperCase ? \strtoupper($pool) : $pool;
         }
 
-        $str = substr(str_shuffle(str_repeat($pool, 5)), 0, 1);
+        $str = \substr(
+            \str_shuffle(
+                \str_repeat($pool, 5)
+            ),
+            0,
+            1);
 
-        return $upperCase ? strtoupper($str) : $str;
+        return $upperCase ? \strtoupper($str) : $str;
     }
 
     /**
@@ -455,7 +480,7 @@ class HelperString
      */
     public static function toAlpha(int $characterIndex): ?string
     {
-        $letters = range('a', 'z');
+        $letters = \range('a', 'z');
         if ($characterIndex <= 25) {
             return $letters[$characterIndex];
         }
@@ -465,7 +490,7 @@ class HelperString
         while ($dividend > 0) {
             $modulo         = ($dividend - 1) % 26;
             $alphaCharacter = $letters[$modulo] . $alphaCharacter;
-            $dividend       = floor(($dividend - $modulo) / 26);
+            $dividend       = \floor(($dividend - $modulo) / 26);
         }
 
         return $alphaCharacter;
@@ -479,19 +504,29 @@ class HelperString
      */
     public static function urlSafeB64encode(string $string): string
     {
-        return str_replace(['+', '/', '='], ['-', '_', '.'], base64_encode($string));
+        return \str_replace(
+            ['+', '/', '='],
+            ['-', '_', '.'],
+            \base64_encode($string));
     }
 
     public static function urlSafeB64Decode(string $string): string
     {
-        $data = str_replace(['-', '_', '.'], ['+', '/', '='], $string);
+        $data = \str_replace(
+            ['-', '_', '.'],
+            ['+', '/', '='],
+            $string);
+
         $mod4 = \strlen($data) % 4;
+
         if ($mod4) {
-            $data .= substr('====', $mod4);
+            $data .= \substr('====', $mod4);
         }
 
         /** @noinspection ReturnFalseInspection */
-        return $data ? base64_decode($data) : '';
+        return $data
+            ? \base64_decode($data)
+            : '';
     }
 
     /**
@@ -542,7 +577,7 @@ class HelperString
         /** @noinspection ForeachSourceInspection */
         foreach ($needles as $needle) {
             /** @noinspection ReturnFalseInspection */
-            if (false !== strpos($str, $needle)) {
+            if (false !== \strpos($str, $needle)) {
                 return true;
             }
         }
@@ -559,46 +594,64 @@ class HelperString
     public static function serialize_dump(string $str): string
     {
         /** @noinspection ReturnFalseInspection */
-        if (false === strpos($str, "\n")) {
+        if (false === \strpos($str, "\n")) {
             // Add new lines
             $regex = [
                 '#(\\[.*?\\]=>)#',
                 '#(string\\(|int\\(|float\\(|array\\(|NULL|object\\(|})#',
             ];
-            $str   = preg_replace($regex, "\n\\1", $str);
-            $str   = trim($str);
+            $str   = \preg_replace($regex, "\n\\1", $str);
+            $str   = \trim($str);
         }
-        /** @noinspection SuspiciousAssignmentsInspection */
-        $regex      = [
-            '#^\\040*NULL\\040*$#m',
-            '#^\\s*array\\((.*?)\\)\\s*{\\s*$#m',
-            '#^\\s*string\\((.*?)\\)\\s*(.*?)$#m',
-            '#^\\s*int\\((.*?)\\)\\s*$#m',
-            '#^\\s*bool\\(true\\)\\s*$#m',
-            '#^\\s*bool\\(false\\)\\s*$#m',
-            '#^\\s*float\\((.*?)\\)\\s*$#m',
-            '#^\\s*\[(\\d+)\\]\\s*=>\\s*$#m',
-            '#\\s*?\\r?\\n\\s*#m',
-        ];
-        $replace    = [
-            'N',
-            'a:\\1:{',
-            's:\\1:\\2',
-            'i:\\1',
-            'b:1',
-            'b:0',
-            'd:\\1',
-            'i:\\1',
-            ';'
-        ];
-        $serialized = preg_replace($regex, $replace, $str);
-        $func       = create_function('$match', 'return "s:".strlen($match[1]).":\\"".$match[1]."\\"";');
-        $serialized = preg_replace_callback('#\\s*\\["(.*?)"\\]\\s*=>#', $func, $serialized);
-        $func       = create_function('$match', 'return "O:".strlen($match[1]).":\\"".$match[1]."\\":".$match[2].":{";');
-        $serialized = preg_replace_callback('#object\\((.*?)\\).*?\\((\\d+)\\)\\s*{\\s*;#', $func, $serialized);
-        $serialized = preg_replace(['#};#', '#{;#'], ['}', '{'], $serialized);
 
-        return $serialized;
+        $serialized = \preg_replace(
+            [
+                '#^\\040*NULL\\040*$#m',
+                '#^\\s*array\\((.*?)\\)\\s*{\\s*$#m',
+                '#^\\s*string\\((.*?)\\)\\s*(.*?)$#m',
+                '#^\\s*int\\((.*?)\\)\\s*$#m',
+                '#^\\s*bool\\(true\\)\\s*$#m',
+                '#^\\s*bool\\(false\\)\\s*$#m',
+                '#^\\s*float\\((.*?)\\)\\s*$#m',
+                '#^\\s*\[(\\d+)\\]\\s*=>\\s*$#m',
+                '#\\s*?\\r?\\n\\s*#m',
+            ],
+            [
+                'N',
+                'a:\\1:{',
+                's:\\1:\\2',
+                'i:\\1',
+                'b:1',
+                'b:0',
+                'd:\\1',
+                'i:\\1',
+                ';'
+            ],
+            $str);
+
+        $serialized = \preg_replace_callback(
+            '#\\s*\\["(.*?)"\\]\\s*=>#',
+            static function($match) {
+                return 's:' . \strlen($match[1]) . ':\"' . $match[1] . '\"';
+            },
+            $serialized
+        );
+
+        $serialized = \preg_replace_callback(
+            '#object\\((.*?)\\).*?\\((\\d+)\\)\\s*{\\s*;#',
+            static function($match) {
+                return 'O:'
+                    . strlen($match[1]) . ':\"'
+                    . $match[1] . '\":'
+                    . $match[2] . ':{';
+            },
+            $serialized
+        );
+
+        return \preg_replace(
+            ['#};#', '#{;#'],
+            ['}', '{'],
+            $serialized);
     }
 
 
@@ -613,17 +666,22 @@ class HelperString
         $serialized = self::serialize_dump($str);
 
         /** @noinspection UnserializeExploitsInspection */
-        return unserialize($serialized);
+        return \unserialize($serialized);
     }
 
     public static function translate(string $message, array $args = []): string
     {
-        return [] === $args ? $message : vsprintf($message, $args);
+        return [] === $args
+            ? $message
+            : \vsprintf($message, $args);
     }
 
     public static function translatePlural(string $single, string $multiple, int $amount): string
     {
-        return $amount === 0 || $amount > 1 ? $multiple : $single;
+        return $amount === 0
+        || $amount > 1
+            ? $multiple
+            : $single;
     }
 
     // ------------------------------------------------- Convenience-Wrappers to Perl regular expression related helpers

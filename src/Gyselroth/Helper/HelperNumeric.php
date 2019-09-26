@@ -55,23 +55,25 @@ class HelperNumeric
         bool $onlyPositive = false
     ): string
     {
-        $array    = array_unique($array);
+        $array    = \array_unique($array);
         $integers = [];
 
         foreach ($array as $item) {
-            if (is_numeric($item) && (!$onlyPositive || $item > 0)) {
+            if (\is_numeric($item)
+                && (!$onlyPositive || $item > 0)
+            ) {
                 $integers[] = (int)$item;
             }
         }
 
         if ($sort) {
-            asort($integers);
+            \asort($integers);
         }
         if ($makeUnique) {
-            $integers = array_unique($integers);
+            $integers = \array_unique($integers);
         }
 
-        return implode($integers, $glue);
+        return \implode($integers, $glue);
     }
 
     /**
@@ -95,14 +97,14 @@ class HelperNumeric
         }
 
         $numbers = [];
-        $parts   = explode($delimiter, $str);
+        $parts   = \explode($delimiter, $str);
         foreach ($parts as $number) {
-            if (!$excludeNullValues || 'null' !== strtolower($number)) {
+            if (!$excludeNullValues || 'null' !== \strtolower($number)) {
                 $numbers[] = (int)$number;
             }
         }
 
-        return $unique ? array_unique($numbers) : $numbers;
+        return $unique ? \array_unique($numbers) : $numbers;
     }
 
     /**
@@ -126,14 +128,14 @@ class HelperNumeric
         }
 
         $numbers = [];
-        $parts   = explode($delimiter, $str);
+        $parts   = \explode($delimiter, $str);
         foreach ($parts as $number) {
-            if (!$excludeNullValues || 'null' !== strtolower($number)) {
+            if (!$excludeNullValues || 'null' !== \strtolower($number)) {
                 $numbers[] = (float)$number;
             }
         }
 
-        return $unique ? array_unique($numbers) : $numbers;
+        return $unique ? \array_unique($numbers) : $numbers;
     }
 
     /**
@@ -155,7 +157,7 @@ class HelperNumeric
         $kilo = $bytes / 1024;
         if ($kilo < 1000) {
             return [
-                'size' => round($kilo, 1),
+                'size' => \round($kilo, 1),
                 'unit' => self::UNIT_KILOBYTES
             ];
         }
@@ -163,7 +165,7 @@ class HelperNumeric
         $mega = $bytes / 1024000;
 
         return [
-            'size' => round($mega, 1),
+            'size' => \round($mega, 1),
             'unit' => self::UNIT_MEGABYTES
         ];
     }

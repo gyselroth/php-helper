@@ -48,10 +48,10 @@ class HelperPreg
         }
 
         if (0 < $offset) {
-            $str = substr($str, $offset);
+            $str = \substr($str, $offset);
         }
 
-        preg_match ($needlePattern, $str, $matches, PREG_OFFSET_CAPTURE);
+        \preg_match ($needlePattern, $str, $matches, PREG_OFFSET_CAPTURE);
 
         if (0 === $offset) {
             return $matches[0][1] ?? -1;
@@ -90,7 +90,7 @@ class HelperPreg
         if ([] === $matchesLhs) {
             return $str;
         }
-        $offsetLhs  = array_keys($matchesLhs)[0];
+        $offsetLhs  = \array_keys($matchesLhs)[0];
         $matchLhs   = $matchesLhs[$offsetLhs] ?: '';
         if ($matchLhs === '') {
             return $str;
@@ -112,25 +112,28 @@ class HelperPreg
         }
 
         // Perform regular removal using obtained LHS and RHS matches
-        if ('' === $matchLhs || -1 === $offsetRhs || '' === $matchRhs) {
+        if ('' === $matchLhs
+            || -1 === $offsetRhs
+            || '' === $matchRhs
+        ) {
             return $str;
         }
 
         $needleLength = $offsetRhs - $offsetLhs + \strlen($matchRhs);
 
-        return substr_replace($str, $replacement, $offsetLhs, $needleLength);
+        return \substr_replace($str, $replacement, $offsetLhs, $needleLength);
     }
 
     public static function startsNumeric(string $str): int
     {
-        return 1 === preg_match('/^\d/', $str);
+        return 1 === \preg_match('/^\d/', $str);
     }
 
     public static function removeNumericChars(string $str, bool $trim = true): string
     {
-        $str = preg_replace('/\d/', '', $str);
+        $str = \preg_replace('/\d/', '', $str);
 
-        return $trim ? trim($str) : $str;
+        return $trim ? \trim($str) : $str;
     }
 
     /**
@@ -142,7 +145,7 @@ class HelperPreg
      */
     public static function removeNonNumericChars(string $str, bool $convertToInt = false)
     {
-        $str = preg_replace('/[^0-9,.]/', '', $str);
+        $str = \preg_replace('/[^0-9,.]/', '', $str);
 
         return $convertToInt ? (int)$str : $str;
     }
@@ -157,7 +160,7 @@ class HelperPreg
      */
     public static function mb_str_split(string $string): array
     {
-        return preg_split('/(?<!^)(?!$)/u', $string);
+        return \preg_split('/(?<!^)(?!$)/u', $string);
     }
 
     /**
@@ -169,8 +172,8 @@ class HelperPreg
     public static function preg_match_all_with_offsets(string $pattern, string $string): array
     {
         /** @var array $matches */
-        preg_match_all($pattern, $string, $matches);
-        $fullMatches = array_shift($matches);
+        \preg_match_all($pattern, $string, $matches);
+        $fullMatches = \array_shift($matches);
         if (!\is_array($fullMatches)) {
             return [];
         }
@@ -178,10 +181,10 @@ class HelperPreg
         $matchesByOffset = [];
         $offsetBase      = 0;
         foreach ($fullMatches as $match) {
-            $offset                                 = strpos($string, $match);
+            $offset                                 = \strpos($string, $match);
             $matchesByOffset[$offsetBase + $offset] = $match;
 
-            $string     = substr($string, $offset + 1);
+            $string     = \substr($string, $offset + 1);
             $offsetBase += $offset + 1;
         }
 

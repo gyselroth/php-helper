@@ -27,9 +27,9 @@ class HelperHtmlPurifierIframeFilter
      */
     public function preFilter($html, $config, $context)
     {
-        $html = preg_replace('#<iframe#i', '<img class="video-iframe-allow-fullscreen"', $html);
+        $html = \preg_replace('#<iframe#i', '<img class="video-iframe-allow-fullscreen"', $html);
 
-        return preg_replace('#</iframe>#i', '</img>', $html);
+        return \preg_replace('#</iframe>#i', '</img>', $html);
     }
 
     /**
@@ -44,7 +44,7 @@ class HelperHtmlPurifierIframeFilter
     {
         $pattern = '#<img class="video-iframe-allow-fullscreen"([^>]+?)>#';
 
-        return preg_replace_callback($pattern, [$this, 'postFilterCallback'], $html);
+        return \preg_replace_callback($pattern, [$this, 'postFilterCallback'], $html);
     }
 
     /**
@@ -55,9 +55,9 @@ class HelperHtmlPurifierIframeFilter
      */
     protected function postFilterCallback($matches): string
     {
-        return preg_match('#src="https?://www.youtube(-nocookie)?.com/#i', $matches[1])
-        || preg_match('#src="http://player.vimeo.com/#i', $matches[1])
-            ? '<iframe ' . $matches[1] . ' frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>'
-            : '';
+        return \preg_match('#src="https?://www.youtube(-nocookie)?.com/#i', $matches[1])
+            || \preg_match('#src="http://player.vimeo.com/#i', $matches[1])
+                ? '<iframe ' . $matches[1] . ' frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>'
+                : '';
     }
 }

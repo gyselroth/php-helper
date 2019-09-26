@@ -200,7 +200,7 @@ class HelperServerClient
             $associative = true;
         }
 
-        $fontLines = explode("\n", shell_exec('fc-list'));
+        $fontLines = \explode("\n", \shell_exec('fc-list'));
 
         $fonts = [];
         $index = 0;
@@ -215,10 +215,10 @@ class HelperServerClient
         }
 
         if ($namesOnly) {
-            $fonts = array_keys($fonts);
-            sort($fonts);
+            $fonts = \array_keys($fonts);
+            \sort($fonts);
         } else {
-            ksort($fonts);
+            \ksort($fonts);
         }
 
         return $fonts;
@@ -226,17 +226,27 @@ class HelperServerClient
 
     public static function getRequestUrl(): string
     {
-        return 'http' . (array_key_exists('HTTPS', $_SERVER) && 'on' === $_SERVER['HTTPS'] ? 's' : '')
-            . '://' . $_SERVER['SERVER_NAME'] . (80 !== $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '') . $_SERVER['REQUEST_URI'];
+        return 'http'
+            . (\array_key_exists('HTTPS', $_SERVER)
+            && 'on' === $_SERVER['HTTPS']
+                ? 's'
+                : ''
+            )
+            . '://'
+            . $_SERVER['SERVER_NAME']
+            . (80 !== $_SERVER['SERVER_PORT']
+                ? ':' . $_SERVER['SERVER_PORT']
+                : ''
+            ) . $_SERVER['REQUEST_URI'];
     }
 
     public static function getClientIP(): string
     {
-        if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
-            $forwardedForItems = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        if (\array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
+            $forwardedForItems = \explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
             if (!empty($forwardedForItems)) {
                 /** @noinspection ReturnNullInspection */
-                return array_pop($forwardedForItems);
+                return \array_pop($forwardedForItems);
             }
         }
 
@@ -246,7 +256,7 @@ class HelperServerClient
     public static function isClientWindows(): bool
     {
         /** @noinspection ReturnFalseInspection */
-        return false !== strpos($_SERVER['HTTP_USER_AGENT'], 'Win');
+        return false !== \strpos($_SERVER['HTTP_USER_AGENT'], 'Win');
     }
 
     /**
@@ -284,7 +294,7 @@ class HelperServerClient
     public static function getUriParts($str): array
     {
         $pattern = '/^(.*):\/\/(.*):(.*)@(.*):(.*)/';
-        preg_match($pattern, $str, $matches);
+        \preg_match($pattern, $str, $matches);
 
         return $matches;
     }

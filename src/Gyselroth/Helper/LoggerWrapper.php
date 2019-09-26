@@ -148,14 +148,14 @@ class LoggerWrapper
     {
         $priority = strtoupper($method);
 
-        if (0 === \count($params)) {
+        if ([] === $params) {
             throw new LoggerException('Missing log message');
         }
 
         /** @noinspection ReturnNullInspection */
-        $message = array_shift($params);
+        $message = \array_shift($params);
         /** @noinspection ReturnNullInspection */
-        $extras = \count($params) > 0 ? array_shift($params) : null;
+        $extras = [] !== $params ? \array_shift($params) : null;
 
         self::log($message, $priority, $extras);
     }
@@ -298,16 +298,16 @@ class LoggerWrapper
 
     private static function getZf1PriorityByPsr3(string $priority = ''): int
     {
-        return array_key_exists($priority, self::ZF1_PRIORITIES)
+        return \array_key_exists($priority, self::ZF1_PRIORITIES)
             ? self::ZF1_PRIORITIES[$priority]
             : self::ZF1_PRIORITIES[self::PRIORITY_PSR3_INFO];
     }
 
     private static function getMonologLevelByPsr3(string $priority = ''): int
     {
-        $priority = strtolower($priority);
+        $priority = \strtolower($priority);
 
-        return array_key_exists($priority, self::MONOLOG_LEVELS)
+        return \array_key_exists($priority, self::MONOLOG_LEVELS)
             ? self::MONOLOG_LEVELS[$priority]
             : self::MONOLOG_LEVELS[self::PRIORITY_PSR3_INFO];
     }

@@ -53,11 +53,13 @@ class HelperSql
      */
     public static function formatHtml($sql)
     {
-        if (empty($sql) || !\is_string($sql)) {
+        if (empty($sql)
+            || !\is_string($sql)
+        ) {
             return false;
         }
 
-        $sql       = str_replace("\n", ' ', $sql);
+        $sql       = \str_replace("\n", ' ', $sql);
         $sqlLength = \strlen($sql);
 
         $formatted = $previousWord = $word = '';
@@ -65,16 +67,22 @@ class HelperSql
             $word .= $sql[$i];
 
             $hasReservedSpecialCharsAtIndex = \in_array($sql[$i], self::RESERVED_SPECIAL_CHARS, false);
-            if ($hasReservedSpecialCharsAtIndex || ' ' === $sql[$i]) {
-                $wordTrimmed = trim($word);
+            if ($hasReservedSpecialCharsAtIndex
+                || ' ' === $sql[$i]
+            ) {
+                $wordTrimmed = \trim($word);
                 if ($hasReservedSpecialCharsAtIndex) {
-                    $wordTrimmed = substr($wordTrimmed, 0, -1);
+                    $wordTrimmed = \substr($wordTrimmed, 0, -1);
                 }
                 $wordTrimmed = strtoupper($wordTrimmed);
-                if (\in_array($wordTrimmed, self::RESERVED_KEYWORDS, true) && !\in_array($wordTrimmed, self::RESERVED_KEYWORDS_SKIP, true)) {
-                    $formatted .= (\in_array($previousWord, self::RESERVED_KEYWORDS, true) ? '' : '<br/>&nbsp;') . '<strong>' . strtoupper(trim($word)) . '</strong>&nbsp;';
+                if (\in_array($wordTrimmed, self::RESERVED_KEYWORDS, true)
+                    && !\in_array($wordTrimmed, self::RESERVED_KEYWORDS_SKIP, true)
+                ) {
+                    $formatted .=
+                        (\in_array($previousWord, self::RESERVED_KEYWORDS, true) ? '' : '<br/>&nbsp;')
+                      . '<strong>' . \strtoupper(\trim($word)) . '</strong>&nbsp;';
                 } else {
-                    $formatted .= trim($word) . '&nbsp;';
+                    $formatted .= \trim($word) . '&nbsp;';
                 }
 
                 $previousWord = $wordTrimmed;
@@ -82,7 +90,7 @@ class HelperSql
             }
         }
 
-        return $formatted . trim($word);
+        return $formatted . \trim($word);
     }
 
     /**
@@ -96,6 +104,6 @@ class HelperSql
             $additionalColumnsSql[] = "$columnName AS '$selectAs'";
         }
 
-        return implode(', ', $additionalColumnsSql);
+        return \implode(', ', $additionalColumnsSql);
     }
 }

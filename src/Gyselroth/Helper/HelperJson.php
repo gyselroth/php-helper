@@ -30,9 +30,13 @@ class HelperJson
     {
         try {
             /** @noinspection ReturnNullInspection */
-            return empty($json) ? null : json_decode($json, self::TYPE_ARRAY === $objectDecodeType);
+            return empty($json)
+                ? null
+                : \json_decode($json, self::TYPE_ARRAY === $objectDecodeType);
         } catch (\Exception $e) {
-            LoggerWrapper::warning('Cannot decode invalid JSON', [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $json, 'Exception' => $e]);
+            LoggerWrapper::warning(
+                'Cannot decode invalid JSON',
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $json, 'Exception' => $e]);
             return null;
         }
     }
@@ -44,6 +48,6 @@ class HelperJson
     public static function ensureIsJson($str): string
     {
         /** @noinspection ReturnFalseInspection */
-        return 0 === strpos($str, '<!DOCTYPE') ? 'HTML Code (expected JSON)' : $str;
+        return 0 === \strpos($str, '<!DOCTYPE') ? 'HTML Code (expected JSON)' : $str;
     }
 }

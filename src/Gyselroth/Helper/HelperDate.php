@@ -98,7 +98,7 @@ class HelperDate
      */
     public static function isDateString($str, $delimiter = '-', $isGermanNotation = false): bool
     {
-        $parts = explode($delimiter, $str);
+        $parts = \explode($delimiter, $str);
 
         if (\count($parts) !== 3) {
             return false;
@@ -112,7 +112,8 @@ class HelperDate
             ? [$parts[1], $parts[0], $parts[2]]
             : [$parts[1], $parts[2], $parts[0]];
 
-        return 3 === \count($parts) && checkdate($month, $day, $year);
+        return 3 === \count($parts)
+            && \checkdate($month, $day, $year);
     }
 
     /**
@@ -131,7 +132,9 @@ class HelperDate
         $separator = '-'
     ): bool
     {
-        return (bool)preg_match('/\d{' . $digitsInPart1 . '}' . $separator . '\d{' . $digitsInPart2 . '}' . $separator . '\d{' . $digitsInPart3 . '}/', $str);
+        return (bool)preg_match(
+            '/\d{' . $digitsInPart1 . '}' . $separator . '\d{' . $digitsInPart2 . '}' . $separator . '\d{' . $digitsInPart3 . '}/',
+            $str);
     }
 
     /**
@@ -168,7 +171,7 @@ class HelperDate
 
         return \is_string($date) && !is_numeric($date)
             // Parse date string, return as int
-            ? strtotime($date)
+            ? \strtotime($date)
             // Fallback: UNIX timestamp
             : $date;
     }
@@ -189,17 +192,17 @@ class HelperDate
             case self::INDEX_FORMAT_DATE_PHP:
             case self::FORMAT_DATE_PHP:
                 /** @noinspection ReturnFalseInspection */
-                return date(self::FORMAT_DATE_PHP, $timestamp);
+                return \date(self::FORMAT_DATE_PHP, $timestamp);
             case self::INDEX_FORMAT_DATETIME_PHP:
             case self::FORMAT_DATETIME_PHP:
             case self::INDEX_FORMAT_DATETIME_MYSQL:
                 /** @noinspection ReturnFalseInspection */
-                return date(self::FORMAT_DATETIME_PHP, $timestamp);
+                return \date(self::FORMAT_DATETIME_PHP, $timestamp);
             case self::INDEX_FORMAT_TIME_PHP:
             case self::FORMAT_TIME_PHP:
             case self::INDEX_FORMAT_TIME_MYSQL:
                 /** @noinspection ReturnFalseInspection */
-                return date(self::FORMAT_TIME_PHP, $timestamp);
+                return \date(self::FORMAT_TIME_PHP, $timestamp);
             case self::FORMAT_DATE_ZF1:
             case self::FORMAT_DATETIME_ZF1:
             case self::FORMAT_TIME_ZF1:
@@ -210,11 +213,15 @@ class HelperDate
                 return new \Zend_Date($timestamp);
             case self::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR:
                 /** @noinspection ReturnFalseInspection */
-                return date(self::FORMAT_DATE_ZF1_WEEKDAY_SHORT_DAY_MONTH_YEAR, $timestamp);
+                return \date(self::FORMAT_DATE_ZF1_WEEKDAY_SHORT_DAY_MONTH_YEAR, $timestamp);
             case self::INDEX_FORMAT_WEEKDAY_LONG_DAY_MONTH_YEAR:
                 $date = new \Zend_Date($timestamp);
 
-                return $date->toString(\Zend_Date::WEEKDAY) . ', ' . $date->toString(\Zend_Date::DAY) . '. ' . $date->toString(\Zend_Date::MONTH_NAME) . ' ' . $date->toString(\Zend_Date::YEAR);
+                return
+                    $date->toString(\Zend_Date::WEEKDAY) . ', '
+                  . $date->toString(\Zend_Date::DAY) . '. '
+                  . $date->toString(\Zend_Date::MONTH_NAME) . ' '
+                  . $date->toString(\Zend_Date::YEAR);
             case self::INDEX_FORMAT_TIMESTAMP_UNIX:
             default:
                 // No change
@@ -241,7 +248,7 @@ class HelperDate
      */
     public static function getDateTime($time): \DateTime
     {
-        return is_numeric($time)
+        return \is_numeric($time)
             ? new \DateTime('@' . (int)$time)
             : new \DateTime($time);
     }
@@ -253,7 +260,7 @@ class HelperDate
     public static function getDateStringFromDateTimeString($str)
     {
         if (self::isDateTimeString($str)) {
-            return explode(' ', $str)[0];
+            return \explode(' ', $str)[0];
         }
 
         return self::isDateString($str) ? $str : false;
@@ -265,7 +272,7 @@ class HelperDate
      */
     public static function getTimeStringFromDateTimeString($dateTimeString): string
     {
-        $parts = explode(' ', $dateTimeString);
+        $parts = \explode(' ', $dateTimeString);
 
         return $parts[1];
     }
@@ -283,9 +290,9 @@ class HelperDate
         $timestamp = self::getUnixTimestampFromDate($timestamp);
 
         return [
-            self::DATE_TIME_PART_YEAR => date($formatYear, $timestamp),
-            'month'                   => date($formatMonth, $timestamp),
-            self::DATE_TIME_PART_DAY  => date($formatDay, $timestamp)
+            self::DATE_TIME_PART_YEAR => \date($formatYear, $timestamp),
+            'month'                   => \date($formatMonth, $timestamp),
+            self::DATE_TIME_PART_DAY  => \date($formatDay, $timestamp)
         ];
     }
 
@@ -295,11 +302,11 @@ class HelperDate
      */
     public static function getDatePartsAtStartOfDay($date): array
     {
-        $dateParts = explode('-', $date);
+        $dateParts = \explode('-', $date);
 
         return [
             'array'     => $dateParts,
-            'timestamp' => mktime(0, 0, 0, $dateParts[1], $dateParts[2], $dateParts[0])
+            'timestamp' => \mktime(0, 0, 0, $dateParts[1], $dateParts[2], $dateParts[0])
         ];
     }
 
@@ -311,7 +318,7 @@ class HelperDate
     {
         $dateParts = self::getDateParts($timestamp);
 
-        return mktime(0, 0, 0, $dateParts['month'], $dateParts[self::DATE_TIME_PART_DAY], $dateParts[self::DATE_TIME_PART_YEAR]);
+        return \mktime(0, 0, 0, $dateParts['month'], $dateParts[self::DATE_TIME_PART_DAY], $dateParts[self::DATE_TIME_PART_YEAR]);
     }
 
     /**
@@ -322,7 +329,7 @@ class HelperDate
     {
         $dateParts = self::getDateParts($timestamp);
 
-        return mktime(23, 59, 59, $dateParts['month'], $dateParts[self::DATE_TIME_PART_DAY], $dateParts[self::DATE_TIME_PART_YEAR]);
+        return \mktime(23, 59, 59, $dateParts['month'], $dateParts[self::DATE_TIME_PART_DAY], $dateParts[self::DATE_TIME_PART_YEAR]);
     }
 
     /**
@@ -334,15 +341,15 @@ class HelperDate
      */
     public static function getTimeStringParts($timeStr, $delimiter = ':', $includeMinutes = true, $includeSeconds = true): array
     {
-        if (is_numeric($timeStr)) {
+        if (\is_numeric($timeStr)) {
             $timeStr = self::getTimeString($timeStr);
-        } elseif (empty($timeStr) || false === strpos($timeStr, $delimiter)) {
+        } elseif (empty($timeStr) || false === \strpos($timeStr, $delimiter)) {
             // Unsupported timeString format detected
             // @todo log: 'Illegal hour time string parsed in ' . __CLASS__
             exit;
         }
 
-        $timeStringParts = explode($delimiter, $timeStr);
+        $timeStringParts = \explode($delimiter, $timeStr);
 
         $parts = [
             self::DATE_TIME_PART_HOUR => (int)$timeStringParts[0],
@@ -365,13 +372,15 @@ class HelperDate
      */
     public static function getTimeString($timestamp, $isMilliSeconds = false, $includeSeconds = true, $isCurrentDate = false): string
     {
-        if (\is_string($timestamp) && !is_numeric($timestamp)) {
+        if (\is_string($timestamp)
+            && !\is_numeric($timestamp)
+        ) {
             // Convert time string like '14:00' or '14:00:00' to sum of seconds
             $timestamp      = self::getSumSecondsOfTimeString($timestamp, true, true, $isCurrentDate);
             $isMilliSeconds = false;
         }
 
-        return date(
+        return \date(
             $includeSeconds ? self::FORMAT_TIME_PHP : self::FORMAT_TIME_NO_SECONDS_PHP,
             $isMilliSeconds ? ($timestamp / self::MILLISECONDS_SECOND) : $timestamp
         );
@@ -385,8 +394,17 @@ class HelperDate
     public static function getSumSecondsOfTimeParts(array $timeParts, $isCurrentDate = false): int
     {
         return $isCurrentDate
-            ? mktime($timeParts[self::DATE_TIME_PART_HOUR], $timeParts['minutes'], array_key_exists('seconds', $timeParts) ? $timeParts['seconds'] : 0)
-            : $timeParts[self::DATE_TIME_PART_HOUR] * self::SECONDS_HOUR + $timeParts['minutes'] * self::SECONDS_MIN + (array_key_exists('seconds', $timeParts) ? $timeParts['seconds'] : 0);
+            ? \mktime(
+                $timeParts[self::DATE_TIME_PART_HOUR],
+                $timeParts['minutes'],
+                \array_key_exists('seconds', $timeParts) ? $timeParts['seconds'] : 0)
+            :
+            $timeParts[self::DATE_TIME_PART_HOUR]
+            * self::SECONDS_HOUR + $timeParts['minutes']
+            * self::SECONDS_MIN
+            + (array_key_exists('seconds', $timeParts)
+                ? $timeParts['seconds']
+                : 0);
     }
 
     /**
@@ -443,7 +461,10 @@ class HelperDate
     {
         $weekDigit = $date->toValue(\Zend_Date::WEEKDAY_DIGIT);
 
-        if ((0 === $weekDigit || 6 === $weekDigit) && (!$showSaturday || !$showSunday)) {
+        if (
+            (0 === $weekDigit || 6 === $weekDigit)
+            && (!$showSaturday || !$showSunday)
+        ) {
             // Sunday
             if (0 === $weekDigit && !$showSunday) {
                 $date->addDay(1);
@@ -467,7 +488,7 @@ class HelperDate
             $timestamp /= self::MILLISECONDS_SECOND;
         }
 
-        $dayNum = (int)date('N', $timestamp);
+        $dayNum = (int)\date('N', $timestamp);
 
         return 7 === $dayNum ? 0 : $dayNum;
     }
@@ -523,7 +544,8 @@ class HelperDate
                 return (int)($date2->sub($date1)->toValue() / self::SECONDS_HOUR);
             default:
                 LoggerWrapper::warning(
-                    "Detected unhandled unit $unit", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $unit]);
+                    "Detected unhandled unit $unit",
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $unit]);
 
                 return null;
         }
@@ -539,9 +561,9 @@ class HelperDate
     public static function getWeeksBetween($dateFrom, $dateTo)
     {
         $weeks              = [];
-        $dayOfWeek          = date('w', $dateFrom);
+        $dayOfWeek          = \date('w', $dateFrom);
         $fromWeekStart      = $dateFrom - ($dayOfWeek * self::SECONDS_DAY) - ($dateFrom % self::SECONDS_DAY);
-        $weeks['startWeek'] = date('W', $fromWeekStart);
+        $weeks['startWeek'] = \date('W', $fromWeekStart);
         $diffDays           = self::getDaysBetween($dateFrom, $dateTo);
         $diffWeeks          = (int)($diffDays / 7);
         $secondsLeft        = ($diffDays % 7) * self::SECONDS_DAY;
@@ -550,7 +572,7 @@ class HelperDate
             $diffWeeks++;
         }
 
-        $startWeek = date('W', $fromWeekStart);
+        $startWeek = \date('W', $fromWeekStart);
 
         return [
             'startWeek' => $startWeek,
@@ -566,7 +588,7 @@ class HelperDate
      */
     public static function getDaysBetween($dateFrom, $dateTo): int
     {
-        $fromDayStart = mktime(0, 0, 0, date('m', $dateFrom), date('d', $dateFrom), date('Y', $dateFrom));
+        $fromDayStart = \mktime(0, 0, 0, \date('m', $dateFrom), \date('d', $dateFrom), \date('Y', $dateFrom));
         $diff         = $dateTo - $dateFrom;
         $days         = (int)($diff / self::SECONDS_DAY);
 
@@ -584,7 +606,7 @@ class HelperDate
     {
         if ($month > 12) {
             // Assumed being a timestamp and converted to the resp. month number
-            $month = date('n', $month);
+            $month = \date('n', $month);
         }
 
         $months = [
@@ -602,7 +624,9 @@ class HelperDate
             12 => HelperString::translate('Dezember')
         ];
 
-        return $abbreviated ? mb_substr($months[$month], 0, 3) : $months[$month];
+        return $abbreviated
+            ? \mb_substr($months[$month], 0, 3)
+            : $months[$month];
     }
 
     /**
@@ -616,7 +640,7 @@ class HelperDate
     {
         if ($day > 7) {
             // Assumed being a timestamp and converted to the resp. weekday number
-            $day = date('n', $day);
+            $day = \date('n', $day);
         }
 
         if ($abbreviated) {
@@ -656,12 +680,16 @@ class HelperDate
      */
     public static function getIcsDateFromDateString($dateStr, $appendTime = false): string
     {
-        $timestamp = strtotime($dateStr);
+        $timestamp = \strtotime($dateStr);
         if (false === $timestamp) {
             throw new DateException("Failed converting '$dateStr' to a date value.");
         }
 
-        return date('Ymd', $timestamp) . ($appendTime ? 'T' . date('His', $timestamp) : '');
+        return
+            \date('Ymd', $timestamp)
+          . ($appendTime
+                ? 'T' . \date('His', $timestamp)
+                : '');
     }
 
     /**
@@ -685,7 +713,7 @@ class HelperDate
             $year += 2000;
         }
 
-        return strtotime($year . 'W' . HelperNumeric::formatAmountDigits($weekNumber, 2));
+        return \strtotime($year . 'W' . HelperNumeric::formatAmountDigits($weekNumber, 2));
     }
 
     /**
@@ -694,7 +722,7 @@ class HelperDate
      */
     public static function getAgeByBirthYear($year)
     {
-        return date('Y') - $year;
+        return \date('Y') - $year;
     }
 
     /**
@@ -707,7 +735,8 @@ class HelperDate
         $closest = null;
         if ($dates) {
             foreach ($dates as $item) {
-                if (empty($closest) || abs($searchDate - $closest) > abs($item - $searchDate)) {
+                if (empty($closest)
+                    || \abs($searchDate - $closest) > \abs($item - $searchDate)) {
                     $closest = $item;
                 }
             }
@@ -757,7 +786,9 @@ class HelperDate
                 $amountDaysAdded = 5;
                 break;
             default:
-                LoggerWrapper::warning(__CLASS__ . '::' . __FUNCTION__ . " - Unknown shifting mode $shiftingMode", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $shiftingMode]);
+                LoggerWrapper::warning(
+                    __CLASS__ . '::' . __FUNCTION__ . " - Unknown shifting mode $shiftingMode",
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $shiftingMode]);
                 break;
         }
 
@@ -804,7 +835,12 @@ class HelperDate
      */
     public static function removeMeridiem($dateStr): string
     {
-        return trim(str_replace(['am', 'pm'], ['', ''], strtolower($dateStr)));
+        return \trim(
+            str_replace(
+                ['am', 'pm'],
+                ['', ''],
+                \strtolower($dateStr))
+        );
     }
 
     /**
@@ -813,7 +849,8 @@ class HelperDate
      */
     public static function ensureTimeStringHasSeconds($timeString): string
     {
-        return $timeString . (1 === substr_count($timeString, ':') ? ':00' : '');
+        return $timeString
+            . (1 === \substr_count($timeString, ':') ? ':00' : '');
     }
 
     /**
@@ -838,7 +875,7 @@ class HelperDate
      */
     public static function convertDelimitedDateString($date, $delimiter = '-')
     {
-        $dateParts = explode($delimiter, $date);
+        $dateParts = \explode($delimiter, $date);
 
         return $dateParts[2] . '.' . $dateParts[1] . '.' . $dateParts[0];
     }
@@ -850,7 +887,7 @@ class HelperDate
     public static function getZendDatePartByType($type): ?string
     {
         $DATE_TIME_PART_MONTH = 'month';
-        switch (strtolower($type)) {
+        switch (\strtolower($type)) {
             case self::DATE_TIME_PART_SECOND:
                 return \Zend_Date::SECOND;
             case self::DATE_TIME_PART_MINUTE:
@@ -876,7 +913,7 @@ class HelperDate
      */
     public static function getTimeOutOfTimeDateString($dateStr): string
     {
-        return substr($dateStr, 0, 5);
+        return \substr($dateStr, 0, 5);
     }
 
     /**
@@ -884,6 +921,6 @@ class HelperDate
      */
     public static function getCurrentWeekAndYear()
     {
-        return date('W / Y');
+        return \date('W / Y');
     }
 }

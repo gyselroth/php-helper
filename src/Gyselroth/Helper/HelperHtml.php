@@ -28,7 +28,7 @@ class HelperHtml
     public static function decodeHtmlSpecialChars(string $text): string
     {
         while (static::containsEncodedHtmlSpecialChars($text)) {
-            $text = htmlspecialchars_decode($text);
+            $text = \htmlspecialchars_decode($text);
         }
 
         return $text;
@@ -42,7 +42,7 @@ class HelperHtml
      */
     public static function containsEncodedHtmlSpecialChars(string $text): bool
     {
-        return $text !== htmlspecialchars_decode($text);
+        return $text !== \htmlspecialchars_decode($text);
     }
 
     /**
@@ -51,7 +51,7 @@ class HelperHtml
      */
     public static function br2nl(string $string): string
     {
-        return str_ireplace(['<br />', '<br/>', '<br>', '<br >'], "\n", $string);
+        return \str_ireplace(['<br />', '<br/>', '<br>', '<br >'], "\n", $string);
     }
 
     /**
@@ -60,22 +60,25 @@ class HelperHtml
      */
     public static function urlsToHyperlinks(string $string): string
     {
-        return preg_replace('/(http[s]?:\/\/\S{4,})\s*/im', '<a href="$1" target="_blank">$1</a> ', $string);
+        return \preg_replace(
+            '/(http[s]?:\/\/\S{4,})\s*/im',
+            '<a href="$1" target="_blank">$1</a> ',
+            $string);
     }
 
     public static function stripHtmlTags(string $html, bool $decodeEntity = false): string
     {
-        $text = htmlspecialchars_decode($html);
-        $text = str_replace(["\n", "\r"], '', $text);
+        $text = \htmlspecialchars_decode($html);
+        $text = \str_replace(["\n", "\r"], '', $text);
         $text = self::br2nl($text);
-        $text = str_replace(['</p>', '</li>', '<li>'], ["\n\n", "\n", ' - '], $text);
-        $text = strip_tags($text);
+        $text = \str_replace(['</p>', '</li>', '<li>'], ["\n\n", "\n", ' - '], $text);
+        $text = \strip_tags($text);
 
         if ($decodeEntity) {
-            $text = html_entity_decode($text, ENT_COMPAT, 'UTF-8');
+            $text = \html_entity_decode($text, ENT_COMPAT, 'UTF-8');
         }
 
-        return trim($text);
+        return \trim($text);
     }
 
     /**
@@ -86,12 +89,12 @@ class HelperHtml
     {
         $plaintext = self::stripHtmlTags($html);
         /** @noinspection ReturnFalseInspection */
-        while (false !== strpos($plaintext, '  ')) {
-            $plaintext = str_replace('  ', ' ', $plaintext);
+        while (false !== \strpos($plaintext, '  ')) {
+            $plaintext = \str_replace('  ', ' ', $plaintext);
         }
         /** @noinspection ReturnFalseInspection */
-        while (false !== strpos($plaintext, "\n\n")) {
-            $plaintext = str_replace("\n\n", "\n", $plaintext);
+        while (false !== \strpos($plaintext, "\n\n")) {
+            $plaintext = \str_replace("\n\n", "\n", $plaintext);
         }
 
         return $plaintext;
@@ -105,15 +108,21 @@ class HelperHtml
      */
     public static function resizeStyles(string $html, $widthFactor = 1, $heightFactor = 1): string
     {
-        preg_match_all('/width:(\s)*(\d)+(\w*)(;)*/', $html, $widths);
-        preg_match_all('/height:(\s)*(\d)+(\w*)(;)*/', $html, $heights);
+        \preg_match_all('/width:(\s)*(\d)+(\w*)(;)*/', $html, $widths);
+        \preg_match_all('/height:(\s)*(\d)+(\w*)(;)*/', $html, $heights);
 
         foreach ($widths[0] as $index=>$width) {
-            $html = str_replace($width, 'width:' . ($widthFactor * HelperString::removeNonNumericChars($width)) . $widths[3][$index] . ';', $html);
+            $html = \str_replace(
+                $width,
+                'width:' . ($widthFactor * HelperString::removeNonNumericChars($width)) . $widths[3][$index] . ';',
+                $html);
         }
 
         foreach ($heights[0] as $index=>$height) {
-            $html = str_replace($height, 'height:' . ($heightFactor * HelperString::removeNonNumericChars($height)) . $heights[3][$index] . ';', $html);
+            $html = \str_replace(
+                $height,
+                'height:' . ($heightFactor * HelperString::removeNonNumericChars($height)) . $heights[3][$index] . ';',
+                $html);
         }
 
         return $html;
@@ -121,7 +130,7 @@ class HelperHtml
 
     public static function umlautsToHtmlEntities(string $html): string
     {
-        return str_replace(
+        return \str_replace(
             ['ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü'],
             ['&auml;', '&ouml;', '&uuml;', '&Auml;', '&Ouml;', '&Uuml;'],
             $html
@@ -170,11 +179,11 @@ class HelperHtml
 
         if ($escapeSingleQuotes) {
             // Escape single quotes to prevent JavaScript error
-            $html = str_replace("'", '&#39;', $html);
+            $html = \str_replace("'", '&#39;', $html);
         }
         if ($escapeBackslashes) {
             // Escape backslashes to prevent loosing them
-            $html = str_replace('\\', '\\\\', $html);
+            $html = \str_replace('\\', '\\\\', $html);
         }
 
         return $html;
@@ -188,9 +197,9 @@ class HelperHtml
      */
     public static function formatArrayDump(string $dump): string
     {
-        $dump = preg_replace('/Array\s*\n\s*/', 'array', $dump);
+        $dump = \preg_replace('/Array\s*\n\s*/', 'array', $dump);
 
-        return preg_replace('/\)\s*\n\n/', ")\n", $dump);
+        return \preg_replace('/\)\s*\n\n/', ")\n", $dump);
     }
 
     public static function renderTableHead(array $columns): string

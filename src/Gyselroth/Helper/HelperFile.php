@@ -57,7 +57,7 @@ class HelperFile
     public const MIME_TYPE_IMAGE_PNG  = 'image/png';
 
     public const MIME_TYPE_JAVASCRIPT = 'text/javascript';
-        
+
     public const MIME_TYPE_JSON = 'application/json';
     public const MIME_TYPE_PDF  = 'application/pdf';
     public const MIME_TYPE_XML  = 'application/xml';
@@ -137,7 +137,7 @@ class HelperFile
     {
         if (empty(self::$rootPath)) {
             /** @noinspection ReturnFalseInspection */
-            $pathDelimiter = false !== strpos(__DIR__, '/vendor/')
+            $pathDelimiter = false !== \strpos(__DIR__, '/vendor/')
                 // __DIR__ is e.g. '/srv/www/trunk/vendor/gyselroth/....../HelperFile
                 ? '/vendor/'
 
@@ -145,7 +145,7 @@ class HelperFile
                 // __DIR__ is e.g. '/srv/www/trunk/src/Gyselroth/Helper'
                 : '/src/';
 
-            self::$rootPath = explode($pathDelimiter, __DIR__)[0];
+            self::$rootPath = \explode($pathDelimiter, __DIR__)[0];
         }
 
         return self::$rootPath;
@@ -159,8 +159,11 @@ class HelperFile
     public static function getGlobalTmpPath($createIfNotExists = false): string
     {
         $path = self::getRootPath() . '/tmp';
-        if ($createIfNotExists && !is_dir($path) && !mkdir($path)) {
-            throw new \RuntimeException(sprintf('Failed create directory "%s"', $path));
+        if ($createIfNotExists
+            && !\is_dir($path)
+            && !\mkdir($path)
+        ) {
+            throw new \RuntimeException(\sprintf('Failed create directory "%s"', $path));
         }
 
         return $path;
@@ -172,7 +175,7 @@ class HelperFile
      */
     private static function getMimeType(string $pathFile)
     {
-        return finfo_file(finfo_open(FILEINFO_MIME_TYPE), $pathFile);
+        return \finfo_file(\finfo_open(FILEINFO_MIME_TYPE), $pathFile);
     }
 
     /**
@@ -198,11 +201,11 @@ class HelperFile
         string $fileExtension = ''
     ): string
     {
-        $prefix = $prefixWithDateTime ? date('Ymd-His') : '';
+        $prefix = $prefixWithDateTime ? \date('Ymd-His') : '';
 
         $filename = $leadStr .
             ($generateUniquePostfix
-                ? uniqid($prefix, false)
+                ? \uniqid($prefix, false)
                 : $prefix) . (empty($fileExtension) ? '' : '.' . $fileExtension);
 
         return self::validateFilename($filename);
@@ -239,18 +242,20 @@ class HelperFile
         array $replacementChars = []
     ): string
     {
-        $filename = str_replace(DIRECTORY_SEPARATOR, '', $filename);
+        $filename = \str_replace(DIRECTORY_SEPARATOR, '', $filename);
 
         if (empty($filename)) {
             throw new FileExceptionIllegalFilename('Filename cannot be empty');
         }
 
         $amountForbiddenChars = \count($forbiddenChars);
-        if ($amountForbiddenChars > 0 && $amountForbiddenChars === \count($replacementChars)) {
-            $filename = str_replace($forbiddenChars, $replacementChars, $filename);
+        if ($amountForbiddenChars > 0
+            && $amountForbiddenChars === \count($replacementChars)
+        ) {
+            $filename = \str_replace($forbiddenChars, $replacementChars, $filename);
         }
 
-        return trim($filename);
+        return \trim($filename);
     }
 
     /**
@@ -262,15 +267,15 @@ class HelperFile
      */
     public static function write(string $pathFile, string $content, string $mode = 'w'): bool
     {
-        $handle = fopen($pathFile, $mode);
+        $handle = \fopen($pathFile, $mode);
         if (!$handle) {
             LoggerWrapper::error('fopen failed: ' . $pathFile);
             return false;
         }
 
-        fwrite($handle, $content);
+        \fwrite($handle, $content);
 
-        return fclose($handle);
+        return \fclose($handle);
     }
 
     /**
@@ -282,7 +287,7 @@ class HelperFile
     public static function writeJson(string $filePath, $content): bool
     {
         if (\is_array($content)) {
-            $content = json_encode($content);
+            $content = \json_encode($content);
         }
 
         return self::write($filePath, $content);
@@ -294,12 +299,12 @@ class HelperFile
             return false;
         }
 
-        ini_set('auto_detect_line_endings', true);
+        \ini_set('auto_detect_line_endings', true);
 
-        $handle = fopen($filePath, 'wb');
-        fputcsv($handle, $headerFields);
+        $handle = \fopen($filePath, 'wb');
+        \fputcsv($handle, $headerFields);
         foreach ($rows as $row) {
-            fputcsv($handle, $row);
+            \fputcsv($handle, $row);
             unset($row);
         }
 
@@ -316,9 +321,15 @@ class HelperFile
      * @param  bool   $namesOnly
      * @return array  Matched files (including their full path), or FALSE if path invalid
      */
-    public static function scanDir(string $path, string $ext = '', bool $recursive = false, string $leadString = '', bool $namesOnly = false): array
+    public static function scanDir(
+        string $path,
+        string $ext = '',
+        bool $recursive = false,
+        string $leadString = '',
+        bool $namesOnly = false
+    ): array
     {
-        if (!is_dir($path)) {
+        if (!\is_dir($path)) {
             return [];
         }
 
@@ -333,9 +344,10 @@ class HelperFile
         // Filter: 1. remove '.' and '..', 2. by extension (or substring), 3. by lead string
         $filesFiltered = [];
         foreach ($files as $file) {
-            if ('.' !== $file && '..' !== $file
+            if ('.' !== $file
+                && '..' !== $file
                 && (empty($ext) || HelperString::endsWith($file, $ext))
-                && (empty($leadString) || HelperString::startsWith(basename($file), $leadString))
+                && (empty($leadString) || HelperString::startsWith(\basename($file), $leadString))
             ) {
                 $filesFiltered[] = $file;
             }
@@ -359,18 +371,18 @@ class HelperFile
     ): array
     {
         $filesFiltered = self::scanDir($path, $ext, $recursive, $leadString);
-        natsort($filesFiltered);
+        \natsort($filesFiltered);
 
         $recentFiles = [];
         foreach ($filesFiltered as $filePath) {
-            $explodedPath           = explode(DIRECTORY_SEPARATOR, $filePath);
-            $fileName               = end($explodedPath);
-            $fileNameWithoutVersion = preg_replace('/_v(.*)/', '', $fileName);
+            $explodedPath           = \explode(DIRECTORY_SEPARATOR, $filePath);
+            $fileName               = \end($explodedPath);
+            $fileNameWithoutVersion = \preg_replace('/_v(.*)/', '', $fileName);
 
             $recentFiles[$fileNameWithoutVersion] = $filePath;
         }
 
-        return array_values($recentFiles);
+        return \array_values($recentFiles);
     }
 
     /**
@@ -382,22 +394,25 @@ class HelperFile
     public static function scanDirRecursive(string $path, string $ext = '', string $leadString = ''): array
     {
         $items = [];
-        if ($handle = opendir($path)) {
-            while (false !== ($file = readdir($handle))) {
+        if ($handle = \opendir($path)) {
+            while (false !== ($file = \readdir($handle))) {
                 $pathFile = $path . DIRECTORY_SEPARATOR . $file;
-                if (0 === preg_match('/^(^\.)/', $file)) {
-                    if (is_dir($pathFile)) {
+                if (0 === \preg_match('/^(^\.)/', $file)) {
+                    if (\is_dir($pathFile)) {
                         /** @noinspection SlowArrayOperationsInLoopInspection */
-                        $items = array_merge($items, self::scanDirRecursive($pathFile, $ext, $leadString));
+                        $items = \array_merge($items, self::scanDirRecursive($pathFile, $ext, $leadString));
                     } elseif (!$ext || HelperString::endsWith($pathFile, $ext)
-                        && (empty($leadString) || HelperString::startsWith(basename($pathFile), $leadString))
+                        && (
+                            empty($leadString)
+                            || HelperString::startsWith(\basename($pathFile), $leadString)
+                        )
                     ) {
-                        $items[] = preg_replace('/\/\//', DIRECTORY_SEPARATOR, $pathFile);
+                        $items[] = \preg_replace('/\/\//', DIRECTORY_SEPARATOR, $pathFile);
                     }
                 }
             }
 
-            closedir($handle);
+            \closedir($handle);
         }
 
         return $items;
@@ -410,24 +425,26 @@ class HelperFile
      */
     public static function chmodRecursive(string $path, $mode = self::FILE_MODE_GRANT_ALL): array
     {
-        if (file_exists($path)) {
-            chmod($path, $mode);
+        if (\file_exists($path)) {
+            \chmod($path, $mode);
         }
         $items = [];
-        if (is_dir($path) && $handle = opendir($path)) {
-            while (false !== ($file = readdir($handle))) {
+        if (\is_dir($path)
+            && $handle = \opendir($path)
+        ) {
+            while (false !== ($file = \readdir($handle))) {
                 $pathFile = $path . DIRECTORY_SEPARATOR . $file;
-                if (0 === preg_match('/^(^\.)/', $file)) {
-                    chmod($pathFile, $mode);
+                if (0 === \preg_match('/^(^\.)/', $file)) {
+                    \chmod($pathFile, $mode);
 
-                    if (is_dir($pathFile)) {
+                    if (\is_dir($pathFile)) {
                         /** @noinspection SlowArrayOperationsInLoopInspection */
-                        $items = array_merge($items, self::chmodRecursive($pathFile, $mode));
+                        $items = \array_merge($items, self::chmodRecursive($pathFile, $mode));
                     }
                 }
             }
 
-            closedir($handle);
+            \closedir($handle);
         }
 
         return $items;
@@ -438,7 +455,7 @@ class HelperFile
         if ($overwrite) {
             self::deleteIfExists($destinationPath);
         }
-        if (!mkdir($destinationPath)) {
+        if (!\mkdir($destinationPath)) {
             return false;
         }
 
@@ -447,10 +464,10 @@ class HelperFile
             return true;
         }
         foreach ($directoryContent as $item) {
-            if (is_file($item)) {
-                copy($item, $destinationPath . DIRECTORY_SEPARATOR . basename($item));
+            if (\is_file($item)) {
+                \copy($item, $destinationPath . DIRECTORY_SEPARATOR . \basename($item));
             } elseif (is_dir($item)) {
-                self::copyDirectory($item, $destinationPath . DIRECTORY_SEPARATOR . basename($item));
+                self::copyDirectory($item, $destinationPath . DIRECTORY_SEPARATOR . \basename($item));
             }
         }
 
@@ -466,10 +483,10 @@ class HelperFile
      */
     public static function sortByDepth(array $files): array
     {
-        sort($files);
-        uasort($files, function ($a, $b) {
-            $aCount = substr_count($a, '.');
-            $bCount = substr_count($b, '.');
+        \sort($files);
+        \uasort($files, function ($a, $b) {
+            $aCount = \substr_count($a, '.');
+            $bCount = \substr_count($b, '.');
 
             if ($aCount === $bCount) {
                 // 1. if depth is identical: sort alphabetic
@@ -492,13 +509,13 @@ class HelperFile
      */
     public static function getDirectoryInfo(string $path, array $info = ['items' => 0, 'size' => 0]): array
     {
-        $children      = glob($path . DIRECTORY_SEPARATOR . '*');
+        $children      = \glob($path . DIRECTORY_SEPARATOR . '*');
         $info['items'] += \count($children);
 
         foreach ($children as $item) {
-            if (is_file($item)) {
-                $info['size'] += filesize($path);
-            } elseif (is_dir($item)) {
+            if (\is_file($item)) {
+                $info['size'] += \filesize($path);
+            } elseif (\is_dir($item)) {
                 $depth         = self::getDirectoryInfo($item, $info);
                 $info['size']  += $depth['size'];
                 $info['items'] += $depth['items'];
@@ -522,14 +539,16 @@ class HelperFile
         $handle = @opendir($path);
 
         if (false === $handle) {
-            LoggerWrapper::warning("Cannot open path: $path", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+            LoggerWrapper::warning(
+                "Cannot open path: $path",
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
             return [];
         }
 
         $data = [];
-        while (false !== ($file = readdir($handle))) {
+        while (false !== ($file = \readdir($handle))) {
             if (!\in_array($file, $ignore, true)) {
-                if (is_dir("$path/$file")) {
+                if (\is_dir("$path/$file")) {
                     $data[] = $file;
                     self::getDirectory("$path/$file", $level + 1);
                 } else {
@@ -538,7 +557,7 @@ class HelperFile
             }
         }
 
-        closedir($handle);
+        \closedir($handle);
 
         return $data;
     }
@@ -552,7 +571,7 @@ class HelperFile
     public static function getUploadFileInfo(array $uploadFile, int $options = FILEINFO_NONE): string
     {
         if (FILEINFO_MIME_TYPE === $options) {
-            $extension = pathinfo(strtolower($uploadFile['name']), PATHINFO_EXTENSION);
+            $extension = \pathinfo(\strtolower($uploadFile['name']), PATHINFO_EXTENSION);
             switch ($extension) {
                 case self::FILE_ENDING_CSV:
                     return self::MIME_TYPE_CSV;
@@ -564,7 +583,7 @@ class HelperFile
                 case self::FILE_ENDING_JPEG:
                     return self::MIME_TYPE_IMAGE_JPEG;
                 case self::FILE_ENDING_JSON:
-                    return self::MIME_TYPE_JSON;    
+                    return self::MIME_TYPE_JSON;
                 case self::FILE_ENDING_PDF:
                     return self::MIME_TYPE_PDF;
                 case self::FILE_ENDING_PNG:
@@ -578,11 +597,13 @@ class HelperFile
                 case self::FILE_ENDING_ZIP:
                     return self::MIME_TYPE_ZIP;
                 default:
-                    LoggerWrapper::warning("Detected unhandled file extension: $extension", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $extension]);
+                    LoggerWrapper::warning(
+                        "Detected unhandled file extension: $extension",
+                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $extension]);
             }
         }
 
-        return (new finfo())->file($uploadFile['tmp_name'], $options);
+        return (new \finfo())->file($uploadFile['tmp_name'], $options);
     }
 
     /**
@@ -602,13 +623,17 @@ class HelperFile
             // @todo throw exception
             return HelperString::translate('Name der Datei wurde nicht empfangen');
         }
-        if ($maximumFileSize > -1 && $uploadFile['size'] > $maximumFileSize) {
+        if ($maximumFileSize > -1
+            && $uploadFile['size'] > $maximumFileSize
+        ) {
             // @todo throw exception
             return HelperString::translate('Die Datei ist zu gross');
         }
 
         $mimeType = self::getUploadFileInfo($uploadFile, FILEINFO_MIME_TYPE);
-        if (\count($allowedTypes) > 0 && !\in_array($mimeType, $allowedTypes, true)) {
+        if (\count($allowedTypes) > 0
+            && !\in_array($mimeType, $allowedTypes, true)
+        ) {
             // @todo throw exception
             return HelperString::translate('Dateityp ist nicht erlaubt');
         }
@@ -622,7 +647,9 @@ class HelperFile
             case UPLOAD_ERR_FORM_SIZE:
                 return HelperString::translate('Exceeded filesize limit.');
             default:
-                return 0 === $uploadFile['size'] ? HelperString::translate('File is empty') : HelperString::translate('Unknown errors.');
+                return 0 === $uploadFile['size']
+                    ? HelperString::translate('File is empty')
+                    : HelperString::translate('Unknown errors.');
         }
     }
 
@@ -656,14 +683,14 @@ class HelperFile
             throw new FileExceptionInvalidPath('Invalid storage path');
         }
 
-        $storageFilename = trim($storageFilename);
+        $storageFilename = \trim($storageFilename);
         if (empty($storageFilename)) {
             $storageFilename = $_FILES['name'];
         }
 
         // Move to storage directory
         $storageFilePath = $storagePath . DIRECTORY_SEPARATOR . $storageFilename;
-        if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $storageFilePath)) {
+        if (!\move_uploaded_file($_FILES['userfile']['tmp_name'], $storageFilePath)) {
             throw new FileException('Failed to move uploaded file ().');
         }
 
@@ -722,8 +749,8 @@ class HelperFile
     public static function unlinkFiles(string $path, array $files = []): bool
     {
         foreach ($files as $file) {
-            if (file_exists($path . DIRECTORY_SEPARATOR . $file)) {
-                unlink($path . DIRECTORY_SEPARATOR . $file);
+            if (\file_exists($path . DIRECTORY_SEPARATOR . $file)) {
+                \unlink($path . DIRECTORY_SEPARATOR . $file);
             }
         }
 
@@ -735,10 +762,12 @@ class HelperFile
      */
     public static function deleteFilesInDirectory(string $pathPattern): void
     {
-        $files = glob($pathPattern);
-        if (\count($files) > 0) {
+        $files = \glob($pathPattern);
+        if ([] !== $files
+            && false !== $files
+        ) {
             foreach ($files as $file) {
-                unlink($file);
+                \unlink($file);
             }
         }
     }
@@ -765,8 +794,10 @@ class HelperFile
 
         $pathFull = ('' === $path ? '' : $path . DIRECTORY_SEPARATOR) . $filename;
 
-        if (file_exists($pathFull)) {
-            return is_dir($pathFull) ? self::rmdirRecursive($pathFull) : unlink($pathFull);
+        if (\file_exists($pathFull)) {
+            return \is_dir($pathFull)
+                ? self::rmdirRecursive($pathFull)
+                : \unlink($pathFull);
         }
 
         return false;
@@ -785,37 +816,39 @@ class HelperFile
             return true;
         }
 
-        if (!is_dir($path)) {
+        if (!\is_dir($path)) {
             return false;
         }
 
         /** @noinspection ReturnFalseInspection */
-        $files = scandir($path, null);
+        $files = \scandir($path, null);
         foreach ($files as $file) {
-            if ('.' !== $file && '..' !== $file) {
+            if ('.' !== $file
+                && '..' !== $file
+            ) {
                 $rmPath = $path . '/' . $file;
-                if (is_dir($rmPath)) {
+                if (\is_dir($rmPath)) {
                     self::rmdirRecursive($rmPath);
                 } else {
-                    unlink($rmPath);
+                    \unlink($rmPath);
                 }
             }
         }
 
         /** @noinspection ReturnFalseInspection */
-        reset($files);
+        \reset($files);
 
-        return rmdir($path);
+        return \rmdir($path);
     }
 
     public static function sendFileHeaders(string $filename, string $contentType): void
     {
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-        header('Content-Type: ' . $contentType);
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        \header('Last-Modified: ' . \gmdate('D, d M Y H:i:s') . ' GMT');
+        \header('Cache-Control: no-store, no-cache, must-revalidate');
+        \header('Cache-Control: post-check=0, pre-check=0', false);
+        \header('Pragma: no-cache');
+        \header('Content-Type: ' . $contentType);
+        \header('Content-Disposition: attachment;filename="' . $filename . '"');
     }
 
     /**
@@ -844,18 +877,23 @@ class HelperFile
         bool $createIfNotExists = true
     ): bool
     {
-        if ($createIfNotExists && !is_dir($path)) {
+        if ($createIfNotExists
+            && !\is_dir($path)
+        ) {
             /** @noinspection MkdirRaceConditionInspection */
-            mkdir($path, self::FILE_MODE_GRANT_ALL, true);
+            \mkdir($path, self::FILE_MODE_GRANT_ALL, true);
         }
-        if (!is_dir($path)) {
+        if (!\is_dir($path)) {
             throw new FileExceptionPathNotFound('Directory does not exist');
         }
-        if ($makeWritableIfNot && !is_writable($path)) {
-            chmod($path, self::FILE_MODE_GRANT_ALL);
+        if ($makeWritableIfNot
+            && !\is_writable($path)
+        ) {
+            \chmod($path, self::FILE_MODE_GRANT_ALL);
         }
 
-        return is_dir($path) && is_writable($path);
+        return \is_dir($path)
+            && \is_writable($path);
     }
 
     /**
@@ -866,7 +904,7 @@ class HelperFile
     public static function sanitizeFilename(string $filename, bool $toLower = true): string
     {
         // Convert space to hyphen, remove single- and double- quotes
-        $filename = str_replace([' ', '\'', '"'], ['-', '', ''], $filename);
+        $filename = \str_replace([' ', '\'', '"'], ['-', '', ''], $filename);
 
         $replacePairs = [
             'š' => 's', 'ð' => 'dj', 'ž' => 'z', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'a',
@@ -877,10 +915,10 @@ class HelperFile
         ];
 
         if ($toLower) {
-            $filename = strtolower($filename);
+            $filename = \strtolower($filename);
         } else {
             // Needs to translate also upper-case characters
-            $replacePairs = array_merge($replacePairs, [
+            $replacePairs = \array_merge($replacePairs, [
                 'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
                 'Ç' => 'C', 'È' => 'E',  'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
                 'Ñ' => 'N', 'Ò' => 'O',  'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
@@ -888,15 +926,15 @@ class HelperFile
             ]);
         }
 
-        $filename = strtr($filename, $replacePairs);
+        $filename = \strtr($filename, $replacePairs);
 
-        $filename = str_replace(['&', '@', '#'], ['-and-', '-at-', '-number-'], $filename);
+        $filename = \str_replace(['&', '@', '#'], ['-and-', '-at-', '-number-'], $filename);
 
         // Remove non-word chars (leaving hyphens and periods)
-        $filename = preg_replace('/[^\w\-.]+/', '', $filename);
+        $filename = \preg_replace('/[^\w\-.]+/', '', $filename);
 
         // Reduce multiple hyphens to one
-        $filename = preg_replace('/[\-]+/', '-', $filename);
+        $filename = \preg_replace('/[\-]+/', '-', $filename);
 
         return HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
     }
@@ -905,20 +943,25 @@ class HelperFile
     {
         $baseNames = [];
         foreach ($filePaths as $filePath) {
-            $baseNames[] = basename($filePath);
+            $baseNames[] = \basename($filePath);
         }
 
-        return $makeUnique ? array_values(array_unique($baseNames)) : $baseNames;
+        return $makeUnique
+            ? \array_values(array_unique($baseNames))
+            : $baseNames;
     }
 
     public static function ensurePathEndsWithDirectorySeparator(string $path): string
     {
-        return $path . (empty($path) || HelperString::endsWith($path, DIRECTORY_SEPARATOR) ? '' : DIRECTORY_SEPARATOR);
+        return $path . (empty($path)
+            || HelperString::endsWith($path, DIRECTORY_SEPARATOR)
+                ? ''
+                : DIRECTORY_SEPARATOR);
     }
 
     public static function scanFilesystem(string $path, string $wildcard = '*'): array
     {
-        return glob($path . DIRECTORY_SEPARATOR . $wildcard);
+        return \glob($path . DIRECTORY_SEPARATOR . $wildcard);
     }
 
     /**
@@ -930,11 +973,11 @@ class HelperFile
     public static function getXMLFilesFromDir(string $path)
     {
         $xmlFiles = self::getDirectory($path);
-        if (0 === \count($xmlFiles)) {
+        if ([] === $xmlFiles) {
             return false;
         }
 
-        asort($xmlFiles);
+        \asort($xmlFiles);
         $files = [];
         foreach ($xmlFiles as $fileName) {
             $files[] = [
