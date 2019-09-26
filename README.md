@@ -1,7 +1,8 @@
 gyselroth PHP Helper Library
 ============================
 
-Collection of PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) and common data structures (e.g. HTML, ZIP, XML etc.).
+Collection of PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) 
+and common data structures (e.g. HTML, ZIP, XML etc.).
 
 
 ## Table of contents
@@ -11,8 +12,11 @@ Collection of PHP helper methods upon primitive data types (Array, Float, Intege
   * [Initialization Example 1: Within Slim PHP application](#initialization-example-1-within-slim-php-application)
   * [Initialization Example 2: Within Zend Framework 1 application](#initialization-example-2-within-zend-framework-1-application)
 * [Minimum Requirements](#minimum-requirements)
-* [Contributing](#contributing)
+* [Installation](#installation)
+  * [For use within your application](#for-use-as-a-dependency-within-your-application)
+  * [Standalone-installation / For developing on the php-helper package](#standalone-installation-for-developing-on-the-php-helper-package)
 * [Running Tests](#running-tests)
+* [Contributing](#contributing)
 * [History](#history)
 * [Author and License](#author-and-license)
 * [Used Open Source Software](#used-open-source-software)
@@ -94,18 +98,36 @@ Minimum Requirements
 * Build-tools: git, composer
 
 
-Contributing
+Installation
 ------------
 
-See [CONTRIBUTING.md](https://github.com/gyselroth/php-helper/blob/master/CONTRIBUTING.md)
+### For use within your application
+
+```sh
+composer require gyselroth/php-helper
+```
+
+
+### Standalone-installation / For developing the php-helper package
+
+```sh
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+composer install
+```
 
 
 Running Tests
 -------------
 
 ```sh
-composer test tests/
+composer test
 ```
+
+Contributing
+------------
+
+See [CONTRIBUTING.md](https://github.com/gyselroth/php-helper/blob/master/CONTRIBUTING.md)
 
 
 History
