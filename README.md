@@ -1,7 +1,7 @@
 gyselroth PHP Helper Library
 ============================
 
-Collection of PHP helper methods upon primitive data types and common data structures (e.g. HTML, ZIP, XML etc.).
+Collection of PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) and common data structures (e.g. HTML, ZIP, XML etc.).
 
 
 ## Table of contents
