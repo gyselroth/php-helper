@@ -14,9 +14,9 @@ namespace Gyselroth\Helper;
 use Gyselroth\Helper\Exception\ReflectionException;
 use Gyselroth\Helper\Exception\ReflectionExceptionInvalidType;
 use Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction;
-use Gyselroth\Helper\Interfaces\DataTypeInterface;
+use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
 
-class HelperReflection implements DataTypeInterface
+class HelperReflection implements ConstantsDataTypesInterface
 {
     public const LOG_CATEGORY = 'reflectionhelper';
 

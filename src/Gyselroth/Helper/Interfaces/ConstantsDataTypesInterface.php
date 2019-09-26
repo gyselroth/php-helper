@@ -11,7 +11,7 @@
 
 namespace Gyselroth\Helper\Interfaces;
 
-interface DataTypeInterface
+interface ConstantsDataTypesInterface
 {
     public const DATA_TYPE_ARRAY            = 'array';
     public const DATA_TYPE_ARRAY_OF_INTS    = 'array.int';
@@ -22,4 +22,7 @@ interface DataTypeInterface
     public const DATA_TYPE_INT_SHORT        = 'int';
     public const DATA_TYPE_OBJECT           = 'object';
     public const DATA_TYPE_STRING           = 'string';
+
+    public const TYPE_ID_OBJECT = 0;
+    public const TYPE_ID_ARRAY = 1;
 }

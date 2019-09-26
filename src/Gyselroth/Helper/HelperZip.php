@@ -60,7 +60,7 @@ class HelperZip
             return false;
         }
 
-        $pathFiles = HelperFile::ensurePathEndsWithDirectorySeparator($pathFiles);
+        $pathFiles = HelperConstantsFile::ensurePathEndsWithDirectorySeparator($pathFiles);
         if ($writeResultFileToSourceFilesPath) {
             $destinationFile = $pathFiles . $destinationFile;
         }
@@ -212,7 +212,7 @@ class HelperZip
         $zip->close();
 
         if ($deleteUnzipped) {
-            HelperFile::rmdirRecursive($pathUnzipped);
+            HelperConstantsFile::rmdirRecursive($pathUnzipped);
         }
 
         return $destinationFilename;

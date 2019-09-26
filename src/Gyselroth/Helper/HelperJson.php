@@ -11,12 +11,11 @@
 
 namespace Gyselroth\Helper;
 
-class HelperJson
+use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
+
+class HelperJson implements ConstantsDataTypesInterface
 {
     public const LOG_CATEGORY = 'jsonHelper';
-
-    public const TYPE_OBJECT = 0;
-    public const TYPE_ARRAY  = 1;
 
     /**
      * PHP 7 wrapper for JSON decode: prevent PHP error on empty string
@@ -26,13 +25,13 @@ class HelperJson
      * @return array|Object|null
      * @throws \Exception
      */
-    public static function decode($json, $objectDecodeType = self::TYPE_ARRAY)
+    public static function decode($json, $objectDecodeType = ConstantsDataTypesInterface::TYPE_ID_ARRAY)
     {
         try {
             /** @noinspection ReturnNullInspection */
             return empty($json)
                 ? null
-                : \json_decode($json, self::TYPE_ARRAY === $objectDecodeType);
+                : \json_decode($json, ConstantsDataTypesInterface::TYPE_ID_ARRAY === $objectDecodeType);
         } catch (\Exception $e) {
             LoggerWrapper::warning(
                 'Cannot decode invalid JSON',

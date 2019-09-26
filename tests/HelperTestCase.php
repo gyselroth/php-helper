@@ -12,7 +12,7 @@
 namespace Tests;
 
 use Gyselroth\Helper\LoggerWrapper;
-use Gyselroth\Helper\HelperFile;
+use Gyselroth\Helper\HelperConstantsFile;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
@@ -47,9 +47,9 @@ class HelperTestCase extends TestCase {
 
     private function emptyTempFolder()
     {
-        $tmpPath = HelperFile::getGlobalTmpPath();
+        $tmpPath = HelperConstantsFile::getGlobalTmpPath();
         if (is_dir($tmpPath)) {
-            HelperFile::rmdirRecursive($tmpPath);
+            HelperConstantsFile::rmdirRecursive($tmpPath);
         }
     }
 

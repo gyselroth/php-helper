@@ -18,62 +18,14 @@ use Gyselroth\Helper\Exception\FileExceptionIllegalFilename;
 use Gyselroth\Helper\Exception\FileExceptionInvalidFile;
 use Gyselroth\Helper\Exception\FileExceptionInvalidPath;
 use Gyselroth\Helper\Exception\FileExceptionPathNotFound;
+use Gyselroth\Helper\Interfaces\ConstantsFileTypesInterface;
+use Gyselroth\Helper\Interfaces\ConstantsMimeTypesInterface;
 
-class HelperFile
+class HelperConstantsFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInterface
 {
     public const LOG_CATEGORY = 'fs';
 
     public const FILE_MODE_GRANT_ALL = 0777;
-
-    // File type endings
-    public const FILE_ENDING_CSV                   = 'csv';
-    public const FILE_ENDING_DOC                   = 'doc';
-    public const FILE_ENDING_DOC_X                 = 'docx';
-    public const FILE_ENDING_DOCX_FACTORY_TEMPLATE = 'dfw';
-    public const FILE_ENDING_PHTML                 = 'phtml';
-    public const FILE_ENDING_HTML                  = 'html';
-    public const FILE_ENDING_JAVASCRIPT            = 'js';
-    public const FILE_ENDING_JSON                  = 'json';
-    public const FILE_ENDING_PDF                   = 'pdf';
-    public const FILE_ENDING_PHP                   = 'php';
-    public const FILE_ENDING_TXT                   = 'txt';
-    public const FILE_ENDING_XLS                   = 'xls';
-    public const FILE_ENDING_XLS_X                 = 'xlsx';
-    public const FILE_ENDING_XML                   = 'xml';
-    public const FILE_ENDING_ZIP                   = 'zip';
-
-    public const FILE_ENDING_GIF  = 'gif';
-    public const FILE_ENDING_JPEG = 'jpeg';
-    public const FILE_ENDING_JPG  = 'jpg';
-    public const FILE_ENDING_PNG  = 'png';
-
-    // MIME types
-    public const MIME_TYPE_CSV  = 'text/csv';
-    public const MIME_TYPE_HTML = 'text/html';
-    public const MIME_TYPE_TEXT = 'text/plain';
-
-    public const MIME_TYPE_IMAGE_GIF  = 'image/gif';
-    public const MIME_TYPE_IMAGE_JPEG = 'image/jpeg';
-    public const MIME_TYPE_IMAGE_PNG  = 'image/png';
-
-    public const MIME_TYPE_JAVASCRIPT = 'text/javascript';
-
-    public const MIME_TYPE_JSON = 'application/json';
-    public const MIME_TYPE_PDF  = 'application/pdf';
-    public const MIME_TYPE_XML  = 'application/xml';
-    public const MIME_TYPE_ZIP  = 'application/zip';
-
-    public const MIME_TYPE_MS_ACCESS     = 'application/msaccess';
-    public const MIME_TYPE_MS_EXCEL      = 'application/msexcel';
-    public const MIME_TYPE_MS_POWERPOINT = 'application/mspowerpoint';
-    public const MIME_TYPE_MS_WORD       = 'application/msword';
-
-    // DOCX
-    public const MIME_TYPE_VND_OPEN_XML_WORD = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    // XLSX
-    public const MIME_TYPE_VND_OPEN_XML_SPREADSHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-
-    public const MIME_TYPE_STREAM = 'application/octet-stream';
 
     private const DEFAULT_UPLOAD_ALLOWED_MIME_TYPES = [
         self::MIME_TYPE_TEXT,
@@ -82,49 +34,50 @@ class HelperFile
         self::MIME_TYPE_VND_OPEN_XML_WORD
     ];
 
-    /**
-     * @var  array
-     * @todo make this an array (possible since PHP7)
-     */
-    public $mimes = [
-        self::MIME_TYPE_HTML       => 'code',
-        self::MIME_TYPE_IMAGE_GIF  => 'image',
+    public const MIMES = [
+        self::MIME_TYPE_HTML => 'code',
+        self::MIME_TYPE_IMAGE_GIF => 'image',
         self::MIME_TYPE_IMAGE_JPEG => 'image',
-        self::MIME_TYPE_IMAGE_PNG  => 'image',
-        self::MIME_TYPE_PDF        => 'pdf',
-        self::MIME_TYPE_TEXT       => 'file',
+        self::MIME_TYPE_IMAGE_PNG => 'image',
+        self::MIME_TYPE_PDF => 'pdf',
+        self::MIME_TYPE_TEXT => 'file',
 
-        self::MIME_TYPE_MS_WORD                                                     => 'word',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'   => 'word',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.template'   => 'word',
-        'application/vnd.ms-word.document.macroEnabled.12'                          => 'word',
-        'application/vnd.ms-word.template.macroEnabled.12'                          => 'word',
-        'application/vnd.oasis.opendocument.text'                                   => 'word',
-        self::MIME_TYPE_MS_EXCEL                                                    => 'excel',
-        'application/vnd.ms-excel'                                                  => 'excel',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'         => 'excel',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.template'      => 'excel',
-        'application/vnd.ms-excel.sheet.macroEnabled.12'                            => 'excel',
-        'application/vnd.ms-excel.template.macroEnabled.12'                         => 'excel',
-        'application/vnd.ms-excel.addin.macroEnabled.12'                            => 'excel',
-        'application/vnd.ms-excel.sheet.binary.macroEnabled.12'                     => 'excel',
-        self::MIME_TYPE_MS_POWERPOINT                                               => 'powerpoint',
-        'application/vnd.ms-powerpoint'                                             => 'powerpoint',
+        self::MIME_TYPE_MS_WORD => 'word',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'word',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.template' => 'word',
+        'application/vnd.ms-word.document.macroEnabled.12' => 'word',
+        'application/vnd.ms-word.template.macroEnabled.12' => 'word',
+        'application/vnd.oasis.opendocument.text' => 'word',
+        self::MIME_TYPE_MS_EXCEL => 'excel',
+        'application/vnd.ms-excel' => 'excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.template' => 'excel',
+        'application/vnd.ms-excel.sheet.macroEnabled.12' => 'excel',
+        'application/vnd.ms-excel.template.macroEnabled.12' => 'excel',
+        'application/vnd.ms-excel.addin.macroEnabled.12' => 'excel',
+        'application/vnd.ms-excel.sheet.binary.macroEnabled.12' => 'excel',
+        self::MIME_TYPE_MS_POWERPOINT => 'powerpoint',
+        'application/vnd.ms-powerpoint' => 'powerpoint',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'powerpoint',
-        'application/vnd.openxmlformats-officedocument.presentationml.template'     => 'powerpoint',
-        'application/vnd.openxmlformats-officedocument.presentationml.slideshow'    => 'powerpoint',
-        'application/vnd.ms-powerpoint.addin.macroEnabled.12'                       => 'powerpoint',
-        'application/vnd.ms-powerpoint.presentation.macroEnabled.12'                => 'powerpoint',
-        'application/vnd.ms-powerpoint.template.macroEnabled.12'                    => 'powerpoint',
-        'application/vnd.ms-powerpoint.slideshow.macroEnabled.12'                   => 'powerpoint',
-        self::MIME_TYPE_CSV                                                         => 'csv',
-        'text/comma-separated-values'                                               => 'csv',
-        'text/x-comma-separated-values'                                             => 'csv',
-        'application/csv'                                                           => 'csv',
-        self::MIME_TYPE_MS_ACCESS                                                   => 'access',
+        'application/vnd.openxmlformats-officedocument.presentationml.template' => 'powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.slideshow' => 'powerpoint',
+        'application/vnd.ms-powerpoint.addin.macroEnabled.12' => 'powerpoint',
+        'application/vnd.ms-powerpoint.presentation.macroEnabled.12' => 'powerpoint',
+        'application/vnd.ms-powerpoint.template.macroEnabled.12' => 'powerpoint',
+        'application/vnd.ms-powerpoint.slideshow.macroEnabled.12' => 'powerpoint',
+        self::MIME_TYPE_CSV => 'csv',
+        'text/comma-separated-values' => 'csv',
+        'text/x-comma-separated-values' => 'csv',
+        'application/csv' => 'csv',
+        self::MIME_TYPE_MS_ACCESS => 'access',
 
         self::MIME_TYPE_ZIP => self::FILE_ENDING_ZIP
     ];
+
+    /**
+     * @var  array
+     */
+    public $mimes = self::MIMES;
 
     /** @var string */
     public static $rootPath;
@@ -138,7 +91,7 @@ class HelperFile
         if (empty(self::$rootPath)) {
             /** @noinspection ReturnFalseInspection */
             $pathDelimiter = false !== \strpos(__DIR__, '/vendor/')
-                // __DIR__ is e.g. '/srv/www/trunk/vendor/gyselroth/....../HelperFile
+                // __DIR__ is e.g. '/srv/www/trunk/vendor/gyselroth/....../HelperConstantsFile
                 ? '/vendor/'
 
                 // Fallback: helper-package seems to be itself the project at hand (is not installed in one of composer's vendor sub directories)
@@ -176,14 +129,6 @@ class HelperFile
     private static function getMimeType(string $pathFile)
     {
         return \finfo_file(\finfo_open(FILEINFO_MIME_TYPE), $pathFile);
-    }
-
-    /**
-     * @return array
-     */
-    public static function getMimes(): array
-    {
-        return (new self())->mimes;
     }
 
     /**
@@ -965,7 +910,7 @@ class HelperFile
     }
 
     /**
-     * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming and remove this additional method
+     * @deprecated  test the method, replace its usages with HelperConstantsFile::scanDir() w/ subsequent reforming and remove this additional method
      * @param  string $path
      * @return array|bool
      * @throws \Exception

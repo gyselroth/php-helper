@@ -11,7 +11,7 @@
 
 namespace Tests;
 
-use Gyselroth\Helper\HelperFile;
+use Gyselroth\Helper\HelperConstantsFile;
 use Gyselroth\Helper\HelperZip;
 
 class HelperZipTest extends HelperTestCase
@@ -29,7 +29,7 @@ class HelperZipTest extends HelperTestCase
         unset($files[0], $files[1]);
         $files = array_values($files);
 
-        $pathTmp        = HelperFile::getGlobalTmpPath();
+        $pathTmp        = HelperConstantsFile::getGlobalTmpPath();
         $pathTmpExisted = is_dir($pathTmp);
         if (!$pathTmpExisted) {
             $pathTmpExisted = false;
@@ -55,10 +55,10 @@ class HelperZipTest extends HelperTestCase
             unlink($pathDestinationFile);
         }
         if (!$pathTmpExisted) {
-            HelperFile::rmdirRecursive($pathTmp);
+            HelperConstantsFile::rmdirRecursive($pathTmp);
         }
         if (is_dir($pathUnzip)) {
-            HelperFile::rmdirRecursive($pathUnzip);
+            HelperConstantsFile::rmdirRecursive($pathUnzip);
         }
     }
 
@@ -70,7 +70,7 @@ class HelperZipTest extends HelperTestCase
     {
         $path = __DIR__ . '/Fixtures/data/files/zip/01.pdf';
 
-        $pathTmp = HelperFile::getGlobalTmpPath(true);
+        $pathTmp = HelperConstantsFile::getGlobalTmpPath(true);
         $pathDestinationFile = $pathTmp . DIRECTORY_SEPARATOR . 'test.zip';
 
         HelperZip::zip($path, $pathDestinationFile, false);
@@ -90,7 +90,7 @@ class HelperZipTest extends HelperTestCase
     public function testZipDestinationFileIsDirectory()
     {
         $path = __DIR__ . '/Fixtures/data/files/zip';
-        $pathTmp = HelperFile::getGlobalTmpPath(true);
+        $pathTmp = HelperConstantsFile::getGlobalTmpPath(true);
         $this->assertFalse(HelperZip::zip($path, $pathTmp));
     }
 
@@ -102,7 +102,7 @@ class HelperZipTest extends HelperTestCase
     {
         $path = __DIR__ . '/Fixtures/data/files/unzip/tobeunzipped.zip';
         $pathToCompare = __DIR__ . '/Fixtures/data/files/unzip/unzipped';
-        $pathTmp = HelperFile::getGlobalTmpPath(true);
+        $pathTmp = HelperConstantsFile::getGlobalTmpPath(true);
         $pathDestinationFolder = $pathTmp . DIRECTORY_SEPARATOR . 'unzip';
         if (!is_dir($pathDestinationFolder)) {
             mkdir($pathDestinationFolder);
@@ -110,7 +110,7 @@ class HelperZipTest extends HelperTestCase
         HelperZip::unzip($path, $pathDestinationFolder);
         $this->assertFileEquals($pathToCompare, $pathDestinationFolder);
         if (is_dir($pathDestinationFolder)) {
-            HelperFile::rmdirRecursive($pathDestinationFolder);
+            HelperConstantsFile::rmdirRecursive($pathDestinationFolder);
         }
     }
 

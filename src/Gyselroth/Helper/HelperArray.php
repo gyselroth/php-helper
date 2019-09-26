@@ -12,9 +12,9 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\ArrayException;
-use Gyselroth\Helper\Interfaces\DataTypeInterface;
+use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
 
-class HelperArray implements DataTypeInterface
+class HelperArray implements ConstantsDataTypesInterface
 {
     public const LOG_CATEGORY = 'arrayhelper';
 

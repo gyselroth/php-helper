@@ -12,22 +12,11 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\XmlException;
+use Gyselroth\Helper\Interfaces\ConstantsXmlInterface;
 
-class HelperXml
+class HelperXml implements ConstantsXmlInterface
 {
     public const LOG_CATEGORY = 'xmlhelper';
-
-    // DOM classes
-    public const DOM_CLASS_ELEMENT   = 'DOMElement';
-    public const DOM_CLASS_NODE_LIST = 'DOMNodeList';
-
-    // XML tag types
-    public const TAG_TYPE_CLOSE    = 'close';
-    public const TAG_TYPE_COMPLETE = 'complete';
-    public const TAG_TYPE_OPEN     = 'open';
-
-    public const ENCODING_UTF_8 = 'UTF-8';
-    public const VERSION_1_0    = '1.0';
 
     /**
      * Simple XML validation

@@ -12,8 +12,9 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\PregExceptionEmptyExpression;
+use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
 
-class HelperString
+class HelperString implements ConstantsDataTypesInterface
 {
     public const LOG_CATEGORY = 'stringHelper';
 
@@ -22,12 +23,6 @@ class HelperString
     public const CHAR_TYPE_ALPHA_UPPER = 1;
     public const CHAR_TYPE_NUMBER      = 2;
     public const CHAR_TYPE_SPECIAL     = 3;
-
-    public const OPERATOR_EQUAL            = 'eq';
-    public const OPERATOR_GREATER_OR_EQUAL = 'ge';
-    public const OPERATOR_GREATER_THAN     = 'gt';
-    public const OPERATOR_LESS_OR_EQUAL    = 'le';
-    public const OPERATOR_LESS_THAN        = 'lt';
 
     /**
      * @param      string $haystack
@@ -305,7 +300,7 @@ class HelperString
 
     public static function sanitizeFilename(string $filename): string
     {
-        return HelperFile::sanitizeFilename($filename);
+        return HelperConstantsFile::sanitizeFilename($filename);
     }
 
     /**
