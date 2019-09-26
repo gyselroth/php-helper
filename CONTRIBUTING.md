@@ -10,7 +10,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 Pull requests concerning improvements and additions to gyselroth/php-helper are welcome.
 
-1. The source code of gyselroth/php-helper follows the [PSR-2 Coding Style Guide](#https://www.php-fig.org/psr/psr-2/),
+1. The source code of gyselroth/php-helper follows the [PSR-2 Coding Style Guide](https://www.php-fig.org/psr/psr-2/),
 2. Please discuss your goals before adding any third party dependencies
 3. Update the README.md with any helper-subjects added in case of additions
    The versioning scheme we use is [SemVer](http://semver.org/).
