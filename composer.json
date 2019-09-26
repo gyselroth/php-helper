@@ -32,6 +32,7 @@
         "ext-openssl": "*",
         "ext-simplexml": "*",
         "ext-spl": "*",
+        "ext-zip": "*",
         "ezyang/htmlpurifier": "^4.9",
         "iio/libmergepdf": "^3.0",
         "itbz/fpdf": "^1.7",
