@@ -4,6 +4,20 @@ gyselroth PHP Helper Library
 Collection of PHP helper methods upon primitive data types and common data structures (e.g. HTML, ZIP, XML etc.).
 
 
+## Table of contents
+
+* [Features](#features)
+* [Log-Wrapper](#log-wrapper)
+  * [Initialization Example 1: Within Slim PHP application](#initialization-example-1-within-slim-php-application)
+  * [Initialization Example 2: Within Zend Framework 1 application](#initialization-example-2-within-zend-framework-1-application)
+* [Minimum Requirements](#minimum-requirements)
+* [Contributing](#contributing)
+* [Running Tests](#running-tests)
+* [History](#history)
+* [Author and License](#author-and-license)
+* [Used Open Source Software](#used-open-source-software)
+
+
 Features
 --------
 
@@ -31,7 +45,7 @@ the host application's logger can be registered with the Logger-Wrapper (skip th
 to write any log-entries):
 
   
-#### Initialization Example 1: Within Slim PHP application  
+#### Initialization Example 1: Within Slim PHP application
 ```php
 <?php 
  use Gyselroth\Helper;
@@ -53,7 +67,7 @@ to write any log-entries):
 ```
 
 
-#### Initialization Example 2: Within Zend Framework 1 application  
+#### Initialization Example 2: Within Zend Framework 1 application
 
 As there's no service container for dependency injection within Zend Framework 1 yet,
 the helper classes will by convention draw your logger (probably Zend_Log) from the Zend_Registry
@@ -83,7 +97,7 @@ Minimum Requirements
 Contributing
 ------------
 
-See [CONTRIBUTING.md](#https://github.com/gyselroth/php-helper/blob/master/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/gyselroth/php-helper/blob/master/CONTRIBUTING.md)
 
 
 Running Tests
@@ -97,7 +111,7 @@ composer test tests/
 History
 -------
 
-See [CHANGELOG.md](#https://github.com/gyselroth/php-helper/blob/master/CHANGELOG.md)
+See [CHANGELOG.md](https://github.com/gyselroth/php-helper/blob/master/CHANGELOG.md)
 
 
 Author and License
