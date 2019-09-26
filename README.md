@@ -35,18 +35,18 @@ to write any log-entries):
 ```php
 <?php 
  use Gyselroth\Helper;
- ...
+ //...
  
  $app = new \Slim\App($settings);
 
  $container = $app->getContainer();
  
- ...
+ //...
 
- $container['logger'] = function (...) {
+ $container['logger'] = function (/*...*/) {
      // Callback to PSR-7 logger, e.g. Monolog
-     ...
- }
+     //...
+ };
  
  // Register host application's logger component within gyselroth Helper's logger wrapper
  new \Gyselroth\Helper\LoggerWrapper($app->getContainer()['logger']);
@@ -61,7 +61,7 @@ the helper classes will by convention draw your logger (probably Zend_Log) from 
 ```php
 <?php 
  use Gyselroth\Helper\;
- ...
+ //...
  
  $app = new Zend_Application($env, $config);
  $app->bootstrap();
@@ -97,7 +97,7 @@ See `CHANGELOG.md`
 Author and License
 ------------------
 
-Copyright 2017-2018 gyselroth™ (http://www.gyselroth.com)
+Copyright 2017-2019 gyselroth™ (http://www.gyselroth.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

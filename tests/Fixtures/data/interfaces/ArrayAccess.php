@@ -2,7 +2,7 @@
 
 /**
  * gyselroth Helper
- * Copyright (c) 2017-2018 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
  *
  *
  */
