@@ -5,7 +5,8 @@ Version 0.1.4 - Not released yet
 --------------------------------
 * Used interface for non-private constants w/ multiple use
 * Performance: Use more strict types, use more opcode caching
-* Added overlooked php-ext dependency declarations in composer.json 
+* Added overlooked php-ext dependency declarations in composer.json
+* Added various helper methods and classes: HelperImage, HelperMongoDB  
 * Added CONTRIBUTING.md
  
 Version 0.1.3 - Released 2019/07/10

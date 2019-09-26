@@ -300,7 +300,7 @@ class HelperString implements ConstantsDataTypesInterface
 
     public static function sanitizeFilename(string $filename): string
     {
-        return HelperConstantsFile::sanitizeFilename($filename);
+        return HelperFile::sanitizeFilename($filename);
     }
 
     /**

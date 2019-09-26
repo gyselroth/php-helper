@@ -890,4 +890,56 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         return \date('W / Y');
     }
+
+    public static function getDayNumberOfWeekFromZendDate(\Zend_Date $date): int
+    {
+        $dateValue = $date->toValue(\Zend_Date::WEEKDAY_DIGIT);
+
+        return 0 === $dateValue ? 7 : $dateValue;
+    }
+
+    /**
+     * @param Zend_Date $date
+     * @param int $addDays
+     * @return bool
+     * @throws Zend_Date_Exception
+     * @throws \Zend_Date_Exception
+     */
+    public static function passesWeekend(\Zend_Date $date, int $addDays): bool
+    {
+        $tempDate = clone $date;
+        for ($count = 0; $count < $addDays; $count++) {
+            $tempDate->addDay(1);
+            $weekDayNumber = $tempDate->toValue(\Zend_Date::WEEKDAY_DIGIT);
+            if ($weekDayNumber === 6 || $weekDayNumber === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $start1 e.g. '07:45'
+     * @param string $end1   e.g. '08:30'
+     * @param string $start2 e.g. '07:45'
+     * @param string $end2   e.g. '08:30'
+     * @return bool
+     */
+    public static function timeSpansIntersect(string $start1, string $end1, string $start2, string $end2): bool
+    {
+        return \date($start1) >= \date($start2)
+            && \date($end1) <= \date($end2);
+    }
+
+    /**
+     * @param string $timeSpan E.g.: '07:45 - 08:30'
+     * @return bool
+     */
+    public static function isTimeSpan(string $timeSpan): bool
+    {
+        \preg_match('/[\d]+:[\d]+ - [\d]+:[\d]+/', $timeSpan, $matches);
+
+        return isset($matches[0]);
+    }
 }

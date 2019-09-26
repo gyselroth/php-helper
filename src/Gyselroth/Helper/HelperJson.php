@@ -49,4 +49,13 @@ class HelperJson implements ConstantsDataTypesInterface
         /** @noinspection ReturnFalseInspection */
         return 0 === \strpos($str, '<!DOCTYPE') ? 'HTML Code (expected JSON)' : $str;
     }
+
+    /**
+     * @param  array|bool|int|null|object $value
+     * @return string
+     */
+    public static function encodePretty($value): string
+    {
+        return \json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?: '';
+    }
 }

@@ -20,11 +20,22 @@ class HelperServerClient implements ConstantsHttpInterface
 {
     private const LOG_CATEGORY_REQUEST = 'request';
 
+    protected const PATTERN_USER_AGENTS_MOBILE_DEVICES =
+        '/(alcatel|amoi|android|avantgo|blackberry|benq|cell|cricket|docomo|elaine|'
+        . 'htc|iemobile|iphone|ipad|ipaq|ipod|j2me|java|midp|mini|mmp|mobi|motorola|nec-|nokia|palm|'
+        . 'panasonic|philips|phone|playbook|sagem|sharp|sie-|silk|smartphone|sony|symbian|t-mobile|telus|'
+        . 'up\.browser|up\.link|vodafone|wap|webos|wireless|xda|xoom|zte)/i';
+
     public static function getHost(bool $withProtocol = true): string
     {
-        $protocol = $withProtocol
-            ? 'http' . (isset($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS'] ? 's' : '') . '://'
-            : '';
+        $protocol = '';
+        if ($withProtocol) {
+            $protocol = 'http' .
+                (isset($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS']
+                    ? 's'
+                    : ''
+                ) . '://';
+        }
 
         return $protocol . $_SERVER['HTTP_HOST'];
     }
@@ -170,5 +181,12 @@ class HelperServerClient implements ConstantsHttpInterface
         \preg_match($pattern, $str, $matches);
 
         return $matches;
+    }
+
+    public static function isMobileDevice(): bool
+    {
+        return \preg_match(
+            self::PATTERN_USER_AGENTS_MOBILE_DEVICES,
+            $_SERVER['HTTP_USER_AGENT']);
     }
 }

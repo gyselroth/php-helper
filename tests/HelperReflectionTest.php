@@ -121,12 +121,12 @@ class HelperReflectionTest extends HelperTestCase
 
     public function testGetControllerFilenames(): void
     {
-        $this->markTestSkipped('Used function HelperConstantsFile::scanDirRecursive() already tested in HelperFileTest');
+        $this->markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
     }
 
     public function testGetActionsFromControllerFile(): void
     {
-        $this->markTestSkipped('Used function HelperConstantsFile::scanDirRecursive() already tested in HelperFileTest');
+        $this->markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
 
 //        $actions = [
 //            'index',

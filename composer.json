@@ -25,6 +25,7 @@
     "require": {
         "php": ">=7.1.0",
         "ext-fileinfo": "*",
+        "ext-gd": "*",
         "ext-imagick": "*",
         "ext-json": "*",
         "ext-libxml": "*",

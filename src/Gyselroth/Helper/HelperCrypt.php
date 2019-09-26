@@ -108,4 +108,20 @@ class HelperCrypt
             OPENSSL_RAW_DATA,
             $initVector);
     }
+
+    /**
+     * Create base64 encoded token
+     *
+     * @param  array|Object|Zend_Json_Expr|string $data
+     * @param  bool                               $compressed
+     * @return string encrypted data
+     */
+    public static function createToken($data, $compressed = true): string
+    {
+        $string = $compressed
+            ? \gzdeflate(\Zend_Json::encode($data), 9)
+            : \Zend_Json::encode($data);
+
+        return HelperString::urlSafeB64encode($string);
+    }
 }

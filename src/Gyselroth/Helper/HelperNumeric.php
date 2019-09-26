@@ -160,4 +160,29 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
             'unit' => self::UNIT_MEGABYTES
         ];
     }
+
+    /**
+     * @param  float|int $amountFull
+     * @param  float|int $amountPartial
+     * @return float|int
+     */
+    public static function getPercentage($amountFull, $amountPartial)
+    {
+        return empty($amountFull) || $amountFull === $amountPartial
+            ? 100
+            : $amountPartial / $amountFull * 100;
+    }
+
+    /**
+     * Remove empty IDs that could cause errors
+     *
+     * @param  string $classIds
+     * @return string
+     */
+    public static function removeEmptyItemsFromIDsCsv(string $classIds): string
+    {
+        $entityIds = \array_filter(\explode(',', $classIds));
+
+        return \implode(',', $entityIds);
+    }
 }

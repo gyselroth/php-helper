@@ -19,6 +19,8 @@ use HTMLPurifier_Config;
  */
 class HelperHtml
 {
+    public const TEXT_ALIGN_VALUES = ['left', 'right', 'center', 'justify', 'initial', 'inherit'];
+
     /**
      * Decode until no more special chars are found
      *
@@ -210,5 +212,12 @@ class HelperHtml
         }
 
         return '<thead><tr>' . $cells . '</tr></thead>';
+    }
+
+    public static function validateTextAlignValue(string $value): string
+    {
+        return \in_array($value, self::TEXT_ALIGN_VALUES, true)
+            ? $value
+            : 'left';
     }
 }

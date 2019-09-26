@@ -21,18 +21,11 @@ use Gyselroth\Helper\Exception\FileExceptionPathNotFound;
 use Gyselroth\Helper\Interfaces\ConstantsFileTypesInterface;
 use Gyselroth\Helper\Interfaces\ConstantsMimeTypesInterface;
 
-class HelperConstantsFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInterface
+class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInterface
 {
     public const LOG_CATEGORY = 'fs';
 
     public const FILE_MODE_GRANT_ALL = 0777;
-
-    private const DEFAULT_UPLOAD_ALLOWED_MIME_TYPES = [
-        self::MIME_TYPE_TEXT,
-        self::MIME_TYPE_PDF,
-        self::MIME_TYPE_MS_WORD,
-        self::MIME_TYPE_VND_OPEN_XML_WORD
-    ];
 
     public const MIMES = [
         self::MIME_TYPE_HTML => 'code',
@@ -74,6 +67,13 @@ class HelperConstantsFile implements ConstantsFileTypesInterface, ConstantsMimeT
         self::MIME_TYPE_ZIP => self::FILE_ENDING_ZIP
     ];
 
+    private const DEFAULT_UPLOAD_ALLOWED_MIME_TYPES = [
+        self::MIME_TYPE_TEXT,
+        self::MIME_TYPE_PDF,
+        self::MIME_TYPE_MS_WORD,
+        self::MIME_TYPE_VND_OPEN_XML_WORD
+    ];
+
     /**
      * @var  array
      */
@@ -91,7 +91,7 @@ class HelperConstantsFile implements ConstantsFileTypesInterface, ConstantsMimeT
         if (empty(self::$rootPath)) {
             /** @noinspection ReturnFalseInspection */
             $pathDelimiter = false !== \strpos(__DIR__, '/vendor/')
-                // __DIR__ is e.g. '/srv/www/trunk/vendor/gyselroth/....../HelperConstantsFile
+                // __DIR__ is e.g. '/srv/www/trunk/vendor/gyselroth/....../HelperFile
                 ? '/vendor/'
 
                 // Fallback: helper-package seems to be itself the project at hand (is not installed in one of composer's vendor sub directories)
@@ -910,7 +910,16 @@ class HelperConstantsFile implements ConstantsFileTypesInterface, ConstantsMimeT
     }
 
     /**
-     * @deprecated  test the method, replace its usages with HelperConstantsFile::scanDir() w/ subsequent reforming and remove this additional method
+     * @param  string $fileName
+     * @param  string $fileStoredIn
+     */
+    public static function moveUploadedFileToTempDirectory($fileName, $fileStoredIn): void
+    {
+        \move_uploaded_file($fileStoredIn, PATH_TMP . DIRECTORY_SEPARATOR . $fileName);
+    }
+
+    /**
+     * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming and remove this additional method
      * @param  string $path
      * @return array|bool
      * @throws \Exception

@@ -1079,6 +1079,97 @@ class HelperArray implements ConstantsDataTypesInterface
     }
 
     /**
+     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to integer
+     *
+     * @param  array        $array
+     * @param  array|string $keys Multiple keys as array | One key as string
+     * @return array
+     * @deprecated use new method castValSubItemsByKey() instead
+     */
+    public static function intValSubItemsByKey(array $array, $keys): array
+    {
+        return self::castSubColumn($array, $keys);
+    }
+
+    public static function isIterable($var): bool
+    {
+        return $var !== null
+            && (
+                \is_array($var)
+                || $var instanceof Traversable
+                || $var instanceof Iterator
+                || $var instanceof IteratorAggregate
+            );
+    }
+
+    /**
+     * Get array from (e.g. stdClass) object
+     *
+     * @param  object|array $obj
+     * @return array
+     */
+    public static function objectToArray($obj): array
+    {
+        if (\is_object($obj)) {
+            // Gets the properties of the given object
+            // with get_object_vars function
+            $obj = \get_object_vars($obj);
+        }
+
+        return \is_array($obj)
+            // Return array converted to object Using __FUNCTION__ (Magic constant) for recursive call
+            ? $obj
+            : (array)$obj;
+    }
+
+    public static function resortByDate(array &$array, string $dateColumnKey): void
+    {
+        \usort(
+            $array,
+            function ($a, $b) use ($dateColumnKey) {
+                $dateA = \DateTime::createFromFormat('d.m.Y', $a[$dateColumnKey])->format('Ymd');
+                $dateB = \DateTime::createFromFormat('d.m.Y', $b[$dateColumnKey])->format('Ymd');
+
+                return $dateA - $dateB;
+            }
+        );
+    }
+
+    public static function sanitize(
+        array &$array,
+        bool $allowCharacters = true,
+        bool $allowUmlauts = false,
+        bool $allowDigits = false,
+        bool $allowWhiteSpace = false,
+        bool $allowSpace = false,
+        string $allowedSpecialCharacters = ''
+    ): void
+    {
+        foreach ($array as &$value) {
+            if (\is_array($value)) {
+                self::sanitize(
+                    $value,
+                    $allowCharacters,
+                    $allowUmlauts,
+                    $allowDigits,
+                    $allowWhiteSpace,
+                    $allowSpace,
+                    $allowedSpecialCharacters);
+            } elseif (!HelperString::validateString(
+                $value,
+                $allowCharacters,
+                $allowUmlauts,
+                $allowDigits,
+                $allowWhiteSpace,
+                $allowSpace,
+                $allowedSpecialCharacters
+            )) {
+                $value = '';
+            }
+        }
+    }
+
+    /**
      * Extract given associative array into a "flat" array, containing just the values of the given key, of all items
      *
      * @param  array  $arr
@@ -1115,18 +1206,5 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function sortElementArr(array $elements)
     {
         return self::sortElements($elements);
-    }
-
-    /**
-     * Reform items of given key(s) of all sub-arrays (1 level of depth) of given array to integer
-     *
-     * @param  array        $array
-     * @param  array|string $keys Multiple keys as array | One key as string
-     * @return array
-     * @deprecated use new method castValSubItemsByKey() instead
-     */
-    public static function intValSubItemsByKey(array $array, $keys): array
-    {
-        return self::castSubColumn($array, $keys);
     }
 }
