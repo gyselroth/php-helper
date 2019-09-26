@@ -14,8 +14,9 @@ namespace Gyselroth\Helper;
 use Gyselroth\Helper\Exception\ReflectionException;
 use Gyselroth\Helper\Exception\ReflectionExceptionInvalidType;
 use Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction;
+use Gyselroth\Helper\Interfaces\DataTypeInterface;
 
-class HelperReflection
+class HelperReflection implements DataTypeInterface
 {
     public const LOG_CATEGORY = 'reflectionhelper';
 
@@ -28,16 +29,16 @@ class HelperReflection
     public static function getTypeCasted($value, string $destinationType)
     {
         switch ($destinationType) {
-            case DataType::TYPE_ARRAY:
+            case self::TYPE_ARRAY:
                 return (array)$value;
-            case DataType::TYPE_BOOL:
+            case self::TYPE_BOOL:
                 return (bool)$value;
-            case DataType::TYPE_FLOAT:
+            case self::TYPE_FLOAT:
                 return (float)$value;
-            case DataType::TYPE_INT:
-            case DataType::TYPE_INT_SHORT:
+            case self::TYPE_INT:
+            case self::TYPE_INT_SHORT:
                 return (int)$value;
-            case DataType::TYPE_STRING:
+            case self::TYPE_STRING:
                 return (string)$value;
             default:
                 LoggerWrapper::warning("Detected unhandled type: $destinationType", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $destinationType]);

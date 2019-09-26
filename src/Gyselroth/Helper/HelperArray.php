@@ -12,12 +12,18 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\ArrayException;
+use Gyselroth\Helper\Interfaces\DataTypeInterface;
 
-class HelperArray
+class HelperArray implements DataTypeInterface
 {
     public const LOG_CATEGORY = 'arrayhelper';
 
-    private const CASTABLE_TYPES = ['bool', 'float', 'int', 'string'];
+    private const CASTABLE_TYPES = [
+        self::DATA_TYPE_BOOL,
+        self::DATA_TYPE_FLOAT,
+        self::DATA_TYPE_INT_SHORT,
+        self::DATA_TYPE_STRING
+    ];
 
     /**
      * Constructor (non-public, not meant to be instantiated)
@@ -399,16 +405,16 @@ class HelperArray
                 }
 
                 switch ($dataTypes[$field]) {
-                    case DataType::TYPE_ARRAY_OF_INTS:
-                    case DataType::TYPE_ARRAY_OF_STRINGS:
+                    case self::DATA_TYPE_ARRAY_OF_INTS:
+                    case self::DATA_TYPE_ARRAY_OF_STRINGS:
                         $queryResult[$index][$field] = \strlen($value) > 0 ? explode(',', $value) : [];
-                        if (DataType::TYPE_ARRAY_OF_INTS === $dataTypes[$field]) {
+                        if (self::DATA_TYPE_ARRAY_OF_INTS === $dataTypes[$field]) {
                             foreach ($queryResult[$index][$field] as $fieldIndex => $id) {
                                 $queryResult[$index][$field][$fieldIndex] = (int)$id;
                             }
                         }
                         break;
-                    case DataType::TYPE_INT_SHORT:
+                    case self::DATA_TYPE_INT_SHORT:
                         $queryResult[$index][$field] = (int)$value;
                         break;
                     default:
@@ -431,17 +437,17 @@ class HelperArray
         $converted = [];
         foreach ($array as $key => $value) {
             switch (strtolower($value['type'])) {
-                case DataType::TYPE_INT_SHORT:
-                case DataType::TYPE_INT:
+                case self::DATA_TYPE_INT_SHORT:
+                case self::DATA_TYPE_INT:
                     $converted[$key] = (int)$value['value'];
                     break;
-                case DataType::TYPE_STRING:
+                case self::DATA_TYPE_STRING:
                     $converted[$key] = (string)$value['value'];
                     break;
-                case DataType::TYPE_ARRAY:
+                case self::DATA_TYPE_ARRAY:
                     $converted[$key] = (array)$value['values']['value'];
                     break;
-                case DataType::TYPE_OBJECT:
+                case self::DATA_TYPE_OBJECT:
                     $converted[$key] = (object)$value['values']['value'];
                     break;
                 default:

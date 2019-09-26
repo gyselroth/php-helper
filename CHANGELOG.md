@@ -3,6 +3,7 @@ gyselroth Helper Library
 
 Version 0.1.4 - Not released yet
 --------------------------------
+* Used interface for non-private constants w/ multiple use 
 * Added CONTRIBUTING.md
  
 Version 0.1.3 - Released 2019/07/10
