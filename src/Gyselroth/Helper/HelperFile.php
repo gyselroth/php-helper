@@ -829,7 +829,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             \mkdir($path, self::FILE_MODE_GRANT_ALL, true);
         }
         if (!\is_dir($path)) {
-            throw new FileExceptionPathNotFound('Directory does not exist');
+            throw new FileExceptionPathNotFound('Directory does not exist: ' . $path);
         }
         if ($makeWritableIfNot
             && !\is_writable($path)
