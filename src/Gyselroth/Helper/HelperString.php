@@ -19,6 +19,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 {
     public const LOG_CATEGORY = 'stringHelper';
 
+    public const CHARSET_UTF8 = 'UTF-8';
+
     // Character classes
     public const CHAR_TYPE_ALPHA_LOWER = 0;
     public const CHAR_TYPE_ALPHA_UPPER = 1;
