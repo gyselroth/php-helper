@@ -21,6 +21,8 @@ class HelperHtml
 {
     public const TEXT_ALIGN_VALUES = ['left', 'right', 'center', 'justify', 'initial', 'inherit'];
 
+    public const IMAGE_SOURCE_PREFIX_JPEG_BASE_64 = 'data:image/jpeg;base64,';
+
     /**
      * Decode until no more special chars are found
      *
