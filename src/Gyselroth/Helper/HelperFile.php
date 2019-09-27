@@ -126,7 +126,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      * @param  string $pathFile
      * @return string|bool
      */
-    private static function getMimeType(string $pathFile)
+    public static function getMimeType(string $pathFile)
     {
         return \finfo_file(\finfo_open(FILEINFO_MIME_TYPE), $pathFile);
     }

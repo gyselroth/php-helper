@@ -11,8 +11,6 @@
 
 namespace Gyselroth\Helper;
 
-use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
-
 class HelperTimerange
 {
     public const DEFAULT_LOCALE = 'de_CH';
