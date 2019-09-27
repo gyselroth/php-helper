@@ -34,6 +34,7 @@
         "ext-openssl": "*",
         "ext-simplexml": "*",
         "ext-spl": "*",
+        "ext-xml": "*",
         "ext-zip": "*",
         "ext-zlib": "*",
         "ezyang/htmlpurifier": "^4.9",

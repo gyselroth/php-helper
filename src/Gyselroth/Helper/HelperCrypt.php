@@ -46,8 +46,8 @@ class HelperCrypt
      * @param  string $key
      * @param  boolean   $encodeUrlSafeBase64
      * @return string
-     * @throws \Gyselroth\Helper\Exception\OperationFailedException
-     * @throws \Gyselroth\Helper\Exception\ArgumentMissingException
+     * @throws OperationFailedException
+     * @throws ArgumentMissingException
      */
     public static function encrypt(string $string, string $key, bool $encodeUrlSafeBase64 = true): string
     {

@@ -102,7 +102,7 @@ class LoggerWrapper
     /**
      * Mute output
      *
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws LoggerException
      */
     public static function mute(): void
     {

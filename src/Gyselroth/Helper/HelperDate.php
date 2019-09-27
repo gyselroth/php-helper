@@ -669,7 +669,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string $dateStr
      * @param  bool   $appendTime
      * @return string
-     * @throws \Gyselroth\Helper\Exception\DateException
+     * @throws DateException
      */
     public static function getIcsDateFromDateString($dateStr, $appendTime = false): string
     {
@@ -688,7 +688,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     /**
      * @param  string $dateStr
      * @return string
-     * @throws \Gyselroth\Helper\Exception\DateException
+     * @throws DateException
      */
     public static function getIcsDateTimeFromDateString($dateStr): string
     {
