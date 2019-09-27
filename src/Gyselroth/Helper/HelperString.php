@@ -668,6 +668,55 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         return \unserialize($serialized);
     }
 
+    /**
+     * Mulit-byte unserialize
+     *
+     * Fix for PHP SPL unserialize() failing with serialized data containing UTF-8
+     * Background: SPL unserialize() calculates total length of serialized data containing multi-byte characters wrong
+     *
+     * @param string
+     * @return array|boolean|float|integer|object|string
+     */
+    public static function mb_unserialize($string)
+    {
+        // special handling for asterisk wrapped in zero bytes
+        $string = \str_replace("\0*\0", "*\0", $string);
+        $string = \preg_replace_callback(
+            '#s:\d+:"(.*?)";#s',
+            function ($matches) {
+                return \sprintf('s:%d:"%s";', \strlen($matches[1]), $matches[1]);
+            },
+            $string);
+        $string = \str_replace('*\0', "\0*\0", $string);
+
+        /** @noinspection UnserializeExploitsInspection */
+        return \unserialize($string);
+    }
+
+    public static function explodeTrimmed(string $string, string $delimiter = ','): array
+    {
+        $items = \explode($delimiter, $string);
+
+        return \array_map('trim', $items);
+    }
+
+    public static function formatBytes(int $size): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $base  = \log($size) / \log(1024);
+
+        return \round(1024 ** ($base - \floor($base)), 1) . ' ' . $units[(int)\floor($base)];
+    }
+
+    public static function umlautsToAscii(string $str): string
+    {
+        return \str_replace(
+            self::UMLAUTS,
+            ['ae', 'oe', 'ue', 'Ae', 'Oe', 'Ue', 'ss'],
+            $str
+        );
+    }
+
     public static function translate(string $message, array $args = []): string
     {
         return [] === $args
@@ -681,6 +730,85 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         || $amount > 1
             ? $multiple
             : $single;
+    }
+
+    /**
+     * @param  string $str
+     * @return string   Given string w/o characters that are not a-z / A-Z / 0-9
+     */
+    public static function filterAlphaNumeric(string $str) : string
+    {
+        return \preg_replace('/[^a-zA-Z0-9]+/', '', $str);
+    }
+
+    public static function replaceSpecialCharacters(string $str, bool $toLower = true): string
+    {
+        $replacePairs = [
+            'š' => 's', 'ð' => 'dj', 'ž' => 'z', 'ä' => 'ae', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'a',
+            'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+            'ñ' => 'n', 'ö' => 'oe', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ø' => 'o', 'ü' => 'ue', 'ù' => 'u', 'ú' => 'u', 'û' => 'u',
+            'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f',
+            'ß' => 'ss'
+        ];
+
+        if ($toLower) {
+            $str = \strtolower($str);
+        } else {
+            // Needs to translate also upper-case characters
+            $replacePairs = array_merge($replacePairs, [
+                'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'Ä' => 'AE', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
+                'Ç' => 'C', 'È' => 'E',  'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
+                'Ñ' => 'N', 'Ö' => 'OE', 'Ò' => 'O',  'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ü' => 'UE', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
+                'Ý' => 'Y', 'Þ' => 'B',  'Ÿ' => 'Y', 'Ƒ' => 'F',
+            ]);
+        }
+
+        return \strtr($str, $replacePairs);
+    }
+
+    public static function validateString(
+        string $str,
+        bool $allowCharacters = true,
+        bool $allowUmlauts = false,
+        bool $allowDigits = false,
+        bool $allowWhiteSpace = false,
+        bool $allowSpace = false,
+        string $allowedSpecialCharacters = ''
+    ): bool
+    {
+        $regExpression = '';
+        if ($allowCharacters) {
+            $regExpression .= 'A-Za-z';
+        }
+        if ($allowDigits) {
+            $regExpression .= '0-9';
+        }
+
+        if ($allowWhiteSpace) {
+            $regExpression .= '\s';
+        } elseif ($allowSpace) {
+            $regExpression .= ' ';
+        }
+
+        if ($allowUmlauts) {
+            $regExpression .= \implode('', self::UMLAUTS);
+        }
+        if ('' !== $allowedSpecialCharacters) {
+            $regExpression .= $allowedSpecialCharacters;
+        }
+
+        return (bool)\preg_match('/[' . $regExpression . ']+/', $str);
+    }
+
+    /**
+     * @param  string $csv
+     * @param  string $delimiter
+     * @return int
+     * @todo harden: add optional handling for inline delimiters, e.g. "\"foo, bar\", \"baz, qux\"" should than return 2 instead of 4
+     */
+    public static function countItemsInCsv(string $csv, string $delimiter = ','): int
+    {
+        return \substr_count($csv, $delimiter) + 1;
     }
 
     // ------------------------------------------------- Convenience-Wrappers to Perl regular expression related helpers
@@ -784,40 +912,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public static function formatAmountDigits($number, int $digits): string
     {
         return HelperNumeric::formatAmountDigits($number, $digits);
-    }
-
-    public static function validateString(
-        string $str,
-        bool $allowCharacters = true,
-        bool $allowUmlauts = false,
-        bool $allowDigits = false,
-        bool $allowWhiteSpace = false,
-        bool $allowSpace = false,
-        string $allowedSpecialCharacters = ''
-    ): bool
-    {
-        $regExpression = '';
-        if ($allowCharacters) {
-            $regExpression .= 'A-Za-z';
-        }
-        if ($allowDigits) {
-            $regExpression .= '0-9';
-        }
-
-        if ($allowWhiteSpace) {
-            $regExpression .= '\s';
-        } elseif ($allowSpace) {
-            $regExpression .= ' ';
-        }
-
-        if ($allowUmlauts) {
-            $regExpression .= \implode('', self::UMLAUTS);
-        }
-        if ('' !== $allowedSpecialCharacters) {
-            $regExpression .= $allowedSpecialCharacters;
-        }
-
-        return (bool)\preg_match('/[' . $regExpression . ']+/', $str);
     }
 
     /**
