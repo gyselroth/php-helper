@@ -18,8 +18,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 {
     public const LOG_CATEGORY = 'datehelper';
 
-    public const DEFAULT_LOCALE = 'de_CH';
-
     // Different format identifiers
     public const INDEX_FORMAT_TIMESTAMP_UNIX               = 0;
     public const INDEX_FORMAT_TIMESTAMP_JAVASCRIPT         = 1;
@@ -49,7 +47,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string $format e.g. 'Y-m-d G:i' or 'Y-m-d G:i:s' etc.
      * @return bool
      */
-    public static function isDateTimeString($str, $format = 'Y-m-d G:i:s'): bool
+    public static function isDateTimeString(string $str, string $format = 'Y-m-d G:i:s'): bool
     {
         return false !== \DateTime::createFromFormat($format, $str);
     }
@@ -60,7 +58,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  bool   $isGermanNotation Validate against german notation (dd.mm.yyyy) instead of gregorian (mm.dd.yyyy)
      * @return bool Is date string of format: 3 parts (year, month, day), separated by '-'
      */
-    public static function isDateString($str, $delimiter = '-', $isGermanNotation = false): bool
+    public static function isDateString(string $str, string $delimiter = '-', bool $isGermanNotation = false): bool
     {
         $parts = \explode($delimiter, $str);
 
@@ -109,7 +107,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  bool   $withSeconds
      * @return bool
      */
-    public static function isTimeString($str, $withSeconds = true): bool
+    public static function isTimeString(string $str, bool $withSeconds = true): bool
     {
         return false !== \DateTime::createFromFormat('h:i' . ($withSeconds ? ':s' : ''), $str);
     }
@@ -151,7 +149,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @return bool|string
      * @throws \Zend_Date_Exception
      */
-    public static function getDateFromUnixTimestamp($timestamp, $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
+    public static function getDateFromUnixTimestamp($timestamp, int $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
     {
         $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
 
@@ -199,7 +197,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
-     * @param  int $date
+     * @param  int|\Zend_Date $date
      * @return bool|string
      * @throws \Zend_Date_Exception
      */
@@ -224,7 +222,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string $str
      * @return string|bool       'yyyy-mm-dd' out of 'yyyy-mm-dd hh:mm:ss'
      */
-    public static function getDateStringFromDateTimeString($str)
+    public static function getDateStringFromDateTimeString(string $str)
     {
         if (self::isDateTimeString($str)) {
             return \explode(' ', $str)[0];
@@ -235,13 +233,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  string $dateTimeString
-     * @return string  'hh:mm:ss' out of 'yyyy-mm-dd hh:mm:ss'
+     * @return string 'hh:mm:ss' out of 'yyyy-mm-dd hh:mm:ss'
      */
-    public static function getTimeStringFromDateTimeString($dateTimeString): string
+    public static function getTimeStringFromDateTimeString(string $dateTimeString): string
     {
-        $parts = \explode(' ', $dateTimeString);
-
-        return $parts[1];
+        return \explode(' ', $dateTimeString)[1];
     }
 
     /**
@@ -251,7 +247,12 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string $formatDay   Default: 'j' = digitI(s) w/o leading 0
      * @return array
      */
-    public static function getDateParts($timestamp, $formatYear = 'Y', $formatMonth = 'n', $formatDay = 'j'): array
+    public static function getDateParts(
+        int $timestamp,
+        string $formatYear = 'Y',
+        string $formatMonth = 'n',
+        string $formatDay = 'j'
+    ): array
     {
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $timestamp = self::getUnixTimestampFromDate($timestamp);
@@ -267,7 +268,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string $date Formats: 'yyyy-mm-dd' or 'year-month-day-hour-min-sec'
      * @return array            Containing date parts (hour, minute, second, month, day, year)
      */
-    public static function getDatePartsAtStartOfDay($date): array
+    public static function getDatePartsAtStartOfDay(string $date): array
     {
         $dateParts = \explode('-', $date);
 
@@ -285,28 +286,45 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $dateParts = self::getDateParts($timestamp);
 
-        return \mktime(0, 0, 0, $dateParts['month'], $dateParts[self::DATE_TIME_PART_DAY], $dateParts[self::DATE_TIME_PART_YEAR]);
+        return \mktime(
+            0,
+            0,
+            0,
+            $dateParts['month'],
+            $dateParts[self::DATE_TIME_PART_DAY],
+            $dateParts[self::DATE_TIME_PART_YEAR]);
     }
 
     /**
      * @param  int $timestamp
      * @return int              Timestamp for end (23:59:59) of day
      */
-    public static function getTimestampEndOfDay($timestamp): int
+    public static function getTimestampEndOfDay(int $timestamp): int
     {
         $dateParts = self::getDateParts($timestamp);
 
-        return \mktime(23, 59, 59, $dateParts['month'], $dateParts[self::DATE_TIME_PART_DAY], $dateParts[self::DATE_TIME_PART_YEAR]);
+        return \mktime(
+            23,
+            59,
+            59,
+            $dateParts['month'],
+            $dateParts[self::DATE_TIME_PART_DAY],
+            $dateParts[self::DATE_TIME_PART_YEAR]);
     }
 
     /**
      * @param  int|string $timeStr   Time string tupel like: hh:mm, or triplet like: hh:mm:ss, accepts also a UNIX timestamp
-     * @param  String     $delimiter Default: ':'
+     * @param  string     $delimiter Default: ':'
      * @param  bool       $includeMinutes
      * @param  bool       $includeSeconds
      * @return array                Time parts as integers, item keys: 'hour', 'minutes', if given in $timeStr: 'seconds'
      */
-    public static function getTimeStringParts($timeStr, $delimiter = ':', $includeMinutes = true, $includeSeconds = true): array
+    public static function getTimeStringParts(
+        $timeStr,
+        string $delimiter = ':',
+        bool $includeMinutes = true,
+        bool $includeSeconds = true
+    ): array
     {
         if (\is_numeric($timeStr)) {
             $timeStr = self::getTimeString($timeStr);
@@ -335,9 +353,13 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  bool       $isMilliSeconds
      * @param  bool       $includeSeconds
      * @param  bool       $isCurrentDate
-     * @return string          Time of day of given $timestamp, formatted like 'hh:mm:ss'
+     * @return string     Time of day of given $timestamp, formatted like 'hh:mm:ss'
      */
-    public static function getTimeString($timestamp, $isMilliSeconds = false, $includeSeconds = true, $isCurrentDate = false): string
+    public static function getTimeString(
+        $timestamp,
+        bool $isMilliSeconds = false,
+        bool $includeSeconds = true,
+        bool $isCurrentDate = false): string
     {
         if (\is_string($timestamp)
             && !\is_numeric($timestamp)
@@ -494,7 +516,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string     $unit Currently this can only be 'day'
      * @return int|null             Difference in given unit, no return value if unit unknown
      * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      * @throws \Zend_Date_Exception
      */
@@ -527,13 +548,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getWeeksBetween($dateFrom, $dateTo)
     {
-        $weeks              = [];
-        $dayOfWeek          = \date('w', $dateFrom);
-        $fromWeekStart      = $dateFrom - ($dayOfWeek * self::SECONDS_DAY) - ($dateFrom % self::SECONDS_DAY);
-        $weeks['startWeek'] = \date('W', $fromWeekStart);
-        $diffDays           = self::getDaysBetween($dateFrom, $dateTo);
-        $diffWeeks          = (int)($diffDays / 7);
-        $secondsLeft        = ($diffDays % 7) * self::SECONDS_DAY;
+        $dayOfWeek     = \date('w', $dateFrom);
+        $fromWeekStart = $dateFrom - ($dayOfWeek * self::SECONDS_DAY) - ($dateFrom % self::SECONDS_DAY);
+        $diffDays      = self::getDaysBetween($dateFrom, $dateTo);
+        $diffWeeks     = (int)($diffDays / 7);
+        $secondsLeft   = ($diffDays % 7) * self::SECONDS_DAY;
 
         if (($dateFrom - $fromWeekStart) + $secondsLeft > self::SECONDS_WEEK) {
             $diffWeeks++;
@@ -555,9 +574,16 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getDaysBetween($dateFrom, $dateTo): int
     {
-        $fromDayStart = \mktime(0, 0, 0, \date('m', $dateFrom), \date('d', $dateFrom), \date('Y', $dateFrom));
-        $diff         = $dateTo - $dateFrom;
-        $days         = (int)($diff / self::SECONDS_DAY);
+        $fromDayStart = \mktime(
+            0,
+            0,
+            0,
+            \date('m', $dateFrom),
+            \date('d', $dateFrom),
+            \date('Y', $dateFrom));
+
+        $diff = $dateTo - $dateFrom;
+        $days = (int)($diff / self::SECONDS_DAY);
 
         return ($dateFrom - $fromDayStart) + ($diff % self::SECONDS_DAY) > self::SECONDS_DAY ? $days + 1 : $days;
     }
@@ -717,7 +743,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string     $shiftingMode
      * @return array
      * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
      * @throws \Exception
      * @throws \Zend_Date_Exception
      */
@@ -771,29 +796,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         }
 
         return [$tempDate, $hasPassedWeekend];
-    }
-
-    /**
-     * @param  string|int $dateStart Starting date as dateTime string or UNIX timestamp
-     * @param  string|int $dateEnd   Ending date as dateTime string or UNIX timestamp
-     * @param  string     $locale
-     * @return string         Human readable timerange, in locale-aware format
-     * @throws \Zend_Date_Exception
-     * @todo: "bis" needs to be translated as well if locale is set to "en"
-     */
-    public static function renderTimerangeHumanReadable($dateStart, $dateEnd, $locale = null): string
-    {
-        if (null === $locale) {
-            $locale = self::DEFAULT_LOCALE;
-        }
-
-        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-        $dateStart = new \Zend_Date(self::getDateFromUnixTimestamp($dateStart), \Zend_Date::ISO_8601, $locale);
-        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-        $dateEnd   = new \Zend_Date(self::getDateFromUnixTimestamp($dateEnd), \Zend_Date::ISO_8601, $locale);
-
-//        return $dateStart->get(\Zend_Date::DATE_LONG) . ' ' . Zend_Registry::get('Zend_Translate')->translate('bis') . ' ' . $dateEnd->get(Zend_Date::DATE_LONG);
-        return $dateStart->get(\Zend_Date::DATE_LONG) . ' ' . 'bis' . ' ' . $dateEnd->get(\Zend_Date::DATE_LONG);
     }
 
     /**
@@ -899,10 +901,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
-     * @param Zend_Date $date
-     * @param int $addDays
+     * @param  \Zend_Date $date
+     * @param  int        $addDays
      * @return bool
-     * @throws Zend_Date_Exception
      * @throws \Zend_Date_Exception
      */
     public static function passesWeekend(\Zend_Date $date, int $addDays): bool
@@ -928,8 +929,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function timeSpansIntersect(string $start1, string $end1, string $start2, string $end2): bool
     {
-        return \date($start1) >= \date($start2)
-            && \date($end1) <= \date($end2);
+        return HelperTimerange::timeSpansIntersect($start1, $end1, $start2, $end2);
     }
 
     /**
@@ -938,8 +938,19 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function isTimeSpan(string $timeSpan): bool
     {
-        \preg_match('/[\d]+:[\d]+ - [\d]+:[\d]+/', $timeSpan, $matches);
+        return HelperTimerange::isTimeSpan($timeSpan);
+    }
 
-        return isset($matches[0]);
+    /**
+     * @param  string|int  $dateStart Starting date as dateTime string or UNIX timestamp
+     * @param  string|int  $dateEnd   Ending date as dateTime string or UNIX timestamp
+     * @param  string|null $locale
+     * @return string      Human readable timerange, in locale-aware format
+     * @throws \Zend_Date_Exception
+     * @todo: "bis" needs to be translated as well if locale is set to "en"
+     */
+    public static function renderTimerangeHumanReadable($dateStart, $dateEnd, ?string $locale = null): string
+    {
+        return HelperTimerange::renderTimerangeHumanReadable($dateStart, $dateEnd, $locale);
     }
 }

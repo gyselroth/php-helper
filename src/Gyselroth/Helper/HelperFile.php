@@ -210,7 +210,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      * @return bool
      * @throws \Exception
      */
-    public static function write(string $pathFile, string $content, string $mode = 'w'): bool
+    public static function write(string $pathFile, string $content, string $mode = 'wb'): bool
     {
         $handle = \fopen($pathFile, $mode);
         if (!$handle) {
@@ -429,7 +429,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function sortByDepth(array $files): array
     {
         \sort($files);
-        \uasort($files, function ($a, $b) {
+        \uasort($files, static function ($a, $b) {
             $aCount = \substr_count($a, '.');
             $bCount = \substr_count($b, '.');
 
@@ -766,7 +766,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         }
 
         /** @noinspection ReturnFalseInspection */
-        $files = \scandir($path, null);
+        $files = \scandir($path);
         foreach ($files as $file) {
             if ('.' !== $file
                 && '..' !== $file
@@ -915,6 +915,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public static function moveUploadedFileToTempDirectory($fileName, $fileStoredIn): void
     {
+        // @todo ensure PATH_TMP is defined / add fallback
         \move_uploaded_file($fileStoredIn, PATH_TMP . DIRECTORY_SEPARATOR . $fileName);
     }
 

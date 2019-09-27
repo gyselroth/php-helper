@@ -415,14 +415,17 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         foreach ($queryResult as $index => $row) {
             foreach ($row as $field => $value) {
-                if (!array_key_exists($field, $dataTypes)) {
+                if (!\array_key_exists($field, $dataTypes)) {
                     continue;
                 }
 
                 switch ($dataTypes[$field]) {
                     case self::DATA_TYPE_ARRAY_OF_INTS:
                     case self::DATA_TYPE_ARRAY_OF_STRINGS:
-                        $queryResult[$index][$field] = \strlen($value) > 0 ? \explode(',', $value) : [];
+                        $queryResult[$index][$field] = '' !== $value
+                            ? \explode(',', $value)
+                            : [];
+
                         if (self::DATA_TYPE_ARRAY_OF_INTS === $dataTypes[$field]) {
                             foreach ($queryResult[$index][$field] as $fieldIndex => $id) {
                                 $queryResult[$index][$field][$fieldIndex] = (int)$id;
@@ -433,7 +436,9 @@ class HelperArray implements ConstantsDataTypesInterface
                         $queryResult[$index][$field] = (int)$value;
                         break;
                     default:
-                        LoggerWrapper::warning("Detected unhandled data type field: {$dataTypes[$field]}", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $dataTypes[$field]]);
+                        LoggerWrapper::warning(
+                            "Detected unhandled data type field: {$dataTypes[$field]}",
+                            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $dataTypes[$field]]);
                 }
             }
         }
@@ -1126,7 +1131,7 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         \usort(
             $array,
-            function ($a, $b) use ($dateColumnKey) {
+            static function ($a, $b) use ($dateColumnKey) {
                 $dateA = \DateTime::createFromFormat('d.m.Y', $a[$dateColumnKey])->format('Ymd');
                 $dateB = \DateTime::createFromFormat('d.m.Y', $b[$dateColumnKey])->format('Ymd');
 

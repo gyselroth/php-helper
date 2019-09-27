@@ -13,8 +13,9 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\PregExceptionEmptyExpression;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
+use Gyselroth\Helper\Interfaces\ConstantsOperatorsInterface;
 
-class HelperString implements ConstantsDataTypesInterface
+class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInterface
 {
     public const LOG_CATEGORY = 'stringHelper';
 
@@ -150,7 +151,7 @@ class HelperString implements ConstantsDataTypesInterface
 
     public static function replaceFirst(string $subject, string $search, string $replace = ''): string
     {
-        if (\strlen($search) > 0) {
+        if ('' !== $search) {
             /** @noinspection ReturnFalseInspection */
             $offset = \strpos($subject, $search);
             if (false !== $offset) {
@@ -601,6 +602,7 @@ class HelperString implements ConstantsDataTypesInterface
 
         $serialized = \preg_replace(
             [
+                // @todo check regular-expressions: are backslashes unintentionally double-escaped?
                 '#^\\040*NULL\\040*$#m',
                 '#^\\s*array\\((.*?)\\)\\s*{\\s*$#m',
                 '#^\\s*string\\((.*?)\\)\\s*(.*?)$#m',
@@ -780,6 +782,40 @@ class HelperString implements ConstantsDataTypesInterface
     public static function formatAmountDigits($number, int $digits): string
     {
         return HelperNumeric::formatAmountDigits($number, $digits);
+    }
+
+    public static function validateString(
+        string $str,
+        bool $allowCharacters = true,
+        bool $allowUmlauts = false,
+        bool $allowDigits = false,
+        bool $allowWhiteSpace = false,
+        bool $allowSpace = false,
+        string $allowedSpecialCharacters = ''
+    ): bool
+    {
+        $regExpression = '';
+        if ($allowCharacters) {
+            $regExpression .= 'A-Za-z';
+        }
+        if ($allowDigits) {
+            $regExpression .= '0-9';
+        }
+
+        if ($allowWhiteSpace) {
+            $regExpression .= '\s';
+        } elseif ($allowSpace) {
+            $regExpression .= ' ';
+        }
+
+        if ($allowUmlauts) {
+            $regExpression .= \implode('', self::$UMLAUTS);
+        }
+        if ('' !== $allowedSpecialCharacters) {
+            $regExpression .= $allowedSpecialCharacters;
+        }
+
+        return (bool)\preg_match('/[' . $regExpression . ']+/', $str);
     }
 
     /**

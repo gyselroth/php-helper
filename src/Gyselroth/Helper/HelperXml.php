@@ -139,7 +139,7 @@ class HelperXml implements ConstantsXmlInterface
         bool $includeWarnings = false
     ): string
     {
-        $renderErrorMessage = function($error, $message) {
+        $renderErrorMessage = static function($error, $message) {
             return "<strong><br/>\n"
                 . $message
                 . \trim($error->message) . ' on line <strong>' . $error->line

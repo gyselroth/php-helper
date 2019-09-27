@@ -24,6 +24,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
+        "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-imagick": "*",
@@ -34,6 +35,7 @@
         "ext-simplexml": "*",
         "ext-spl": "*",
         "ext-zip": "*",
+        "ext-zlib": "*",
         "ezyang/htmlpurifier": "^4.9",
         "iio/libmergepdf": "^3.0",
         "itbz/fpdf": "^1.7",

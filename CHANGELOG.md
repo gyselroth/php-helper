@@ -4,9 +4,9 @@ gyselroth Helper Library
 Version 0.1.4 - Not released yet
 --------------------------------
 * Used interface for non-private constants w/ multiple use
-* Performance: Use more strict types, use more opcode caching
+* Performance: Use more strict types and rel. identity comparisons, use more opcode caching
 * Added overlooked php-ext dependency declarations in composer.json
-* Added various helper methods and classes: HelperImage, HelperMongoDB  
+* Added various helper methods and classes: HelperImage, HelperMongoDB, HelperTimerange  
 * Added CONTRIBUTING.md
  
 Version 0.1.3 - Released 2019/07/10
