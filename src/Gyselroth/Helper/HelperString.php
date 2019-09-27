@@ -25,6 +25,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public const CHAR_TYPE_NUMBER      = 2;
     public const CHAR_TYPE_SPECIAL     = 3;
 
+    protected CONST UMLAUTS = ['ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß'];
+
     /**
      * @param      string $haystack
      * @param      array  $needles
@@ -809,7 +811,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         }
 
         if ($allowUmlauts) {
-            $regExpression .= \implode('', self::$UMLAUTS);
+            $regExpression .= \implode('', self::UMLAUTS);
         }
         if ('' !== $allowedSpecialCharacters) {
             $regExpression .= $allowedSpecialCharacters;
