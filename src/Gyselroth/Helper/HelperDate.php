@@ -18,6 +18,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 {
     public const LOG_CATEGORY = 'datehelper';
 
+    public const DEFAULT_LOCALE = 'de_CH';
+
     // Different format identifiers
     public const INDEX_FORMAT_TIMESTAMP_UNIX               = 0;
     public const INDEX_FORMAT_TIMESTAMP_JAVASCRIPT         = 1;
