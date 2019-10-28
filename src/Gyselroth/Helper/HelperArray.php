@@ -1212,4 +1212,27 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         return self::sortElements($elements);
     }
+
+    /**
+     * @param  array|int|float|resource|string|object $value
+     * @return bool
+     */
+    public static function isSingleValueArray($value): bool
+    {
+        return \is_array($value)
+            && 1 === \count($value);
+    }
+
+    /**
+     * @param  array $array
+     * @return string|int
+     */
+    public static function getFirstKey(array $array)
+    {
+        \reset($array);
+
+        $keys = \array_keys($array);
+
+        return \array_pop($keys);
+    }
 }
