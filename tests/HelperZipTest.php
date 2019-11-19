@@ -11,15 +11,18 @@
 
 namespace Tests;
 
+use Exception;
+use Gyselroth\Helper\Exception\LoggerException;
+use Gyselroth\Helper\Exception\ZipException;
 use Gyselroth\Helper\HelperFile;
 use Gyselroth\Helper\HelperZip;
 
 class HelperZipTest extends HelperTestCase
 {
     /**
-     * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
-     * @throws \Gyselroth\Helper\Exception\ZipException
+     * @throws Exception
+     * @throws LoggerException
+     * @throws ZipException
      */
     public function testZipFiles(): void
     {
@@ -66,8 +69,8 @@ class HelperZipTest extends HelperTestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws Exception
+     * @throws LoggerException
      */
     public function testZip(): void
     {
@@ -87,8 +90,8 @@ class HelperZipTest extends HelperTestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws Exception
+     * @throws LoggerException
      */
     public function testZipDestinationFileIsDirectory(): void
     {
@@ -98,8 +101,8 @@ class HelperZipTest extends HelperTestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws Exception
+     * @throws LoggerException
      */
     public function testUnZip(): void
     {
@@ -121,8 +124,8 @@ class HelperZipTest extends HelperTestCase
     }
 
     /**
-     * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws Exception
+     * @throws LoggerException
      */
     public function testGetContainedFileContents(): void
     {

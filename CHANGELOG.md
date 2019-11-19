@@ -1,7 +1,7 @@
 gyselroth Helper Library
 ========================
 
-Version 0.1.4 - Not released yet
+Version 0.2.0 - Released 2019/11/19
 --------------------------------
 * Used interface for non-private constants w/ multiple use
 * Performance: Use more strict types and rel. identity comparisons, use more opcode caching
