@@ -1,6 +1,10 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.1 - Released 2019/21/19
+-----------------------------------
+* Added unit-test: Test PSR-4 autoload of interfaces
+
 Version 0.2.0 - Released 2019/11/19
 --------------------------------
 * Used interface for non-private constants w/ multiple use
