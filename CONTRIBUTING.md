@@ -6,6 +6,25 @@ within the [github repository](#https://github.com/gyselroth/php-helper/issues),
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
 
+## When developing bugfixes and new features:
+
+* For every feature, same as bugfix, a related issue should be filed. See also: ``Commit style`` 
+* Always develop on branches, never on master. 
+* Add all changes under the upcoming version (reflected also in the name of the used branch) into CHANGELOG.md
+* Ensure to update and extend documentation (minimum: README.md) w/ relevant additions and changes
+
+
+### Commit style
+
+Commits should be in the following format:
+
+```
+$ git commit -m"resolves #12345: implement easter egg
+>
+>More details about the commit."
+```
+
+
 ## Pull Request Process
 
 Pull requests concerning improvements and additions to gyselroth/php-helper are welcome.
