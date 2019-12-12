@@ -4,6 +4,7 @@ gyselroth Helper Library
 Version 0.2.2 - Released 2019/12/12
 -----------------------------------
 * Resolved #19: HelperServerClient::getClientIP() fails when called from CLI 
+* Resolved #21: Add issue convention into CONTRIBUTING.md 
 
 
 Version 0.2.1 - Released 2019/11/19
