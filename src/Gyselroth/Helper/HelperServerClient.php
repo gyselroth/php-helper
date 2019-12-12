@@ -134,7 +134,7 @@ class HelperServerClient implements ConstantsHttpInterface
             }
         }
 
-        return $_SERVER['REMOTE_ADDR'];
+        return $_SERVER['REMOTE_ADDR'] ?? '';
     }
 
     public static function isClientWindows(): bool

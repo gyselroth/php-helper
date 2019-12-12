@@ -1,9 +1,15 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.1 - Released 2019/21/19
+Version 0.2.2 - Released 2019/12/12
+-----------------------------------
+* Resolved #19: HelperServerClient::getClientIP() fails when called from CLI 
+
+
+Version 0.2.1 - Released 2019/11/19
 -----------------------------------
 * Added unit-test: Test PSR-4 autoload of interfaces
+
 
 Version 0.2.0 - Released 2019/11/19
 --------------------------------
@@ -12,6 +18,7 @@ Version 0.2.0 - Released 2019/11/19
 * Added overlooked php-ext dependency declarations in composer.json
 * Added various helper methods and classes: HelperImage, HelperMongoDB, HelperTimerange  
 * Added CONTRIBUTING.md
+
  
 Version 0.1.3 - Released 2019/07/10
 -----------------------------------
