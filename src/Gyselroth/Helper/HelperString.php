@@ -718,6 +718,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             $string
         );
 
+        if (null === $string) {
+            return '';
+        }
+
         $string = \str_replace('*\0', "\0*\0", $string);
 
         /** @noinspection UnserializeExploitsInspection */

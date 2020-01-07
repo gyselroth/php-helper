@@ -89,7 +89,13 @@ class HelperServerClient implements ConstantsHttpInterface
             $associative = true;
         }
 
-        $fontLines = \explode("\n", \shell_exec('fc-list'));
+        $fcList = \shell_exec('fc-list');
+
+        if (null === $fcList) {
+            return [];
+        }
+
+        $fontLines = \explode("\n", $fcList);
 
         $fonts = [];
         $index = 0;
@@ -195,7 +201,7 @@ class HelperServerClient implements ConstantsHttpInterface
 
     public static function isMobileDevice(): bool
     {
-        return \preg_match(
+        return (bool)\preg_match(
             self::PATTERN_USER_AGENTS_MOBILE_DEVICES,
             $_SERVER['HTTP_USER_AGENT']);
     }

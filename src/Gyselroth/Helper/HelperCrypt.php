@@ -61,6 +61,7 @@ class HelperCrypt
         if (empty($key)) {
             throw new ArgumentMissingException('Empty crypt key not allowed');
         }
+
         /** @noinspection CryptographicallySecureRandomnessInspection */
         $initVector = \openssl_random_pseudo_bytes(
             \openssl_cipher_iv_length(self::OPEN_SSL_CIPHER),
@@ -77,7 +78,8 @@ class HelperCrypt
             self::OPEN_SSL_CIPHER,
             $key,
             OPENSSL_RAW_DATA,
-            $initVector);
+            $initVector
+        );
 
         return $encodeUrlSafeBase64
             ? HelperString::urlSafeB64encode($encrypted)
