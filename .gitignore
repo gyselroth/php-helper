@@ -5,4 +5,4 @@ composer.phar
 Dockerifle
 tmp
 vendor
-var/*
+var/logs

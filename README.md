@@ -16,6 +16,7 @@ and common data structures (e.g. HTML, ZIP, XML etc.).
   * [For use within your application](#for-use-as-a-dependency-within-your-application)
   * [Standalone-installation / For developing on the php-helper package](#standalone-installation-for-developing-on-the-php-helper-package)
 * [Running Tests](#running-tests)
+* [Running phpstan](#running-phpstan)
 * [Contributing](#contributing)
 * [History](#history)
 * [Author and License](#author-and-license)
@@ -123,6 +124,15 @@ Running Tests
 ```sh
 composer test
 ```
+
+
+Running phpstan
+---------------
+
+```sh
+ vendor/bin/phpstan analyse /srv/www/trunk/src -c /srv/www/trunk/var/ci/phpstan/phpstan.neon
+```
+
 
 Contributing
 ------------

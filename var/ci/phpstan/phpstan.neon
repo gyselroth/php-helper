@@ -1,0 +1,22 @@
+parameters:
+    bootstrap: /srv/www/trunk/var/ci/phpstan/phpstan-bootstrap.php
+    level: max
+    inferPrivatePropertyTypeFromConstructor: true
+    checkMissingIterableValueType: false
+    paths:
+        - %rootDir%/../../..
+
+    autoload_files:
+        - /srv/www/trunk/vendor/autoload.php
+
+    autoload_directories:
+        - %rootDir%/../../..
+
+    excludes_analyse:
+        - /srv/www/trunk/.idea/
+        - /srv/www/trunk/tests/
+        - /srv/www/trunk/var/
+        - /srv/www/trunk/var/
+        - /srv/www/trunk/vendor/
+
+    ignoreErrors:
