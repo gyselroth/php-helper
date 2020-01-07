@@ -368,6 +368,7 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         $relatedIdsWithPrefix = \is_array($idsList) ? $idsList : \explode(',', $idsList);
         $relatedIds           = [];
+
         foreach ($relatedIdsWithPrefix as $relatedId) {
             $parts = \explode($prefixGlue, \trim($relatedId));
 
@@ -442,6 +443,7 @@ class HelperArray implements ConstantsDataTypesInterface
                                 $queryResult[$index][$field][$fieldIndex] = (int)$id;
                             }
                         }
+
                         break;
                     case self::DATA_TYPE_INT_SHORT:
                         $queryResult[$index][$field] = (int)$value;
@@ -556,6 +558,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function arrayMultidimensionalSortByKey(array &$array, $key, int $sortingMode = SORT_ASC): void
     {
         $tmp = [];
+
         foreach ($array as $value) {
             $tmp[] = $value[$key];
         }
@@ -693,10 +696,12 @@ class HelperArray implements ConstantsDataTypesInterface
     ): array
     {
         $values = [];
+
         foreach ($keys as $key) {
             $value = $array[$key];
 
             $include = true;
+
             foreach ($excludes as $excludeKey => $excludeValue) {
                 if (!$strict) {
                     /** @noinspection TypeUnsafeComparisonInspection */
@@ -788,6 +793,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function getCsvFromArray(array $array, $glue = ',', array $wrap = []): string
     {
         $csv = [];
+
         foreach ($array as $item) {
             $csv[] = \is_array($item) ? self::getCsvFromArray($item) : $item;
         }
@@ -1055,6 +1061,7 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         $sortedElements = [];
         $result         = [];
+
         foreach ($elementsUnsorted as $unsortedKey => $elements) {
             if (isset($elementsUnsorted[$unsortedKey]['sort'])) {
                 $sortedElements[$elements['sort']][$unsortedKey] = $elementsUnsorted[$unsortedKey];
