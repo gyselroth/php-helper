@@ -60,9 +60,9 @@ class HelperHtml
 
     /**
      * @param  string $string
-     * @return string           Given string w/ all inline URLs converted to HTML hyperlinks
+     * @return string|null      Given string w/ all inline URLs converted to HTML hyperlinks
      */
-    public static function urlsToHyperlinks(string $string): string
+    public static function urlsToHyperlinks(string $string): ?string
     {
         return \preg_replace(
             '/(http[s]?:\/\/\S{4,})\s*/im',
@@ -202,9 +202,9 @@ class HelperHtml
      * Compacts dump of PHP-array (or object) created e.g. via print_r (removes unnecessary linebreaks)
      *
      * @param string $dump
-     * @return string
+     * @return string|null
      */
-    public static function formatArrayDump(string $dump): string
+    public static function formatArrayDump(string $dump): ?string
     {
         $dump = \preg_replace('/Array\s*\n\s*/', 'array', $dump);
 

@@ -34,11 +34,14 @@ class HelperCrypt
     public static function mapToken(string $token, bool $compressed = true)
     {
         $string = HelperString::urlSafeB64Decode($token);
+
         $string = $compressed
             ? \gzinflate($string)
             : $string;
 
-        return HelperJson::decode($string);
+        return false === $string
+            ? null
+            : HelperJson::decode($string);
     }
 
     /**
@@ -95,12 +98,14 @@ class HelperCrypt
         $initVector = \substr($encrypted, 0, $ivLength);
         $encrypted  = \substr($encrypted, $ivLength);
 
-        return \openssl_decrypt(
+        $res = \openssl_decrypt(
             $encrypted,
             self::OPEN_SSL_CIPHER,
             $password,
             OPENSSL_RAW_DATA,
             $initVector);
+
+        return $res === false ? '' : $res;
     }
 
     /**

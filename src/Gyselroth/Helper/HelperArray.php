@@ -140,9 +140,9 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  array|int|string  $array
      * @param  string $glue
      * @param  bool   $makeItemsUnique
-     * @return string                   List of integers, all other data types out of $array are filtered out
+     * @return int|string         List of integers, all other data types out of $array are filtered out
      */
-    public static function intImplode($array, string $glue = ',', bool $makeItemsUnique = true): string
+    public static function intImplode($array, string $glue = ',', bool $makeItemsUnique = true)
     {
         return \is_array($array)
             ? \implode($glue, self::intVal($array, $makeItemsUnique))
@@ -521,7 +521,7 @@ class HelperArray implements ConstantsDataTypesInterface
             $key .= $postFix;
         }
 
-        return $key;
+        return (string)$key;
     }
 
     /**
@@ -657,7 +657,7 @@ class HelperArray implements ConstantsDataTypesInterface
         foreach ($arr as $index => $value) {
             if (\is_array($value)) {
                 $arr[$index] = self::strSplManipulate($value, $functionName);
-            } elseif (\is_string($value)) {
+            } elseif (\is_string($value) && is_callable($functionName)) {
                 $arr[$index] = $functionName($value);
             }
         }
@@ -925,10 +925,10 @@ class HelperArray implements ConstantsDataTypesInterface
      *
      * @param  array                                  $array
      * @param  int|string                             $key
-     * @param  array|float|int|resource|string|Object $value
-     * @return array
+     * @param  array|float|int|resource|string|object $value
+     * @return array|float|int|resource|string|object
      */
-    public static function set(array &$array, $key, $value): array
+    public static function set(array &$array, $key, $value)
     {
         if (null === $key) {
             /** @noinspection UselessReturnInspection */
@@ -1135,6 +1135,10 @@ class HelperArray implements ConstantsDataTypesInterface
         return self::castSubColumn($array, $keys);
     }
 
+    /**
+     * @param  array|object $var
+     * @return bool
+     */
     public static function isIterable($var): bool
     {
         return $var !== null
@@ -1149,21 +1153,16 @@ class HelperArray implements ConstantsDataTypesInterface
     /**
      * Get array from (e.g. stdClass) object
      *
-     * @param  object|array $obj
+     * @param  object|array $object
      * @return array
      */
-    public static function objectToArray($obj): array
+    public static function objectToArray($object): array
     {
-        if (\is_object($obj)) {
+        return \is_object($object)
             // Gets the properties of the given object
             // with get_object_vars function
-            $obj = \get_object_vars($obj);
-        }
-
-        return \is_array($obj)
-            // Return array converted to object Using __FUNCTION__ (Magic constant) for recursive call
-            ? $obj
-            : (array)$obj;
+            ? \get_object_vars($object)
+            : (array)$object;
     }
 
     public static function resortByDate(array &$array, string $dateColumnKey): void

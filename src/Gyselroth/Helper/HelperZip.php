@@ -134,10 +134,14 @@ class HelperZip
      * @param  string $pathUnzipped
      * @param  string $destinationFilename
      * @param  bool   $deleteUnzipped
-     * @return bool|string
+     * @return bool
      * @throws \Exception
      */
-    public static function zip(string $pathUnzipped, string $destinationFilename, bool $deleteUnzipped = false): bool
+    public static function zip(
+        string $pathUnzipped,
+        string $destinationFilename,
+        bool $deleteUnzipped = false
+    ): bool
     {
         if (!self::isExtensionInstalled()) {
             return false;

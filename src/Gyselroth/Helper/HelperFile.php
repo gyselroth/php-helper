@@ -128,7 +128,11 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public static function getMimeType(string $pathFile)
     {
-        return \finfo_file(\finfo_open(FILEINFO_MIME_TYPE), $pathFile);
+        $fileInfoOpen = \finfo_open(FILEINFO_MIME_TYPE);
+
+        return $fileInfoOpen === false
+            ? false
+            : \finfo_file($fileInfoOpen, $pathFile);
     }
 
     /**

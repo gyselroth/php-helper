@@ -5,7 +5,7 @@ Version 0.2.3 - Not released yet
 --------------------------------
 * Correct formatting to follow PSR-2 more closely
 * Performance: Root-namespace all PSL functions 
-* Declare more data types in method signatures
+* Improve and add method signatures: data type declarations and annotations 
 * Add phpstan config 
 
 

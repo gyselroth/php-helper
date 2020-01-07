@@ -347,9 +347,9 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      *
      * @param  string $string
      * @param  bool   $upperCaseFirstLetter
-     * @return string
+     * @return string|null
      */
-    public static function toCamelCase(string $string, bool $upperCaseFirstLetter = false): string
+    public static function toCamelCase(string $string, bool $upperCaseFirstLetter = false): ?string
     {
         if ($upperCaseFirstLetter) {
             $string = \ucfirst($string);
@@ -376,7 +376,9 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             $glue . '$0',
             \lcfirst($camelString));
 
-        return \strtolower($string);
+        return null === $string
+            ? ''
+            : \strtolower($string);
     }
 
     /**
@@ -621,8 +623,11 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                 '#(string\\(|int\\(|float\\(|array\\(|NULL|object\\(|})#',
             ];
 
-            $str   = \preg_replace($regex, "\n\\1", $str);
-            $str   = \trim($str);
+            $str = \preg_replace($regex, "\n\\1", $str);
+
+            $str = null === $str
+                ? ''
+                : \trim($str);
         }
 
         $serialized = \preg_replace(
@@ -760,9 +765,9 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
     /**
      * @param  string $str
-     * @return string   Given string w/o characters that are not a-z / A-Z / 0-9
+     * @return string|null   Given string w/o characters that are not a-z / A-Z / 0-9
      */
-    public static function filterAlphaNumeric(string $str) : string
+    public static function filterAlphaNumeric(string $str) : ?string
     {
         return \preg_replace('/[^a-zA-Z0-9]+/', '', $str);
     }
@@ -854,7 +859,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
     public static function startsNumeric(string $str): bool
     {
-        return HelperPreg::startsNumeric($str);
+        return (bool)HelperPreg::startsNumeric($str);
     }
 
     public static function removeNumericChars(string $str, bool $trim = true): string
@@ -866,8 +871,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * Reduce given string to its contained numbers
      *
      * @param  string    $str
-     * @param  bool|null $convertToInt
-     * @return string|int
+     * @param  bool      $convertToInt
+     * @return int|string
      */
     public static function removeNonNumericChars(string $str, bool $convertToInt = false)
     {

@@ -3,6 +3,7 @@ parameters:
     level: max
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     paths:
         - %rootDir%/../../..
 

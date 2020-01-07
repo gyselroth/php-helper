@@ -52,6 +52,7 @@ class HelperServerClient implements ConstantsHttpInterface
     public static function getDiffOfRequestAndLocalTime($requestTime, $modificationTime): string
     {
         $now = new \Zend_Date();
+
         // Diff: 0 = equal, 1 = later, -1 = earlier
         $diff = $now->compare($requestTime);
 
@@ -59,11 +60,13 @@ class HelperServerClient implements ConstantsHttpInterface
             // Requesting servers timestamp is earlier than timestamp of this machine
             case 1:
                 $diff = $now->get(\Zend_Date::TIMESTAMP) - $requestTime->get(\Zend_Date::TIMESTAMP);
+
                 $modificationTime->sub($diff, \Zend_Date::TIMESTAMP);
                 break;
             // Requesting servers timestamp is later than timestamp of this machine
             case -1:
                 $diff = $requestTime->get(\Zend_Date::TIMESTAMP) - $now->get(\Zend_Date::TIMESTAMP);
+
                 $modificationTime->add($diff, \Zend_Date::TIMESTAMP);
                 break;
             default:

@@ -62,7 +62,7 @@ class LoggerWrapper
         self::PRIORITY_PSR3_EMERGENCY => 600
     ];
 
-    /** @var LoggerWrapper */
+    /** @var LoggerWrapper|null */
     protected static $instance;
 
     /** @var string */
@@ -273,11 +273,11 @@ class LoggerWrapper
     }
 
     /**
-     * @param  string                                $message
-     * @param  bool                                  $logAsError
-     * @param  array|bool|int|Object|resource|string $returnValue
-     * @param  string                                $logCategory
-     * @return array|bool|int|Object|resource|string
+     * @param  string                                     $message
+     * @param  bool                                       $logAsError
+     * @param  array|bool|int|object|resource|string|null $returnValue
+     * @param  string                                     $logCategory
+     * @return array|bool|int|object|resource|string|null
      * @throws \Exception
      */
     public static function logOrDieOnDev(
