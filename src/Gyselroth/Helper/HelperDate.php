@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -72,6 +72,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             // Might be DateTime format
             return false;
         }
+
         [$month, $day, $year] = $isGermanNotation
             ? [$parts[1], $parts[0], $parts[2]]
             : [$parts[1], $parts[2], $parts[0]];
@@ -96,7 +97,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $separator = '-'
     ): bool
     {
-        return (bool)preg_match(
+        return (bool)\preg_match(
             '/\d{' . $digitsInPart1 . '}' . $separator
             . '\d{' . $digitsInPart2 . '}' . $separator
             . '\d{' . $digitsInPart3 . '}/',
@@ -111,7 +112,10 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function isTimeString(string $str, bool $withSeconds = true): bool
     {
-        return false !== \DateTime::createFromFormat('h:i' . ($withSeconds ? ':s' : ''), $str);
+        return false !== \DateTime::createFromFormat(
+            'h:i' . ($withSeconds ? ':s' : ''),
+            $str
+        );
     }
 
     /**
@@ -509,7 +513,10 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $dayOfWeek = (int)$monday->get(\Zend_Date::WEEKDAY_DIGIT);
 
         // $dayOfWeek = 0 -> Sunday
-        return $monday->sub(0 === $dayOfWeek ? 6 : ($dayOfWeek - 1), \Zend_Date::DAY_SHORT);
+        return $monday->sub(
+            0 === $dayOfWeek ? 6 : ($dayOfWeek - 1),
+            \Zend_Date::DAY_SHORT
+        );
     }
 
     /**
@@ -676,6 +683,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public static function getIcsDateFromDateString($dateStr, $appendTime = false): string
     {
         $timestamp = \strtotime($dateStr);
+
         if (false === $timestamp) {
             throw new DateException("Failed converting '$dateStr' to a date value.");
         }
@@ -728,6 +736,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public static function getClosestDate($searchDate, $dates): ?int
     {
         $closest = null;
+
         if ($dates) {
             foreach ($dates as $item) {
                 if (empty($closest)
@@ -790,6 +799,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             for ($addDayIndex = 0; $addDayIndex < $amountDaysAdded; $addDayIndex++) {
                 $tempDate->addDay(1);
                 $weekdayIndex = $tempDate->toValue(\Zend_Date::WEEKDAY_DIGIT);
+
                 if (6 === $weekdayIndex || 0 === $weekdayIndex) {
                     $hasPassedWeekend = true;
                     break;
@@ -851,13 +861,10 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         return $dateParts[2] . '.' . $dateParts[1] . '.' . $dateParts[0];
     }
 
-    /**
-     * @param  string $type
-     * @return string
-     */
-    public static function getZendDatePartByType($type): ?string
+    public static function getZendDatePartByType(string $type): string
     {
         $DATE_TIME_PART_MONTH = 'month';
+
         switch (\strtolower($type)) {
             case self::DATE_TIME_PART_SECOND:
                 return \Zend_Date::SECOND;
@@ -911,9 +918,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public static function passesWeekend(\Zend_Date $date, int $addDays): bool
     {
         $tempDate = clone $date;
+
         for ($count = 0; $count < $addDays; $count++) {
             $tempDate->addDay(1);
             $weekDayNumber = $tempDate->toValue(\Zend_Date::WEEKDAY_DIGIT);
+
             if ($weekDayNumber === 6 || $weekDayNumber === 0) {
                 return true;
             }

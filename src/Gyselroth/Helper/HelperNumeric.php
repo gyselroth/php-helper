@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -23,6 +23,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
     public static function formatAmountDigits($number, int $digits): string
     {
         $number = (int)$number;
+
         while (\strlen($number) < $digits) {
             $number = '0' . $number;
         }
@@ -60,6 +61,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         if ($sort) {
             \asort($integers);
         }
+
         if ($makeUnique) {
             $integers = \array_unique($integers);
         }
@@ -89,6 +91,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
 
         $numbers = [];
         $parts   = \explode($delimiter, $str);
+
         foreach ($parts as $number) {
             if (!$excludeNullValues || 'null' !== \strtolower($number)) {
                 $numbers[] = (int)$number;
@@ -120,6 +123,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
 
         $numbers = [];
         $parts   = \explode($delimiter, $str);
+
         foreach ($parts as $number) {
             if (!$excludeNullValues || 'null' !== \strtolower($number)) {
                 $numbers[] = (float)$number;
@@ -138,6 +142,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
     public static function calcBytesSize($bytes): array
     {
         $bytes = (int)$bytes;
+
         if ($bytes < 1000) {
             return [
                 'size' => $bytes,
@@ -146,6 +151,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         }
 
         $kilo = $bytes / 1024;
+
         if ($kilo < 1000) {
             return [
                 'size' => \round($kilo, 1),

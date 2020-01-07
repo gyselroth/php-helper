@@ -139,7 +139,7 @@ See [CHANGELOG.md](https://github.com/gyselroth/php-helper/blob/master/CHANGELOG
 Author and License
 ------------------
 
-Copyright 2017-2019 gyselroth™ (http://www.gyselroth.com)
+Copyright 2017-2020 gyselroth™ (http://www.gyselroth.com)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

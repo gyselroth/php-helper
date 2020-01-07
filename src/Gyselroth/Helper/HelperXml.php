@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -72,6 +72,7 @@ class HelperXml implements ConstantsXmlInterface
     {
         $nodesFiltered = [];
         $excludeTagNames = \array_map('strtoupper', $excludeTagNames);
+
         foreach ($nodes as $node) {
             if (!\in_array($node['tag'], $excludeTagNames, true)
                 && !\in_array($node['type'], $excludeTagTypes, true)
@@ -191,6 +192,7 @@ class HelperXml implements ConstantsXmlInterface
         if (!\file_exists($pathXml)) {
             throw new XmlException('Failed loading XML file: ' . $pathXml);
         }
+
         if (!\file_exists($pathXsd)) {
             throw new XmlException('Failed loading XSD file: ' . $pathXsd);
         }
@@ -222,6 +224,7 @@ class HelperXml implements ConstantsXmlInterface
         } elseif (self::DOM_CLASS_NODE_LIST === \get_class($dom)) {
             // Print-out nodeList XML
             $tempDom = new \DOMDocument();
+
             foreach ($dom as $node) {
                 $tempDom->appendChild($tempDom->importNode($node, true));
             }
@@ -235,8 +238,13 @@ class HelperXml implements ConstantsXmlInterface
         } else {
             // Print-out DOMDocument
             if (!empty($key)) {
-                echo "\n\n" . str_repeat('.', 80) . "\n\n$key\n" . str_repeat('-', \strlen($key)) . "\n\n";
+                echo "\n\n"
+                    . str_repeat('.', 80)
+                    . "\n\n$key\n"
+                    . str_repeat('-', \strlen($key))
+                    . "\n\n";
             }
+
             echo $dom->saveXML();
         }
     }
@@ -280,6 +288,7 @@ class HelperXml implements ConstantsXmlInterface
 
         $parser = \xml_parser_create(self::ENCODING_UTF_8);
         $data   = [];
+
         \xml_parse_into_struct($parser, $xml, $data);
 
         return $data;
@@ -336,12 +345,14 @@ class HelperXml implements ConstantsXmlInterface
         }
 
         $previousKey = false;
+
         foreach ($node->children() as $key => $_) {
             if ($previousKey !== $key
                 && false !== $previousKey
             ) {
                 return false;
             }
+
             $previousKey = $key;
         }
 

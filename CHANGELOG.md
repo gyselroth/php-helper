@@ -1,6 +1,13 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.3 - Not released yet
+--------------------------------
+* Correct formatting to follow PSR-2 more closely
+* Performance: Root-namespace all PSL functions 
+* Declare more data types in method signatures 
+
+
 Version 0.2.2 - Released 2019/12/12
 -----------------------------------
 * Resolved #19: HelperServerClient::getClientIP() fails when called from CLI 

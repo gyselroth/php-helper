@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -163,6 +163,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         }
 
         $path = self::ensurePathEndsWithDirectorySeparator($path);
+
         foreach ($files as $index => $file) {
             if (!HelperString::startsWith($file, $path)) {
                 $files[$index] = $path . $file;
@@ -248,6 +249,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
         $handle = \fopen($filePath, 'wb');
         \fputcsv($handle, $headerFields);
+
         foreach ($rows as $row) {
             \fputcsv($handle, $row);
             unset($row);
@@ -284,10 +286,11 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
         /** @noinspection ScandirUsageInspection */
         /** @noinspection ReturnFalseInspection */
-        $files = scandir($path);
+        $files = \scandir($path);
 
         // Filter: 1. remove '.' and '..', 2. by extension (or substring), 3. by lead string
         $filesFiltered = [];
+
         foreach ($files as $file) {
             if ('.' !== $file
                 && '..' !== $file
@@ -319,6 +322,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         \natsort($filesFiltered);
 
         $recentFiles = [];
+
         foreach ($filesFiltered as $filePath) {
             $explodedPath           = \explode(DIRECTORY_SEPARATOR, $filePath);
             $fileName               = \end($explodedPath);
@@ -339,9 +343,11 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function scanDirRecursive(string $path, string $ext = '', string $leadString = ''): array
     {
         $items = [];
+
         if ($handle = \opendir($path)) {
             while (false !== ($file = \readdir($handle))) {
                 $pathFile = $path . DIRECTORY_SEPARATOR . $file;
+
                 if (0 === \preg_match('/^(^\.)/', $file)) {
                     if (\is_dir($pathFile)) {
                         /** @noinspection SlowArrayOperationsInLoopInspection */
@@ -373,12 +379,15 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         if (\file_exists($path)) {
             \chmod($path, $mode);
         }
+
         $items = [];
+
         if (\is_dir($path)
             && $handle = \opendir($path)
         ) {
             while (false !== ($file = \readdir($handle))) {
                 $pathFile = $path . DIRECTORY_SEPARATOR . $file;
+
                 if (0 === \preg_match('/^(^\.)/', $file)) {
                     \chmod($pathFile, $mode);
 
@@ -400,14 +409,17 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         if ($overwrite) {
             self::deleteIfExists($destinationPath);
         }
+
         if (!\mkdir($destinationPath)) {
             return false;
         }
 
         $directoryContent = self::scanDir($directoryName);
+
         if (!$directoryContent) {
             return true;
         }
+
         foreach ($directoryContent as $item) {
             if (\is_file($item)) {
                 \copy($item, $destinationPath . DIRECTORY_SEPARATOR . \basename($item));
@@ -491,6 +503,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         }
 
         $data = [];
+
         while (false !== ($file = \readdir($handle))) {
             if (!\in_array($file, $ignore, true)) {
                 if (\is_dir("$path/$file")) {
@@ -517,6 +530,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     {
         if (FILEINFO_MIME_TYPE === $options) {
             $extension = \pathinfo(\strtolower($uploadFile['name']), PATHINFO_EXTENSION);
+
             switch ($extension) {
                 case self::FILE_ENDING_CSV:
                     return self::MIME_TYPE_CSV;
@@ -568,6 +582,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             // @todo throw exception
             return HelperString::translate('Name der Datei wurde nicht empfangen');
         }
+
         if ($maximumFileSize > -1
             && $uploadFile['size'] > $maximumFileSize
         ) {
@@ -576,6 +591,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         }
 
         $mimeType = self::getUploadFileInfo($uploadFile, FILEINFO_MIME_TYPE);
+
         if ([] !== $allowedTypes
             && !\in_array($mimeType, $allowedTypes, true)
         ) {
@@ -623,18 +639,21 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         if (!empty($message)) {
             throw new FileExceptionFailedTransfer($message);
         }
+
         if (!self::isDirectoryWritable($storagePath)) {
             // Storage directory does not exist / is not writable
             throw new FileExceptionInvalidPath('Invalid storage path');
         }
 
         $storageFilename = \trim($storageFilename);
+
         if (empty($storageFilename)) {
             $storageFilename = $_FILES['name'];
         }
 
         // Move to storage directory
         $storageFilePath = $storagePath . DIRECTORY_SEPARATOR . $storageFilename;
+
         if (!\move_uploaded_file($_FILES['userfile']['tmp_name'], $storageFilePath)) {
             throw new FileException('Failed to move uploaded file ().');
         }
@@ -681,9 +700,11 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         if ('' !== $message) {
             throw new FileExceptionInvalidFile($message);
         }
+
         if ($callbackModelFileExists->$callbackFunctionNameFileExists($filename)) {
             throw new FileException('File already exists');
         }
+
         if ($callbackModelCreateFile->$callbackFunctionNameCreateFile($filename, $file['tmp_name'])) {
             return $filename;
         }
@@ -708,6 +729,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function deleteFilesInDirectory(string $pathPattern): void
     {
         $files = \glob($pathPattern);
+
         if ([] !== $files
             && false !== $files
         ) {
@@ -729,6 +751,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     {
         if (\is_array($filename)) {
             $res = true;
+
             /** @noinspection ForeachSourceInspection */
             foreach($filename as $filenameSingle) {
                 $res = $res && self::deleteIfExists($filenameSingle, $path);
@@ -758,6 +781,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             foreach ($path as $pathSingle) {
                 self::rmdirRecursive($pathSingle);
             }
+
             return true;
         }
 
@@ -767,6 +791,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
         /** @noinspection ReturnFalseInspection */
         $files = \scandir($path);
+
         foreach ($files as $file) {
             if ('.' !== $file
                 && '..' !== $file
@@ -828,9 +853,11 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             /** @noinspection MkdirRaceConditionInspection */
             \mkdir($path, self::FILE_MODE_GRANT_ALL, true);
         }
+
         if (!\is_dir($path)) {
             throw new FileExceptionPathNotFound('Directory does not exist: ' . $path);
         }
+
         if ($makeWritableIfNot
             && !\is_writable($path)
         ) {
@@ -887,12 +914,13 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function getBasenames(array $filePaths, bool $makeUnique = true): array
     {
         $baseNames = [];
+
         foreach ($filePaths as $filePath) {
             $baseNames[] = \basename($filePath);
         }
 
         return $makeUnique
-            ? \array_values(array_unique($baseNames))
+            ? \array_values(\array_unique($baseNames))
             : $baseNames;
     }
 
@@ -928,12 +956,15 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function getXMLFilesFromDir(string $path)
     {
         $xmlFiles = self::getDirectory($path);
+
         if ([] === $xmlFiles) {
             return false;
         }
 
         \asort($xmlFiles);
+
         $files = [];
+
         foreach ($xmlFiles as $fileName) {
             $files[] = [
                 'name'  => $fileName,

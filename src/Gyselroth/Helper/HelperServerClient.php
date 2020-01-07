@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -29,6 +29,7 @@ class HelperServerClient implements ConstantsHttpInterface
     public static function getHost(bool $withProtocol = true): string
     {
         $protocol = '';
+
         if ($withProtocol) {
             $protocol = 'http' .
                 (isset($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS']
@@ -53,6 +54,7 @@ class HelperServerClient implements ConstantsHttpInterface
         $now = new \Zend_Date();
         // Diff: 0 = equal, 1 = later, -1 = earlier
         $diff = $now->compare($requestTime);
+
         switch ($diff) {
             // Requesting servers timestamp is earlier than timestamp of this machine
             case 1:
@@ -88,13 +90,16 @@ class HelperServerClient implements ConstantsHttpInterface
 
         $fonts = [];
         $index = 0;
+
         foreach ($fontLines as $fontLine) {
-            $fontName                                 = HelperString::getStringBetween($fontLine, ': ', ':style=');
+            $fontName = HelperString::getStringBetween($fontLine, ': ', ':style=');
+
             $fonts[$associative ? $fontName : $index] = [
                 'path'  => HelperString::removeAllAfter(':', $fontLine, 1, true),
                 'name'  => $fontName,
                 'style' => HelperString::removeAllBefore(':style=', $fontLine, 0, true)
             ];
+
             $index++;
         }
 
@@ -128,6 +133,7 @@ class HelperServerClient implements ConstantsHttpInterface
     {
         if (\array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
             $forwardedForItems = \explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+
             if (!empty($forwardedForItems)) {
                 /** @noinspection ReturnNullInspection */
                 return \array_pop($forwardedForItems);
@@ -178,6 +184,7 @@ class HelperServerClient implements ConstantsHttpInterface
     public static function getUriParts($str): array
     {
         $pattern = '/^(.*):\/\/(.*):(.*)@(.*):(.*)/';
+
         \preg_match($pattern, $str, $matches);
 
         return $matches;

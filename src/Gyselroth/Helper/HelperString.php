@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -51,10 +51,12 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     {
         $offsets     = \array_flip($needles);
         $hasFoundAny = false;
+
         foreach ($needles as $needle) {
             /** @noinspection ReturnFalseInspection */
             // @todo currently offsets are not consecutive! check: isn't the following strpos() missing an $offset+1 argument?
             $offset = \strpos($haystack, $needle);
+
             if (false !== $offset) {
                 $offsets[$needle] = $offset;
                 $hasFoundAny      = true;
@@ -88,6 +90,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
         /** @noinspection ReturnFalseInspection */
         $offset = \strpos($string, $start);
+
         /** @noinspection ReturnFalseInspection */
         if (false === $offset
             || false === \strpos($string, $end)
@@ -114,12 +117,14 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         if ('' === $needle) {
             return true;
         }
+
         if (!\is_array($needle)) {
             /** @noinspection ReturnFalseInspection */
             return 0 === \strpos($haystack, $needle);
         }
 
         // Needle is array (of needles): check whether haystack starts with any of them
+
         /** @noinspection ForeachSourceInspection */
         foreach ($needle as $needleString) {
             /** @noinspection ReturnFalseInspection */
@@ -207,6 +212,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         if ($offsetNeedle > \strlen($str)) {
             return $str;
         }
+
         // @todo check what happens when $needle is not contained after $offsetNeedle, $start will be false
         $start = \strpos($str, $needle, $offsetNeedle);
 
@@ -242,14 +248,17 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         if ('' === $str) {
             return $str;
         }
+
         /** @noinspection ReturnFalseInspection */
         $offsetLhs = \strpos($str, $lhs);
+
         if (false === $offsetLhs) {
             return $str;
         }
 
         /** @noinspection ReturnFalseInspection */
         $offsetRhs = \strpos($str, $rhs, $offsetLhs + 1);
+
         /** @noinspection PhpUnreachableStatementInspection */
         if (false === $offsetRhs) {
             return $str;
@@ -323,6 +332,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             }
         } else {
             $double = $characters . $characters;
+
             /** @noinspection ReturnFalseInspection */
             while (false !== \strpos($string, $double)) {
                 $string = \str_replace($double, $characters, $string);
@@ -394,22 +404,28 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         $offset = 0;
 
         $charTypes = [];
+
         if ($containAlphaLower) {
             $charTypes[] = static::CHAR_TYPE_ALPHA_LOWER;
         }
+
         if ($containAlphaUpper) {
             $charTypes[] = static::CHAR_TYPE_ALPHA_UPPER;
         }
+
         if ($containNumbers) {
             $charTypes[] = static::CHAR_TYPE_NUMBER;
         }
+
         if (!empty($specialChars)) {
             $charTypes[] = static::CHAR_TYPE_SPECIAL;
         }
 
         $amountTypes = \count($charTypes);
+
         while (\strlen($str) < $length) {
             $typeOffset = $offset % $amountTypes;
+
             switch ($charTypes[$typeOffset]) {
                 case static::CHAR_TYPE_ALPHA_LOWER:
                     $str .= static::getRandomLetter();
@@ -430,6 +446,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                             $amountTypes--;
                         }
                     }
+
                     $str .= $specialChar;
                     break;
                 default:
@@ -438,6 +455,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                         [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]]);
                     break;
             }
+
             $offset++;
         }
 
@@ -481,12 +499,14 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public static function toAlpha(int $characterIndex): ?string
     {
         $letters = \range('a', 'z');
+
         if ($characterIndex <= 25) {
             return $letters[$characterIndex];
         }
 
         $dividend       = $characterIndex + 1;
         $alphaCharacter = '';
+
         while ($dividend > 0) {
             $modulo         = ($dividend - 1) % 26;
             $alphaCharacter = $letters[$modulo] . $alphaCharacter;
@@ -600,6 +620,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                 '#(\\[.*?\\]=>)#',
                 '#(string\\(|int\\(|float\\(|array\\(|NULL|object\\(|})#',
             ];
+
             $str   = \preg_replace($regex, "\n\\1", $str);
             $str   = \trim($str);
         }
@@ -683,12 +704,15 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     {
         // special handling for asterisk wrapped in zero bytes
         $string = \str_replace("\0*\0", "*\0", $string);
+
         $string = \preg_replace_callback(
             '#s:\d+:"(.*?)";#s',
             function ($matches) {
                 return \sprintf('s:%d:"%s";', \strlen($matches[1]), $matches[1]);
             },
-            $string);
+            $string
+        );
+
         $string = \str_replace('*\0', "\0*\0", $string);
 
         /** @noinspection UnserializeExploitsInspection */
@@ -779,9 +803,11 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     ): bool
     {
         $regExpression = '';
+
         if ($allowCharacters) {
             $regExpression .= 'A-Za-z';
         }
+
         if ($allowDigits) {
             $regExpression .= '0-9';
         }
@@ -795,6 +821,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         if ($allowUmlauts) {
             $regExpression .= \implode('', self::UMLAUTS);
         }
+
         if ('' !== $allowedSpecialCharacters) {
             $regExpression .= $allowedSpecialCharacters;
         }

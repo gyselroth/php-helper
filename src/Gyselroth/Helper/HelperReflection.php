@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -190,6 +190,7 @@ class HelperReflection implements ConstantsDataTypesInterface
     public static function getConstantFromPhpClassFile(string $pathPhpFilename, string $classPrefix = 'Helper')
     {
         $className = $classPrefix . \pathinfo($pathPhpFilename, PATHINFO_FILENAME);
+
         /** @noinspection ReturnFalseInspection */
         if (false !== \strpos($className, 'Mediator')) {
             return false;

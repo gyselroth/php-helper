@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -87,22 +87,27 @@ class HelperPreg
     {
         // Find consecutive offsets of left- and right-hand-side patterns
         $matchesLhs = self::preg_match_all_with_offsets($patternLhs, $str);
+
         if ([] === $matchesLhs) {
             return $str;
         }
+
         $offsetLhs  = \array_keys($matchesLhs)[0];
         $matchLhs   = $matchesLhs[$offsetLhs] ?: '';
+
         if ($matchLhs === '') {
             return $str;
         }
 
         $offsetsRhs = self::preg_match_all_with_offsets($patternRhs, $str);
+
         if ([] === $offsetsRhs) {
             return $str;
         }
 
         $matchRhs  = '';
         $offsetRhs = -1;
+
         foreach ($offsetsRhs as $offsetCurrentRhs => $matchCurrentRhs) {
             if ($offsetLhs < $offsetCurrentRhs) {
                 $offsetRhs = $offsetCurrentRhs;
@@ -174,12 +179,14 @@ class HelperPreg
         /** @var array $matches */
         \preg_match_all($pattern, $string, $matches);
         $fullMatches = \array_shift($matches);
+
         if (!\is_array($fullMatches)) {
             return [];
         }
 
         $matchesByOffset = [];
         $offsetBase      = 0;
+
         foreach ($fullMatches as $match) {
             $offset                                 = \strpos($string, $match);
             $matchesByOffset[$offsetBase + $offset] = $match;

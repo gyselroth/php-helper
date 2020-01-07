@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -63,18 +63,23 @@ class HelperSql
         $sqlLength = \strlen($sql);
 
         $formatted = $previousWord = $word = '';
+
         for ($i = 0, $j = $sqlLength; $i < $j; $i++) {
             $word .= $sql[$i];
 
             $hasReservedSpecialCharsAtIndex = \in_array($sql[$i], self::RESERVED_SPECIAL_CHARS, false);
+
             if ($hasReservedSpecialCharsAtIndex
                 || ' ' === $sql[$i]
             ) {
                 $wordTrimmed = \trim($word);
+
                 if ($hasReservedSpecialCharsAtIndex) {
                     $wordTrimmed = \substr($wordTrimmed, 0, -1);
                 }
+
                 $wordTrimmed = strtoupper($wordTrimmed);
+
                 if (\in_array($wordTrimmed, self::RESERVED_KEYWORDS, true)
                     && !\in_array($wordTrimmed, self::RESERVED_KEYWORDS_SKIP, true)
                 ) {
@@ -100,6 +105,7 @@ class HelperSql
     public static function getAssociativeColumnsList(array $columns): string
     {
         $additionalColumnsSql = [];
+
         foreach ($columns as $columnName => $selectAs) {
             $additionalColumnsSql[] = "$columnName AS '$selectAs'";
         }

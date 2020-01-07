@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -92,6 +92,7 @@ class LoggerWrapper
             if (!\is_object($loggerReference)) {
                 throw new LoggerException('first argument to LoggerWrapper::__construct must be an object (logger)');
             }
+
             self::$logger           = $loggerReference;
             self::$logPath          = $logPath;
             self::$isDevEnvironment = $isDevEnvironment;
@@ -289,6 +290,7 @@ class LoggerWrapper
         if (self::$isDevEnvironment) {
             die($message . "\n");
         }
+
         if (false !== $logAsError) {
             self::error($message, [self::OPT_CATEGORY => $logCategory]);
         }

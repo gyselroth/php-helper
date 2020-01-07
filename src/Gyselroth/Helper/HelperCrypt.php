@@ -2,7 +2,7 @@
 
 /**
  * Encryption helper classes
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -81,12 +81,6 @@ class HelperCrypt
             : $encrypted;
     }
 
-    /**
-     * @param  string $encrypted
-     * @param  string $password
-     * @param  bool   $base64
-     * @return string
-     */
     public static function decrypt(string $encrypted, string $password, bool $base64 = true): string
     {
         if (empty($encrypted)) {

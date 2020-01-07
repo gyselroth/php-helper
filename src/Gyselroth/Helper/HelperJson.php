@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -36,6 +36,7 @@ class HelperJson implements ConstantsDataTypesInterface
             LoggerWrapper::warning(
                 'Cannot decode invalid JSON',
                 [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $json, 'Exception' => $e]);
+
             return null;
         }
     }

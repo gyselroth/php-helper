@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -92,10 +92,12 @@ class HelperHtml
     public static function html2plaintext(string $html): string
     {
         $plaintext = self::stripHtmlTags($html);
+
         /** @noinspection ReturnFalseInspection */
         while (false !== \strpos($plaintext, '  ')) {
             $plaintext = \str_replace('  ', ' ', $plaintext);
         }
+
         /** @noinspection ReturnFalseInspection */
         while (false !== \strpos($plaintext, "\n\n")) {
             $plaintext = \str_replace("\n\n", "\n", $plaintext);
@@ -167,10 +169,12 @@ class HelperHtml
             // Allow target: _blank for open link in new window
             $config->set('Attr.AllowedFrameTargets', array('_blank'));
         }
+
         if ($disablePurifierCache) {
             // @note    Setting "Core.DefinitionCache" will trigger a PHP error: "Core.DefinitionCache" is an alias for "Cache.DefinitionImpl"
             $config->set('Cache.DefinitionImpl', null);
         }
+
         if ($allowVideo) {
             // Allow video: only if url is from YouTube or Vimeo
             $config->set('HTML.SafeIframe', true);
@@ -185,6 +189,7 @@ class HelperHtml
             // Escape single quotes to prevent JavaScript error
             $html = \str_replace("'", '&#39;', $html);
         }
+
         if ($escapeBackslashes) {
             // Escape backslashes to prevent loosing them
             $html = \str_replace('\\', '\\\\', $html);
@@ -209,6 +214,7 @@ class HelperHtml
     public static function renderTableHead(array $columns): string
     {
         $cells = '';
+
         foreach ($columns as $columnContent) {
             $cells .= '<th>' . $columnContent . '</th>';
         }

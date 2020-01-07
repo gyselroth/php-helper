@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -96,6 +96,7 @@ class HelperImage
         $image = \imagecreatetruecolor($width, $height);
 
         \imagesavealpha($image, true);
+
         $transparentColor = \imagecolorallocatealpha($image, 255, 255, 255, 127);
         \imagefill($image, 0, 0, $transparentColor);
 

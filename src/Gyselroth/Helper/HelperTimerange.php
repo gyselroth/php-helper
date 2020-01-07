@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -152,6 +152,7 @@ class HelperTimerange
 
         // Draw comparison ranges
         $y += $stepSize;
+
         foreach ($rangesCompare as $rangeCompare) {
             \imageline(
                 $image,
@@ -170,12 +171,14 @@ class HelperTimerange
         // Scan pixels top-down from pixels of first range, find longest series of black pixels
         for ($x = $rangeStart; $x <= $rangeEnd; $x++) {
             $maxOverlapsCurrent = 0;
+
             for ($y = 1; $y <= $amountRanges; $y++) {
                 $scannedColor = \imagecolorat($image, $x, $y);
                 if ($scannedColor !== $white) {
                     $maxOverlapsCurrent++;
                 }
             }
+
             $maxOverlaps = \max($maxOverlaps, $maxOverlapsCurrent);
         }
 

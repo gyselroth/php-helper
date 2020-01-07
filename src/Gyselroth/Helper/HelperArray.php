@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2017-2019 gyselroth™  (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
  *
  * @package \gyselroth\Helper
  * @author  gyselroth™  (http://www.gyselroth.com)
@@ -106,10 +106,12 @@ class HelperArray implements ConstantsDataTypesInterface
             if (\is_numeric($array)) {
                 return [(int)$array];
             }
+
             return $convertNonNumericValuesToZero ? [0] : [];
         }
 
         $integers = [];
+
         foreach ($array as $value) {
             if ($convertNonNumericValuesToZero
                 || \is_numeric($value)
@@ -150,6 +152,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function trim(array $strings, bool $allowEmpty = false): array
     {
         $trimmed = [];
+
         foreach ($strings as $string) {
             if (!empty($string)
                 || $allowEmpty
@@ -253,12 +256,15 @@ class HelperArray implements ConstantsDataTypesInterface
         if ($hasKeyOnLevel3 && $hasKeyOnLevel2 && $hasKeyOnLevel1 && $hasKeyOnLevel0) {
             return $array[$keyOnLevel0][$keyOnLevel1][$keyOnLevel2][$keyOnLevel3] ?? $default;
         }
+
         if ($hasKeyOnLevel2 && $hasKeyOnLevel1 && $hasKeyOnLevel0) {
             return $array[$keyOnLevel0][$keyOnLevel1][$keyOnLevel2] ?? $default;
         }
+
         if ($hasKeyOnLevel1 && $hasKeyOnLevel0) {
             return $array[$keyOnLevel0][$keyOnLevel1] ?? $default;
         }
+
         if ($hasKeyOnLevel0) {
             return $array[$keyOnLevel0] ?? $default;
         }
@@ -276,20 +282,23 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function keysFromIDs(array $array, string $keyName = 'id', bool $sortById = false): array
     {
         $arrayWithKeys = [];
+
         foreach ($array as $item) {
             $key                 = (int)$item[$keyName];
             $arrayWithKeys[$key] = $item;
         }
+
         if ($sortById) {
-            ksort($arrayWithKeys);
+            \ksort($arrayWithKeys);
         }
+
         return $arrayWithKeys;
     }
 
     public static function keysExist(array $arr, array $keys): bool
     {
         foreach ($keys as $key) {
-            if (!array_key_exists($key, $arr)) {
+            if (!\array_key_exists($key, $arr)) {
                 return false;
             }
         }
@@ -307,10 +316,12 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function replaceInKeys($search, $replace, array &$array): void
     {
         $results = [];
+
         foreach ($array as $key => $value) {
             if (\is_array($value)) {
                 self::replaceInKeys($search, $replace, $value);
             }
+
             $key           = \str_replace($search, $replace, $key);
             $results[$key] = $value;
         }
@@ -377,7 +388,7 @@ class HelperArray implements ConstantsDataTypesInterface
          *        When using the array in JavaScript, it's data type might be converted to object (to preserve the keys) instead of array.
          *        If usage of the result requires an un-associative array, use array_values() upon the array.
          */
-        return array_diff($array, $values);
+        return \array_diff($array, $values);
     }
 
     /**
@@ -455,6 +466,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function convertArrayDataByTypes(array $array): array
     {
         $converted = [];
+
         foreach ($array as $key => $value) {
             switch (strtolower($value['type'])) {
                 case self::DATA_TYPE_INT_SHORT:
@@ -487,6 +499,7 @@ class HelperArray implements ConstantsDataTypesInterface
                     } else {
                         $converted[$key] = $value['values']['value'] ?: null;
                     }
+
                     break;
             }
         }
@@ -504,7 +517,7 @@ class HelperArray implements ConstantsDataTypesInterface
      */
     public static function getUniqueKey($key, array $array, string $postFix = '_1'): string
     {
-        while (array_key_exists($key, $array)) {
+        while (\array_key_exists($key, $array)) {
             $key .= $postFix;
         }
 
@@ -524,7 +537,7 @@ class HelperArray implements ConstantsDataTypesInterface
         $result = [];
 
         foreach ($array as $value) {
-            if (array_key_exists($key, $value)
+            if (\array_key_exists($key, $value)
                 && !\in_array($value[$key], $tmp, true)
             ) {
                 $tmp[]    = $value[$key];
@@ -547,7 +560,7 @@ class HelperArray implements ConstantsDataTypesInterface
             $tmp[] = $value[$key];
         }
 
-        array_multisort($tmp, $sortingMode, $array);
+        \array_multisort($tmp, $sortingMode, $array);
     }
 
     /**
@@ -569,8 +582,9 @@ class HelperArray implements ConstantsDataTypesInterface
         $specialCharacter = [];
         $stringBeginsWith = [];
         $string           = [];
+
         foreach ($array as $value) {
-            if (ctype_punct($value[$key])) {
+            if (\ctype_punct($value[$key])) {
                 // True if: string contains only printable characters, but no whitespace, no a-z|A-Z, no digits
                 $specialCharacter[] = $value;
             } elseif ($value[$key]{0} == $check) {
@@ -596,7 +610,10 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function keys_recursive(array $arr): array
     {
         $keys = [];
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr), \RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveArrayIterator($arr),
+            \RecursiveIteratorIterator::SELF_FIRST);
+
         foreach ($iterator as $key => $value) {
             $keys[] = $key;
         }
@@ -607,6 +624,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function addKeysToSubArray(array $array, array $keys): array
     {
         $return = [];
+
         foreach ($keys as $key) {
             foreach ($array[$key] as $index => $value) {
                 $return[$index][$key] = $value;
@@ -629,7 +647,10 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function strSplManipulate(array $arr, string $functionName): array
     {
         if (!\function_exists($functionName)) {
-            LoggerWrapper::alert("Tried to call undefined function: $functionName", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+            LoggerWrapper::alert(
+                "Tried to call undefined function: $functionName",
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+
             return $arr;
         }
 
@@ -652,7 +673,7 @@ class HelperArray implements ConstantsDataTypesInterface
      */
     public static function getLastElement(array $array)
     {
-        return array_pop($array);
+        return \array_pop($array);
     }
 
     /**
@@ -705,6 +726,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function mergeArraysByArrayIndexID()
     {
         $arrays = \func_get_args();
+
         if (!$arrays[0]) {
             return false;
         }
@@ -712,6 +734,7 @@ class HelperArray implements ConstantsDataTypesInterface
         $data       = [];
         $arrayIndex = 0;
         $newData    = null;
+
         foreach ($arrays as $currentArray) {
             foreach ($currentArray as $currentArrayKey => $currentArrayValue) {
                 if ($arrayIndex === 0) {
@@ -726,6 +749,7 @@ class HelperArray implements ConstantsDataTypesInterface
                     $newData[$currentArrayKey] = \array_merge($data[$currentArrayKey][0], $currentArrayValue);
                 }
             }
+
             $arrayIndex++;
         }
 
@@ -780,9 +804,10 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function getArrayFromCsvInRows(string $csv, string $delimiter = ','): array
     {
         $res      = [];
-        $csvArray = str_getcsv(str_replace(["\n", "\r\r"], "\r", $csv), "\r");
+        $csvArray = \str_getcsv(\str_replace(["\n", "\r\r"], "\r", $csv), "\r");
+
         foreach ($csvArray as $line) {
-            $res[] = array_map('trim', str_getcsv(trim($line), $delimiter));
+            $res[] = \array_map('trim', \str_getcsv(\trim($line), $delimiter));
         }
 
         return $res;
@@ -800,9 +825,13 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         $keys   = \array_keys($array);
         $return = [];
+
         foreach ($keys as $key) {
             // If length is given and is 0, false or null; an empty string will be returned.
-            $keyName          = $length ? substr($key, $start, $length) : substr($key, $start);
+            $keyName = $length
+                ? \substr($key, $start, $length)
+                : \substr($key, $start);
+
             $return[$keyName] = $array[$key];
         }
 
@@ -826,6 +855,7 @@ class HelperArray implements ConstantsDataTypesInterface
     ): string
     {
         $itemsWrapped = [];
+
         foreach ($items as $item) {
             $itemsWrapped[] = $wrapLhs . $item . $wrapRhs;
         }
@@ -881,6 +911,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function reIndexByKey(array $rows, $associativeIndexKey): array
     {
         $associativeResult = [];
+
         foreach ($rows as $row) {
             $associativeResult[$row[$associativeIndexKey]] = $row;
         }
@@ -905,6 +936,7 @@ class HelperArray implements ConstantsDataTypesInterface
         }
 
         $keys = \explode('.', $key);
+
         while (\count($keys) > 1) {
             $key = \array_shift($keys);
 
@@ -941,6 +973,7 @@ class HelperArray implements ConstantsDataTypesInterface
         if (null === $key) {
             return $array;
         }
+
         if (static::keyExists($array, $key)) {
             return $array[$key];
         }
@@ -1003,6 +1036,7 @@ class HelperArray implements ConstantsDataTypesInterface
         }
 
         $array = [];
+
         foreach ($data as $key => $value) {
             $array[] = [
                 'key'   => $key,
@@ -1017,7 +1051,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  array $elementsUnsorted
      * @return array|bool
      */
-    public static function sortElements($elementsUnsorted)
+    public static function sortElements(array $elementsUnsorted)
     {
         $sortedElements = [];
         $result         = [];
@@ -1033,7 +1067,9 @@ class HelperArray implements ConstantsDataTypesInterface
             }
         }
 
-        return [] === $result ? false : $result;
+        return [] === $result
+            ? false
+            : $result;
     }
 
     /**
@@ -1045,6 +1081,7 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function extractStringValues(array $arr): array
     {
         $strings = [];
+
         foreach (\array_values($arr) as $value) {
             if (\is_string($value)) {
                 $strings[] = $value;
@@ -1067,6 +1104,7 @@ class HelperArray implements ConstantsDataTypesInterface
         if (!\in_array($type, self::CASTABLE_TYPES, true)) {
             return $array;
         }
+
         if (!\is_array($column)
             && !\is_iterable($column)
         ) {
@@ -1077,6 +1115,7 @@ class HelperArray implements ConstantsDataTypesInterface
             foreach ($column as $key) {
                 \settype($subArray[$key], $type);
             }
+
             $array[$index] = $subArray;
         }
 
