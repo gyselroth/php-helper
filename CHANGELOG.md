@@ -1,11 +1,11 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.3 - Not released yet
---------------------------------
+Version 0.2.3 - Released 2020/01/07
+-----------------------------------
 * Correct formatting to follow PSR-2 more closely
 * Performance: Root-namespace all PSL functions 
-* Improve and add method signatures: data type declarations and annotations 
+* More strict types: Type declarations and annotations in method signatures 
 * Add phpstan config
 * Add method: HelperDate::ensureSeparator() 
 * Add method: HelperDate::getZendDateByDateString() 
