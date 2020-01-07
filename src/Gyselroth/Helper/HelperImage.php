@@ -35,6 +35,7 @@ class HelperImage
         if (!$imageResource) {
             $imageResource = \imagecreate($maxWidth, $maxHeight);
             $white         = \imagecolorallocate($imageResource, 255, 255, 255);
+
             \imagefilledrectangle($imageResource, 0, 0, $maxWidth, $maxHeight, $white);
         }
 

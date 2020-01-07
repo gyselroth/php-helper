@@ -82,6 +82,7 @@ class HelperZip
 
         if ([] === $validFiles) {
             self::handleZipError($pathFiles, self::ERROR_CODE_NO_FILES);
+
             return false;
         }
 
@@ -105,6 +106,7 @@ class HelperZip
 
         if (!$result) {
             self::handleZipError($destinationFile, $result);
+
             return false;
         }
 

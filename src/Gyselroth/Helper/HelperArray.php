@@ -1060,7 +1060,9 @@ class HelperArray implements ConstantsDataTypesInterface
                 $sortedElements[$elements['sort']][$unsortedKey] = $elementsUnsorted[$unsortedKey];
             }
         }
+
         \ksort($sortedElements);
+
         foreach ($sortedElements as $elements) {
             foreach ($elements as $elementKey => $elementItems) {
                 $result[$elementKey] = $elementItems;

@@ -199,6 +199,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         }
 
         $amountForbiddenChars = \count($forbiddenChars);
+
         if ($amountForbiddenChars > 0
             && $amountForbiddenChars === \count($replacementChars)
         ) {
@@ -701,6 +702,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $message = self::validateUploadFile($file, $allowedTypes, $maximumFileSize);
+
         if ('' !== $message) {
             throw new FileExceptionInvalidFile($message);
         }
@@ -801,6 +803,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
                 && '..' !== $file
             ) {
                 $rmPath = $path . '/' . $file;
+
                 if (\is_dir($rmPath)) {
                     self::rmdirRecursive($rmPath);
                 } else {
