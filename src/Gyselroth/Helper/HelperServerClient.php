@@ -42,7 +42,7 @@ class HelperServerClient implements ConstantsHttpInterface
     }
 
     /**
-     * @param  array|int|string|\Zend_Date $requestTime
+     * @param  \Zend_Date $requestTime
      * @param  \Zend_Date                  $modificationTime
      * @return string
      * @throws \InvalidArgumentException

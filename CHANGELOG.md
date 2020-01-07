@@ -11,6 +11,7 @@ Version 0.2.3 - Not released yet
 * Add method: HelperDate::getZendDateByDateString() 
 * Add method: HelperImage::scaleJpegByData() 
 * Add class: HelperSanitize
+* Extract string rel. constants into interface: ConstantsEntitiesOfStrings
 
 
 Version 0.2.2 - Released 2019/12/12

@@ -11,10 +11,12 @@
 
 namespace Gyselroth\Helper;
 
+use Gyselroth\Helper\Interfaces\ConstantsEntitiesOfStrings;
+
 /**
  * Server/Client helpers: Environment settings, MVC, AJAX
  */
-class HelperSanitize
+class HelperSanitize implements ConstantsEntitiesOfStrings
 {
     private const LOG_CATEGORY_REQUEST = 'sanitize';
 

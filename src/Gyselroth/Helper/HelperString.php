@@ -13,21 +13,12 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\PregExceptionEmptyExpression;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
+use Gyselroth\Helper\Interfaces\ConstantsEntitiesOfStrings;
 use Gyselroth\Helper\Interfaces\ConstantsOperatorsInterface;
 
-class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInterface
+class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInterface, ConstantsEntitiesOfStrings
 {
     public const LOG_CATEGORY = 'stringHelper';
-
-    public const CHARSET_UTF8 = 'UTF-8';
-
-    // Character classes
-    public const CHAR_TYPE_ALPHA_LOWER = 0;
-    public const CHAR_TYPE_ALPHA_UPPER = 1;
-    public const CHAR_TYPE_NUMBER      = 2;
-    public const CHAR_TYPE_SPECIAL     = 3;
-
-    protected CONST UMLAUTS = ['ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß'];
 
     /**
      * @param      string $haystack
@@ -675,10 +666,14 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             $serialized
         );
 
-        return \preg_replace(
-            ['#};#', '#{;#'],
-            ['}', '{'],
-            $serialized);
+
+        return null === $serialized
+            ? ''
+            : \preg_replace(
+                ['#};#', '#{;#'],
+                ['}', '{'],
+                $serialized
+            );
     }
 
 
@@ -702,10 +697,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * Fix for PHP SPL unserialize() failing with serialized data containing UTF-8
      * Background: SPL unserialize() calculates total length of serialized data containing multi-byte characters wrong
      *
-     * @param string
+     * @param string $string
      * @return array|boolean|float|integer|object|string
      */
-    public static function mb_unserialize($string)
+    public static function mb_unserialize(string $string)
     {
         // special handling for asterisk wrapped in zero bytes
         $string = \str_replace("\0*\0", "*\0", $string);
@@ -731,6 +726,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public static function explodeTrimmed(string $string, string $delimiter = ','): array
     {
         $items = \explode($delimiter, $string);
+
+        if (false ===  $items) {
+            return [];
+        }
 
         return \array_map('trim', $items);
     }

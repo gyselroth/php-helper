@@ -69,7 +69,7 @@ class HelperImage
 
         $file = \file($thumbnailFile);
 
-        return !empty($file[0]);
+        return $file ? !empty($file[0]) : false;
     }
 
     /**
