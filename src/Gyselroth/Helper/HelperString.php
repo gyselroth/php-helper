@@ -647,6 +647,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             ],
             $str);
 
+        if (null === $serialized) {
+            return '';
+        }
+
         $serialized = \preg_replace_callback(
             '#\\s*\\["(.*?)"\\]\\s*=>#',
             static function($match) {
@@ -654,6 +658,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             },
             $serialized
         );
+
+        if (null === $serialized) {
+            return '';
+        }
 
         $serialized = \preg_replace_callback(
             '#object\\((.*?)\\).*?\\((\\d+)\\)\\s*{\\s*;#',
@@ -667,15 +675,16 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         );
 
 
-        return null === $serialized
-            ? ''
-            : \preg_replace(
-                ['#};#', '#{;#'],
-                ['}', '{'],
-                $serialized
-            );
-    }
+        if (null === $serialized) {
+            return '';
+        }
 
+        $serialized = \preg_replace(['#};#', '#{;#'], ['}', '{'], $serialized);
+
+        return null == $serialized
+            ? ''
+            : $serialized;
+    }
 
     /**
      * Convert output of var_dump() back into PHP value

@@ -92,13 +92,19 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         $numbers = [];
         $parts   = \explode($delimiter, $str);
 
+        if (false === $parts) {
+            return [];
+        }
+
         foreach ($parts as $number) {
             if (!$excludeNullValues || 'null' !== \strtolower($number)) {
                 $numbers[] = (int)$number;
             }
         }
 
-        return $unique ? \array_unique($numbers) : $numbers;
+        return $unique
+            ? \array_unique($numbers)
+            : $numbers;
     }
 
     /**

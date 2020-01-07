@@ -175,7 +175,7 @@ class HelperZip
             return false;
         }
 
-        $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, realpath($pathUnzipped));
+        $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, \realpath($pathUnzipped));
 
         if (\is_file($pathUnzipped)) {
             if (\file_exists($pathUnzipped)
@@ -331,9 +331,13 @@ class HelperZip
         $content = false;
 
         for ($index = 0; $index < $zip->numFiles; $index++) {
-            $filenameAtIndex = $reduceToBasename
-                ? \basename($zip->getNameIndex($index))
-                : $zip->getNameIndex($index);
+            $filenameAtIndex = $zip->getNameIndex($index);
+
+            if ($reduceToBasename) {
+                $filenameAtIndex = $filenameAtIndex === false
+                    ? false
+                    : \basename($filenameAtIndex);
+            }
 
             if ($filenameAtIndex === $filenameOrFilePath) {
                 $content = $zip->getFromIndex($index);

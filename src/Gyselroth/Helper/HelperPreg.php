@@ -138,14 +138,18 @@ class HelperPreg
     {
         $str = \preg_replace('/\d/', '', $str);
 
+        if (null ===  $str) {
+            return '';
+        }
+
         return $trim ? \trim($str) : $str;
     }
 
     /**
      * Reduce given string to its contained numbers
      *
-     * @param  string    $str
-     * @param  bool|null $convertToInt
+     * @param  string   $str
+     * @param  bool     $convertToInt
      * @return string|int
      */
     public static function removeNonNumericChars(string $str, bool $convertToInt = false)
@@ -178,6 +182,7 @@ class HelperPreg
     {
         /** @var array $matches */
         \preg_match_all($pattern, $string, $matches);
+
         $fullMatches = \array_shift($matches);
 
         if (!\is_array($fullMatches)) {
