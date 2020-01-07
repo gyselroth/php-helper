@@ -14,6 +14,7 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\ArgumentMissingException;
 use Gyselroth\Helper\Exception\OperationFailedException;
+use Laminas\Json\Json;
 
 /**
  * Application helpers
@@ -120,8 +121,8 @@ class HelperCrypt
     public static function createToken($data, $compressed = true): string
     {
         $string = $compressed
-            ? \gzdeflate(\Zend_Json::encode($data), 9)
-            : \Zend_Json::encode($data);
+            ? \gzdeflate(Json::encode($data), 9)
+            : Json::encode($data);
 
         return HelperString::urlSafeB64encode($string);
     }
