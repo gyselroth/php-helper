@@ -6,7 +6,8 @@ Version 0.2.3 - Not released yet
 * Correct formatting to follow PSR-2 more closely
 * Performance: Root-namespace all PSL functions 
 * Improve and add method signatures: data type declarations and annotations 
-* Add phpstan config 
+* Add phpstan config
+* Add method: HelperDate::ensureSeparator() 
 
 
 Version 0.2.2 - Released 2019/12/12

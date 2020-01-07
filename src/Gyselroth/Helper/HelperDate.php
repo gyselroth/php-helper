@@ -119,6 +119,18 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
+     * Replace all non numeric characters by given separator
+     *
+     * @param string $date          e.g. 2019_08_19
+     * @param string $separator     e.g. '-'
+     * @return string|null          e.g. 2019-08-19
+     */
+    public static function ensureSeparator(string $date, string $separator = '-'): ?string
+    {
+        return \preg_replace('/\\D/', $separator, $date);
+    }
+
+    /**
      * @return string
      * @throws \Zend_Date_Exception
      */
