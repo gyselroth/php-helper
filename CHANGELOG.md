@@ -8,6 +8,9 @@ Version 0.2.3 - Not released yet
 * Improve and add method signatures: data type declarations and annotations 
 * Add phpstan config
 * Add method: HelperDate::ensureSeparator() 
+* Add method: HelperDate::getZendDateByDateString() 
+* Add method: HelperImage::scaleJpegByData() 
+* Add class: HelperSanitize
 
 
 Version 0.2.2 - Released 2019/12/12

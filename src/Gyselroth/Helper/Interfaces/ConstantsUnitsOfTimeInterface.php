@@ -38,6 +38,8 @@ interface ConstantsUnitsOfTimeInterface
     public const FORMAT_TIME_PHP            = 'H:i:s';
     public const FORMAT_TIME_NO_SECONDS_PHP = 'H:i';
 
+    public const ZERO_DATETIME = '0000-00-00 00:00:00';
+
     // Date and datetime formats for Zend_Date
     public const FORMAT_DATE_ZF1                              = 'yyyy-MM-dd';
     public const FORMAT_DATE_ZF1_WEEKDAY_SHORT_DAY_MONTH_YEAR = 'D, j. F Y';

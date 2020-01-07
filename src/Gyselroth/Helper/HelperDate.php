@@ -13,6 +13,7 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\DateException;
 use Gyselroth\Helper\Interfaces\ConstantsUnitsOfTimeInterface;
+use Zend_Date;
 
 class HelperDate implements ConstantsUnitsOfTimeInterface
 {
@@ -137,6 +138,21 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public static function getCurrentDate(): string
     {
         return (new \Zend_Date())->toString(self::FORMAT_DATE_ZF1_WEEKDAY_LONG_DAY_MONTH_YEAR);
+    }
+
+    /**
+     * @param string $date e.g. '2019-12-31'
+     * @return Zend_Date
+     * @throws Zend_Date_Exception
+     * @throws \Zend_Date_Exception
+     */
+    public static function getZendDateByDateString(string $date): \Zend_Date
+    {
+        return new \Zend_Date([
+            'year'  => \substr($date, 0, 4),
+            'month' => \substr($date, 5, 2),
+            'day'   => \substr($date, 8, 2)
+        ], self::DEFAULT_LOCALE);
     }
 
     /**

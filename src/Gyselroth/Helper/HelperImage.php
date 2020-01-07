@@ -11,6 +11,8 @@
 
 namespace Gyselroth\Helper;
 
+use Gyselroth\Helper\Exception\FileException;
+
 /**
  * Image helper methods
  */
@@ -45,7 +47,8 @@ class HelperImage
                 $sourceHeight / ($sourceWidth / $maxWidth))
             : \imagecreatetruecolor(
                 $sourceWidth / ($sourceHeight / $maxHeight),
-                $sourceHeight / ($sourceHeight / $maxHeight));
+                $sourceHeight / ($sourceHeight / $maxHeight)
+            );
 
         \imagecopyresampled(
             $save,
@@ -54,7 +57,8 @@ class HelperImage
             \imagesx($save),
             \imagesy($save),
             $sourceWidth,
-            $sourceHeight);
+            $sourceHeight
+        );
 
         // Changes the compression and quality to 0, quality has to be between 0 and 9
         \imagepng($save, $thumbnailFile, (int)($quality > 0 ? (100 - $quality) / 10 : 9));
@@ -131,5 +135,29 @@ class HelperImage
         \imagecopy($imageNew, $imageCopy, 0, 0, 0, 0, $cropWidth, $cropHeight);
 
         return \imagepng($imageNew, $imageFilename);
+    }
+
+    /**
+     * @param string $jpegData
+     * @param int $maxWidth
+     * @param int $maxHeight
+     * @return string
+     * @throws FileException
+     */
+    public static function scaleJpegByData(string $jpegData, int $maxWidth, int $maxHeight): string
+    {
+        $pathTmpWithoutExtension = APPLICATION_PATH . '/../../tmp/' . \uniqid('img_', false);
+        $pathTmpJpg              = $pathTmpWithoutExtension . 'jpeg';
+        $pathScaledJpeg          = $pathTmpWithoutExtension . '_scaled.jpeg';
+
+        $fileHandle = \fopen($pathTmpJpg, 'wb+');
+        \fwrite($fileHandle, $jpegData);
+        \fclose($fileHandle);
+
+        if (!self::saveThumbnail($pathTmpJpg, $pathScaledJpeg, $maxWidth, $maxHeight)) {
+            throw new FileException('Failed store scaled image: ' . $pathScaledJpeg);
+        }
+
+        return \file_get_contents($pathScaledJpeg);
     }
 }

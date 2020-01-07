@@ -769,7 +769,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      */
     public static function filterAlphaNumeric(string $str) : ?string
     {
-        return \preg_replace('/[^a-zA-Z0-9]+/', '', $str);
+        return HelperSanitize::filterAlphaNumeric($str);
     }
 
     public static function replaceSpecialCharacters(string $str, bool $toLower = true): string
@@ -807,31 +807,15 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         string $allowedSpecialCharacters = ''
     ): bool
     {
-        $regExpression = '';
-
-        if ($allowCharacters) {
-            $regExpression .= 'A-Za-z';
-        }
-
-        if ($allowDigits) {
-            $regExpression .= '0-9';
-        }
-
-        if ($allowWhiteSpace) {
-            $regExpression .= '\s';
-        } elseif ($allowSpace) {
-            $regExpression .= ' ';
-        }
-
-        if ($allowUmlauts) {
-            $regExpression .= \implode('', self::UMLAUTS);
-        }
-
-        if ('' !== $allowedSpecialCharacters) {
-            $regExpression .= $allowedSpecialCharacters;
-        }
-
-        return (bool)\preg_match('/[' . $regExpression . ']+/', $str);
+        return HelperSanitize::validateString(
+            $str,
+            $allowCharacters,
+            $allowUmlauts,
+            $allowDigits,
+            $allowWhiteSpace,
+            $allowSpace,
+            $allowedSpecialCharacters
+        );
     }
 
     /**
