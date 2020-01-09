@@ -99,7 +99,8 @@ class HelperTimerange
         $endRange1,
         $startRange2,
         $endRange2,
-        bool $allowTouching = true): bool
+        bool $allowTouching = true
+    ): bool
     {
         // Ensure all times are UNIX timestamps
         $startRange1 = HelperDate::getUnixTimestampFromDate($startRange1);

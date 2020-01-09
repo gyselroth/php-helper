@@ -393,7 +393,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $timestamp,
         bool $isMilliSeconds = false,
         bool $includeSeconds = true,
-        bool $isCurrentDate = false): string
+        bool $isCurrentDate = false
+    ): string
     {
         if (\is_string($timestamp)
             && !\is_numeric($timestamp)
@@ -451,7 +452,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $timeStr,
         bool $includeMinutes = true,
         bool $includeSeconds = true,
-        bool $isCurrentDate = false): int
+        bool $isCurrentDate = false
+    ): int
     {
         return self::getSumSecondsOfTimeParts(
             self::getTimeStringParts($timeStr, ':', $includeMinutes, $includeSeconds),
