@@ -237,7 +237,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  string               $keyOnLevel2
      * @param  string               $keyOnLevel3
      * @param  boolean|string|array $default
-     * @return array|float|int|string|Object    Value on sub level(s), identified by given keys, or full array if no keys given. False if a given key doesn't exist
+     * @return array|bool|float|int|string|object    Value on sub level(s), identified by given keys, or full array if no keys given. False if a given key doesn't exist
      */
     public static function getValueByKeyFromSubArrays(
         array $array,

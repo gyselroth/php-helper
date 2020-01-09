@@ -956,4 +956,31 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     {
         return HelperDate::isDateString($str, $delimiter, $isGermanNotation);
     }
+
+    public static function specialCharsToAscii(string $string, bool $toLower): string
+    {
+        $replacePairs = [
+            'š' => 's', 'ð' => 'dj', 'ž' => 'z', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'a',
+            'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+            'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u',
+            'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f',
+            'ß' => 'ss'
+        ];
+
+        if ($toLower) {
+            $string = \strtolower($string);
+        } else {
+            // Needs to translate also upper-case characters
+            $replacePairs = \array_merge($replacePairs, [
+                'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
+                'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
+                'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
+                'Ý' => 'Y', 'Þ' => 'B', 'Ÿ' => 'Y', 'Ƒ' => 'F',
+            ]);
+        }
+
+        $string = \strtr($string, $replacePairs);
+
+        return \str_replace(['&', '@', '#'], ['-and-', '-at-', '-number-'], $string);
+    }
 }

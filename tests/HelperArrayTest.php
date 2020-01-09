@@ -116,7 +116,8 @@ class HelperArrayTest extends HelperTestCase
         $this->assertThat(
             $result,
             new IsType('array')
-            );
+        );
+
         $this->assertNotEmpty($result);
         $this->assertCount(4, $result);
         $this->assertEquals(6, array_sum($result));

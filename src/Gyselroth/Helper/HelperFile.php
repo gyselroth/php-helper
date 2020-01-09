@@ -882,40 +882,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public static function sanitizeFilename(string $filename, bool $toLower = true): string
     {
-        // Convert space to hyphen, remove single- and double- quotes
-        $filename = \str_replace([' ', '\'', '"'], ['-', '', ''], $filename);
-
-        $replacePairs = [
-            'š' => 's', 'ð' => 'dj', 'ž' => 'z', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'a',
-            'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
-            'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u',
-            'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f',
-            'ß' => 'ss'
-        ];
-
-        if ($toLower) {
-            $filename = \strtolower($filename);
-        } else {
-            // Needs to translate also upper-case characters
-            $replacePairs = \array_merge($replacePairs, [
-                'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
-                'Ç' => 'C', 'È' => 'E',  'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
-                'Ñ' => 'N', 'Ò' => 'O',  'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
-                'Ý' => 'Y', 'Þ' => 'B',  'Ÿ' => 'Y', 'Ƒ' => 'F',
-            ]);
-        }
-
-        $filename = \strtr($filename, $replacePairs);
-
-        $filename = \str_replace(['&', '@', '#'], ['-and-', '-at-', '-number-'], $filename);
-
-        // Remove non-word chars (leaving hyphens and periods)
-        $filename = \preg_replace('/[^\w\-.]+/', '', $filename);
-
-        // Reduce multiple hyphens to one
-        $filename = \preg_replace('/[\-]+/', '-', $filename);
-
-        return HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
+        return HelperSanitize::sanitizeFilename($filename, $toLower);
     }
 
     public static function getBasenames(array $filePaths, bool $makeUnique = true): array

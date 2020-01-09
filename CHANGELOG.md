@@ -1,6 +1,12 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.4 - Not released yet
+--------------------------------
+* Corrected too narrow return type signals (added forgotten |null)
+* Collect more sanitization methods into HelperSanitize 
+
+
 Version 0.2.3 - Released 2020/01/07
 -----------------------------------
 * Correct formatting to follow PSR-2 more closely

@@ -55,7 +55,7 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
             $str);
     }
 
-    public static function validateString(
+    public static function sanitizeString(
         string $str,
         bool $allowCharacters = true,
         bool $allowUmlauts = false,
@@ -92,8 +92,57 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         return (bool)\preg_match('/[' . $regExpression . ']+/', $str);
     }
 
-    public static function sanitizeFilename(string $filename): string
+    public static function sanitizeFilename(
+        string $filename,
+        bool $toLower = true,
+        bool $specialCharsToAscii = true
+    ): string
     {
-        return HelperFile::sanitizeFilename($filename);
+        // Convert space to hyphen, remove single- and double- quotes
+        $filename = \str_replace([' ', '\'', '"'], ['-', '', ''], $filename);
+
+        if ($specialCharsToAscii) {
+            $filename = HelperString::specialCharsToAscii($filename, $toLower);
+        }
+
+        // Remove non-word chars (leaving hyphens and periods)
+        $filename = \preg_replace('/[^\w\-.]+/', '', $filename);
+
+        // Reduce multiple hyphens to one
+        $filename = \preg_replace('/[\-]+/', '-', $filename);
+
+        return HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
+    }
+
+    /**
+     * @param string $str
+     * @param bool $allowCharacters
+     * @param bool $allowUmlauts
+     * @param bool $allowDigits
+     * @param bool $allowWhiteSpace
+     * @param bool $allowSpace
+     * @param string $allowedSpecialCharacters
+     * @return bool
+     * @deprecated
+     */
+    public static function validateString(
+        string $str,
+        bool $allowCharacters = true,
+        bool $allowUmlauts = false,
+        bool $allowDigits = false,
+        bool $allowWhiteSpace = false,
+        bool $allowSpace = false,
+        string $allowedSpecialCharacters = ''
+    ): bool
+    {
+        return self::sanitizeString(
+            $str,
+            $allowCharacters,
+            $allowUmlauts,
+            $allowDigits,
+            $allowWhiteSpace,
+            $allowSpace,
+            $allowedSpecialCharacters
+        );
     }
 }

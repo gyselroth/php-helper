@@ -889,7 +889,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         return $dateParts[2] . '.' . $dateParts[1] . '.' . $dateParts[0];
     }
 
-    public static function getZendDatePartByType(string $type): string
+    public static function getZendDatePartByType(?string $type): string
     {
         $DATE_TIME_PART_MONTH = 'month';
 
