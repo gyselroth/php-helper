@@ -583,9 +583,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      *
      * @param  int  $dateFrom UNIX timestamp
      * @param  int  $dateTo   UNIX timestamp
-     * @return array|bool
+     * @return array
      */
-    public static function getWeeksBetween($dateFrom, $dateTo)
+    public static function getWeeksBetween($dateFrom, $dateTo): array
     {
         $dayOfWeek     = \date('w', $dateFrom);
         $fromWeekStart = $dateFrom - ($dayOfWeek * self::SECONDS_DAY) - ($dateFrom % self::SECONDS_DAY);
