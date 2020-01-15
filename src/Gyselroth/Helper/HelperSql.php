@@ -49,7 +49,7 @@ class HelperSql
      * Render given SQL as HTML
      *
      * @param  string $sql
-     * @return bool|string
+     * @return string|false
      */
     public static function formatHtml($sql)
     {

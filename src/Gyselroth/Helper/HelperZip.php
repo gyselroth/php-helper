@@ -306,7 +306,7 @@ class HelperZip
      * @param string $pathArchive
      * @param string $filenameOrFilePath If in sub directory, prefix w/ path, e.g. "word/document.xml"
      * @param bool   $reduceToBasename   Optional: return content of 1st matching filename in any sub directory
-     * @return bool|string
+     * @return string|false
      * @throws \Exception
      */
     public static function getContainedFileContents(

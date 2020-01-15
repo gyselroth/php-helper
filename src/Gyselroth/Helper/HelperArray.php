@@ -236,7 +236,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  string               $keyOnLevel1
      * @param  string               $keyOnLevel2
      * @param  string               $keyOnLevel3
-     * @param  boolean|string|array $default
+     * @param  bool|string|array $default
      * @return array|bool|float|int|string|object    Value on sub level(s), identified by given keys, or full array if no keys given. False if a given key doesn't exist
      */
     public static function getValueByKeyFromSubArrays(
@@ -1033,7 +1033,7 @@ class HelperArray implements ConstantsDataTypesInterface
 
     /**
      * @param  array $data
-     * @return array|bool
+     * @return array|false
      */
     public static function getAssociativeKeyValues(array $data)
     {
@@ -1055,7 +1055,7 @@ class HelperArray implements ConstantsDataTypesInterface
 
     /**
      * @param  array $elementsUnsorted
-     * @return array|bool
+     * @return array|false
      */
     public static function sortElements(array $elementsUnsorted)
     {
@@ -1253,7 +1253,7 @@ class HelperArray implements ConstantsDataTypesInterface
     /**
      * @deprecated
      * @param array $elements
-     * @return array|bool
+     * @return array|false
      */
     public static function sortElementArr(array $elements)
     {

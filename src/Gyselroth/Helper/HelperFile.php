@@ -124,7 +124,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
     /**
      * @param  string $pathFile
-     * @return string|bool
+     * @return string|false
      */
     public static function getMimeType(string $pathFile)
     {
@@ -924,7 +924,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     /**
      * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming and remove this additional method
      * @param  string $path
-     * @return array|bool
+     * @return array|false
      * @throws \Exception
      */
     public static function getXMLFilesFromDir(string $path)

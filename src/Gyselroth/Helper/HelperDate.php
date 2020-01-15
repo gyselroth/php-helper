@@ -180,7 +180,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      *
      * @param  int|\Zend_Date $timestamp
      * @param  int            $format
-     * @return bool|string
+     * @return string|false
      * @throws \Zend_Date_Exception
      */
     public static function getDateFromUnixTimestamp($timestamp, int $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
@@ -232,7 +232,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  int|\Zend_Date $date
-     * @return bool|string
+     * @return string|false
      * @throws \Zend_Date_Exception
      */
     public static function getMySqlDateTimeFromDate($date)
@@ -254,7 +254,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  string $str
-     * @return string|bool       'yyyy-mm-dd' out of 'yyyy-mm-dd hh:mm:ss'
+     * @return string|false       'yyyy-mm-dd' out of 'yyyy-mm-dd hh:mm:ss'
      */
     public static function getDateStringFromDateTimeString(string $str)
     {
@@ -751,7 +751,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  string|int $year 4-digit year
-     * @return bool|string
+     * @return string|false
      */
     public static function getAgeByBirthYear($year)
     {
@@ -925,7 +925,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
-     * @return bool|string
+     * @return string|false
      */
     public static function getCurrentWeekAndYear()
     {
