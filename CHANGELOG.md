@@ -1,11 +1,13 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.4 - Not released yet
---------------------------------
+Version 0.2.4 - Released 2020/01/27
+-----------------------------------
 * Corrected too narrow return type signals (added forgotten |null)
 * Collect more sanitization methods into HelperSanitize 
 * Marked HelperArray::isIterable() deprecated - Use PSL isIterable() instead
+* Method signatures cleanup: Remove unused arguments
+* Clarify/make various type declarations and annotations more precise
 
 Version 0.2.3 - Released 2020/01/07
 -----------------------------------
