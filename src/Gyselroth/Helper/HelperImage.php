@@ -62,7 +62,11 @@ class HelperImage
         );
 
         // Changes the compression and quality to 0, quality has to be between 0 and 9
-        \imagepng($save, $thumbnailFile, (int)($quality > 0 ? (100 - $quality) / 10 : 9));
+        \imagepng(
+            $save,
+            $thumbnailFile,
+            (int)($quality > 0 ? (100 - $quality) / 10 : 9)
+        );
 
         \imagedestroy($imageResource);
         \imagedestroy($save);
@@ -120,7 +124,8 @@ class HelperImage
         if (!\file_exists($imageFilename)) {
             LoggerWrapper::error(
                 "Tried to crop non-existing image file: $imageFilename",
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -152,6 +157,7 @@ class HelperImage
         $pathScaledJpeg          = $pathTmpWithoutExtension . '_scaled.jpeg';
 
         $fileHandle = \fopen($pathTmpJpg, 'wb+');
+
         \fwrite($fileHandle, $jpegData);
         \fclose($fileHandle);
 

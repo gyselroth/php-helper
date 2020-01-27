@@ -28,7 +28,8 @@ class HelperXml implements ConstantsXmlInterface
     {
         return (bool)\simplexml_load_string(
             $str, 'SimpleXmlElement',
-            LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE);
+            LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE
+        );
     }
 
     /**
@@ -104,7 +105,8 @@ class HelperXml implements ConstantsXmlInterface
     ):int
     {
         return \count(
-            self::getNodes($xml, $levels, $excludeTagNames, $excludeTagTypes));
+            self::getNodes($xml, $levels, $excludeTagNames, $excludeTagTypes)
+        );
     }
 
     /**
@@ -122,7 +124,8 @@ class HelperXml implements ConstantsXmlInterface
     ): int
     {
         return \count(
-            self::getItemsInArrayOfNodes($levels, $excludeTagNames, $excludeTagTypes, $nodes));
+            self::getItemsInArrayOfNodes($levels, $excludeTagNames, $excludeTagTypes, $nodes)
+        );
     }
 
     /**
@@ -152,21 +155,25 @@ class HelperXml implements ConstantsXmlInterface
                 if ($includeWarnings) {
                     return $renderErrorMessage($error, "Warning {$error->code}");
                 }
+
                 break;
             case LIBXML_ERR_ERROR:
                 if ($includeErrors) {
                     return $renderErrorMessage($error, "Error {$error->code}");
                 }
+
                 break;
             case LIBXML_ERR_FATAL:
                 if ($includeFatal) {
                     return $renderErrorMessage($error, "Fatal Error {$error->code}");
                 }
+
                 break;
             default:
                 LoggerWrapper::warning(
                     "Detected unhandled error-level: {$error->level}",
-                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $error->level]);
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $error->level]
+                );
         }
 
         return '';
@@ -281,9 +288,13 @@ class HelperXml implements ConstantsXmlInterface
             $xml = \mb_convert_encoding(
                 $xml,
                 self::ENCODING_UTF_8,
-                \mb_detect_encoding($xml));
+                \mb_detect_encoding($xml)
+            );
         } else {
-            LoggerWrapper::warning('HelperXml::getTagsFromXml() recommends installation of PHP extension: mbstring. Skipping encoding conversion for now.');
+            LoggerWrapper::warning(
+                'HelperXml::getTagsFromXml() recommends installation of PHP extension: mbstring. '
+                . 'Skipping encoding conversion for now.'
+            );
         }
 
         $parser = \xml_parser_create(self::ENCODING_UTF_8);
@@ -299,6 +310,7 @@ class HelperXml implements ConstantsXmlInterface
         $dom                     = new \DOMDocument(self::VERSION_1_0);
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput       = true;
+
         $dom->loadXML($xml);
 
         return $dom->saveXML();

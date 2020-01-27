@@ -67,7 +67,8 @@ class HelperHtml
         return \preg_replace(
             '/(http[s]?:\/\/\S{4,})\s*/im',
             '<a href="$1" target="_blank">$1</a> ',
-            $string);
+            $string
+        );
     }
 
     public static function stripHtmlTags(string $html, bool $decodeEntity = false): string
@@ -121,14 +122,16 @@ class HelperHtml
             $html = \str_replace(
                 $width,
                 'width:' . ($widthFactor * HelperString::removeNonNumericChars($width)) . $widths[3][$index] . ';',
-                $html);
+                $html
+            );
         }
 
         foreach ($heights[0] as $index=>$height) {
             $html = \str_replace(
                 $height,
                 'height:' . ($heightFactor * HelperString::removeNonNumericChars($height)) . $heights[3][$index] . ';',
-                $html);
+                $html
+            );
         }
 
         return $html;
@@ -180,7 +183,11 @@ class HelperHtml
             $config->set('HTML.SafeIframe', true);
             // Allow fullScreen for videos, with custom HTML purifier filter
             $config->set('Filter.Custom', array(new HelperHtmlPurifierIframeFilter()));
-            $config->set('URI.SafeIframeRegexp', '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%');
+
+            $config->set(
+                'URI.SafeIframeRegexp',
+                '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%'
+            );
         }
 
         $html = (new HTMLPurifier($config))->purify($html);

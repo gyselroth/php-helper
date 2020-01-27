@@ -70,7 +70,11 @@ class HelperServerClient implements ConstantsHttpInterface
                 $modificationTime->add($diff, \Zend_Date::TIMESTAMP);
                 break;
             default:
-                LoggerWrapper::warning("Detected unhandled time diff value: $diff", [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY_REQUEST]);
+                LoggerWrapper::warning(
+                    "Detected unhandled time diff value: $diff",
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY_REQUEST]
+                );
+
                 break;
         }
 
@@ -203,6 +207,7 @@ class HelperServerClient implements ConstantsHttpInterface
     {
         return (bool)\preg_match(
             self::PATTERN_USER_AGENTS_MOBILE_DEVICES,
-            $_SERVER['HTTP_USER_AGENT']);
+            $_SERVER['HTTP_USER_AGENT']
+        );
     }
 }

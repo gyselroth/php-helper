@@ -193,7 +193,8 @@ class HelperPreg
         $offsetBase      = 0;
 
         foreach ($fullMatches as $match) {
-            $offset                                 = \strpos($string, $match);
+            $offset = \strpos($string, $match);
+
             $matchesByOffset[$offsetBase + $offset] = $match;
 
             $string     = \substr($string, $offset + 1);

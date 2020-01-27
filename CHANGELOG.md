@@ -5,7 +5,7 @@ Version 0.2.4 - Not released yet
 --------------------------------
 * Corrected too narrow return type signals (added forgotten |null)
 * Collect more sanitization methods into HelperSanitize 
-
+* Marked HelperArray::isIterable() deprecated - Use PSL isIterable() instead
 
 Version 0.2.3 - Released 2020/01/07
 -----------------------------------

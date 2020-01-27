@@ -221,6 +221,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         $handle = \fopen($pathFile, $mode);
         if (!$handle) {
             LoggerWrapper::error('fopen failed: ' . $pathFile);
+
             return false;
         }
 
@@ -446,6 +447,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function sortByDepth(array $files): array
     {
         \sort($files);
+
         \uasort($files, static function ($a, $b) {
             $aCount = \substr_count($a, '.');
             $bCount = \substr_count($b, '.');
@@ -503,7 +505,9 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         if (false === $handle) {
             LoggerWrapper::warning(
                 "Cannot open path: $path",
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
+
             return [];
         }
 
@@ -563,7 +567,8 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
                 default:
                     LoggerWrapper::warning(
                         "Detected unhandled file extension: $extension",
-                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $extension]);
+                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $extension]
+                    );
             }
         }
 
@@ -641,6 +646,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $message = self::validateUploadFile($_FILES['userfile'], $allowedTypes, $maximumFileSize);
+
         if (!empty($message)) {
             throw new FileExceptionFailedTransfer($message);
         }
@@ -900,10 +906,13 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
     public static function ensurePathEndsWithDirectorySeparator(string $path): string
     {
-        return $path . (empty($path)
+        return $path
+            . (
+            empty($path)
             || HelperString::endsWith($path, DIRECTORY_SEPARATOR)
                 ? ''
-                : DIRECTORY_SEPARATOR);
+                : DIRECTORY_SEPARATOR
+            );
     }
 
     public static function scanFilesystem(string $path, string $wildcard = '*'): array
