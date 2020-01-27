@@ -143,7 +143,7 @@ class HelperZip
         string $pathUnzipped,
         string $destinationFilename,
         bool $deleteUnzipped = false
-    ): bool
+    )
     {
         if (!self::isExtensionInstalled()) {
             return false;
@@ -178,7 +178,11 @@ class HelperZip
             return false;
         }
 
-        $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, \realpath($pathUnzipped));
+        $realpathUnzipped = \realpath($pathUnzipped);
+
+        // @todo add error handling when false === $realpathUnzipped
+
+        $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, $realpathUnzipped);
 
         if (\is_file($pathUnzipped)) {
             if (\file_exists($pathUnzipped)
@@ -190,7 +194,7 @@ class HelperZip
                 );
             }
         } elseif (\is_dir($pathUnzipped)) {
-            $files    = new \RecursiveIteratorIterator(
+            $files = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($pathUnzipped),
                 \RecursiveIteratorIterator::SELF_FIRST
             );
@@ -201,7 +205,7 @@ class HelperZip
                 $file = \str_replace('\\', DIRECTORY_SEPARATOR, $file);
 
                 if (\in_array(
-                        substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
+                        \substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
                         $pathDots,
                     true
                     )
