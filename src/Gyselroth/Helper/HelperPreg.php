@@ -129,7 +129,7 @@ class HelperPreg
         return \substr_replace($str, $replacement, $offsetLhs, $needleLength);
     }
 
-    public static function startsNumeric(string $str): int
+    public static function startsNumeric(string $str): bool
     {
         return 1 === \preg_match('/^\d/', $str);
     }
@@ -142,7 +142,9 @@ class HelperPreg
             return '';
         }
 
-        return $trim ? \trim($str) : $str;
+        return $trim
+            ? \trim($str)
+            : $str;
     }
 
     /**
@@ -165,9 +167,9 @@ class HelperPreg
      * Split at all position not after the start: ^ and not before the end: $
      *
      * @param  string $string
-     * @return array
+     * @return array<int, string>|false
      */
-    public static function mb_str_split(string $string): array
+    public static function mb_str_split(string $string)
     {
         return \preg_split('/(?<!^)(?!$)/u', $string);
     }
@@ -180,7 +182,6 @@ class HelperPreg
      */
     public static function preg_match_all_with_offsets(string $pattern, string $string): array
     {
-        /** @var array $matches */
         \preg_match_all($pattern, $string, $matches);
 
         $fullMatches = \array_shift($matches);

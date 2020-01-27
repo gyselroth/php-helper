@@ -136,7 +136,7 @@ class HelperZip
      * @param  string $pathUnzipped
      * @param  string $destinationFilename
      * @param  bool   $deleteUnzipped
-     * @return bool
+     * @return string|false
      * @throws \Exception
      */
     public static function zip(

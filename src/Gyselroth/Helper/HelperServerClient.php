@@ -65,7 +65,7 @@ class HelperServerClient implements ConstantsHttpInterface
                 break;
             // Requesting servers timestamp is later than timestamp of this machine
             case -1:
-                $diff = $requestTime->get(\Zend_Date::TIMESTAMP) - $now->get(\Zend_Date::TIMESTAMP);
+                $diff = (int)$requestTime->get(\Zend_Date::TIMESTAMP) - (int)$now->get(\Zend_Date::TIMESTAMP);
 
                 $modificationTime->add($diff, \Zend_Date::TIMESTAMP);
                 break;

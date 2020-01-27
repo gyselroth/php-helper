@@ -34,7 +34,12 @@ class HelperImage
 
         if (!$imageResource) {
             $imageResource = \imagecreate($maxWidth, $maxHeight);
-            $white         = \imagecolorallocate($imageResource, 255, 255, 255);
+
+            if (false === $imageResource) {
+                return false;
+            }
+
+            $white = \imagecolorallocate($imageResource, 255, 255, 255);
 
             \imagefilledrectangle($imageResource, 0, 0, $maxWidth, $maxHeight, $white);
         }
@@ -42,10 +47,15 @@ class HelperImage
         $sourceWidth  = \imagesx($imageResource);
         $sourceHeight = \imagesy($imageResource);
 
+        if (false === $sourceHeight || false === $sourceWidth) {
+            return false;
+        }
+
         $save = (($maxWidth / $maxHeight) < ($sourceWidth / $sourceHeight))
             ? \imagecreatetruecolor(
                 $sourceWidth / ($sourceWidth / $maxWidth),
-                $sourceHeight / ($sourceWidth / $maxWidth))
+                $sourceHeight / ($sourceWidth / $maxWidth)
+            )
             : \imagecreatetruecolor(
                 $sourceWidth / ($sourceHeight / $maxHeight),
                 $sourceHeight / ($sourceHeight / $maxHeight)
@@ -84,8 +94,16 @@ class HelperImage
      */
     public static function encodeBase64(string $pathImage, bool $getImgTag = false, string $alt = ''): string
     {
-        $type    = \pathinfo($pathImage, PATHINFO_EXTENSION);
-        $encoded = 'data:image/' . $type . ';base64,' . \base64_encode(\file_get_contents($pathImage));
+        if (!file_exists($pathImage)) {
+            // @todo add logging
+            return '';
+        }
+
+        $type = \pathinfo($pathImage, PATHINFO_EXTENSION);
+
+        $imageContents = \file_get_contents($pathImage);
+
+        $encoded = 'data:image/' . $type . ';base64,' . \base64_encode($imageContents);
 
         if ($getImgTag) {
             [$width, $height] = \getimagesize($pathImage);
@@ -103,6 +121,11 @@ class HelperImage
     public static function saveTransparentImage(int $width, int $height, string $filePath): bool
     {
         $image = \imagecreatetruecolor($width, $height);
+
+        if (false === $image) {
+            // @todo add logging
+            return false;
+        }
 
         \imagesavealpha($image, true);
 
@@ -136,6 +159,11 @@ class HelperImage
 
         $imageCopy  = \imagecreatefrompng($imageFilename);
         $imageNew   = \imagecreatetruecolor($cropWidth, $cropHeight);
+
+        if (false === $imageNew) {
+            // @todo add logging
+            return false;
+        }
 
         \imagesavealpha($imageNew, true);
         \imagecopy($imageNew, $imageCopy, 0, 0, 0, 0, $cropWidth, $cropHeight);

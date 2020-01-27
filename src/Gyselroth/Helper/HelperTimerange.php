@@ -145,6 +145,10 @@ class HelperTimerange
         $stepSize = 1;
         $image    = \imagecreate(HelperDate::MINUTES_DAY, $amountRanges * $stepSize + 2);
 
+        if (false === $image) {
+            return 0;
+        }
+
         $black = \imagecolorallocate($image, 0, 0, 0);
         $white = \imagecolorallocate($image, 255, 255, 255);
 
