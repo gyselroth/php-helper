@@ -9,6 +9,7 @@ Version 0.2.4 - Released 2020/01/27
 * Method signatures cleanup: Remove unused arguments
 * Clarify/make various type declarations and annotations more precise
 
+
 Version 0.2.3 - Released 2020/01/07
 -----------------------------------
 * Correct formatting to follow PSR-2 more closely
