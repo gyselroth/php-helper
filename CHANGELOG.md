@@ -1,9 +1,15 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.7 - Released 2020/01/28
+-----------------------------------
+* HelperNumeric::intImplode: Updated deprecated implode()-arguments order  
+
+
 Version 0.2.6 - Released 2020/01/28
 -----------------------------------
 * Changed ZF1 dependency (required for Zend_Date handling): switched to "shardj/zf1-future"  
+
 
 Version 0.2.5 - Released 2020/01/28
 -----------------------------------

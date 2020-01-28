@@ -66,7 +66,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
             $integers = \array_unique($integers);
         }
 
-        return \implode($integers, $glue);
+        return \implode($glue, $integers);
     }
 
     /**
