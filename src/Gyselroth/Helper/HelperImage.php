@@ -28,9 +28,11 @@ class HelperImage
         int $quality = 100
     ): bool
     {
+        $extension = \pathinfo($sourcePath)['extension'];
+
         $imageResource = '' === $sourcePath
             ? false
-            : @imagecreatefromjpeg($sourcePath);
+            : self::imageCreateByFormat($sourcePath, $extension);
 
         if (!$imageResource) {
             $imageResource = \imagecreate($maxWidth, $maxHeight);
@@ -172,27 +174,68 @@ class HelperImage
     }
 
     /**
-     * @param string $jpegData
+     * @param string $imageData
      * @param int $maxWidth
      * @param int $maxHeight
+     * @param string $extension
+     * @param int $quality
      * @return string
      * @throws FileException
      */
-    public static function scaleJpegByData(string $jpegData, int $maxWidth, int $maxHeight): string
+    public static function scaleImageByData(
+        string $imageData,
+        int $maxWidth,
+        int $maxHeight,
+        string $extension = HelperFile::FILE_ENDING_JPEG,
+        int $quality = 100
+    ): string
     {
         $pathTmpWithoutExtension = APPLICATION_PATH . '/../../tmp/' . \uniqid('img_', false);
-        $pathTmpJpg              = $pathTmpWithoutExtension . 'jpeg';
-        $pathScaledJpeg          = $pathTmpWithoutExtension . '_scaled.jpeg';
+        $pathTmpImage            = $pathTmpWithoutExtension . '.' . $extension;
+        $pathScaledImage         = $pathTmpWithoutExtension . '_scaled.' . $extension;
 
-        $fileHandle = \fopen($pathTmpJpg, 'wb+');
+        $fileHandle = \fopen($pathTmpImage, 'wb+');
 
-        \fwrite($fileHandle, $jpegData);
+        \fwrite($fileHandle, $imageData);
         \fclose($fileHandle);
 
-        if (!self::saveThumbnail($pathTmpJpg, $pathScaledJpeg, $maxWidth, $maxHeight)) {
-            throw new FileException('Failed store scaled image: ' . $pathScaledJpeg);
+        if (!self::saveThumbnail($pathTmpImage, $pathScaledImage, $maxWidth, $maxHeight, $quality)) {
+            throw new FileException('Failed store scaled image: ' . $pathScaledImage);
         }
 
-        return \file_get_contents($pathScaledJpeg);
+        $contents = \file_get_contents($pathScaledImage);
+
+        if (false === $contents) {
+            throw new FileException('Failed store scaled image: ' . $pathScaledImage);
+        }
+
+        \unlink($pathScaledImage);
+
+        return $contents;
+    }
+
+    /**
+     * @param string $sourcePath
+     * @param string $extension
+     * @return false|resource
+     */
+    public static function imageCreateByFormat(string $sourcePath, string $extension)
+    {
+        switch ($extension) {
+            case HelperFile::FILE_ENDING_BMP:
+                $imageResource = \imagecreatefrombmp($sourcePath);
+                break;
+            case HelperFile::FILE_ENDING_GIF:
+                $imageResource = \imagecreatefromgif($sourcePath);
+                break;
+            case HelperFile::FILE_ENDING_PNG:
+                $imageResource = \imagecreatefrompng($sourcePath);
+                break;
+            default:
+                $imageResource = \imagecreatefromjpeg($sourcePath);
+                break;
+        }
+
+        return $imageResource;
     }
 }
