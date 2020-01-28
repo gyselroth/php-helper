@@ -1,7 +1,7 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.4 - Released 2020/01/28
+Version 0.2.5 - Released 2020/01/28
 -----------------------------------
 * Improved thumbnail generation: Support more formats (bmp, gif, jpeg, png)
 
