@@ -148,11 +148,13 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getZendDateByDateString(string $date): \Zend_Date
     {
-        return new \Zend_Date([
-            'year'  => \substr($date, 0, 4),
-            'month' => \substr($date, 5, 2),
-            'day'   => \substr($date, 8, 2)
-        ], self::DEFAULT_LOCALE);
+        return new \Zend_Date(
+            [
+                'year' => \substr($date, 0, 4),
+                'month' => \substr($date, 5, 2),
+                'day' => \substr($date, 8, 2)
+            ], self::DEFAULT_LOCALE
+        );
     }
 
     /**
@@ -180,7 +182,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      *
      * @param  int|\Zend_Date $timestamp
      * @param  int            $format
-     * @return bool|string
+     * @return string|false
      * @throws \Zend_Date_Exception
      */
     public static function getDateFromUnixTimestamp($timestamp, int $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
@@ -232,7 +234,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  int|\Zend_Date $date
-     * @return bool|string
+     * @return string|false
      * @throws \Zend_Date_Exception
      */
     public static function getMySqlDateTimeFromDate($date)
@@ -247,14 +249,16 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getDateTime($time): \DateTime
     {
-        return \is_numeric($time)
-            ? new \DateTime('@' . (int)$time)
-            : new \DateTime($time);
+        return new \DateTime(
+            \is_numeric($time)
+                ? '@' . (int)$time
+                : $time
+        );
     }
 
     /**
      * @param  string $str
-     * @return string|bool       'yyyy-mm-dd' out of 'yyyy-mm-dd hh:mm:ss'
+     * @return string|false       'yyyy-mm-dd' out of 'yyyy-mm-dd hh:mm:ss'
      */
     public static function getDateStringFromDateTimeString(string $str)
     {
@@ -326,7 +330,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             0,
             $dateParts['month'],
             $dateParts[self::DATE_TIME_PART_DAY],
-            $dateParts[self::DATE_TIME_PART_YEAR]);
+            $dateParts[self::DATE_TIME_PART_YEAR]
+        );
     }
 
     /**
@@ -343,7 +348,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             59,
             $dateParts['month'],
             $dateParts[self::DATE_TIME_PART_DAY],
-            $dateParts[self::DATE_TIME_PART_YEAR]);
+            $dateParts[self::DATE_TIME_PART_YEAR]
+        );
     }
 
     /**
@@ -393,7 +399,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $timestamp,
         bool $isMilliSeconds = false,
         bool $includeSeconds = true,
-        bool $isCurrentDate = false): string
+        bool $isCurrentDate = false
+    ): string
     {
         if (\is_string($timestamp)
             && !\is_numeric($timestamp)
@@ -427,7 +434,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             * self::SECONDS_MIN
             + (array_key_exists('seconds', $timeParts)
                 ? $timeParts['seconds']
-                : 0);
+                : 0
+            );
     }
 
     /**
@@ -451,11 +459,13 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $timeStr,
         bool $includeMinutes = true,
         bool $includeSeconds = true,
-        bool $isCurrentDate = false): int
+        bool $isCurrentDate = false
+    ): int
     {
         return self::getSumSecondsOfTimeParts(
             self::getTimeStringParts($timeStr, ':', $includeMinutes, $includeSeconds),
-            $isCurrentDate);
+            $isCurrentDate
+        );
     }
 
     /**
@@ -570,7 +580,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             default:
                 LoggerWrapper::warning(
                     "Detected unhandled unit $unit",
-                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $unit]);
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $unit]
+                );
 
                 return null;
         }
@@ -581,9 +592,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      *
      * @param  int  $dateFrom UNIX timestamp
      * @param  int  $dateTo   UNIX timestamp
-     * @return array|bool
+     * @return array
      */
-    public static function getWeeksBetween($dateFrom, $dateTo)
+    public static function getWeeksBetween($dateFrom, $dateTo): array
     {
         $dayOfWeek     = \date('w', $dateFrom);
         $fromWeekStart = $dateFrom - ($dayOfWeek * self::SECONDS_DAY) - ($dateFrom % self::SECONDS_DAY);
@@ -617,7 +628,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             0,
             \date('m', $dateFrom),
             \date('d', $dateFrom),
-            \date('Y', $dateFrom));
+            \date('Y', $dateFrom)
+        );
 
         $diff = $dateTo - $dateFrom;
         $days = (int)($diff / self::SECONDS_DAY);
@@ -720,7 +732,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             \date('Ymd', $timestamp)
           . ($appendTime
                 ? 'T' . \date('His', $timestamp)
-                : '');
+                : ''
+            );
     }
 
     /**
@@ -749,7 +762,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  string|int $year 4-digit year
-     * @return bool|string
+     * @return string|false
      */
     public static function getAgeByBirthYear($year)
     {
@@ -794,32 +807,40 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         switch ($shiftingMode) {
             case self::SHIFT_MODE_YESTERDAY:
                 $date->subDay(1);
+
                 break;
             case self::SHIFT_MODE_TODAY:
                 break;
             case self::SHIFT_MODE_TOMORROW:
                 $date->addDay(1);
+
                 break;
             case self::SHIFT_MODE_DAY_AFTER_TOMORROW:
                 $date->addDay(2);
                 $amountDaysAdded = 2;
+
                 break;
             case self::SHIFT_MODE_3_DAYS_LATER:
                 $date->addDay(3);
                 $amountDaysAdded = 3;
+
                 break;
             case self::SHIFT_MODE_4_DAYS_LATER:
                 $date->addDay(4);
                 $amountDaysAdded = 4;
+
                 break;
             case self::SHIFT_MODE_5_DAYS_LATER:
                 $date->addDay(5);
                 $amountDaysAdded = 5;
+
                 break;
             default:
                 LoggerWrapper::warning(
                     __CLASS__ . '::' . __FUNCTION__ . " - Unknown shifting mode $shiftingMode",
-                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $shiftingMode]);
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $shiftingMode]
+                );
+
                 break;
         }
 
@@ -830,6 +851,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
                 if (6 === $weekdayIndex || 0 === $weekdayIndex) {
                     $hasPassedWeekend = true;
+
                     break;
                 }
             }
@@ -923,7 +945,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
-     * @return bool|string
+     * @return string|false
      */
     public static function getCurrentWeekAndYear()
     {

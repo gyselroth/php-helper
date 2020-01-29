@@ -90,7 +90,9 @@ class LoggerWrapper
     {
         if (null === self::$instance) {
             if (!\is_object($loggerReference)) {
-                throw new LoggerException('first argument to LoggerWrapper::__construct must be an object (logger)');
+                throw new LoggerException(
+                    'first argument to LoggerWrapper::__construct must be an object (logger)'
+                );
             }
 
             self::$logger           = $loggerReference;
@@ -155,8 +157,11 @@ class LoggerWrapper
 
         /** @noinspection ReturnNullInspection */
         $message = \array_shift($params);
+
         /** @noinspection ReturnNullInspection */
-        $extras = [] !== $params ? \array_shift($params) : null;
+        $extras = [] !== $params
+            ? \array_shift($params)
+            : null;
 
         self::log($message, $priority, $extras);
     }
@@ -168,6 +173,7 @@ class LoggerWrapper
             // TODO: should logger wrapper really have to care about logfile and loglevel?
             if (empty(self::$logger->getHandlers())) {
                 $streamHandler = new StreamHandler(self::$logPath, self::PRIORITY_PSR3_INFO);
+
                 self::$logger->pushHandler($streamHandler);
             }
             self::$logger->log(self::getMonologLevelByPsr3($priority), $message, $options);

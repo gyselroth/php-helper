@@ -66,7 +66,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
             $integers = \array_unique($integers);
         }
 
-        return \implode($integers, $glue);
+        return \implode($glue, $integers);
     }
 
     /**
@@ -130,13 +130,20 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         $numbers = [];
         $parts   = \explode($delimiter, $str);
 
+        if (false === $parts) {
+            // @todo add logging
+            return [];
+        }
+
         foreach ($parts as $number) {
             if (!$excludeNullValues || 'null' !== \strtolower($number)) {
                 $numbers[] = (float)$number;
             }
         }
 
-        return $unique ? \array_unique($numbers) : $numbers;
+        return $unique
+            ? \array_unique($numbers)
+            : $numbers;
     }
 
     /**

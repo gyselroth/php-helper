@@ -28,13 +28,20 @@ class HelperImage
         int $quality = 100
     ): bool
     {
+        $extension = \pathinfo($sourcePath)['extension'];
+
         $imageResource = '' === $sourcePath
             ? false
-            : @imagecreatefromjpeg($sourcePath);
+            : self::imageCreateByFormat($sourcePath, $extension);
 
         if (!$imageResource) {
             $imageResource = \imagecreate($maxWidth, $maxHeight);
-            $white         = \imagecolorallocate($imageResource, 255, 255, 255);
+
+            if (false === $imageResource) {
+                return false;
+            }
+
+            $white = \imagecolorallocate($imageResource, 255, 255, 255);
 
             \imagefilledrectangle($imageResource, 0, 0, $maxWidth, $maxHeight, $white);
         }
@@ -42,10 +49,15 @@ class HelperImage
         $sourceWidth  = \imagesx($imageResource);
         $sourceHeight = \imagesy($imageResource);
 
+        if (false === $sourceHeight || false === $sourceWidth) {
+            return false;
+        }
+
         $save = (($maxWidth / $maxHeight) < ($sourceWidth / $sourceHeight))
             ? \imagecreatetruecolor(
                 $sourceWidth / ($sourceWidth / $maxWidth),
-                $sourceHeight / ($sourceWidth / $maxWidth))
+                $sourceHeight / ($sourceWidth / $maxWidth)
+            )
             : \imagecreatetruecolor(
                 $sourceWidth / ($sourceHeight / $maxHeight),
                 $sourceHeight / ($sourceHeight / $maxHeight)
@@ -62,7 +74,11 @@ class HelperImage
         );
 
         // Changes the compression and quality to 0, quality has to be between 0 and 9
-        \imagepng($save, $thumbnailFile, (int)($quality > 0 ? (100 - $quality) / 10 : 9));
+        \imagepng(
+            $save,
+            $thumbnailFile,
+            (int)($quality > 0 ? (100 - $quality) / 10 : 9)
+        );
 
         \imagedestroy($imageResource);
         \imagedestroy($save);
@@ -80,8 +96,16 @@ class HelperImage
      */
     public static function encodeBase64(string $pathImage, bool $getImgTag = false, string $alt = ''): string
     {
-        $type    = \pathinfo($pathImage, PATHINFO_EXTENSION);
-        $encoded = 'data:image/' . $type . ';base64,' . \base64_encode(\file_get_contents($pathImage));
+        if (!file_exists($pathImage)) {
+            // @todo add logging
+            return '';
+        }
+
+        $type = \pathinfo($pathImage, PATHINFO_EXTENSION);
+
+        $imageContents = \file_get_contents($pathImage);
+
+        $encoded = 'data:image/' . $type . ';base64,' . \base64_encode($imageContents);
 
         if ($getImgTag) {
             [$width, $height] = \getimagesize($pathImage);
@@ -99,6 +123,11 @@ class HelperImage
     public static function saveTransparentImage(int $width, int $height, string $filePath): bool
     {
         $image = \imagecreatetruecolor($width, $height);
+
+        if (false === $image) {
+            // @todo add logging
+            return false;
+        }
 
         \imagesavealpha($image, true);
 
@@ -120,7 +149,8 @@ class HelperImage
         if (!\file_exists($imageFilename)) {
             LoggerWrapper::error(
                 "Tried to crop non-existing image file: $imageFilename",
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -132,6 +162,11 @@ class HelperImage
         $imageCopy  = \imagecreatefrompng($imageFilename);
         $imageNew   = \imagecreatetruecolor($cropWidth, $cropHeight);
 
+        if (false === $imageNew) {
+            // @todo add logging
+            return false;
+        }
+
         \imagesavealpha($imageNew, true);
         \imagecopy($imageNew, $imageCopy, 0, 0, 0, 0, $cropWidth, $cropHeight);
 
@@ -139,26 +174,68 @@ class HelperImage
     }
 
     /**
-     * @param string $jpegData
+     * @param string $imageData
      * @param int $maxWidth
      * @param int $maxHeight
+     * @param string $extension
+     * @param int $quality
      * @return string
      * @throws FileException
      */
-    public static function scaleJpegByData(string $jpegData, int $maxWidth, int $maxHeight): string
+    public static function scaleImageByData(
+        string $imageData,
+        int $maxWidth,
+        int $maxHeight,
+        string $extension = HelperFile::FILE_ENDING_JPEG,
+        int $quality = 100
+    ): string
     {
         $pathTmpWithoutExtension = APPLICATION_PATH . '/../../tmp/' . \uniqid('img_', false);
-        $pathTmpJpg              = $pathTmpWithoutExtension . 'jpeg';
-        $pathScaledJpeg          = $pathTmpWithoutExtension . '_scaled.jpeg';
+        $pathTmpImage            = $pathTmpWithoutExtension . '.' . $extension;
+        $pathScaledImage         = $pathTmpWithoutExtension . '_scaled.' . $extension;
 
-        $fileHandle = \fopen($pathTmpJpg, 'wb+');
-        \fwrite($fileHandle, $jpegData);
+        $fileHandle = \fopen($pathTmpImage, 'wb+');
+
+        \fwrite($fileHandle, $imageData);
         \fclose($fileHandle);
 
-        if (!self::saveThumbnail($pathTmpJpg, $pathScaledJpeg, $maxWidth, $maxHeight)) {
-            throw new FileException('Failed store scaled image: ' . $pathScaledJpeg);
+        if (!self::saveThumbnail($pathTmpImage, $pathScaledImage, $maxWidth, $maxHeight, $quality)) {
+            throw new FileException('Failed store scaled image: ' . $pathScaledImage);
         }
 
-        return \file_get_contents($pathScaledJpeg);
+        $contents = \file_get_contents($pathScaledImage);
+
+        if (false === $contents) {
+            throw new FileException('Failed store scaled image: ' . $pathScaledImage);
+        }
+
+        \unlink($pathScaledImage);
+
+        return $contents;
+    }
+
+    /**
+     * @param string $sourcePath
+     * @param string $extension
+     * @return false|resource
+     */
+    public static function imageCreateByFormat(string $sourcePath, string $extension)
+    {
+        switch ($extension) {
+            case HelperFile::FILE_ENDING_BMP:
+                $imageResource = \imagecreatefrombmp($sourcePath);
+                break;
+            case HelperFile::FILE_ENDING_GIF:
+                $imageResource = \imagecreatefromgif($sourcePath);
+                break;
+            case HelperFile::FILE_ENDING_PNG:
+                $imageResource = \imagecreatefrompng($sourcePath);
+                break;
+            default:
+                $imageResource = \imagecreatefromjpeg($sourcePath);
+                break;
+        }
+
+        return $imageResource;
     }
 }

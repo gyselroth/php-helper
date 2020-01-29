@@ -52,7 +52,8 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
             '/[^a-zA-Z0-9'
             . ($allowUnderscore ? '_' : '') . ']+/',
             '',
-            $str);
+            $str
+        );
     }
 
     public static function sanitizeString(

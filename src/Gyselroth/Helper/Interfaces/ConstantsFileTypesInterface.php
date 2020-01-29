@@ -30,6 +30,7 @@ interface ConstantsFileTypesInterface
     public const FILE_ENDING_XML                   = 'xml';
     public const FILE_ENDING_ZIP                   = 'zip';
 
+    public const FILE_ENDING_BMP  = 'bmp';
     public const FILE_ENDING_GIF  = 'gif';
     public const FILE_ENDING_JPEG = 'jpeg';
     public const FILE_ENDING_JPG  = 'jpg';

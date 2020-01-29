@@ -13,7 +13,8 @@ namespace Gyselroth\Helper\Interfaces;
 
 interface ConstantsEntitiesOfStrings
 {
-    public const CHARSET_UTF8 = 'UTF-8';
+    public const CHARSET_UTF8  = 'UTF-8';
+    public const CHARSET_UTF16 = 'UTF-16';
 
     // Character classes
     public const CHAR_TYPE_ALPHA_LOWER = 0;

@@ -20,12 +20,9 @@ class HelperHtmlPurifierIframeFilter
 
     /**
      * @param  string                $html
-     * @param  HTMLPurifier_Config   $config
-     * @param  HTMLPurifier_Context  $context
-     * @return string
-     * @todo review: arguments $config and $context are unused
+     * @return string|string[]|null
      */
-    public function preFilter($html, $config, $context)
+    public function preFilter($html)
     {
         $html = \preg_replace('#<iframe#i', '<img class="video-iframe-allow-fullscreen"', $html);
 
@@ -35,12 +32,9 @@ class HelperHtmlPurifierIframeFilter
     /**
      *
      * @param  string $html
-     * @param  HTMLPurifier_Config $config
-     * @param  HTMLPurifier_Context $context
-     * @return string
-     * @todo review: arguments $config and $context are unused
+     * @return string|string[]|null
      */
-    public function postFilter(string $html, $config, $context)
+    public function postFilter(string $html)
     {
         $pattern = '#<img class="video-iframe-allow-fullscreen"([^>]+?)>#';
 

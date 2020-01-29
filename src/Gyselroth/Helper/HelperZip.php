@@ -136,14 +136,14 @@ class HelperZip
      * @param  string $pathUnzipped
      * @param  string $destinationFilename
      * @param  bool   $deleteUnzipped
-     * @return bool
+     * @return string|false
      * @throws \Exception
      */
     public static function zip(
         string $pathUnzipped,
         string $destinationFilename,
         bool $deleteUnzipped = false
-    ): bool
+    )
     {
         if (!self::isExtensionInstalled()) {
             return false;
@@ -152,7 +152,8 @@ class HelperZip
         if (!\file_exists($pathUnzipped)) {
             LoggerWrapper::error(
                 'Zipping failed: file does not exist:' . $pathUnzipped,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -160,7 +161,8 @@ class HelperZip
         if (\is_dir($destinationFilename)) {
             LoggerWrapper::error(
                 'Zipping failed: given destination is directory:' . $destinationFilename,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -170,12 +172,17 @@ class HelperZip
         if (!$zip->open($destinationFilename, \ZipArchive::CREATE)) {
             LoggerWrapper::error(
                 'Zipping failed: cannot open archive:' . $pathUnzipped,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
 
-        $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, \realpath($pathUnzipped));
+        $realpathUnzipped = \realpath($pathUnzipped);
+
+        // @todo add error handling when false === $realpathUnzipped
+
+        $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, $realpathUnzipped);
 
         if (\is_file($pathUnzipped)) {
             if (\file_exists($pathUnzipped)
@@ -183,12 +190,14 @@ class HelperZip
             ) {
                 LoggerWrapper::warning(
                     'ZipArchive->addFile failed for file: ' . $pathUnzipped,
-                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+                );
             }
         } elseif (\is_dir($pathUnzipped)) {
-            $files    = new \RecursiveIteratorIterator(
+            $files = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($pathUnzipped),
-                \RecursiveIteratorIterator::SELF_FIRST);
+                \RecursiveIteratorIterator::SELF_FIRST
+            );
 
             $pathDots = ['.', '..'];
 
@@ -196,7 +205,7 @@ class HelperZip
                 $file = \str_replace('\\', DIRECTORY_SEPARATOR, $file);
 
                 if (\in_array(
-                        substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
+                        \substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
                         $pathDots,
                     true
                     )
@@ -227,6 +236,7 @@ class HelperZip
                 }
             }
         }
+
         $zip->close();
 
         if ($deleteUnzipped) {
@@ -252,7 +262,8 @@ class HelperZip
         if (!\is_file($pathArchive)) {
             LoggerWrapper::error(
                 'ZIP archive doesn\'t exist: ' . $pathArchive,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -261,7 +272,8 @@ class HelperZip
         if (0 === \filesize($pathArchive)) {
             LoggerWrapper::error(
                 'Cannot unzip archive with file size of 0: ' . $pathArchive,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -275,7 +287,8 @@ class HelperZip
         if (!$zipArchive->open($pathArchive)) {
             LoggerWrapper::error(
                 'Failed opening ZIP archive: ' . $pathArchive,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -297,7 +310,8 @@ class HelperZip
 
         LoggerWrapper::error(
             'Failed extracting ZIP archive: ' . $pathArchive . ' to path: ' . $pathDestination,
-            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+        );
 
         return false;
     }
@@ -306,7 +320,7 @@ class HelperZip
      * @param string $pathArchive
      * @param string $filenameOrFilePath If in sub directory, prefix w/ path, e.g. "word/document.xml"
      * @param bool   $reduceToBasename   Optional: return content of 1st matching filename in any sub directory
-     * @return bool|string
+     * @return string|false
      * @throws \Exception
      */
     public static function getContainedFileContents(
@@ -323,7 +337,8 @@ class HelperZip
 
         if (!$zip->open($pathArchive)) {
             LoggerWrapper::error('Failed opening ZIP archive: ' . $pathArchive,
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return false;
         }
@@ -394,6 +409,7 @@ class HelperZip
         LoggerWrapper::log(
             $message,
             $logLevel,
-            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, 'trace' => debug_backtrace()]);
+            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, 'trace' => debug_backtrace()]
+        );
     }
 }

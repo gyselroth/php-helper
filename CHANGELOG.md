@@ -1,10 +1,33 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.4 - Not released yet
---------------------------------
+Version 0.2.8 - Released 2020/01/29
+-----------------------------------
+* Improve PHP 7.4 compatibility (used vendor package zf1-future)
+
+
+Version 0.2.7 - Released 2020/01/28
+-----------------------------------
+* HelperNumeric::intImplode: Updated deprecated implode()-arguments order  
+
+
+Version 0.2.6 - Released 2020/01/28
+-----------------------------------
+* Changed ZF1 dependency (required for Zend_Date handling): switched to "shardj/zf1-future"  
+
+
+Version 0.2.5 - Released 2020/01/28
+-----------------------------------
+* Improved thumbnail generation: Support more formats (bmp, gif, jpeg, png)
+
+
+Version 0.2.4 - Released 2020/01/27
+-----------------------------------
 * Corrected too narrow return type signals (added forgotten |null)
 * Collect more sanitization methods into HelperSanitize 
+* Marked HelperArray::isIterable() deprecated - Use PSL isIterable() instead
+* Method signatures cleanup: Remove unused arguments
+* Clarify/make various type declarations and annotations more precise
 
 
 Version 0.2.3 - Released 2020/01/07

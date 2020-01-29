@@ -44,8 +44,7 @@
         "monolog/monolog": "^1.17",
         "phpoffice/phpexcel": "dev-mpdfCompatibilityFix@dev",
         "smalot/pdfparser": "0.11.x-dev@dev",
-        "zf1/zend-date": "1.12.20",
-        "zf1/zend-registry": "^1.12",
+        "shardj/zf1-future": "^1.16",
         "laminas/laminas-zendframework-bridge": "^1.0",
         "laminas/laminas-json": "^3.1"
     },

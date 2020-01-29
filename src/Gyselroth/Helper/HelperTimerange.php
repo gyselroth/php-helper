@@ -56,17 +56,22 @@ class HelperTimerange
         $dateStart = new \Zend_Date(
             HelperDate::getDateFromUnixTimestamp($dateStart),
             \Zend_Date::ISO_8601,
-            $locale);
+            $locale
+        );
 
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $dateEnd = new \Zend_Date(
             HelperDate::getDateFromUnixTimestamp($dateEnd),
             \Zend_Date::ISO_8601,
-            $locale);
+            $locale
+        );
 
         // @todo: "bis" needs to be translated as well if locale is set to "en"
 
-        return $dateStart->get(\Zend_Date::DATE_LONG) . ' ' . 'bis' . ' ' . $dateEnd->get(\Zend_Date::DATE_LONG);
+        return $dateStart->get(
+            \Zend_Date::DATE_LONG) . ' '
+            . 'bis' . ' '
+            . $dateEnd->get(\Zend_Date::DATE_LONG);
     }
 
     /**
@@ -99,7 +104,8 @@ class HelperTimerange
         $endRange1,
         $startRange2,
         $endRange2,
-        bool $allowTouching = true): bool
+        bool $allowTouching = true
+    ): bool
     {
         // Ensure all times are UNIX timestamps
         $startRange1 = HelperDate::getUnixTimestampFromDate($startRange1);
@@ -139,6 +145,10 @@ class HelperTimerange
         $stepSize = 1;
         $image    = \imagecreate(HelperDate::MINUTES_DAY, $amountRanges * $stepSize + 2);
 
+        if (false === $image) {
+            return 0;
+        }
+
         $black = \imagecolorallocate($image, 0, 0, 0);
         $white = \imagecolorallocate($image, 255, 255, 255);
 
@@ -148,6 +158,7 @@ class HelperTimerange
         $rangeStart = HelperDate::getSumMinutesOfTimeString($range[0]);
         $rangeEnd   = HelperDate::getSumMinutesOfTimeString($range[1]);
         $y          = 1;
+
         \imageline($image, $rangeStart, $y, $rangeEnd, $y, $black);
 
         // Draw comparison ranges
@@ -162,6 +173,7 @@ class HelperTimerange
                 $y,
                 $black
             );
+
             $y += $stepSize;
         }
 
@@ -174,6 +186,7 @@ class HelperTimerange
 
             for ($y = 1; $y <= $amountRanges; $y++) {
                 $scannedColor = \imagecolorat($image, $x, $y);
+
                 if ($scannedColor !== $white) {
                     $maxOverlapsCurrent++;
                 }
@@ -198,8 +211,9 @@ class HelperTimerange
     public static function getWeekDaysByTimeRange($startTime, $endTime): array
     {
         $weekDays = [];
-        $day      = new \Zend_Date($startTime);
-        $end      = (new \Zend_Date($endTime))->toValue();
+
+        $day = new \Zend_Date($startTime);
+        $end = (new \Zend_Date($endTime))->toValue();
 
         while ($day->toValue() <= $end) {
             $weekDays[] = $day->get(\Zend_Date::WEEKDAY_DIGIT);

@@ -43,7 +43,9 @@ class HelperReflection implements ConstantsDataTypesInterface
             default:
                 LoggerWrapper::warning(
                     "Detected unhandled type: $destinationType",
-                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $destinationType]);
+                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $destinationType]
+                );
+
                 /** @noinspection ThrowRawExceptionInspection */
                 throw new ReflectionExceptionInvalidType();
         }
@@ -59,9 +61,11 @@ class HelperReflection implements ConstantsDataTypesInterface
     {
         try {
             self::ensureIsClass($className);
+
             $object = new $className($config);
         } catch (\Exception $exception) {
             $trace = \debug_backtrace();
+
             throw new ReflectionException($exception->getMessage() . ' Caller: ' . \print_r($trace[1], true));
         }
 
@@ -91,7 +95,8 @@ class HelperReflection implements ConstantsDataTypesInterface
             if ($logIfNot) {
                 LoggerWrapper::info(
                     $exception,
-                    empty($logCategory) ? null : [LoggerWrapper::OPT_CATEGORY => $logCategory]);
+                    empty($logCategory) ? null : [LoggerWrapper::OPT_CATEGORY => $logCategory]
+                );
             }
 
             throw new ReflectionException($exception);
@@ -110,7 +115,8 @@ class HelperReflection implements ConstantsDataTypesInterface
         \preg_match_all(
             '/(function) ([a-zA-Z]+)(Action)\(/',
             \file_get_contents($pathController),
-            $matches);
+            $matches
+        );
 
         return $matches[2];
     }
@@ -139,6 +145,7 @@ class HelperReflection implements ConstantsDataTypesInterface
             $callback = $funcRefParts;
         } else {
             LoggerWrapper::info('HelperReflection::callUserFunction() called function instead of method.');
+
             $callback = $funcRefString;
         }
 

@@ -154,6 +154,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         if ('' !== $search) {
             /** @noinspection ReturnFalseInspection */
             $offset = \strpos($subject, $search);
+
             if (false !== $offset) {
                 return \substr_replace($subject, $replace, $offset, \strlen($search));
             }
@@ -224,7 +225,11 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         /** @noinspection ReturnFalseInspection */
         $start = \strpos($str, $needle, $offsetNeedle);
 
-        return \substr($str, 0, $start + ($excludeNeedle ? 0 : \strlen($needle)));
+        return \substr(
+            $str,
+            0,
+            $start + ($excludeNeedle ? 0 : \strlen($needle))
+        );
     }
 
     /**
@@ -422,18 +427,22 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             switch ($charTypes[$typeOffset]) {
                 case static::CHAR_TYPE_ALPHA_LOWER:
                     $str .= static::getRandomLetter();
+
                     break;
                 case static::CHAR_TYPE_ALPHA_UPPER:
                     $str .= static::getRandomLetter(true);
+
                     break;
                 case static::CHAR_TYPE_NUMBER:
                     $str .= \random_int(0, 9);
+
                     break;
                 case static::CHAR_TYPE_SPECIAL:
                     $specialChar = static::getRandomLetter(false, $specialChars);
 
                     if ($eachSpecialCharOnlyOnce) {
                         $specialChars = \str_replace($specialChar, '', $specialChars);
+
                         if (empty($specialChars)) {
                             unset($charTypes[$typeOffset]);
                             $amountTypes--;
@@ -441,11 +450,14 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                     }
 
                     $str .= $specialChar;
+
                     break;
                 default:
                     LoggerWrapper::warning(
                         __CLASS__ . '::' . __FUNCTION__ . " - Unknown char type: {$charTypes[$typeOffset]}",
-                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]]);
+                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]]
+                    );
+
                     break;
             }
 
@@ -474,7 +486,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                 \str_repeat($pool, 5)
             ),
             0,
-            1);
+            1
+        );
 
         return $upperCase ? \strtoupper($str) : $str;
     }
@@ -520,7 +533,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         return \str_replace(
             ['+', '/', '='],
             ['-', '_', '.'],
-            \base64_encode($string));
+            \base64_encode($string)
+        );
     }
 
     public static function urlSafeB64Decode(string $string): string
@@ -528,7 +542,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         $data = \str_replace(
             ['-', '_', '.'],
             ['+', '/', '='],
-            $string);
+            $string
+        );
 
         $mod4 = \strlen($data) % 4;
 
@@ -645,7 +660,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                 'i:\\1',
                 ';'
             ],
-            $str);
+            $str
+        );
 
         if (null === $serialized) {
             return '';
@@ -673,7 +689,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             },
             $serialized
         );
-
 
         if (null === $serialized) {
             return '';
@@ -798,12 +813,13 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             $str = \strtolower($str);
         } else {
             // Needs to translate also upper-case characters
-            $replacePairs = array_merge($replacePairs, [
+            $replacePairs = \array_merge($replacePairs, [
                 'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'Ä' => 'AE', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
                 'Ç' => 'C', 'È' => 'E',  'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
                 'Ñ' => 'N', 'Ö' => 'OE', 'Ò' => 'O',  'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ü' => 'UE', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
                 'Ý' => 'Y', 'Þ' => 'B',  'Ÿ' => 'Y', 'Ƒ' => 'F',
-            ]);
+            ]
+            );
         }
 
         return \strtr($str, $replacePairs);

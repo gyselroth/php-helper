@@ -66,7 +66,8 @@ class HelperCrypt
         /** @noinspection CryptographicallySecureRandomnessInspection */
         $initVector = \openssl_random_pseudo_bytes(
             \openssl_cipher_iv_length(self::OPEN_SSL_CIPHER),
-            $isStrong);
+            $isStrong
+        );
 
         if (false === $isStrong
             || false === $initVector
@@ -106,7 +107,8 @@ class HelperCrypt
             self::OPEN_SSL_CIPHER,
             $password,
             OPENSSL_RAW_DATA,
-            $initVector);
+            $initVector
+        );
 
         return $res === false ? '' : $res;
     }

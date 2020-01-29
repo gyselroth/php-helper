@@ -236,7 +236,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  string               $keyOnLevel1
      * @param  string               $keyOnLevel2
      * @param  string               $keyOnLevel3
-     * @param  boolean|string|array $default
+     * @param  bool|string|array $default
      * @return array|bool|float|int|string|object    Value on sub level(s), identified by given keys, or full array if no keys given. False if a given key doesn't exist
      */
     public static function getValueByKeyFromSubArrays(
@@ -311,7 +311,7 @@ class HelperArray implements ConstantsDataTypesInterface
      *
      * @param  array|string $search
      * @param  array|string $replace
-     * @param  array        &$array
+     * @param  array        $array
      */
     public static function replaceInKeys($search, $replace, array &$array): void
     {
@@ -451,7 +451,8 @@ class HelperArray implements ConstantsDataTypesInterface
                     default:
                         LoggerWrapper::warning(
                             "Detected unhandled data type field: {$dataTypes[$field]}",
-                            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $dataTypes[$field]]);
+                            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $dataTypes[$field]]
+                        );
                 }
             }
         }
@@ -470,7 +471,7 @@ class HelperArray implements ConstantsDataTypesInterface
         $converted = [];
 
         foreach ($array as $key => $value) {
-            switch (strtolower($value['type'])) {
+            switch (\strtolower($value['type'])) {
                 case self::DATA_TYPE_INT_SHORT:
                 case self::DATA_TYPE_INT:
                     $converted[$key] = (int)$value['value'];
@@ -615,7 +616,8 @@ class HelperArray implements ConstantsDataTypesInterface
         $keys = [];
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveArrayIterator($arr),
-            \RecursiveIteratorIterator::SELF_FIRST);
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
 
         foreach ($iterator as $key => $value) {
             $keys[] = $key;
@@ -652,7 +654,8 @@ class HelperArray implements ConstantsDataTypesInterface
         if (!\function_exists($functionName)) {
             LoggerWrapper::alert(
                 "Tried to call undefined function: $functionName",
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
 
             return $arr;
         }
@@ -1033,7 +1036,7 @@ class HelperArray implements ConstantsDataTypesInterface
 
     /**
      * @param  array $data
-     * @return array|bool
+     * @return array|false
      */
     public static function getAssociativeKeyValues(array $data)
     {
@@ -1055,7 +1058,7 @@ class HelperArray implements ConstantsDataTypesInterface
 
     /**
      * @param  array $elementsUnsorted
-     * @return array|bool
+     * @return array|false
      */
     public static function sortElements(array $elementsUnsorted)
     {
@@ -1145,21 +1148,6 @@ class HelperArray implements ConstantsDataTypesInterface
     }
 
     /**
-     * @param  array|object $var
-     * @return bool
-     */
-    public static function isIterable($var): bool
-    {
-        return $var !== null
-            && (
-                \is_array($var)
-                || $var instanceof Traversable
-                || $var instanceof Iterator
-                || $var instanceof IteratorAggregate
-            );
-    }
-
-    /**
      * Get array from (e.g. stdClass) object
      *
      * @param  object|array $object
@@ -1206,7 +1194,8 @@ class HelperArray implements ConstantsDataTypesInterface
                     $allowDigits,
                     $allowWhiteSpace,
                     $allowSpace,
-                    $allowedSpecialCharacters);
+                    $allowedSpecialCharacters
+                );
             } elseif (!HelperString::validateString(
                 $value,
                 $allowCharacters,
@@ -1234,7 +1223,8 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         LoggerWrapper::warning(
             'Used deprecated HelperArray::flatten() - better: use array_column()',
-            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]);
+            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+        );
 
         return \array_column($arr, $key);
     }
@@ -1253,7 +1243,7 @@ class HelperArray implements ConstantsDataTypesInterface
     /**
      * @deprecated
      * @param array $elements
-     * @return array|bool
+     * @return array|false
      */
     public static function sortElementArr(array $elements)
     {
@@ -1281,5 +1271,15 @@ class HelperArray implements ConstantsDataTypesInterface
         $keys = \array_keys($array);
 
         return \array_pop($keys);
+    }
+
+    /**
+     * @param  array|object $var
+     * @return bool
+     * @deprecated
+     */
+    public static function isIterable($var): bool
+    {
+        return \is_iterable($var);
     }
 }
