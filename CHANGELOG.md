@@ -4,6 +4,7 @@ gyselroth Helper Library
 Version 0.2.8 - Released 2020/01/29
 -----------------------------------
 * Improve PHP 7.4 compatibility (used vendor package zf1-future)
+* Improved HelperHtml::getCleanedHtml added option to escape double quotes
 
 
 Version 0.2.7 - Released 2020/01/28
