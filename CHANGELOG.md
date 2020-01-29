@@ -1,25 +1,17 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.8 - Released 2020/01/29
------------------------------------
-* Improve PHP 7.4 compatibility (used vendor package zf1-future)
-* Improved HelperHtml::getCleanedHtml added option to escape double quotes
+Version 0.2.8, 0.2.9 - Released 2020/01/29
+------------------------------------------
+* 0.2.9: Improved HelperHtml::getCleanedHtml added option to escape double quotes
+* 0.2.8: Improve PHP 7.4 compatibility (used vendor package zf1-future)
 
 
-Version 0.2.7 - Released 2020/01/28
------------------------------------
-* HelperNumeric::intImplode: Updated deprecated implode()-arguments order  
-
-
-Version 0.2.6 - Released 2020/01/28
------------------------------------
-* Changed ZF1 dependency (required for Zend_Date handling): switched to "shardj/zf1-future"  
-
-
-Version 0.2.5 - Released 2020/01/28
------------------------------------
-* Improved thumbnail generation: Support more formats (bmp, gif, jpeg, png)
+Version 0.2.5, 0.2.6, 0.2.7 - Released 2020/01/28
+-------------------------------------------------
+* 0.2.7: HelperNumeric::intImplode: Updated deprecated implode()-arguments order  
+* 0.2.6: Changed ZF1 dependency (required for Zend_Date handling): switched to "shardj/zf1-future"  
+* 0.2.5: Improved thumbnail generation: Support more formats (bmp, gif, jpeg, png)
 
 
 Version 0.2.4 - Released 2020/01/27
