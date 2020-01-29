@@ -146,12 +146,13 @@ class HelperHtml
     /**
      * Use HTMLPurifier to clean given HTML string
      *
-     * @param  string $html
-     * @param  bool   $enableTargetBlank
-     * @param  bool   $escapeSingleQuotes
-     * @param  bool   $escapeBackslashes
-     * @param  bool   $disablePurifierCache
-     * @param  bool   $allowVideo
+     * @param string $html
+     * @param bool   $enableTargetBlank
+     * @param bool   $escapeSingleQuotes
+     * @param bool   $escapeBackslashes
+     * @param bool   $disablePurifierCache
+     * @param bool   $allowVideo
+     * @param bool   $escapeDoubleQuotes
      * @return string
      */
     public static function getCleanedHtml(
@@ -160,7 +161,8 @@ class HelperHtml
         bool $escapeSingleQuotes = false,
         bool $escapeBackslashes = false,
         bool $disablePurifierCache = true,
-        bool $allowVideo = false
+        bool $allowVideo = false,
+        bool $escapeDoubleQuotes = false
     ): string
     {
         $config = HTMLPurifier_Config::createDefault();
@@ -188,6 +190,11 @@ class HelperHtml
         if ($escapeSingleQuotes) {
             // Escape single quotes to prevent JavaScript error
             $html = \str_replace("'", '&#39;', $html);
+        }
+
+        if ($escapeDoubleQuotes) {
+            // Escape double quotes to prevent JavaScript error
+            $html = \str_replace('"', '&#34;', $html);
         }
 
         if ($escapeBackslashes) {
