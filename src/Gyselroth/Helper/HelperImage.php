@@ -28,7 +28,7 @@ class HelperImage
         int $quality = 100
     ): bool
     {
-        $extension = \pathinfo($sourcePath)['extension'];
+        $extension = \pathinfo($sourcePath)[PATHINFO_EXTENSION];
 
         $imageResource = '' === $sourcePath
             ? false

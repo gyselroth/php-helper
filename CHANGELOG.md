@@ -1,9 +1,10 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.10 - Released 2020/01/30
+Version 0.2.10, 0.2.11 - Released 2020/01/30
 ------------------------------------------
-* Language-level / upwards-compatibility: Update left-over use of deprecated curly brackets array access
+* 0.2.10: Language-level / upwards-compatibility: Update left-over use of deprecated curly brackets array access
+* 0.2.11: Bugfix - HelperImage::SaveThumbnail: Corrected file extension extraction
 
 
 Version 0.2.8, 0.2.9 - Released 2020/01/29
