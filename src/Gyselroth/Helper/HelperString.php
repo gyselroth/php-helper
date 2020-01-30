@@ -683,7 +683,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             '#object\\((.*?)\\).*?\\((\\d+)\\)\\s*{\\s*;#',
             static function($match) {
                 return 'O:'
-                    . strlen($match[1]) . ':\"'
+                    . \strlen($match[1]) . ':\"'
                     . $match[1] . '\":'
                     . $match[2] . ':{';
             },

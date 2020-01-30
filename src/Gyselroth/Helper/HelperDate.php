@@ -432,7 +432,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             $timeParts[self::DATE_TIME_PART_HOUR]
             * self::SECONDS_HOUR + $timeParts['minutes']
             * self::SECONDS_MIN
-            + (array_key_exists('seconds', $timeParts)
+            + (\array_key_exists('seconds', $timeParts)
                 ? $timeParts['seconds']
                 : 0
             );
@@ -867,7 +867,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public static function removeMeridiem($dateStr): string
     {
         return \trim(
-            str_replace(
+            \str_replace(
                 ['am', 'pm'],
                 ['', ''],
                 \strtolower($dateStr))

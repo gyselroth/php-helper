@@ -223,19 +223,13 @@ class HelperImage
     {
         switch ($extension) {
             case HelperFile::FILE_ENDING_BMP:
-                $imageResource = \imagecreatefrombmp($sourcePath);
-                break;
+                return \imagecreatefrombmp($sourcePath);
             case HelperFile::FILE_ENDING_GIF:
-                $imageResource = \imagecreatefromgif($sourcePath);
-                break;
+                return \imagecreatefromgif($sourcePath);
             case HelperFile::FILE_ENDING_PNG:
-                $imageResource = \imagecreatefrompng($sourcePath);
-                break;
+                return \imagecreatefrompng($sourcePath);
             default:
-                $imageResource = \imagecreatefromjpeg($sourcePath);
-                break;
+                return \imagecreatefromjpeg($sourcePath);
         }
-
-        return $imageResource;
     }
 }

@@ -222,13 +222,15 @@ class HelperXml implements ConstantsXmlInterface
      */
     public static function debugPrint($dom, string $key = ''): void
     {
-        if (self::DOM_CLASS_ELEMENT === \get_class($dom)) {
+        $class = \get_class($dom);
+
+        if (self::DOM_CLASS_ELEMENT === $class) {
             $tempDom = new \DOMDocument();
             $node    = $tempDom->importNode($dom, true);
             $tempDom->appendChild($node);
 
             echo $tempDom->saveXML();
-        } elseif (self::DOM_CLASS_NODE_LIST === \get_class($dom)) {
+        } elseif (self::DOM_CLASS_NODE_LIST === $class) {
             // Print-out nodeList XML
             $tempDom = new \DOMDocument();
 
@@ -246,9 +248,9 @@ class HelperXml implements ConstantsXmlInterface
             // Print-out DOMDocument
             if (!empty($key)) {
                 echo "\n\n"
-                    . str_repeat('.', 80)
+                    . \str_repeat('.', 80)
                     . "\n\n$key\n"
-                    . str_repeat('-', \strlen($key))
+                    . \str_repeat('-', \strlen($key))
                     . "\n\n";
             }
 

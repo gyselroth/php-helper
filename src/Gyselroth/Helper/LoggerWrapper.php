@@ -149,7 +149,7 @@ class LoggerWrapper
      */
     private static function call(string $method, array $params): void
     {
-        $priority = strtoupper($method);
+        $priority = \strtoupper($method);
 
         if ([] === $params) {
             throw new LoggerException('Missing log message');

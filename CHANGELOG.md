@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.10 - Released 2020/01/30
+------------------------------------------
+* Language-level / upwards-compatibility: Update left-over use of deprecated curly brackets array access
+
+
 Version 0.2.8, 0.2.9 - Released 2020/01/29
 ------------------------------------------
 * 0.2.9: Improved HelperHtml::getCleanedHtml added option to escape double quotes

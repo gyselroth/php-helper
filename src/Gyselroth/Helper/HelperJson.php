@@ -25,13 +25,13 @@ class HelperJson implements ConstantsDataTypesInterface
      * @return array|Object|null
      * @throws \Exception
      */
-    public static function decode($json, $objectDecodeType = ConstantsDataTypesInterface::TYPE_ID_ARRAY)
+    public static function decode($json, $objectDecodeType = self::TYPE_ID_ARRAY)
     {
         try {
             /** @noinspection ReturnNullInspection */
             return empty($json)
                 ? null
-                : \json_decode($json, ConstantsDataTypesInterface::TYPE_ID_ARRAY === $objectDecodeType);
+                : \json_decode($json, self::TYPE_ID_ARRAY === $objectDecodeType);
         } catch (\Exception $e) {
             LoggerWrapper::warning(
                 'Cannot decode invalid JSON',

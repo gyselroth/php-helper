@@ -591,7 +591,7 @@ class HelperArray implements ConstantsDataTypesInterface
             if (\ctype_punct($value[$key])) {
                 // True if: string contains only printable characters, but no whitespace, no a-z|A-Z, no digits
                 $specialCharacter[] = $value;
-            } elseif ($value[$key]{0} == $check) {
+            } elseif ($value[$key][0] == $check) {
                 $stringBeginsWith[] = $value;
             } else {
                 $string[] = $value;
