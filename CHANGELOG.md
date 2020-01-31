@@ -3,7 +3,8 @@ gyselroth Helper Library
 
 Version 0.2.12, 0.2.13 - Released 2020/01/31
 --------------------------------------------
-* 0.2.13: Improve image-helper: Second-check by detecting correct MIME in case of inapplicable given one
+* 0.2.13: Improve HelperImage: Second-check by detecting correct MIME in case of inapplicable given one
+* 0.2.13: Added method: HelperImage::ensureCorrectImageFileExtension()
 * 0.2.12: Added error logging 
 * 0.2.12: Corrected pathinfo/extension resolving in file- and image-helpers 
 

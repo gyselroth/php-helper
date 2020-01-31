@@ -20,6 +20,37 @@ class HelperImage
 {
     public const LOG_CATEGORY = 'imaging';
 
+    /**
+     * Detect whether given file extension of image file does not match it's MIME type, rename resp. file when necessary
+     *
+     * @param string $imageFilePath
+     * @param string $imageFileExtension
+     * @return mixed|string|string[]
+     * @throws FileException
+     */
+    public static function ensureCorrectImageFileExtension(string $imageFilePath, string &$imageFileExtension)
+    {
+        $extensionInFilename = \pathinfo($imageFilePath, PATHINFO_EXTENSION);
+
+        $extensionByMimeType = \explode(
+            '/',
+            \mime_content_type($imageFilePath)
+        )[1];
+
+        if ($extensionByMimeType !== \strtolower($extensionInFilename)) {
+            $filePathIncorrect = $imageFilePath;
+            $imageFilePath = \str_replace('.' . $extensionInFilename, '.' . $extensionByMimeType, $imageFilePath);
+
+            if (!\rename($filePathIncorrect, $imageFilePath)) {
+                throw new FileException("Failed to rename $filePathIncorrect to $imageFilePath");
+            }
+
+            $imageFileExtension = $extensionByMimeType;
+        }
+
+        return $imageFilePath;
+    }
+
     public static function saveThumbnail(
         string $sourcePath,
         string $thumbnailFile,
