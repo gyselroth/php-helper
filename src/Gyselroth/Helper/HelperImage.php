@@ -261,7 +261,11 @@ class HelperImage
 
             if (false === $hasSecondCheckedMime) {
                 $requestedMimeType = $mimeType;
-                $mimeType          = \mime_content_type($sourcePath);
+
+                $mimeType = \explode(
+                    '/',
+                    \mime_content_type($sourcePath)
+                )[1];
 
                 LoggerWrapper::warning(
                     'HelperImage::imageCreateByFormat - Obtaining image data failed.'
