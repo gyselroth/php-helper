@@ -538,7 +538,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function getUploadFileInfo(array $uploadFile, int $options = FILEINFO_NONE): string
     {
         if (FILEINFO_MIME_TYPE === $options) {
-            $extension = \pathinfo(\strtolower($uploadFile['name']), PATHINFO_EXTENSION);
+            $extension = \strtolower(\pathinfo($uploadFile['name'], PATHINFO_EXTENSION));
 
             switch ($extension) {
                 case self::FILE_ENDING_CSV:

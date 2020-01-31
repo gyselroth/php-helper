@@ -28,7 +28,7 @@ class HelperImage
         int $quality = 100
     ): bool
     {
-        $extension = \pathinfo($sourcePath)[PATHINFO_EXTENSION];
+        $extension = \strtolower(\pathinfo($sourcePath, PATHINFO_EXTENSION));
 
         $imageResource = '' === $sourcePath
             ? false
@@ -89,19 +89,24 @@ class HelperImage
     }
 
     /**
-     * @param  string $pathImage
-     * @param  bool   $getImgTag Get img tag or just the image data?
-     * @param  string $alt
+     * @param string $pathImage
+     * @param bool $getImgTag Get img tag or just the image data?
+     * @param string $alt
      * @return string            Base64 encoded data of given image file
+     * @throws \Exception
      */
     public static function encodeBase64(string $pathImage, bool $getImgTag = false, string $alt = ''): string
     {
-        if (!file_exists($pathImage)) {
-            // @todo add logging
+        if (!\file_exists($pathImage)) {
+            LoggerWrapper::warning(
+                "HelperImage::encodeBase64 - File not found $pathImage",
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $$pathImage]
+            );
+
             return '';
         }
 
-        $type = \pathinfo($pathImage, PATHINFO_EXTENSION);
+        $type = \strtolower(\pathinfo($pathImage, PATHINFO_EXTENSION));
 
         $imageContents = \file_get_contents($pathImage);
 
@@ -125,7 +130,11 @@ class HelperImage
         $image = \imagecreatetruecolor($width, $height);
 
         if (false === $image) {
-            // @todo add logging
+            LoggerWrapper::warning(
+                'HelperImage::saveTransparentImage - imagecreatetruecolor failed',
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
+
             return false;
         }
 
@@ -163,7 +172,11 @@ class HelperImage
         $imageNew   = \imagecreatetruecolor($cropWidth, $cropHeight);
 
         if (false === $imageNew) {
-            // @todo add logging
+            LoggerWrapper::warning(
+                'HelperImage::saveTransparentImage - imagecreatetruecolor failed',
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
+
             return false;
         }
 

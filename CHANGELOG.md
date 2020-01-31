@@ -1,8 +1,14 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.12 - Released 2020/01/31
+------------------------------------
+* Added error logging 
+* Corrected pathinfo/extension resolving in file- and image-helpers 
+
+
 Version 0.2.10, 0.2.11 - Released 2020/01/30
-------------------------------------------
+--------------------------------------------
 * 0.2.10: Language-level / upwards-compatibility: Update left-over use of deprecated curly brackets array access
 * 0.2.11: Bugfix - HelperImage::SaveThumbnail: Corrected file extension extraction
 
