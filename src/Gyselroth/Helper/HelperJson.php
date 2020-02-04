@@ -35,7 +35,12 @@ class HelperJson implements ConstantsDataTypesInterface
         } catch (\Exception $e) {
             LoggerWrapper::warning(
                 'Cannot decode invalid JSON',
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $json, 'Exception' => $e]);
+                [
+                    LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY,
+                    LoggerWrapper::OPT_PARAMS => $json,
+                    'Exception' => $e
+                ]
+            );
 
             return null;
         }

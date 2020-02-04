@@ -613,11 +613,12 @@ class HelperArray implements ConstantsDataTypesInterface
      */
     public static function keys_recursive(array $arr): array
     {
-        $keys = [];
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveArrayIterator($arr),
             \RecursiveIteratorIterator::SELF_FIRST
         );
+
+        $keys = [];
 
         foreach ($iterator as $key => $value) {
             $keys[] = $key;
@@ -754,7 +755,10 @@ class HelperArray implements ConstantsDataTypesInterface
                         && !empty($data[$currentArrayKey][0])
                     )
                 ) {
-                    $newData[$currentArrayKey] = \array_merge($data[$currentArrayKey][0], $currentArrayValue);
+                    $newData[$currentArrayKey] = \array_merge(
+                        $data[$currentArrayKey][0],
+                        $currentArrayValue
+                    );
                 }
             }
 
@@ -812,11 +816,18 @@ class HelperArray implements ConstantsDataTypesInterface
 
     public static function getArrayFromCsvInRows(string $csv, string $delimiter = ','): array
     {
-        $res      = [];
-        $csvArray = \str_getcsv(\str_replace(["\n", "\r\r"], "\r", $csv), "\r");
+        $csvArray = \str_getcsv(
+            \str_replace(["\n", "\r\r"], "\r", $csv),
+            "\r"
+        );
+
+        $res = [];
 
         foreach ($csvArray as $line) {
-            $res[] = \array_map('trim', \str_getcsv(\trim($line), $delimiter));
+            $res[] = \array_map(
+                'trim',
+                \str_getcsv(\trim($line), $delimiter)
+            );
         }
 
         return $res;
@@ -832,7 +843,8 @@ class HelperArray implements ConstantsDataTypesInterface
      */
     public static function substrKeys(array $array, int $start, $length = null): array
     {
-        $keys   = \array_keys($array);
+        $keys = \array_keys($array);
+
         $return = [];
 
         foreach ($keys as $key) {

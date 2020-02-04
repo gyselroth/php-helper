@@ -261,7 +261,7 @@ class HelperZip
     {
         if (!\is_file($pathArchive)) {
             LoggerWrapper::error(
-                'ZIP archive doesn\'t exist: ' . $pathArchive,
+                'ZIP archive does NOT exist: ' . $pathArchive,
                 [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
             );
 

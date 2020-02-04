@@ -109,7 +109,7 @@ class LoggerWrapper
      */
     public static function mute(): void
     {
-        new LoggerWrapper(function(){});
+        new LoggerWrapper(static function(){});
     }
 
     /**

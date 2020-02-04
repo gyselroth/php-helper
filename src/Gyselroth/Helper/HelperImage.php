@@ -39,6 +39,7 @@ class HelperImage
 
         if ($extensionByMimeType !== \strtolower($extensionInFilename)) {
             $filePathIncorrect = $imageFilePath;
+
             $imageFilePath = \str_replace('.' . $extensionInFilename, '.' . $extensionByMimeType, $imageFilePath);
 
             if (!\rename($filePathIncorrect, $imageFilePath)) {
@@ -195,7 +196,8 @@ class HelperImage
             return false;
         }
 
-        $size       = \getimagesize($imageFilename);
+        $size = \getimagesize($imageFilename);
+
         $cropWidth  = $size[0] - $widthSubtrahend;
         $cropHeight = $size[1] - $heightSubtrahend;
 
@@ -235,8 +237,9 @@ class HelperImage
     ): string
     {
         $pathTmpWithoutExtension = APPLICATION_PATH . '/../../tmp/' . \uniqid('img_', false);
-        $pathTmpImage            = $pathTmpWithoutExtension . '.' . $extension;
-        $pathScaledImage         = $pathTmpWithoutExtension . '_scaled.' . $extension;
+
+        $pathTmpImage    = $pathTmpWithoutExtension . '.' . $extension;
+        $pathScaledImage = $pathTmpWithoutExtension . '_scaled.' . $extension;
 
         $fileHandle = \fopen($pathTmpImage, 'wb+');
 

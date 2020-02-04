@@ -45,6 +45,13 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public const SHIFT_MODE_4_DAYS_LATER       = '4DaysLater';
     public const SHIFT_MODE_5_DAYS_LATER       = '5DaysLater';
 
+    protected const DATE_SHIFT_MAP = [
+        self::SHIFT_MODE_DAY_AFTER_TOMORROW => 2,
+        self::SHIFT_MODE_3_DAYS_LATER       => 3,
+        self::SHIFT_MODE_4_DAYS_LATER       => 4,
+        self::SHIFT_MODE_5_DAYS_LATER       => 5
+    ];
+
     /**
      * @param  string $str
      * @param  string $format e.g. 'Y-m-d G:i' or 'Y-m-d G:i:s' etc.
@@ -150,9 +157,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         return new \Zend_Date(
             [
-                'year' => \substr($date, 0, 4),
+                'year'  => \substr($date, 0, 4),
                 'month' => \substr($date, 5, 2),
-                'day' => \substr($date, 8, 2)
+                'day'   => \substr($date, 8, 2)
             ], self::DEFAULT_LOCALE
         );
     }
@@ -181,11 +188,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * Render date in given format from given UNIX timestamp
      *
      * @param  int|\Zend_Date $timestamp
-     * @param  int            $format
+     * @param  int|string     $format       Format constant or identifier
      * @return string|false
      * @throws \Zend_Date_Exception
      */
-    public static function getDateFromUnixTimestamp($timestamp, int $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
+    public static function getDateFromUnixTimestamp($timestamp, $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
     {
         $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
 
@@ -540,14 +547,19 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         if (\is_string($date)) {
             // Convert to Zend_Date
-            $date = empty($date) ? new \Zend_Date() : new \Zend_Date($date);
+            $date = empty($date)
+                ? new \Zend_Date()
+                : new \Zend_Date($date);
         } elseif (!\is_object($date) || 'Zend_Date' !== \get_class($date)) {
             throw new \InvalidArgumentException(
-                'Argument 1 passed to ' . __CLASS__ . '::' . __METHOD__ . ' must be an instance of Zend_Date or null or string');
+                'Argument 1 passed to ' . __CLASS__ . '::' . __METHOD__
+                . ' must be an instance of Zend_Date or null or string'
+            );
         }
 
         $monday = empty($date) ? new \Zend_Date() : clone $date;
         $monday->set('00:00:00', \Zend_Date::TIMES);
+
         $dayOfWeek = (int)$monday->get(\Zend_Date::WEEKDAY_DIGIT);
 
         // $dayOfWeek = 0 -> Sunday
@@ -816,23 +828,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
                 break;
             case self::SHIFT_MODE_DAY_AFTER_TOMORROW:
-                $date->addDay(2);
-                $amountDaysAdded = 2;
-
-                break;
             case self::SHIFT_MODE_3_DAYS_LATER:
-                $date->addDay(3);
-                $amountDaysAdded = 3;
-
-                break;
             case self::SHIFT_MODE_4_DAYS_LATER:
-                $date->addDay(4);
-                $amountDaysAdded = 4;
-
-                break;
             case self::SHIFT_MODE_5_DAYS_LATER:
-                $date->addDay(5);
-                $amountDaysAdded = 5;
+                $amountDaysAdded = self::DATE_SHIFT_MAP[$shiftingMode];
+                $date->addDay($amountDaysAdded);
 
                 break;
             default:
@@ -847,6 +847,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         if ($amountDaysAdded > 0) {
             for ($addDayIndex = 0; $addDayIndex < $amountDaysAdded; $addDayIndex++) {
                 $tempDate->addDay(1);
+
                 $weekdayIndex = $tempDate->toValue(\Zend_Date::WEEKDAY_DIGIT);
 
                 if (6 === $weekdayIndex || 0 === $weekdayIndex) {

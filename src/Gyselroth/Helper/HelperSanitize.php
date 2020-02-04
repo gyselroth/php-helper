@@ -18,8 +18,6 @@ use Gyselroth\Helper\Interfaces\ConstantsEntitiesOfStrings;
  */
 class HelperSanitize implements ConstantsEntitiesOfStrings
 {
-    private const LOG_CATEGORY_REQUEST = 'sanitize';
-
     /**
      * @param  array|string $idOrIDs
      * @param  string $glue

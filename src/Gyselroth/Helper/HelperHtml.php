@@ -23,6 +23,9 @@ class HelperHtml
 
     public const IMAGE_SOURCE_PREFIX_JPEG_BASE_64 = 'data:image/jpeg;base64,';
 
+    protected const PATTERN_ATTRIBUTE_WIDTH = '/width:(\s)*(\d)+(\w*)(;)*/';
+    protected const PATTERN_ATTRIBUTE_HEIGHT = '/height:(\s)*(\d)+(\w*)(;)*/';
+
     /**
      * Decode until no more special chars are found
      *
@@ -55,7 +58,11 @@ class HelperHtml
      */
     public static function br2nl(string $string): string
     {
-        return \str_ireplace(['<br />', '<br/>', '<br>', '<br >'], "\n", $string);
+        return \str_ireplace(
+            ['<br />', '<br/>', '<br>', '<br >'],
+            "\n",
+            $string
+        );
     }
 
     /**
@@ -76,7 +83,13 @@ class HelperHtml
         $text = \htmlspecialchars_decode($html);
         $text = \str_replace(["\n", "\r"], '', $text);
         $text = self::br2nl($text);
-        $text = \str_replace(['</p>', '</li>', '<li>'], ["\n\n", "\n", ' - '], $text);
+
+        $text = \str_replace(
+            ['</p>', '</li>', '<li>'],
+            ["\n\n", "\n", ' - '],
+            $text
+        );
+
         $text = \strip_tags($text);
 
         if ($decodeEntity) {
@@ -115,8 +128,8 @@ class HelperHtml
      */
     public static function resizeStyles(string $html, $widthFactor = 1, $heightFactor = 1): string
     {
-        \preg_match_all('/width:(\s)*(\d)+(\w*)(;)*/', $html, $widths);
-        \preg_match_all('/height:(\s)*(\d)+(\w*)(;)*/', $html, $heights);
+        \preg_match_all(self::PATTERN_ATTRIBUTE_WIDTH, $html, $widths);
+        \preg_match_all(self::PATTERN_ATTRIBUTE_HEIGHT, $html, $heights);
 
         foreach ($widths[0] as $index=>$width) {
             $html = \str_replace(

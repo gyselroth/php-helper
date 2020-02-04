@@ -190,8 +190,9 @@ class HelperPreg
             return [];
         }
 
+        $offsetBase = 0;
+
         $matchesByOffset = [];
-        $offsetBase      = 0;
 
         foreach ($fullMatches as $match) {
             $offset = \strpos($string, $match);

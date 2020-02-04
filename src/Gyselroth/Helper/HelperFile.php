@@ -11,7 +11,6 @@
 
 namespace Gyselroth\Helper;
 
-use finfo;
 use Gyselroth\Helper\Exception\FileException;
 use Gyselroth\Helper\Exception\FileExceptionFailedTransfer;
 use Gyselroth\Helper\Exception\FileExceptionIllegalFilename;
@@ -219,6 +218,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function write(string $pathFile, string $content, string $mode = 'wb'): bool
     {
         $handle = \fopen($pathFile, $mode);
+
         if (!$handle) {
             LoggerWrapper::error('fopen failed: ' . $pathFile);
 
@@ -254,6 +254,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         \ini_set('auto_detect_line_endings', true);
 
         $handle = \fopen($filePath, 'wb');
+
         \fputcsv($handle, $headerFields);
 
         foreach ($rows as $row) {
@@ -261,7 +262,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             unset($row);
         }
 
-        return fclose($handle);
+        return \fclose($handle);
     }
 
     /**
@@ -357,7 +358,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
                 if (0 === \preg_match('/^(^\.)/', $file)) {
                     if (\is_dir($pathFile)) {
                         /** @noinspection SlowArrayOperationsInLoopInspection */
-                        $items = \array_merge($items, self::scanDirRecursive($pathFile, $ext, $leadString));
+                        $items = \array_merge(
+                            $items,
+                            self::scanDirRecursive($pathFile, $ext, $leadString)
+                        );
                     } elseif (!$ext || HelperString::endsWith($pathFile, $ext)
                         && (
                             empty($leadString)

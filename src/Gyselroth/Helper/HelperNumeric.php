@@ -47,7 +47,8 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         bool $onlyPositive = false
     ): string
     {
-        $array    = \array_unique($array);
+        $array = \array_unique($array);
+
         $integers = [];
 
         foreach ($array as $item) {
@@ -89,12 +90,13 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
             return [];
         }
 
-        $numbers = [];
-        $parts   = \explode($delimiter, $str);
+        $parts = \explode($delimiter, $str);
 
         if (false === $parts) {
             return [];
         }
+
+        $numbers = [];
 
         foreach ($parts as $number) {
             if (!$excludeNullValues || 'null' !== \strtolower($number)) {
@@ -127,13 +129,14 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
             return [];
         }
 
-        $numbers = [];
-        $parts   = \explode($delimiter, $str);
+        $parts = \explode($delimiter, $str);
 
         if (false === $parts) {
             // @todo add logging
             return [];
         }
+
+        $numbers = [];
 
         foreach ($parts as $number) {
             if (!$excludeNullValues || 'null' !== \strtolower($number)) {

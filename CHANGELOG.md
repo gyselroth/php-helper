@@ -1,6 +1,12 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.14 - Released 2020/02/04
+------------------------------------
+* HelperDate::getDateFromUnixTimestamp: Correct too narrow $format argument type declaration 
+* Cleanup: Remove unused imports and private fields, reduce redundant code
+
+
 Version 0.2.12, 0.2.13 - Released 2020/01/31
 --------------------------------------------
 * 0.2.13: Improve HelperImage: Second-check by detecting correct MIME in case of inapplicable given one

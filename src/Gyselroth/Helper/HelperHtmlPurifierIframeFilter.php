@@ -7,9 +7,6 @@
 
 namespace Gyselroth\Helper;
 
-use HTMLPurifier_Context;
-use HTMLPurifier_Config;
-
 /**
  * HTML Purifier - custom html purifier filter for allowing fullscreen of iframes(videos) with src "youtube" or "vimeo"
  */
