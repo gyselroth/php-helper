@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4473202952955c6e0e99e981f0964c4e",
+    "content-hash": "9e1313544603e18ae42f46e87a654fb2",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
@@ -744,20 +744,21 @@
         },
         {
             "name": "smalot/pdfparser",
-            "version": "0.11.x-dev",
+            "version": "v0.14.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/gyselroth/pdfparser.git",
-                "reference": "4593fb10d26d795fa22246771b57b2b9aaaba552"
+                "url": "https://github.com/smalot/pdfparser.git",
+                "reference": "ec72a99028ba5e21a0acad92047b85e128cbf81f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gyselroth/pdfparser/zipball/4593fb10d26d795fa22246771b57b2b9aaaba552",
-                "reference": "4593fb10d26d795fa22246771b57b2b9aaaba552",
+                "url": "https://api.github.com/repos/smalot/pdfparser/zipball/ec72a99028ba5e21a0acad92047b85e128cbf81f",
+                "reference": "ec72a99028ba5e21a0acad92047b85e128cbf81f",
                 "shasum": ""
             },
             "require": {
-                "ext-iconv": "*",
+                "ext-mbstring": "*",
+                "ext-zlib": "*",
                 "php": ">=5.3.0",
                 "tecnickcom/tcpdf": "~6.0"
             },
@@ -770,29 +771,26 @@
                     "Smalot\\PdfParser\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPLv3"
+                "LGPL-3.0"
             ],
             "authors": [
                 {
-                    "name": "Sebastien MALOT",
+                    "name": "Sebastien Malot",
                     "email": "sebastien@malot.fr"
                 }
             ],
             "description": "Pdf parser library. Can read and extract information from pdf file.",
             "homepage": "http://www.pdfparser.org",
             "keywords": [
-                "PDF",
                 "extract",
                 "parse",
                 "parser",
+                "pdf",
                 "text"
             ],
-            "support": {
-                "issues": "https://github.com/smalot/pdfparser/issues",
-                "source": "https://github.com/gyselroth/pdfparser/tree/master"
-            },
-            "time": "2017-12-12T14:06:20+00:00"
+            "time": "2019-01-23T09:14:37+00:00"
         },
         {
             "name": "tecnickcom/tcpdf",
@@ -1280,16 +1278,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.8",
+            "version": "0.12.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "62a552602b7586d82826231f2fd4cbfe39fe0b1d"
+                "reference": "297cb2458a96ea96d5e9d6ef38f1b7305c071f32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/62a552602b7586d82826231f2fd4cbfe39fe0b1d",
-                "reference": "62a552602b7586d82826231f2fd4cbfe39fe0b1d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/297cb2458a96ea96d5e9d6ef38f1b7305c071f32",
+                "reference": "297cb2458a96ea96d5e9d6ef38f1b7305c071f32",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1313,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-01-26T23:36:48+00:00"
+            "time": "2020-02-04T22:30:27+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2373,8 +2371,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phpoffice/phpexcel": 20,
-        "smalot/pdfparser": 20
+        "phpoffice/phpexcel": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

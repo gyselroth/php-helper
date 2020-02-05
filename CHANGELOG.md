@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.15 - Released 2020/02/05
+------------------------------------
+* Update dependency: use smalot/pdfparser 0.14.0
+
+
 Version 0.2.14 - Released 2020/02/04
 ------------------------------------
 * HelperDate::getDateFromUnixTimestamp: Correct too narrow $format argument type declaration 

@@ -43,7 +43,7 @@
         "mikehaertl/phpwkhtmltopdf": "^2.2",
         "monolog/monolog": "^1.17",
         "phpoffice/phpexcel": "dev-mpdfCompatibilityFix@dev",
-        "smalot/pdfparser": "0.11.x-dev@dev",
+        "smalot/pdfparser": "0.14.0",
         "shardj/zf1-future": "^1.16",
         "laminas/laminas-zendframework-bridge": "^1.0",
         "laminas/laminas-json": "^3.1"
