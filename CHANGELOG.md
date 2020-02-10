@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.16 - Released 2020/02/10
+------------------------------------
+* Added new method validateStringImproved (improved version of validateString)
+
+
 Version 0.2.15 - Released 2020/02/05
 ------------------------------------
 * Update dependency: use smalot/pdfparser 0.14.0

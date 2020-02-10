@@ -122,7 +122,56 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
      * @param bool $allowSpace
      * @param string $allowedSpecialCharacters
      * @return bool
-     * @deprecated
+     *
+     * improved version of validateString consider using this one
+     */
+    public static function validateStringImproved(
+        string $str,
+        bool $allowCharacters = true,
+        bool $allowUmlauts = false,
+        bool $allowDigits = false,
+        bool $allowWhiteSpace = false,
+        bool $allowSpace = false,
+        string $allowedSpecialCharacters = ''
+    ): bool
+    {
+        $regExpression = '';
+
+        if ($allowCharacters) {
+            $regExpression .= 'A-Za-z';
+        }
+
+        if ($allowDigits) {
+            $regExpression .= '0-9';
+        }
+
+        if ($allowWhiteSpace) {
+            $regExpression .= '\s';
+        } elseif ($allowSpace) {
+            $regExpression .= ' ';
+        }
+
+        if ($allowUmlauts) {
+            $regExpression .= \implode('', self::UMLAUTS);
+        }
+
+        if ('' !== $allowedSpecialCharacters) {
+            $regExpression .= $allowedSpecialCharacters;
+        }
+
+        return !(bool)\preg_match('/[^' . $regExpression . ']+/', $str);
+    }
+
+    /**
+     * @param string $str
+     * @param bool $allowCharacters
+     * @param bool $allowUmlauts
+     * @param bool $allowDigits
+     * @param bool $allowWhiteSpace
+     * @param bool $allowSpace
+     * @param string $allowedSpecialCharacters
+     * @return bool
+     * @deprecated Method is useless at the moment consider using validateStringImproved
      */
     public static function validateString(
         string $str,
