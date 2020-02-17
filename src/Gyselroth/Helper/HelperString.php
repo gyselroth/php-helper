@@ -775,8 +775,12 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         );
     }
 
-    public static function translate(string $message, array $args = []): string
+    public static function translate(string $message, array $args = [], bool $escapeHtmlEntities = false): string
     {
+        if($escapeHtmlEntities) {
+            $message = htmlentities($message, ENT_QUOTES);
+        }
+
         return [] === $args
             ? $message
             : \vsprintf($message, $args);
