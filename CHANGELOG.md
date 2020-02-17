@@ -1,6 +1,10 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.17 - Released 2020/02/17
+------------------------------------
+* Extended translate method with the parameter $escapeHtmlEntities
+
 Version 0.2.16 - Released 2020/02/10
 ------------------------------------
 * Added new method validateStringImproved (improved version of validateString)
