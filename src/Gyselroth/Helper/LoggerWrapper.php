@@ -65,17 +65,14 @@ class LoggerWrapper
     /** @var LoggerWrapper|null */
     protected static $instance;
 
-    /** @var string */
-    protected static $loggerClassName;
+    protected static string $loggerClassName;
 
     /** @var \Monolog\Logger */
     protected static $logger;
 
-    /** @var bool */
-    protected static $isDevEnvironment;
+    protected static bool $isDevEnvironment;
 
-    /** @var string */
-    protected static $logPath;
+    protected static string $logPath;
 
     /**
      * Constructor

@@ -78,8 +78,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public $mimes = self::MIMES;
 
-    /** @var string */
-    public static $rootPath;
+    public static string $rootPath;
 
     /**
      * @return string

@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0",
+        "php": ">=7.4",
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",

@@ -16,7 +16,7 @@ use Gyselroth\Helper\HelperString;
 
 class HelperStringTest extends HelperTestCase
 {
-    public function testGetStringBetween()
+    public function testGetStringBetween(): void
     {
         $this->assertEquals('miny',         HelperString::getStringBetween('eeny meeny miny moe', 'meeny', 'moe'));
 

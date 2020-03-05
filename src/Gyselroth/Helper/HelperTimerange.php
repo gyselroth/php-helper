@@ -66,11 +66,9 @@ class HelperTimerange
             $locale
         );
 
-        // @todo: "bis" needs to be translated as well if locale is set to "en"
-
         return $dateStart->get(
             \Zend_Date::DATE_LONG) . ' '
-            . 'bis' . ' '
+            . HelperString::translate('bis') . ' '
             . $dateEnd->get(\Zend_Date::DATE_LONG);
     }
 

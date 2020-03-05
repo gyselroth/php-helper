@@ -12,8 +12,8 @@ namespace Gyselroth\Helper;
  */
 class HelperHtmlPurifierIframeFilter
 {
-    /** @var string */
-    public $name = 'IframeAllowFullscreen';
+
+    public string $name = 'IframeAllowFullscreen';
 
     /**
      * @param  string                $html

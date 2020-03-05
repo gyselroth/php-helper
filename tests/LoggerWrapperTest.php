@@ -19,16 +19,16 @@ use Tests\Fixtures\TestFilesHelper;
 
 class LoggerWrapperTest extends HelperTestCase
 {
-    protected $_pathToLogfile = __DIR__ . '/tmp/app.log';
+    protected string $_pathToLogfile = __DIR__ . '/tmp/app.log';
     protected $_logMock;
-    protected $_logger;
+    protected LoggerWrapper $_logger;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         TestFilesHelper::emptyTmpDirectory();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         TestFilesHelper::removeTmpDirectory();
         if (\is_object($this->_logger)) {
@@ -51,7 +51,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::isDevEnvironment without $isDevEnvironment
      * @throws \Gyselroth\Helper\Exception\LoggerException
      */
-    public function testIsDevEnvironmentDefault()
+    public function testIsDevEnvironmentDefault(): void
     {
         $this->_logger = new LoggerWrapper($this->createMock(CustomLogMock::class));
         $this->assertFalse($this->_logger->isDevEnvironment());
@@ -61,7 +61,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::isDevEnvironment with $isDevEnvironment = true
      * @throws \Gyselroth\Helper\Exception\LoggerException
      */
-    public function testIsDevEnvironmentTrue()
+    public function testIsDevEnvironmentTrue(): void
     {
         $this->_logger = new LoggerWrapper($this->createMock(CustomLogMock::class), true);
         $this->assertTrue($this->_logger->isDevEnvironment());
@@ -81,7 +81,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::log default priority (info) to custom log (e.g. Zend_Log)
      * @throws \Exception
      */
-    public function testLogInfoToCustomLog()
+    public function testLogInfoToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->log('test message');
@@ -92,7 +92,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::log emergency message with log options to custom log
      * @throws \Exception
      */
-    public function testLogEmergencyWithOptionsToCustomLog()
+    public function testLogEmergencyWithOptionsToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->log('test message', 'emergency', ['option_1', 'option_2', 'option_3']);
@@ -103,7 +103,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::log info to monolog with Streamhandler - no options
      * @throws \Exception
      */
-    public function testLogInfoToMonolog()
+    public function testLogInfoToMonolog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->log('test message', 'info');
@@ -114,7 +114,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::log critical message to monolog without Streamhandler - no options
      * @throws \Exception
      */
-    public function testLogCriticalToMonologWithoutStreamHandler()
+    public function testLogCriticalToMonologWithoutStreamHandler(): void
     {
         $this->_logger = $this->_setUpMonoLogger(false);
         $this->_logger->log('test message', 'critical');
@@ -125,7 +125,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::alert to custom log
      * @throws \Exception
      */
-    public function testAlertToCustomLog()
+    public function testAlertToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->alert('alert message');
@@ -136,7 +136,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::alert to mono log
      * @throws \Exception
      */
-    public function testAlertToMonoLog()
+    public function testAlertToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->alert('alert message');
@@ -147,7 +147,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::crit to custom log
      * @throws \Exception
      */
-    public function testCritToCustomLog()
+    public function testCritToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->crit('crit message');
@@ -158,7 +158,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::crit to mono log
      * @throws \Exception
      */
-    public function testCritToMonoLog()
+    public function testCritToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->crit('crit message');
@@ -169,7 +169,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::debug to custom log
      * @throws \Exception
      */
-    public function testDebugToCustomLog()
+    public function testDebugToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->debug('debug message');
@@ -180,7 +180,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::debug to mono log
      * @throws \Exception
      */
-    public function testDebugToMonoLog()
+    public function testDebugToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->debug('debug message');
@@ -191,7 +191,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::emerg to custom log
      * @throws \Exception
      */
-    public function testEmergToCustomLog()
+    public function testEmergToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->emerg('emerg message');
@@ -202,7 +202,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::emerg to mono log
      * @throws \Exception
      */
-    public function testEmergToMonoLog()
+    public function testEmergToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->emerg('emerg message');
@@ -213,7 +213,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::error to custom log
      * @throws \Exception
      */
-    public function testErrorToCustomLog()
+    public function testErrorToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->error('error message');
@@ -224,7 +224,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::error to mono log
      * @throws \Exception
      */
-    public function testErrorToMonoLog()
+    public function testErrorToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->error('error message');
@@ -235,7 +235,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::info to custom log
      * @throws \Exception
      */
-    public function testInfoToCustomLog()
+    public function testInfoToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->info('info message');
@@ -246,7 +246,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::info to mono log
      * @throws \Exception
      */
-    public function testInfoToMonoLog()
+    public function testInfoToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->info('info message');
@@ -257,7 +257,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::notice to custom log
      * @throws \Exception
      */
-    public function testNoticeToCustomLog()
+    public function testNoticeToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->notice('notice message');
@@ -268,7 +268,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::notice to mono log
      * @throws \Exception
      */
-    public function testNoticeToMonoLog()
+    public function testNoticeToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->notice('notice message');
@@ -279,7 +279,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::warning to custom log
      * @throws \Exception
      */
-    public function testWarningToCustomLog()
+    public function testWarningToCustomLog(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $this->_logger->warning('warning message');
@@ -290,7 +290,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper::warning to mono log
      * @throws \Exception
      */
-    public function testWarningToMonoLog()
+    public function testWarningToMonoLog(): void
     {
         $this->_logger = $this->_setUpMonoLogger();
         $this->_logger->warning('warning message');
@@ -301,7 +301,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper:: logOrDieOnDevOnToCustLogDev on not-dev with log as error = true
      * @throws \Exception
      */
-    public function testLogOrDieOnDevToCustLogNotDevLogAsError()
+    public function testLogOrDieOnDevToCustLogNotDevLogAsError(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $result = $this->_logger->logOrDieOnDev('test message', true, 'result', 'category_1');
@@ -313,7 +313,7 @@ class LoggerWrapperTest extends HelperTestCase
      * Test LoggerWrapper:: logOrDieOnDevOnToCustLogDev on not-dev with log as error = false
      * @throws \Exception
      */
-    public function testLogOrDieOnDevToCustLogNotDevLogNotAsError()
+    public function testLogOrDieOnDevToCustLogNotDevLogNotAsError(): void
     {
         $this->_logger = $this->_setUpCustomLogger();
         $result = $this->_logger->logOrDieOnDev('test message', false, 'result', 'category_1');
@@ -335,7 +335,7 @@ class LoggerWrapperTest extends HelperTestCase
      * @return LoggerWrapper
      * @throws \Gyselroth\Helper\Exception\LoggerException
      */
-    protected function _setUpCustomLogger(bool $isDevEnvironment = false)
+    protected function _setUpCustomLogger(bool $isDevEnvironment = false): LoggerWrapper
     {
         return new LoggerWrapper(
             $this->getMockBuilder(CustomLogMock::class)
@@ -351,7 +351,7 @@ class LoggerWrapperTest extends HelperTestCase
      * @return LoggerWrapper
      * @throws \Gyselroth\Helper\Exception\LoggerException
      */
-    protected function _setUpMonoLogger(bool $hasStreamHandlers = true)
+    protected function _setUpMonoLogger(bool $hasStreamHandlers = true): LoggerWrapper
     {
         return new LoggerWrapper(
             $this->getMockBuilder(MonologMock::class)
