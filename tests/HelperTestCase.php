@@ -34,7 +34,7 @@ class HelperTestCase extends TestCase {
         $this->_logger = new LoggerWrapper($this->_setUpLogger(), true, '.');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         self::emptyTempFolder();
         if (\is_object($this->_logger)) {

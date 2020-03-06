@@ -131,20 +131,20 @@ class HelperDateTest extends HelperTestCase
 //        $this->assertSame('{"year":"17","month":"6","day":"28"}', json_encode(HelperDate::getDateParts('28.6.2017', 'y', 'n', 'd')));
     }
 
-    public function testgetDatePartsAtStartOfDay(): void
+    public function testGetDatePartsAtStartOfDay(): void
     {
         $this->assertSame('{"array":["1994","05","22","12","20","15"],"timestamp":769564800}', json_encode(HelperDate::getDatePartsAtStartOfDay('1994-05-22-12-20-15')));
         $this->assertSame('{"array":["1994","05","22"],"timestamp":769564800}', json_encode(HelperDate::getDatePartsAtStartOfDay('1994-05-22')));
     }
 
-    public function testgetTimestampStartOfDay(): void
+    public function testGetTimestampStartOfDay(): void
     {
         $this->markTestIncomplete('@todo: Review and correct test and rel. method');
 
 //        $this->assertEquals('769564800', HelperDate::getTimestampStartOfDay('1994-05-22'));
     }
 
-    public function testgetTimestampEndOfDay(): void
+    public function testGetTimestampEndOfDay(): void
     {
         $this->markTestIncomplete('@todo: Review and correct test and rel. method');
 
@@ -157,7 +157,7 @@ class HelperDateTest extends HelperTestCase
         $this->assertSame('{"hour":12,"minutes":5}', json_encode(HelperDate::getTimeStringParts('12:05')));
     }
 
-    public function testgetTimeString(): void
+    public function testGetTimeString(): void
     {
         $this->assertSame('10:20:20', HelperDate::getTimeString(1498645220800, true));
         $this->assertSame('10:20:20', HelperDate::getTimeString(1498645220));
@@ -277,7 +277,7 @@ class HelperDateTest extends HelperTestCase
     /**
      * @throws \Gyselroth\Helper\Exception\DateException
      */
-    public function testgetIcsDateFromDateString(): void
+    public function testGetIcsDateFromDateString(): void
     {
         $this->assertSame('20170512', HelperDate::getIcsDateFromDateString('12.5.2017'));
         $this->assertSame('20170512T123456', HelperDate::getIcsDateFromDateString('12.5.2017 12:34:56', true));

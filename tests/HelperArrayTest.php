@@ -55,7 +55,7 @@ class HelperArrayTest extends HelperTestCase
         'Erfahrungsnote_Mathe'     => 5.5
     ];
 
-    public function testIsAssociativeWhenNotAssotiative(): void
+    public function testIsAssociativeWhenNotAssociative(): void
     {
         $this->assertFalse(HelperArray::isAssociative([
             0 => [
