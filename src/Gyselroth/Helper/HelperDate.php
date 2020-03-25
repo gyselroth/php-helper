@@ -86,7 +86,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             : [$parts[1], $parts[2], $parts[0]];
 
         return 3 === \count($parts)
-            && \checkdate($month, $day, $year);
+            && \checkdate((int)$month, (int)$day, (int)$year);
     }
 
     /**
