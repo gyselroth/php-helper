@@ -215,7 +215,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             case self::FORMAT_TIME_ZF1:
                 return (new \Zend_Date($timestamp))->toString((string)$format);
             case self::INDEX_FORMAT_TIMESTAMP_JAVASCRIPT:
-                return $timestamp * self::MILLISECONDS_SECOND;
+                return (string)($timestamp * self::MILLISECONDS_SECOND);
             case self::INDEX_FORMAT_ZEND_DATE:
                 return new \Zend_Date($timestamp);
             case self::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR:
