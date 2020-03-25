@@ -956,7 +956,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         return \date('W / Y');
     }
 
-    public static function getDayNumberOfWeekFromZendDate(\Zend_Date $date): int
+    /**
+     * @param Zend_Date $date
+     * @return int|false
+     */
+    public static function getDayNumberOfWeekFromZendDate(\Zend_Date $date)
     {
         $dateValue = $date->toValue(\Zend_Date::WEEKDAY_DIGIT);
 
