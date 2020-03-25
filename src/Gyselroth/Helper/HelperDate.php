@@ -382,6 +382,10 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         $timeStringParts = \explode($delimiter, $timeStr);
 
+        if ($timeStringParts === false) {
+            return [];
+        }
+
         $parts = [
             self::DATE_TIME_PART_HOUR => (int)$timeStringParts[0],
             'minutes'                 => $includeMinutes ? (int)$timeStringParts[1] : 0
