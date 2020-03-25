@@ -254,7 +254,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             return false;
         }
 
-        \ini_set('auto_detect_line_endings', true);
+        \ini_set('auto_detect_line_endings', '1');
 
         $handle = \fopen($filePath, 'wb');
 
