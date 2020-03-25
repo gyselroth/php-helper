@@ -299,7 +299,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     ): array
     {
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-        $timestamp = self::getUnixTimestampFromDate($timestamp);
+        $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
 
         return [
             self::DATE_TIME_PART_YEAR => \date($formatYear, $timestamp),
