@@ -764,9 +764,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     /**
      * @param  int $weekNumber Week number of year (0 - 52)
      * @param  int $year       2- or 4-digit year number
-     * @return int
+     * @return int|false
      */
-    public static function getTimestampFirstDayOfCalendarWeek($weekNumber, $year): int
+    public static function getTimestampFirstDayOfCalendarWeek($weekNumber, $year)
     {
         if ($year < 100) {
             $year += 2000;
