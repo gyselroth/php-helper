@@ -1274,7 +1274,7 @@ class HelperArray implements ConstantsDataTypesInterface
 
     /**
      * @param  array $array
-     * @return string|int
+     * @return string|int|null
      */
     public static function getFirstKey(array $array)
     {
