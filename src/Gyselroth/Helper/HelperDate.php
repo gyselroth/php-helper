@@ -167,7 +167,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * Detect type of given date and return the resp. UNIX timestamp
      *
      * @param  \Zend_Date|Integer|String $date
-     * @return int|string|\Zend_Date
+     * @return int|string|false|\Zend_Date
      */
     public static function getUnixTimestampFromDate($date)
     {
