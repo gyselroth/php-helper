@@ -72,7 +72,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $parts = \explode($delimiter, $str);
 
-        if (\count($parts) !== 3) {
+        if ($parts === false || \count($parts) !== 3) {
             return false;
         }
 
