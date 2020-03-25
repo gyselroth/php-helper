@@ -956,7 +956,7 @@ class HelperArray implements ConstantsDataTypesInterface
             return $array = $value;
         }
 
-        $keys = \explode('.', $key);
+        $keys = \explode('.', (string)$key);
 
         while (\count($keys) > 1) {
             $key = \array_shift($keys);
