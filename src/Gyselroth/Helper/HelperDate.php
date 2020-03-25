@@ -150,7 +150,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     /**
      * @param string $date e.g. '2019-12-31'
      * @return Zend_Date
-     * @throws Zend_Date_Exception
      * @throws \Zend_Date_Exception
      */
     public static function getZendDateByDateString(string $date): \Zend_Date
