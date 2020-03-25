@@ -302,6 +302,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         /** @noinspection ReturnFalseInspection */
         $files = \scandir($path);
 
+        if(!$files) {
+            return [];
+        }
+
         // Filter: 1. remove '.' and '..', 2. by extension (or substring), 3. by lead string
         $filesFiltered = [];
 
