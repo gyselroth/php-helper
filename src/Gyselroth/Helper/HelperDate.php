@@ -318,7 +318,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         return [
             'array'     => $dateParts,
-            'timestamp' => \mktime(0, 0, 0, $dateParts[1], $dateParts[2], $dateParts[0])
+            'timestamp' => \mktime(0, 0, 0, (int)$dateParts[1], (int)$dateParts[2], (int)$dateParts[0])
         ];
     }
 
