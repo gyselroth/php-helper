@@ -163,12 +163,13 @@ class HelperHtml
      * Use HTMLPurifier to clean given HTML string
      *
      * @param string $html
-     * @param bool   $enableTargetBlank
-     * @param bool   $escapeSingleQuotes
-     * @param bool   $escapeBackslashes
-     * @param bool   $disablePurifierCache
-     * @param bool   $allowVideo
-     * @param bool   $escapeDoubleQuotes
+     * @param bool $enableTargetBlank
+     * @param bool $escapeSingleQuotes
+     * @param bool $escapeBackslashes
+     * @param bool $disablePurifierCache
+     * @param bool $allowVideo
+     * @param bool $escapeDoubleQuotes
+     * @param array|null $allowedUriSchemes null = HtmlPurifier default config / array = limit to given schemes
      * @return string
      */
     public static function getCleanedHtml(
@@ -178,14 +179,15 @@ class HelperHtml
         bool $escapeBackslashes = false,
         bool $disablePurifierCache = true,
         bool $allowVideo = false,
-        bool $escapeDoubleQuotes = false
+        bool $escapeDoubleQuotes = false,
+        ?array $allowedUriSchemes = null
     ): string
     {
         $config = HTMLPurifier_Config::createDefault();
 
         if ($enableTargetBlank) {
             // Allow target: _blank for open link in new window
-            $config->set('Attr.AllowedFrameTargets', array('_blank'));
+            $config->set('Attr.AllowedFrameTargets', ['_blank']);
         }
 
         if ($disablePurifierCache) {
@@ -194,15 +196,19 @@ class HelperHtml
         }
 
         if ($allowVideo) {
-            // Allow video: only if url is from YouTube or Vimeo
+            // Allow video: only if URL is from YouTube or Vimeo
             $config->set('HTML.SafeIframe', true);
             // Allow fullScreen for videos, with custom HTML purifier filter
-            $config->set('Filter.Custom', array(new HelperHtmlPurifierIframeFilter()));
+            $config->set('Filter.Custom', [new HelperHtmlPurifierIframeFilter()]);
 
             $config->set(
                 'URI.SafeIframeRegexp',
                 '%^(https?:)?//(www\.youtube(?:-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%'
             );
+        }
+
+        if (null !== $allowedUriSchemes) {
+            $config->set('URI.AllowedSchemes', $allowedUriSchemes);
         }
 
         $html = (new HTMLPurifier($config))->purify($html);

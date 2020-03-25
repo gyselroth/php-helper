@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.18 - Released 2020/03/13
+------------------------------------
+* Extended HelperHtml::getCleanedHtml() w/ new option: $allowBase64images
+
+
 Version 0.2.17 - Released 2020/02/17
 ------------------------------------
 * Extended translate method with the parameter $escapeHtmlEntities
