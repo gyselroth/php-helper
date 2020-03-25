@@ -999,7 +999,7 @@ class HelperArray implements ConstantsDataTypesInterface
             return $array[$key];
         }
 
-        foreach (\explode('.', $key) as $segment) {
+        foreach (\explode('.', (string)$key) as $segment) {
             if (!static::isAccessible($array)
                 || !static::keyExists($array, $segment)
             ) {
