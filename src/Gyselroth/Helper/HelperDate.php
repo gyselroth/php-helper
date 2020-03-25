@@ -328,7 +328,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getTimestampStartOfDay($timestamp): int
     {
-        $dateParts = self::getDateParts($timestamp);
+        $dateParts = self::getDateParts((int)$timestamp);
 
         return \mktime(
             0,
