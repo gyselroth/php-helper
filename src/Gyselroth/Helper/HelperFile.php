@@ -258,6 +258,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
         $handle = \fopen($filePath, 'wb');
 
+        if(!$handle){
+            return false;
+        }
+
         \fputcsv($handle, $headerFields);
 
         foreach ($rows as $row) {
