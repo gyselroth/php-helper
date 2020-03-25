@@ -641,9 +641,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             0,
             0,
             0,
-            \date('m', $dateFrom),
-            \date('d', $dateFrom),
-            \date('Y', $dateFrom)
+            (int)\date('m', $dateFrom),
+            (int)\date('d', $dateFrom),
+            (int)\date('Y', $dateFrom)
         );
 
         $diff = $dateTo - $dateFrom;
