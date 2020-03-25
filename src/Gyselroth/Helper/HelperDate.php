@@ -919,7 +919,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $DATE_TIME_PART_MONTH = 'month';
 
-        switch (\strtolower($type)) {
+        switch (\strtolower((string)$type)) {
             case self::DATE_TIME_PART_SECOND:
                 return \Zend_Date::SECOND;
             case self::DATE_TIME_PART_MINUTE:
