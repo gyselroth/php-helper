@@ -422,7 +422,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         return \date(
             $includeSeconds ? self::FORMAT_TIME_PHP : self::FORMAT_TIME_NO_SECONDS_PHP,
-            $isMilliSeconds ? ($timestamp / self::MILLISECONDS_SECOND) : $timestamp
+            $isMilliSeconds ? ((int)$timestamp / self::MILLISECONDS_SECOND) : (int)$timestamp
         );
     }
 
