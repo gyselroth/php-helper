@@ -241,6 +241,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             $content = \json_encode($content);
         }
 
+        if(!$content){
+            return false;
+        }
+
         return self::write($filePath, $content);
     }
 
