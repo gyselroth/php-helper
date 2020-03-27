@@ -493,7 +493,12 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public static function getDirectoryInfo(string $path, array $info = ['items' => 0, 'size' => 0]): array
     {
-        $children      = \glob($path . DIRECTORY_SEPARATOR . '*');
+        $children = \glob($path . DIRECTORY_SEPARATOR . '*');
+
+        if (!$children) {
+            return [];
+        }
+
         $info['items'] += \count($children);
 
         foreach ($children as $item) {
