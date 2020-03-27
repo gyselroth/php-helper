@@ -946,7 +946,9 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
     public static function scanFilesystem(string $path, string $wildcard = '*'): array
     {
-        return \glob($path . DIRECTORY_SEPARATOR . $wildcard);
+        $files = \glob($path . DIRECTORY_SEPARATOR . $wildcard);
+
+        return $files?: [];
     }
 
     /**
