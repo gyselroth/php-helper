@@ -829,6 +829,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         /** @noinspection ReturnFalseInspection */
         $files = \scandir($path);
 
+        if (!$files) {
+            return false;
+        }
+
         foreach ($files as $file) {
             if ('.' !== $file
                 && '..' !== $file
