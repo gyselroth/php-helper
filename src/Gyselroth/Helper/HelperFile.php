@@ -342,8 +342,13 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         $recentFiles = [];
 
         foreach ($filesFiltered as $filePath) {
-            $explodedPath           = \explode(DIRECTORY_SEPARATOR, $filePath);
-            $fileName               = \end($explodedPath);
+            $explodedPath = \explode(DIRECTORY_SEPARATOR, $filePath);
+            $fileName     = \end($explodedPath);
+
+            if (!$fileName) {
+                continue;
+            }
+
             $fileNameWithoutVersion = \preg_replace('/_v(.*)/', '', $fileName);
 
             $recentFiles[$fileNameWithoutVersion] = $filePath;
