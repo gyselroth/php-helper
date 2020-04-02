@@ -1,6 +1,12 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.19 - Released 2020/04/02
+------------------------------------
+* Added new method: HelperTimerange::rangeStartsBeforeAndEndsInAllowedRange()
+* Added new method: HelperTimerange::rangeStartsInAndEndsAfterAllowedRange()
+
+
 Version 0.2.18 - Released 2020/03/13
 ------------------------------------
 * Extended HelperHtml::getCleanedHtml() w/ new option: $allowBase64images

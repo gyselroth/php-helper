@@ -125,6 +125,42 @@ class HelperTimerange
     }
 
     /**
+     * @param int $timestampStart
+     * @param int $timestampEnd
+     * @param int $timestampStartAllowed
+     * @param int $timestampEndAllowed
+     * @return bool
+     */
+    public static function rangeStartsBeforeAndEndsInAllowedRange(
+        int $timestampStart,
+        int $timestampEnd,
+        int $timestampStartAllowed,
+        int $timestampEndAllowed
+    ): bool {
+        return $timestampStart < $timestampStartAllowed
+            && $timestampEnd > $timestampStartAllowed
+            && $timestampEnd <= $timestampEndAllowed;
+    }
+
+    /**
+     * @param int $timestampStart
+     * @param int $timestampEnd
+     * @param int $timestampStartAllowed
+     * @param int $timestampEndAllowed
+     * @return bool
+     */
+    public static function rangeStartsInAndEndsAfterAllowedRange(
+        int $timestampStart,
+        int $timestampEnd,
+        int $timestampStartAllowed,
+        int $timestampEndAllowed
+    ): bool {
+        return $timestampEnd > $timestampEndAllowed
+            && $timestampStart >= $timestampStartAllowed
+            && $timestampStart < $timestampEndAllowed;
+    }
+
+    /**
      * Find maximum amount of overlaps which the given range has with the given compare-ranges
      *
      * @note this method assumes the given ranges to be within the same day
