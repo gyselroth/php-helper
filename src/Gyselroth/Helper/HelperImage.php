@@ -255,6 +255,10 @@ class HelperImage
 
         $fileHandle = \fopen($pathTmpImage, 'wb+');
 
+        if(!$fileHandle){
+            throw new FileException('Failed open image: ' . $pathTmpImage);
+        }
+
         \fwrite($fileHandle, $imageData);
         \fclose($fileHandle);
 
