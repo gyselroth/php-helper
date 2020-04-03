@@ -134,7 +134,7 @@ class HelperHtml
         foreach ($widths[0] as $index=>$width) {
             $html = \str_replace(
                 $width,
-                'width:' . ($widthFactor * HelperString::removeNonNumericChars($width)) . $widths[3][$index] . ';',
+                'width:' . ($widthFactor * (int)HelperString::removeNonNumericChars($width)) . $widths[3][$index] . ';',
                 $html
             );
         }
@@ -142,7 +142,7 @@ class HelperHtml
         foreach ($heights[0] as $index=>$height) {
             $html = \str_replace(
                 $height,
-                'height:' . ($heightFactor * HelperString::removeNonNumericChars($height)) . $heights[3][$index] . ';',
+                'height:' . ($heightFactor * (int)HelperString::removeNonNumericChars($height)) . $heights[3][$index] . ';',
                 $html
             );
         }
