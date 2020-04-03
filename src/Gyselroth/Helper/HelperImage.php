@@ -87,12 +87,12 @@ class HelperImage
 
         $save = (($maxWidth / $maxHeight) < ($sourceWidth / $sourceHeight))
             ? \imagecreatetruecolor(
-                $sourceWidth / ($sourceWidth / $maxWidth),
-                $sourceHeight / ($sourceWidth / $maxWidth)
+                (int)$sourceWidth / (int)($sourceWidth / $maxWidth),
+                (int)$sourceHeight / (int)($sourceWidth / $maxWidth)
             )
             : \imagecreatetruecolor(
-                $sourceWidth / ($sourceHeight / $maxHeight),
-                $sourceHeight / ($sourceHeight / $maxHeight)
+                (int)$sourceWidth / (int)($sourceHeight / $maxHeight),
+                (int)$sourceHeight / (int)($sourceHeight / $maxHeight)
             );
 
         \imagecopyresampled(
