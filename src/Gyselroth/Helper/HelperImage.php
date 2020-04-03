@@ -95,6 +95,10 @@ class HelperImage
                 (int)$sourceHeight / (int)($sourceHeight / $maxHeight)
             );
 
+        if (!$save) {
+            return false;
+        }
+
         \imagecopyresampled(
             $save,
             $imageResource,
