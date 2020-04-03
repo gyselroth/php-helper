@@ -23,6 +23,10 @@ class HelperHtmlPurifierIframeFilter
     {
         $html = \preg_replace('#<iframe#i', '<img class="video-iframe-allow-fullscreen"', $html);
 
+        if ($html === null) {
+            return null;
+        }
+
         return \preg_replace('#</iframe>#i', '</img>', $html);
     }
 
