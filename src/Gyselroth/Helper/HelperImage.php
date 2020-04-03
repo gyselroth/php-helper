@@ -206,6 +206,10 @@ class HelperImage
 
         $size = \getimagesize($imageFilename);
 
+        if (!$size) {
+            return false;
+        }
+
         $cropWidth  = $size[0] - $widthSubtrahend;
         $cropHeight = $size[1] - $heightSubtrahend;
 
