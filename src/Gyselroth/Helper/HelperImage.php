@@ -216,7 +216,7 @@ class HelperImage
         $imageCopy  = \imagecreatefrompng($imageFilename);
         $imageNew   = \imagecreatetruecolor($cropWidth, $cropHeight);
 
-        if (false === $imageNew) {
+        if (false === $imageNew || false === $imageCopy) {
             LoggerWrapper::warning(
                 'HelperImage::saveTransparentImage - imagecreatetruecolor failed',
                 [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
