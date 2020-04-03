@@ -241,6 +241,10 @@ class HelperHtml
     {
         $dump = \preg_replace('/Array\s*\n\s*/', 'array', $dump);
 
+        if ($dump === null) {
+            return null;
+        }
+
         return \preg_replace('/\)\s*\n\n/', ")\n", $dump);
     }
 
