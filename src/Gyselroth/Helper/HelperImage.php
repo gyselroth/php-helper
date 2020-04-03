@@ -146,6 +146,10 @@ class HelperImage
 
         $imageContents = \file_get_contents($pathImage);
 
+        if (!$imageContents) {
+            return '';
+        }
+
         $encoded = 'data:image/' . $type . ';base64,' . \base64_encode($imageContents);
 
         if ($getImgTag) {
