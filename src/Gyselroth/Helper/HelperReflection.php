@@ -112,9 +112,15 @@ class HelperReflection implements ConstantsDataTypesInterface
 
     public static function getActionsFromControllerFile(string $pathController): array
     {
+        $fileContent = \file_get_contents($pathController);
+
+        if (!$fileContent) {
+            return [];
+        }
+
         \preg_match_all(
             '/(function) ([a-zA-Z]+)(Action)\(/',
-            \file_get_contents($pathController),
+            $fileContent,
             $matches
         );
 
