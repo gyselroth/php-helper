@@ -507,7 +507,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         $letters = \range('a', 'z');
 
         if ($characterIndex <= 25) {
-            return $letters[$characterIndex];
+            return (string)$letters[$characterIndex];
         }
 
         $dividend       = $characterIndex + 1;
