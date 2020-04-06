@@ -107,14 +107,14 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         // Remove non-word chars (leaving hyphens and periods)
         $filename = \preg_replace('/[^\w\-.]+/', '', $filename);
 
-        if (null === $filename) {
-            return '';
-        }
-
         // Reduce multiple hyphens to one
-        $filename = \preg_replace('/[\-]+/', '-', $filename);
+        $filename = null === $filename
+            ? ''
+            : \preg_replace('/[\-]+/', '-', $filename);
 
-        return HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
+        return null === $filename
+            ? ''
+            : HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
     }
 
     /**
