@@ -54,14 +54,14 @@ class HelperTimerange
 
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $dateStart = new \Zend_Date(
-            HelperDate::getDateFromUnixTimestamp($dateStart),
+            HelperDate::getDateFromUnixTimestamp((int)$dateStart)?: null,
             \Zend_Date::ISO_8601,
             $locale
         );
 
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $dateEnd = new \Zend_Date(
-            HelperDate::getDateFromUnixTimestamp($dateEnd),
+            HelperDate::getDateFromUnixTimestamp((int)$dateEnd)?: null,
             \Zend_Date::ISO_8601,
             $locale
         );
