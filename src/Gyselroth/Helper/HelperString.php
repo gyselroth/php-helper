@@ -888,7 +888,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      *
      * @param  string    $str
      * @param  bool      $convertToInt
-     * @return int|string
+     * @return int|string|null
      */
     public static function removeNonNumericChars(string $str, bool $convertToInt = false)
     {
