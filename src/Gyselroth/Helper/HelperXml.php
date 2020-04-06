@@ -314,8 +314,13 @@ class HelperXml implements ConstantsXmlInterface
         $dom->formatOutput       = true;
 
         $dom->loadXML($xml);
+        $xmlAsString = $dom->saveXML();
 
-        return $dom->saveXML();
+        if ($xmlAsString === false) {
+            return '';
+        }
+
+        return $xmlAsString;
     }
 
     /**
