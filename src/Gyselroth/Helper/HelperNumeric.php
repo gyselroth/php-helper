@@ -125,7 +125,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         bool $unique = false
     ): array
     {
-        if (null === $str) {
+        if ('' === $str) {
             return [];
         }
 
