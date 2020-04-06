@@ -107,6 +107,10 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         // Remove non-word chars (leaving hyphens and periods)
         $filename = \preg_replace('/[^\w\-.]+/', '', $filename);
 
+        if (null === $filename) {
+            return '';
+        }
+
         // Reduce multiple hyphens to one
         $filename = \preg_replace('/[\-]+/', '-', $filename);
 
