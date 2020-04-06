@@ -422,7 +422,7 @@ class HelperZip
 
         LoggerWrapper::log(
             $message,
-            $logLevel,
+            (string)$logLevel,
             [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, 'trace' => debug_backtrace()]
         );
     }
