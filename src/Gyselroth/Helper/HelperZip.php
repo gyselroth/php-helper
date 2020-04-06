@@ -222,6 +222,14 @@ class HelperZip
 
                 $file = \realpath($file);
 
+                if (false === $file) {
+                    LoggerWrapper::error(
+                        'Zipping failed: cannot return absolute pathname' . $file,
+                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+                    );
+                    return false;
+                }
+
                 if (\is_dir($file)) {
                     $zip->addEmptyDir(
                         \str_replace(
