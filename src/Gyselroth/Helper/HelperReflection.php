@@ -95,7 +95,7 @@ class HelperReflection implements ConstantsDataTypesInterface
             if ($logIfNot) {
                 LoggerWrapper::info(
                     $exception,
-                    empty($logCategory) ? null : [LoggerWrapper::OPT_CATEGORY => $logCategory]
+                    empty($logCategory) ? [] : [LoggerWrapper::OPT_CATEGORY => $logCategory]
                 );
             }
 
