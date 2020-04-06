@@ -169,7 +169,7 @@ class LoggerWrapper
         if (self::$logger instanceof \Monolog\Logger) {
             // TODO: should logger wrapper really have to care about logfile and loglevel?
             if (empty(self::$logger->getHandlers())) {
-                $streamHandler = new StreamHandler(self::$logPath, self::PRIORITY_PSR3_INFO);
+                $streamHandler = new StreamHandler(self::$logPath, self::MONOLOG_LEVELS[self::PRIORITY_PSR3_INFO]);
 
                 self::$logger->pushHandler($streamHandler);
             }
