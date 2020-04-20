@@ -775,7 +775,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         );
     }
 
-    public static function formatLabel(string $message, array $args = [], bool $escapeHtmlEntities = false): string
+    public static function translate(string $message, array $args = [], bool $escapeHtmlEntities = false): string
     {
         if ($escapeHtmlEntities) {
             $message = \htmlentities($message, ENT_QUOTES);

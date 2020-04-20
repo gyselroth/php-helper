@@ -469,10 +469,10 @@ class HelperStringTest extends HelperTestCase
         $this->assertEquals(['t','3',' ','_','e','0','s','t'], HelperString::mb_str_split('t3 _e0st'));
     }
 
-    public function testFormatLabel(): void
+    public function testTranslate(): void
     {
-        $this->assertSame('test', HelperString::formatLabel('test'));
-        $this->assertSame('This is 1 test', HelperString::formatLabel('This is %d %s', [1, 'test']));
+        $this->assertSame('test', HelperString::translate('test'));
+        $this->assertSame('This is 1 test', HelperString::translate('This is %d %s', [1, 'test']));
     }
 
     public function testTranslatePlural(): void

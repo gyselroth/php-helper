@@ -1,11 +1,6 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.20 - Released 2020/04/03
-------------------------------------
-* Renamed method: HelperString::translate() to HelperString::formatLabel() 
-
-
 Version 0.2.19 - Released 2020/04/02
 ------------------------------------
 * Added new method: HelperTimerange::rangeStartsBeforeAndEndsInAllowedRange()

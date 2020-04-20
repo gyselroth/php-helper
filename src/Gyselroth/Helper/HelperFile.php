@@ -594,14 +594,14 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     {
         if (!isset($uploadFile['name'])) {
             // @todo throw exception
-            return HelperString::formatLabel('Name der Datei wurde nicht empfangen');
+            return HelperString::translate('Name der Datei wurde nicht empfangen');
         }
 
         if ($maximumFileSize > -1
             && $uploadFile['size'] > $maximumFileSize
         ) {
             // @todo throw exception
-            return HelperString::formatLabel('Die Datei ist zu gross');
+            return HelperString::translate('Die Datei ist zu gross');
         }
 
         $mimeType = self::getUploadFileInfo($uploadFile, FILEINFO_MIME_TYPE);
@@ -610,21 +610,21 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             && !\in_array($mimeType, $allowedTypes, true)
         ) {
             // @todo throw exception
-            return HelperString::formatLabel('Dateityp ist nicht erlaubt');
+            return HelperString::translate('Dateityp ist nicht erlaubt');
         }
 
         switch ($uploadFile['error']) {
             case UPLOAD_ERR_OK:
                 return '';
             case UPLOAD_ERR_NO_FILE:
-                return HelperString::formatLabel('No file sent.');
+                return HelperString::translate('No file sent.');
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-                return HelperString::formatLabel('Exceeded filesize limit.');
+                return HelperString::translate('Exceeded filesize limit.');
             default:
                 return 0 === $uploadFile['size']
-                    ? HelperString::formatLabel('File is empty')
-                    : HelperString::formatLabel('Unknown errors.');
+                    ? HelperString::translate('File is empty')
+                    : HelperString::translate('Unknown errors.');
         }
     }
 

@@ -664,18 +664,18 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         }
 
         $months = [
-            1  => HelperString::formatLabel('Januar'),
-            2  => HelperString::formatLabel('Februar'),
-            3  => HelperString::formatLabel('März'),
-            4  => HelperString::formatLabel('April'),
-            5  => HelperString::formatLabel('Mai'),
-            6  => HelperString::formatLabel('Juni'),
-            7  => HelperString::formatLabel('Juli'),
-            8  => HelperString::formatLabel('August'),
-            9  => HelperString::formatLabel('September'),
-            10 => HelperString::formatLabel('Oktober'),
-            11 => HelperString::formatLabel('November'),
-            12 => HelperString::formatLabel('Dezember')
+            1  => HelperString::translate('Januar'),
+            2  => HelperString::translate('Februar'),
+            3  => HelperString::translate('März'),
+            4  => HelperString::translate('April'),
+            5  => HelperString::translate('Mai'),
+            6  => HelperString::translate('Juni'),
+            7  => HelperString::translate('Juli'),
+            8  => HelperString::translate('August'),
+            9  => HelperString::translate('September'),
+            10 => HelperString::translate('Oktober'),
+            11 => HelperString::translate('November'),
+            12 => HelperString::translate('Dezember')
         ];
 
         return $abbreviated
@@ -699,26 +699,26 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         if ($abbreviated) {
             $daysAbbreviated = [
-                1 => HelperString::formatLabel('Mo'),
-                2 => HelperString::formatLabel('Di'),
-                3 => HelperString::formatLabel('Mi'),
-                4 => HelperString::formatLabel('Do'),
-                5 => HelperString::formatLabel('Fr'),
-                6 => HelperString::formatLabel('Sa'),
-                7 => HelperString::formatLabel('So')
+                1 => HelperString::translate('Mo'),
+                2 => HelperString::translate('Di'),
+                3 => HelperString::translate('Mi'),
+                4 => HelperString::translate('Do'),
+                5 => HelperString::translate('Fr'),
+                6 => HelperString::translate('Sa'),
+                7 => HelperString::translate('So')
             ];
 
             return $daysAbbreviated[$day];
         }
 
         $days = [
-            1 => HelperString::formatLabel('Montag'),
-            2 => HelperString::formatLabel('Dienstag'),
-            3 => HelperString::formatLabel('Mittwoch'),
-            4 => HelperString::formatLabel('Donnerstag'),
-            5 => HelperString::formatLabel('Freitag'),
-            6 => HelperString::formatLabel('Samstag'),
-            7 => HelperString::formatLabel('Sonntag')
+            1 => HelperString::translate('Montag'),
+            2 => HelperString::translate('Dienstag'),
+            3 => HelperString::translate('Mittwoch'),
+            4 => HelperString::translate('Donnerstag'),
+            5 => HelperString::translate('Freitag'),
+            6 => HelperString::translate('Samstag'),
+            7 => HelperString::translate('Sonntag')
         ];
 
         return $days[$day];
