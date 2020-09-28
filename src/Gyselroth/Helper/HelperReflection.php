@@ -17,7 +17,7 @@ use Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
 
 /**
- * @todo create new vendor-package "helper-zf1-reflection"
+ * @todo create new vendor-package "helper-zf1"
  *
  * getControllerActionsByModule()
  * getDbModelByEntity()
