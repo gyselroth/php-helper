@@ -234,7 +234,9 @@ class HelperReflection implements ConstantsDataTypesInterface
 
         $constantName = $className . '::LOG_CATEGORY';
 
-        return \defined($constantName) ? eval('return ' . $constantName . ';') : false;
+        return \defined($constantName)
+            ? eval('return ' . $constantName . ';')
+            : false;
     }
 
     public static function getCallingMethodName(bool $withClassName = true): string
@@ -351,7 +353,11 @@ class HelperReflection implements ConstantsDataTypesInterface
             $requestParamsVariable = $matches[1][0];
 
             // 3.1. Find params taken out of request-params array variable
-            \preg_match_all('/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i', $actionCode, $matches);
+            \preg_match_all(
+                '/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i',
+                $actionCode,
+                $matches
+            );
 
             if ([] !== $matches[1]) {
                 $requestParams = \array_merge($requestParams, $matches[1]);

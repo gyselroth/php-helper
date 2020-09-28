@@ -947,10 +947,13 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         return $files?: [];
     }
 
-    public static function moveUploadedFileToTempDirectory(string $fileName, string $fileStoredIn): void
+    public static function moveUploadedFileToTempDirectory(
+        string $fileName,
+        string $fileStoredIn,
+        string $pathTmp
+    ): void
     {
-        // @todo ensure PATH_TMP is defined / add fallback
-        \move_uploaded_file($fileStoredIn, PATH_TMP . DIRECTORY_SEPARATOR . $fileName);
+        \move_uploaded_file($fileStoredIn, $pathTmp . DIRECTORY_SEPARATOR . $fileName);
     }
 
     /**

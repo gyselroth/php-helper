@@ -1,7 +1,7 @@
 gyselroth Helper Library
 ========================
 
-Version 0.2.20 - Not released yet
+Version 0.2.20 - Released 2020/09/28
 ---------------------------------
 * Declare and use types more strict
 * Added method: HelperArray::sortAssociative()
