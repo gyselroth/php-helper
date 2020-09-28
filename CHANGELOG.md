@@ -1,8 +1,12 @@
 gyselroth Helper Library
 ========================
 
+Version 0.2.21 - Released 2020/09/28
+------------------------------------
+* Remove composer branch alias
+
 Version 0.2.20 - Released 2020/09/28
----------------------------------
+------------------------------------
 * Added method: HelperArray::sortAssociative()
 * Added method: HelperDate::renderIso8601Date()
 * Added method: HelperDate::toZendDate()
