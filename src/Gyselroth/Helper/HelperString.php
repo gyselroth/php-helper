@@ -870,19 +870,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         return \substr_count($csv, $delimiter) + 1;
     }
 
-    /**
-     * @todo  add option/method(s) to allow also dateTime and/or time
-     * @param  string $str
-     * @param  string $delimiter
-     * @param  bool   $isGermanNotation Validate against german notation (dd.mm.yyyy) instead of gregorian (mm.dd.yyyy)
-     * @return bool
-     * @deprecated
-     */
-    public static function isDate(string $str, string $delimiter = '.', bool $isGermanNotation = true): bool
-    {
-        return HelperDate::isDateString($str, $delimiter, $isGermanNotation);
-    }
-
     public static function specialCharsToAscii(string $string, bool $toLower): string
     {
         $replacePairs = [
