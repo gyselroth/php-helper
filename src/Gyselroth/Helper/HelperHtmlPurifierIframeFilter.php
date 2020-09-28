@@ -1,8 +1,12 @@
 <?php
 
 /**
- * Intranet Sek II
- * Copyright (c) 2012-2018 gyselroth™ (http://www.gyselroth.net)
+ * Copyright (c) 2017-2020 gyselroth™  (http://www.gyselroth.net)
+ *
+ * @package \gyselroth\Helper
+ * @author  gyselroth™  (http://www.gyselroth.com)
+ * @link    http://www.gyselroth.com
+ * @license Apache-2.0
  */
 
 namespace Gyselroth\Helper;
@@ -27,7 +31,6 @@ class HelperHtmlPurifierIframeFilter
     }
 
     /**
-     *
      * @param  string $html
      * @return string|string[]|null
      */
@@ -48,7 +51,9 @@ class HelperHtmlPurifierIframeFilter
     {
         return \preg_match('#src="https?://www.youtube(-nocookie)?.com/#i', $matches[1])
             || \preg_match('#src="http://player.vimeo.com/#i', $matches[1])
-                ? '<iframe ' . $matches[1] . ' frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>'
+                ? '<iframe '
+                  . $matches[1]
+                  . ' frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>'
                 : '';
     }
 }

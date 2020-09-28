@@ -64,7 +64,8 @@ class HelperPreg
      * @param  string $str
      * @param  string $patternLhs
      * @param  string $patternRhs
-     * @return string Given string w/o the 1st sub-string enclosed by given left- and right-hand-side delimiters (delimiters are removed as well)
+     * @return string Given string w/o 1st sub-string enclosed by given left- and right-hand-side delimiters
+     *                (delimiters are removed as well)
      */
     public static function pregRemoveBetween(string $str, string $patternLhs, string $patternRhs): string
     {
@@ -76,7 +77,7 @@ class HelperPreg
      * @param  string $patternLhs
      * @param  string $patternRhs
      * @param  string $replacement
-     * @return string Replace 1st occurrence of delimiters matching given regex patterns and their enclosed content by given replacement
+     * @return string Replace 1st occurrence of delimiters matching given patterns and their enclosed content
      */
     public static function pregReplaceBetween(
         string $str,

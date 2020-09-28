@@ -54,10 +54,6 @@ class HelperArray implements ConstantsDataTypesInterface
             : \array_keys($array) !== \range(0, \count($array) - 1);
     }
 
-    /**
-     * @param  array $array
-     * @return bool
-     */
     public static function isMultiDimensional(array $array): bool
     {
         foreach ($array as $item) {
@@ -83,11 +79,9 @@ class HelperArray implements ConstantsDataTypesInterface
 
     public static function hasStringKeys(array $array): bool
     {
-        return \count(
-            \array_filter(
-                \array_keys($array),
-                'is_string')
-            ) > 0;
+        return [] !== \array_filter(
+            \array_keys($array),
+            'is_string');
     }
 
     /**
@@ -248,10 +242,10 @@ class HelperArray implements ConstantsDataTypesInterface
         $default = false
     )
     {
-        $hasKeyOnLevel3 = !empty($keyOnLevel3);
-        $hasKeyOnLevel2 = !empty($keyOnLevel2);
-        $hasKeyOnLevel1 = !empty($keyOnLevel1);
-        $hasKeyOnLevel0 = !empty($keyOnLevel0);
+        $hasKeyOnLevel0 = '' !== $keyOnLevel0;
+        $hasKeyOnLevel1 = $hasKeyOnLevel0 && '' !== $keyOnLevel1;
+        $hasKeyOnLevel2 = $hasKeyOnLevel1 && '' !== $keyOnLevel2;
+        $hasKeyOnLevel3 = $hasKeyOnLevel2 && '' !== $keyOnLevel3;
 
         if ($hasKeyOnLevel3 && $hasKeyOnLevel2 && $hasKeyOnLevel1 && $hasKeyOnLevel0) {
             return $array[$keyOnLevel0][$keyOnLevel1][$keyOnLevel2][$keyOnLevel3] ?? $default;
@@ -355,10 +349,10 @@ class HelperArray implements ConstantsDataTypesInterface
     }
 
     /**
-     * @param  array|string $idsList      Comma separated relation-type prefixed IDs list, i.e.: pe_4016536,pe_4012942,cl_1516,lo_1,co_37794
+     * @param  array|string $idsList      Comma separated relation-type prefixed IDs list, i.e.: pe_1,pe_2,cl_1,lo_1
      * @param  string       $filterPrefix Optional, if given: keep only items with this prefix
      * @param  string       $prefixGlue
-     * @return array                        Array of integers from the given (prefixed) relation-IDs, w/o their relation-type prefix
+     * @return array        Array of integers from the given (prefixed) relation-IDs, w/o their relation-type prefix
      */
     public static function getArrayFromRelatedIdsList(
         $idsList,
@@ -385,8 +379,10 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function removeItemsByValue(array $array, array $values): array
     {
         /**
-         * @note  The returned array will be associative, possibly with "gaps" in the otherwise numerically ordered keys (i.e. 1,2,4,...).
-         *        When using the array in JavaScript, it's data type might be converted to object (to preserve the keys) instead of array.
+         * @note  The returned array will be associative, possibly with "gaps" in the otherwise numerically
+         *        ordered keys (i.e. 1,2,4,...).
+         *        When using the array in JavaScript, it's data type might be converted to object (to preserve the keys)
+         *        instead of array.
          *        If usage of the result requires an un-associative array, use array_values() upon the array.
          */
         return \array_diff($array, $values);
@@ -451,7 +447,10 @@ class HelperArray implements ConstantsDataTypesInterface
                     default:
                         LoggerWrapper::warning(
                             "Detected unhandled data type field: {$dataTypes[$field]}",
-                            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $dataTypes[$field]]
+                            [
+                                LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY,
+                                LoggerWrapper::OPT_PARAMS   => $dataTypes[$field]
+                            ]
                         );
                 }
             }
@@ -487,7 +486,9 @@ class HelperArray implements ConstantsDataTypesInterface
                     break;
                 default:
                     /**
-                     * @todo If data type not set, the values should be handed over without any type changes. If key 'value' is set, single value is being passed. If key 'values' is set, an array is being passed
+                     * @todo If data type not set, the values should be handed over without any type changes.
+                     *       If key 'value' is set, single value is being passed. If key 'values' is set,
+                     *       an array is being passed
                      * @todo suggested solution (review and integrate)
 
                          if (array_key_exists('value', $value)) {
@@ -962,7 +963,8 @@ class HelperArray implements ConstantsDataTypesInterface
             $key = \array_shift($keys);
 
             // If the key doesn't exist at this depth, we will just create an empty array to hold the next value,
-            // allowing us to create the arrays to hold final values at the correct depth. Then we'll keep digging into the array.
+            // allowing us to create the arrays to hold final values at the correct depth.
+            // Then we'll keep digging into the array.
             if (!isset($array[$key])
                 || !\is_array($array[$key])
             ) {

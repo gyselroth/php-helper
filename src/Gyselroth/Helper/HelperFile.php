@@ -73,9 +73,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         self::MIME_TYPE_VND_OPEN_XML_WORD
     ];
 
-    /**
-     * @var  array
-     */
+    /** @var  array */
     public $mimes = self::MIMES;
 
     /** @var string */
@@ -93,7 +91,8 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
                 // __DIR__ is e.g. '/srv/www/trunk/vendor/gyselroth/....../HelperFile
                 ? '/vendor/'
 
-                // Fallback: helper-package seems to be itself the project at hand (is not installed in one of composer's vendor sub directories)
+                // Fallback: helper-package seems to be itself the project at hand
+                // (is not installed in one of composer's vendor sub directories)
                 // __DIR__ is e.g. '/srv/www/trunk/src/Gyselroth/Helper'
                 : '/src/';
 
@@ -266,7 +265,8 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     }
 
     /**
-     * Get list of files in given directory, optional recursive, optionally filtered: only files w/ filename containing the given substring
+     * Get list of files in given directory, optional recursive, optionally filtered:
+     * only files w/ filename containing the given substring
      *
      * @param  string $path
      * @param  string $ext        Optional: limit by file extension or trailing string
@@ -583,7 +583,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      * @param  array $uploadFile
      * @param  array $allowedTypes    Empty array = no type restriction
      * @param  int   $maximumFileSize Max. size / -1 for unlimited size
-     * @return string                   Error message / empty string if valid
+     * @return string                 Error message / empty string if valid
      * @throws \Exception
      */
     public static function validateUploadFile(
@@ -629,13 +629,14 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     }
 
     /**
-     * Validate and store upload file (given in $_FILES[userfile]) to given storage directory (which is created if not exists)
+     * Validate and store upload file (given in $_FILES[userfile]) to given storage directory
+     * (which is created if not exists)
      *
      * @param  string $storagePath     Where to store the file?
      * @param  array  $allowedTypes
      * @param  int    $maximumFileSize Max. size / -1 for unlimited size
      * @param  string $storageFilename New filename for stored file, if different from original upload filename
-     * @return string                    Path to copied upload file or false on any failure
+     * @return string                  Path to copied upload file or false on any failure
      * @throws FileException
      * @throws FileExceptionFailedTransfer
      * @throws FileExceptionInvalidPath
@@ -885,11 +886,6 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             && \is_writable($path);
     }
 
-    /**
-     * @param  string $filename
-     * @param  bool   $toLower
-     * @return string
-     */
     public static function sanitizeFilename(string $filename, bool $toLower = true): string
     {
         return HelperSanitize::sanitizeFilename($filename, $toLower);
@@ -924,18 +920,16 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         return \glob($path . DIRECTORY_SEPARATOR . $wildcard);
     }
 
-    /**
-     * @param  string $fileName
-     * @param  string $fileStoredIn
-     */
-    public static function moveUploadedFileToTempDirectory($fileName, $fileStoredIn): void
+    public static function moveUploadedFileToTempDirectory(string $fileName, string $fileStoredIn): void
     {
         // @todo ensure PATH_TMP is defined / add fallback
         \move_uploaded_file($fileStoredIn, PATH_TMP . DIRECTORY_SEPARATOR . $fileName);
     }
 
     /**
-     * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming and remove this additional method
+     * @deprecated  test the method, replace its usages with HelperFile::scanDir() w/ subsequent reforming
+     * and remove this additional method
+     *
      * @param  string $path
      * @return array|false
      * @throws \Exception

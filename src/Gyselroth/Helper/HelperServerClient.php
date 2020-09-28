@@ -163,7 +163,7 @@ class HelperServerClient implements ConstantsHttpInterface
     }
 
     /**
-     * Removes unnecessary data from request array to use it for response
+     * Remove unnecessary data from request array to use it for response
      *
      * @param  array $data request data array to prepare for response
      * @param  array  $indexesToUnset

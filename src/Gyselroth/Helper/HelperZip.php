@@ -95,7 +95,8 @@ class HelperZip
         if ($overwrite
             && !\file_exists($destinationFile)
         ) {
-            // @note bug in ZipArchive: https://bugs.php.net/bug.php?id=71064 - open() w/ mode \ZipArchive::OVERWRITE fails if the file does not exist yet
+            // @note bug in ZipArchive: https://bugs.php.net/bug.php?id=71064 -
+            // open() w/ mode \ZipArchive::OVERWRITE fails if the file does not exist yet
             $overwrite = false;
         }
 

@@ -91,12 +91,17 @@ class HelperTimerange
     /**
      * Detect whether to time ranges overlap
      *
-     * @todo add summertime handling: e.g. Application_Helper_Timerange::doRangesOverlap('1.1.2017','25.4.2018 02:00','25.4.2018 03:00','4.5.2018',false) should not overlap.
+     * @todo add summertime handling
+     *       e.g. Application_Helper_Timerange::doRangesOverlap(
+     *              '1.1.2017','25.4.2018 02:00','25.4.2018 03:00','4.5.2018',false
+     *            ) should not overlap.
+     *
      * @param  \Zend_Date|int|string $startRange1
      * @param  \Zend_Date|int|string $endRange1
      * @param  \Zend_Date|int|string $startRange2
      * @param  \Zend_Date|int|string $endRange2
-     * @param  bool                  $allowTouching Should an overlap of 1 sec be seen as collision or be allowed? (eg. lesson 1 ends at 16:00 and lesson 2 starts at 16:00)
+     * @param  bool                  $allowTouching Should an overlap of 1 sec be seen as collision or be allowed?
+     *                                              (eg. lesson 1 ends at 16:00 and lesson 2 starts at 16:00)
      * @return bool
      */
     public static function doRangesOverlap(
@@ -166,7 +171,8 @@ class HelperTimerange
      * @note this method assumes the given ranges to be within the same day
      *
      * The method uses a trick (instead of implementing a "interval tree" structure):
-     * it generates and scans an image, consisting of a line per range: representing the minutes in a day which this range spans
+     * it generates and scans an image, consisting of a line per range: representing the minutes in a day
+     * which this range spans
      *
      * @param  array $range         Range array, like: [0 => start, 1 => end]
      * @param  array $rangesCompare Array of range arrays

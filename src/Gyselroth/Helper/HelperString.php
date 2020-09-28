@@ -45,7 +45,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
         foreach ($needles as $needle) {
             /** @noinspection ReturnFalseInspection */
-            // @todo currently offsets are not consecutive! check: isn't the following strpos() missing an $offset+1 argument?
+            // @todo offsets are not consecutive! check: isn't the following strpos() missing an $offset+1 argument?
             $offset = \strpos($haystack, $needle);
 
             if (false !== $offset) {
@@ -91,7 +91,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
         $offset  += \strlen($start);
 
-        // @todo check if $offset is not contained, $length will be negative. check how this can happen and to what consequence, avoid that possible error.
+        // @todo check if $offset is not contained, $length will be negative.
+        //       check how this can happen and to what consequence, avoid that possible error.
         $length  = \strpos($string, $end, $offset) - $offset;
         $between = \substr($string, $offset, $length);
 
@@ -178,7 +179,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param  string $lhs                   "left-hand-side" (prefix to be prepended)
      * @param  string $rhs                   "right-hand-side" (postfix to be appended)
      * @param  bool   $preventDoubleWrapping Prevent wrapping into already existing LHS / RHS?
-     * @return string                       Given string wrapped into given LHS / RHS
+     * @return string                        Given string wrapped into given LHS / RHS
      */
     public static function wrap(string $str, string $lhs, string $rhs, bool $preventDoubleWrapping = true): string
     {
@@ -205,7 +206,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             return $str;
         }
 
-        // @todo check what happens when $needle is not contained after $offsetNeedle, $start will be false
+        // @todo check: when $needle is not contained after $offsetNeedle, $start will be false
         $start = \strpos($str, $needle, $offsetNeedle);
 
         return \substr($str, $start + ($excludeNeedle ? \strlen($needle) : 0));
@@ -455,7 +456,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
                 default:
                     LoggerWrapper::warning(
                         __CLASS__ . '::' . __FUNCTION__ . " - Unknown char type: {$charTypes[$typeOffset]}",
-                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]]
+                        [
+                            LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY,
+                            LoggerWrapper::OPT_PARAMS => $charTypes[$typeOffset]
+                        ]
                     );
 
                     break;
@@ -497,7 +501,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      *
      * 0  = 'a', 1 = 'b', ...,
      * 25 = 'z'
-     * 26 = 'aa' (when index > 25: use character of index mod 25, repeated as many times as there are modulo "wrap-arounds")
+     * 26 = 'aa' (when index > 25: use character of index mod 25,
+     *            repeated as many times as there are modulo "wrap-arounds")
      *
      * @param  int $characterIndex
      * @return string|null
@@ -806,23 +811,25 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public static function replaceSpecialCharacters(string $str, bool $toLower = true): string
     {
         $replacePairs = [
-            'š' => 's', 'ð' => 'dj', 'ž' => 'z', 'ä' => 'ae', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'å' => 'a', 'æ' => 'a',
-            'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
-            'ñ' => 'n', 'ö' => 'oe', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ø' => 'o', 'ü' => 'ue', 'ù' => 'u', 'ú' => 'u', 'û' => 'u',
-            'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f',
-            'ß' => 'ss'
+            'š' => 's', 'ð' => 'dj', 'ž' => 'z', 'ä' => 'ae', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
+            'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i',
+            'î' => 'i', 'ï' => 'i', 'ñ' => 'n', 'ö' => 'oe', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ø' => 'o',
+            'ü' => 'ue', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f', 'ß' => 'ss'
         ];
 
         if ($toLower) {
             $str = \strtolower($str);
         } else {
             // Needs to translate also upper-case characters
-            $replacePairs = \array_merge($replacePairs, [
-                'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'Ä' => 'AE', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
-                'Ç' => 'C', 'È' => 'E',  'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
-                'Ñ' => 'N', 'Ö' => 'OE', 'Ò' => 'O',  'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ü' => 'UE', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
-                'Ý' => 'Y', 'Þ' => 'B',  'Ÿ' => 'Y', 'Ƒ' => 'F',
-            ]
+            $replacePairs = \array_merge(
+                $replacePairs,
+                [
+                    'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'Ä' => 'AE', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A',
+                    'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E',  'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I',
+                    'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ö' => 'OE', 'Ò' => 'O',  'Ó' => 'O', 'Ô' => 'O',
+                    'Õ' => 'O', 'Ø' => 'O', 'Ü' => 'UE', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',  'Ý' => 'Y', 'Þ' => 'B',
+                    'Ÿ' => 'Y', 'Ƒ' => 'F',
+                ]
             );
         }
 
@@ -854,7 +861,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param  string $csv
      * @param  string $delimiter
      * @return int
-     * @todo harden: add optional handling for inline delimiters, e.g. "\"foo, bar\", \"baz, qux\"" should than return 2 instead of 4
+     * @todo harden: add optional handling for inline delimiters, e.g. "\"foo, bar\", \"baz, qux\""
+     *               should than return 2 instead of 4
      */
     public static function countItemsInCsv(string $csv, string $delimiter = ','): int
     {
@@ -911,7 +919,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param  string $str
      * @param  string $patternLhs
      * @param  string $patternRhs
-     * @return string Given string w/o the 1st sub-string enclosed by given left- and right-hand-side delimiters (delimiters are removed as well)
+     * @return string Given string w/o the 1st sub-string enclosed by given left- and right-hand-side delimiters
+     *                (delimiters are removed as well)
      */
     public static function pregRemoveBetween(string $str, string $patternLhs, string $patternRhs): string
     {
@@ -923,7 +932,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param  string $patternLhs
      * @param  string $patternRhs
      * @param  string $replacement
-     * @return string Replace 1st occurrence of delimiters matching given regex patterns and their enclosed content by given replacement
+     * @return string Replace 1st occurrence of delimiters matching given regex patterns and their enclosed content
      */
     public static function pregReplaceBetween(string $str, string $patternLhs, string $patternRhs, string $replacement): string
     {
@@ -992,15 +1001,19 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         } else {
             // Needs to translate also upper-case characters
             $replacePairs = \array_merge($replacePairs, [
-                'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A', 'Æ' => 'A',
-                'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I',
-                'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U',
-                'Ý' => 'Y', 'Þ' => 'B', 'Ÿ' => 'Y', 'Ƒ' => 'F',
+                'Š' => 'S', 'Ð' => 'DJ', 'Ž' => 'Z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Å' => 'A',
+                'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I',
+                'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ø' => 'O',
+                'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'Ÿ' => 'Y', 'Ƒ' => 'F'
             ]);
         }
 
         $string = \strtr($string, $replacePairs);
 
-        return \str_replace(['&', '@', '#'], ['-and-', '-at-', '-number-'], $string);
+        return \str_replace(
+            ['&', '@', '#'],
+            ['-and-', '-at-', '-number-'],
+            $string
+        );
     }
 }

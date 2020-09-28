@@ -141,7 +141,8 @@ class LoggerWrapper
     }
 
     /**
-     * Undefined method handler. Implements shortcut methods to log() w/ status - crit(), debug(), error(), info(), warning()
+     * Undefined method handler. Implements shortcut methods to log() w/ status -
+     * crit(), debug(), error(), info(), warning()
      *
      * @param  string $method
      * @param  array  $params

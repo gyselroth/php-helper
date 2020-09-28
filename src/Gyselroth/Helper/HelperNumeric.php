@@ -195,15 +195,9 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
             : $amountPartial / $amountFull * 100;
     }
 
-    /**
-     * Remove empty IDs that could cause errors
-     *
-     * @param  string $classIds
-     * @return string
-     */
-    public static function removeEmptyItemsFromIDsCsv(string $classIds): string
+    public static function removeEmptyItemsFromIDsCsv(string $ids): string
     {
-        $entityIds = \array_filter(\explode(',', $classIds));
+        $entityIds = \array_filter(\explode(',', $ids));
 
         return \implode(',', $entityIds);
     }

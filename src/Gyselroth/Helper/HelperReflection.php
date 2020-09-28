@@ -105,7 +105,17 @@ class HelperReflection implements ConstantsDataTypesInterface
         return true;
     }
 
+    /**
+     * @param string $modulePath
+     * @return array
+     * @deprecated
+     */
     public static function getControllerFilenames(string $modulePath): array
+    {
+        return self::getZf1ControllerFilenames($modulePath);
+    }
+
+    public static function getZf1ControllerFilenames(string $modulePath): array
     {
         return HelperFile::scanDirRecursive($modulePath, 'Controller.php');
     }

@@ -191,7 +191,8 @@ class HelperHtml
         }
 
         if ($disablePurifierCache) {
-            // @note    Setting "Core.DefinitionCache" will trigger a PHP error: "Core.DefinitionCache" is an alias for "Cache.DefinitionImpl"
+            // @note    Setting "Core.DefinitionCache" will trigger a PHP error:
+            // "Core.DefinitionCache" is an alias for "Cache.DefinitionImpl"
             $config->set('Cache.DefinitionImpl', null);
         }
 

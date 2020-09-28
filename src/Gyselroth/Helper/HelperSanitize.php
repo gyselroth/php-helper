@@ -114,6 +114,8 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
     }
 
     /**
+     * Improved version of validateString()
+     *
      * @param string $str
      * @param bool $allowCharacters
      * @param bool $allowUmlauts
@@ -122,8 +124,6 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
      * @param bool $allowSpace
      * @param string $allowedSpecialCharacters
      * @return bool
-     *
-     * improved version of validateString consider using this one
      */
     public static function validateStringImproved(
         string $str,

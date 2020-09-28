@@ -61,7 +61,8 @@ class HelperXml implements ConstantsXmlInterface
      * @param  array $levels            Levels of nodes to be counted
      * @param  array $excludeTagNames   Tag names not to be counted
      * @param  array $excludeTagTypes   Tag types not to be counted
-     * @param  array $nodes             Array of XML nodes (tags), each having attributes: 'tag', 'type', 'level' (, optionally: 'attributes')
+     * @param  array $nodes             Array of XML nodes (tags), each having attributes:
+     *                                  'tag', 'type', 'level' (, optionally: 'attributes')
      * @return array
      */
     public static function getItemsInArrayOfNodes(
@@ -94,7 +95,7 @@ class HelperXml implements ConstantsXmlInterface
      * @param  array  $levels          If empty: all levels
      * @param  array  $excludeTagNames Tag names not to be counted
      * @param  array  $excludeTagTypes Tag types not to be counted
-     * @return int                          Amount of nodes on given/all levels, not counting elements matching given filters
+     * @return int                     Amount of nodes on given/all levels, not counting elements matching given filters
      * @throws \Exception
      */
     public static function getAmountNodes(
@@ -113,7 +114,8 @@ class HelperXml implements ConstantsXmlInterface
      * @param  array $levels            Levels of nodes to be counted
      * @param  array $excludeTagNames   Tag names not to be counted
      * @param  array $excludeTagTypes   Tag types not to be counted
-     * @param  array $nodes             Array of XML nodes (tags), each having attributes: 'tag', 'type', 'level' (, optionally: 'attributes')
+     * @param  array $nodes             Array of XML nodes (tags), each having attributes:
+     *                                  'tag', 'type', 'level' (, optionally: 'attributes')
      * @return int
      */
     public static function countItemsInArrayOfNodes(

@@ -360,11 +360,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
-     * @param  int|string $timeStr   Time string tupel like: hh:mm, or triplet like: hh:mm:ss, accepts also a UNIX timestamp
+     * @param  int|string $timeStr   Time string tupel like: hh:mm, or triplet like: hh:mm:ss, or UNIX timestamp
      * @param  string     $delimiter Default: ':'
      * @param  bool       $includeMinutes
      * @param  bool       $includeSeconds
-     * @return array                Time parts as integers, item keys: 'hour', 'minutes', if given in $timeStr: 'seconds'
+     * @return array      Time parts as integers, item keys: 'hour', 'minutes', if given in $timeStr: 'seconds'
      */
     public static function getTimeStringParts(
         $timeStr,
@@ -940,7 +940,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * @param  string $dateStr
      * @return string           E.g. "12:30" out of "12:30 2017.12.31"
      */
-    public static function getTimeOutOfTimeDateString($dateStr): string
+    public static function getTimeOutOfTimeDateString(string $dateStr): string
     {
         return \substr($dateStr, 0, 5);
     }
