@@ -38,6 +38,7 @@
         "ext-zip": "*",
         "ext-zlib": "*",
         "gyselroth/php-helper-log": "0.2.20",
+        "gyselroth/html-purifier-filters": "0.0.1",
         "ezyang/htmlpurifier": "^4.9",
         "iio/libmergepdf": "^3.0",
         "itbz/fpdf": "^1.7",

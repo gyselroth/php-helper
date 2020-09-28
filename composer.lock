@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd1cc2df03ae2fd8dbf3eb13cb0323dd",
+    "content-hash": "5aab4d22de46b3998bda0269bd8fc1f7",
     "packages": [
         {
             "name": "ezyang/htmlpurifier",
@@ -55,6 +55,51 @@
                 "html"
             ],
             "time": "2020-06-29T00:56:53+00:00"
+        },
+        {
+            "name": "gyselroth/html-purifier-filters",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gyselroth/html-purifier-filters.git",
+                "reference": "19bee2a450ceb4fefaf61703040e511f21dd2ada"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gyselroth/html-purifier-filters/zipball/19bee2a450ceb4fefaf61703040e511f21dd2ada",
+                "reference": "19bee2a450ceb4fefaf61703040e511f21dd2ada",
+                "shasum": ""
+            },
+            "require": {
+                "ezyang/htmlpurifier": "^4.9",
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gyselroth\\htmlPurifierFilters\\": "src/Gyselroth/htmlPurifierFilters/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "gyselroth",
+                    "email": "mail@gyselroth.com",
+                    "homepage": "http://www.gyselroth.com"
+                }
+            ],
+            "description": "HtmlPurifier filters",
+            "homepage": "https://gyselroth.com",
+            "keywords": [
+                "Purifier",
+                "filter",
+                "html",
+                "htmlpurifier"
+            ],
+            "time": "2020-09-28T15:39:55+00:00"
         },
         {
             "name": "gyselroth/php-helper-log",
