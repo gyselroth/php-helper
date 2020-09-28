@@ -6,6 +6,7 @@ Version 0.2.20 - Not released yet
 * Added method: HelperArray::sortAssociative()
 * Added method: HelperDate::renderIso8601Date()
 * Added method: HelperDate::toZendDate()
+* Added method: HelperServerClient::addToSessionArray()
 * Added ZF1 reflection method: getRequestParamsOfControllerAction()
 * Added ZF1 reflection method: getSourceCodeOfControllerAction()
 * Added ZF1 reflection method: getPhpDocDescriptionOfControllerAction()

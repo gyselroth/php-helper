@@ -210,4 +210,17 @@ class HelperServerClient implements ConstantsHttpInterface
             $_SERVER['HTTP_USER_AGENT']
         );
     }
+
+    public static function addToSessionArray(string $sessionKey, string $value): void
+    {
+        if (isset($_SESSION[$sessionKey])
+            && \is_array($_SESSION[$sessionKey])
+        ) {
+            /** @noinspection UnsupportedStringOffsetOperationsInspection */
+            $_SESSION[$sessionKey][] = $value;
+        } else {
+            // Ensure avoiding fatal error: [] operator not supported for strings
+            $_SESSION[$sessionKey] = [$value];
+        }
+    }
 }
