@@ -144,7 +144,8 @@ class HelperReflection implements ConstantsDataTypesInterface
     }
 
     /**
-     * Call user function. Works same as call_user_func(), but accepts also a string function reference like 'MyClass::myMethod'
+     * Call user function. Works same as call_user_func(), but accepts also a string function reference
+     * like 'MyClass::myMethod'
      *
      * @param  string $funcRefString function reference
      * @return array|bool|int|string|Object|null
