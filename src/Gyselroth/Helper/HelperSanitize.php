@@ -108,9 +108,13 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         $filename = \preg_replace('/[^\w\-.]+/', '', $filename);
 
         // Reduce multiple hyphens to one
-        $filename = \preg_replace('/[\-]+/', '-', $filename);
+        $filename = null === $filename
+            ? ''
+            : \preg_replace('/[\-]+/', '-', $filename);
 
-        return HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
+        return null === $filename
+            ? ''
+            : HelperString::reduceCharRepetitions($filename, ['.', '_', '-']);
     }
 
     /**

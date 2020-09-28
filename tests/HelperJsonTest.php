@@ -15,10 +15,10 @@ use Gyselroth\Helper\HelperJson;
 
 class HelperJsonTest extends HelperTestCase
 {
-    private $array = [],
-            $jsonEncoded;
+    private array $array = [];
+    private string $jsonEncoded;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->array = [
             'key1' => ['subvalue1', 'subvalue2'],

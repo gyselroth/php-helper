@@ -153,7 +153,7 @@ class HelperPreg
      *
      * @param  string   $str
      * @param  bool     $convertToInt
-     * @return string|int
+     * @return string|int|null
      */
     public static function removeNonNumericChars(string $str, bool $convertToInt = false)
     {

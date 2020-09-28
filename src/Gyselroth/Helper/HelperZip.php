@@ -181,7 +181,13 @@ class HelperZip
 
         $realpathUnzipped = \realpath($pathUnzipped);
 
-        // @todo add error handling when false === $realpathUnzipped
+        if (false === $realpathUnzipped) {
+            LoggerWrapper::error(
+                'Zipping failed: cannot return absolute pathname' . $pathUnzipped,
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+            );
+            return false;
+        }
 
         $pathUnzipped = \str_replace('\\', DIRECTORY_SEPARATOR, $realpathUnzipped);
 
@@ -216,6 +222,14 @@ class HelperZip
                 }
 
                 $file = \realpath($file);
+
+                if (false === $file) {
+                    LoggerWrapper::error(
+                        'Zipping failed: cannot return absolute pathname' . $file,
+                        [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+                    );
+                    return false;
+                }
 
                 if (\is_dir($file)) {
                     $zip->addEmptyDir(
@@ -409,7 +423,7 @@ class HelperZip
 
         LoggerWrapper::log(
             $message,
-            $logLevel,
+            (string)$logLevel,
             [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, 'trace' => debug_backtrace()]
         );
     }

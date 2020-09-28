@@ -72,7 +72,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $parts = \explode($delimiter, $str);
 
-        if (\count($parts) !== 3) {
+        if ($parts === false || \count($parts) !== 3) {
             return false;
         }
 
@@ -86,7 +86,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             : [$parts[1], $parts[2], $parts[0]];
 
         return 3 === \count($parts)
-            && \checkdate($month, $day, $year);
+            && \checkdate((int)$month, (int)$day, (int)$year);
     }
 
     /**
@@ -155,7 +155,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     /**
      * @param string $date e.g. '2019-12-31'
      * @return Zend_Date
-     * @throws Zend_Date_Exception
      * @throws \Zend_Date_Exception
      */
     public static function getZendDateByDateString(string $date): \Zend_Date
@@ -173,7 +172,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      * Detect type of given date and return the resp. UNIX timestamp
      *
      * @param  \Zend_Date|Integer|String $date
-     * @return int|string|\Zend_Date
+     * @return int|string|false|\Zend_Date
      */
     public static function getUnixTimestampFromDate($date)
     {
@@ -219,9 +218,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             case self::FORMAT_DATE_ZF1:
             case self::FORMAT_DATETIME_ZF1:
             case self::FORMAT_TIME_ZF1:
-                return (new \Zend_Date($timestamp))->toString($format);
+                return (new \Zend_Date($timestamp))->toString((string)$format);
             case self::INDEX_FORMAT_TIMESTAMP_JAVASCRIPT:
-                return $timestamp * self::MILLISECONDS_SECOND;
+                return (string)($timestamp * self::MILLISECONDS_SECOND);
             case self::INDEX_FORMAT_ZEND_DATE:
                 return new \Zend_Date($timestamp);
             case self::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR:
@@ -305,7 +304,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     ): array
     {
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-        $timestamp = self::getUnixTimestampFromDate($timestamp);
+        $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
 
         return [
             self::DATE_TIME_PART_YEAR => \date($formatYear, $timestamp),
@@ -324,7 +323,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         return [
             'array'     => $dateParts,
-            'timestamp' => \mktime(0, 0, 0, $dateParts[1], $dateParts[2], $dateParts[0])
+            'timestamp' => \mktime(0, 0, 0, (int)$dateParts[1], (int)$dateParts[2], (int)$dateParts[0])
         ];
     }
 
@@ -334,7 +333,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getTimestampStartOfDay($timestamp): int
     {
-        $dateParts = self::getDateParts($timestamp);
+        $dateParts = self::getDateParts((int)$timestamp);
 
         return \mktime(
             0,
@@ -388,6 +387,10 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         $timeStringParts = \explode($delimiter, $timeStr);
 
+        if ($timeStringParts === false) {
+            return [];
+        }
+
         $parts = [
             self::DATE_TIME_PART_HOUR => (int)$timeStringParts[0],
             'minutes'                 => $includeMinutes ? (int)$timeStringParts[1] : 0
@@ -424,7 +427,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         return \date(
             $includeSeconds ? self::FORMAT_TIME_PHP : self::FORMAT_TIME_NO_SECONDS_PHP,
-            $isMilliSeconds ? ($timestamp / self::MILLISECONDS_SECOND) : $timestamp
+            $isMilliSeconds ? ((int)$timestamp / self::MILLISECONDS_SECOND) : (int)$timestamp
         );
     }
 
@@ -643,9 +646,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             0,
             0,
             0,
-            \date('m', $dateFrom),
-            \date('d', $dateFrom),
-            \date('Y', $dateFrom)
+            (int)\date('m', $dateFrom),
+            (int)\date('d', $dateFrom),
+            (int)\date('Y', $dateFrom)
         );
 
         $diff = $dateTo - $dateFrom;
@@ -766,9 +769,9 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     /**
      * @param  int $weekNumber Week number of year (0 - 52)
      * @param  int $year       2- or 4-digit year number
-     * @return int
+     * @return int|false
      */
-    public static function getTimestampFirstDayOfCalendarWeek($weekNumber, $year): int
+    public static function getTimestampFirstDayOfCalendarWeek($weekNumber, $year)
     {
         if ($year < 100) {
             $year += 2000;
@@ -921,7 +924,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $DATE_TIME_PART_MONTH = 'month';
 
-        switch (\strtolower($type)) {
+        switch (\strtolower((string)$type)) {
             case self::DATE_TIME_PART_SECOND:
                 return \Zend_Date::SECOND;
             case self::DATE_TIME_PART_MINUTE:
@@ -958,7 +961,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         return \date('W / Y');
     }
 
-    public static function getDayNumberOfWeekFromZendDate(\Zend_Date $date): int
+    /**
+     * @param Zend_Date $date
+     * @return int|false
+     */
+    public static function getDayNumberOfWeekFromZendDate(\Zend_Date $date)
     {
         $dateValue = $date->toValue(\Zend_Date::WEEKDAY_DIGIT);
 

@@ -16,7 +16,7 @@ use PHPUnit\Framework\Constraint\IsType;
 
 class HelperArrayTest extends HelperTestCase
 {
-    public $data = [
+    public array $data = [
         'Brief_Anrede'             => 'Sehr geehrter Herr Foo, sehr geehrte Frau Bar-Baz',
         'Brief_Bezeichner'         => '5112398 1003 Joeline Doe',
         'Brief_Datum'              => ' 7. February 2018',
@@ -55,7 +55,7 @@ class HelperArrayTest extends HelperTestCase
         'Erfahrungsnote_Mathe'     => 5.5
     ];
 
-    public function testIsAssociativeWhenNotAssotiative(): void
+    public function testIsAssociativeWhenNotAssociative(): void
     {
         $this->assertFalse(HelperArray::isAssociative([
             0 => [

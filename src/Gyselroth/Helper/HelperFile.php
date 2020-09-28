@@ -76,8 +76,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     /** @var  array */
     public $mimes = self::MIMES;
 
-    /** @var string */
-    public static $rootPath;
+    public static string $rootPath;
 
     /**
      * @return string
@@ -241,6 +240,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             $content = \json_encode($content);
         }
 
+        if(!$content){
+            return false;
+        }
+
         return self::write($filePath, $content);
     }
 
@@ -250,9 +253,13 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             return false;
         }
 
-        \ini_set('auto_detect_line_endings', true);
+        \ini_set('auto_detect_line_endings', '1');
 
         $handle = \fopen($filePath, 'wb');
+
+        if(!$handle){
+            return false;
+        }
 
         \fputcsv($handle, $headerFields);
 
@@ -295,6 +302,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         /** @noinspection ReturnFalseInspection */
         $files = \scandir($path);
 
+        if(!$files) {
+            return [];
+        }
+
         // Filter: 1. remove '.' and '..', 2. by extension (or substring), 3. by lead string
         $filesFiltered = [];
 
@@ -331,8 +342,13 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         $recentFiles = [];
 
         foreach ($filesFiltered as $filePath) {
-            $explodedPath           = \explode(DIRECTORY_SEPARATOR, $filePath);
-            $fileName               = \end($explodedPath);
+            $explodedPath = \explode(DIRECTORY_SEPARATOR, $filePath);
+            $fileName     = \end($explodedPath);
+
+            if (!$fileName) {
+                continue;
+            }
+
             $fileNameWithoutVersion = \preg_replace('/_v(.*)/', '', $fileName);
 
             $recentFiles[$fileNameWithoutVersion] = $filePath;
@@ -477,7 +493,12 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public static function getDirectoryInfo(string $path, array $info = ['items' => 0, 'size' => 0]): array
     {
-        $children      = \glob($path . DIRECTORY_SEPARATOR . '*');
+        $children = \glob($path . DIRECTORY_SEPARATOR . '*');
+
+        if (!$children) {
+            return [];
+        }
+
         $info['items'] += \count($children);
 
         foreach ($children as $item) {
@@ -809,6 +830,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         /** @noinspection ReturnFalseInspection */
         $files = \scandir($path);
 
+        if (!$files) {
+            return false;
+        }
+
         foreach ($files as $file) {
             if ('.' !== $file
                 && '..' !== $file
@@ -917,7 +942,9 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
     public static function scanFilesystem(string $path, string $wildcard = '*'): array
     {
-        return \glob($path . DIRECTORY_SEPARATOR . $wildcard);
+        $files = \glob($path . DIRECTORY_SEPARATOR . $wildcard);
+
+        return $files?: [];
     }
 
     public static function moveUploadedFileToTempDirectory(string $fileName, string $fileStoredIn): void

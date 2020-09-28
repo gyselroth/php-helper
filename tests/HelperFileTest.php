@@ -19,7 +19,7 @@ class HelperFileTest extends HelperTestCase
     private $uploadedFileInfo,
             $uploadedFilePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->uploadedFilePath = HelperFile::getGlobalTmpPath(true) . DIRECTORY_SEPARATOR . '01.pdf';
         $pathFileTemplate  = __DIR__ . '/Fixtures/data/files/zip/01.pdf';
@@ -33,7 +33,7 @@ class HelperFileTest extends HelperTestCase
         ];
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (is_file($this->uploadedFilePath)) {
             unlink($this->uploadedFilePath);
@@ -376,7 +376,7 @@ class HelperFileTest extends HelperTestCase
     /**
      *
      */
-    public function testDeleteIfExists()
+    public function testDeleteIfExists(): void
     {
         $pathCopy = __DIR__ . '/Fixtures/data/files/unzip/unzipped';
         $path = HelperFile::getGlobalTmpPath(true) . DIRECTORY_SEPARATOR . 'delete_exists';

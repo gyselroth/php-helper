@@ -19,14 +19,14 @@ use PHPUnit\Framework\TestCase;
 
 class HelperTestCase extends TestCase {
 
-    protected $_pathToLogfile = __DIR__ . '/tmp/app.log';
+    protected string $_pathToLogfile = __DIR__ . '/tmp/app.log';
     protected $_logMock;
-    protected $_logger;
+    protected LoggerWrapper $_logger;
 
     /**
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         self::emptyTempFolder();
         /** @noinspection PhpUnhandledExceptionInspection */
@@ -34,7 +34,7 @@ class HelperTestCase extends TestCase {
         $this->_logger = new LoggerWrapper($this->_setUpLogger(), true, '.');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         self::emptyTempFolder();
         if (\is_object($this->_logger)) {
@@ -45,7 +45,7 @@ class HelperTestCase extends TestCase {
         }
     }
 
-    private function emptyTempFolder()
+    private function emptyTempFolder(): void
     {
         $tmpPath = HelperFile::getGlobalTmpPath();
         if (is_dir($tmpPath)) {
@@ -59,7 +59,7 @@ class HelperTestCase extends TestCase {
      * @return Logger
      * @throws \Exception
      */
-    private function _setUpLogger($useStdOut = false, $logLevel = 'DEBUG')
+    private function _setUpLogger($useStdOut = false, $logLevel = 'DEBUG'): Logger
     {
         $path =  $useStdOut ? 'php://stdout' : __DIR__ . '/../var/logs/phpunit.log';
 

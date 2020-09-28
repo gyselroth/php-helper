@@ -16,8 +16,8 @@ namespace Gyselroth\Helper;
  */
 class HelperHtmlPurifierIframeFilter
 {
-    /** @var string */
-    public $name = 'IframeAllowFullscreen';
+
+    public string $name = 'IframeAllowFullscreen';
 
     /**
      * @param  string                $html
@@ -26,6 +26,10 @@ class HelperHtmlPurifierIframeFilter
     public function preFilter($html)
     {
         $html = \preg_replace('#<iframe#i', '<img class="video-iframe-allow-fullscreen"', $html);
+
+        if ($html === null) {
+            return null;
+        }
 
         return \preg_replace('#</iframe>#i', '</img>', $html);
     }

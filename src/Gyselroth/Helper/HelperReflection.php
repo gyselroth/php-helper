@@ -107,7 +107,7 @@ class HelperReflection implements ConstantsDataTypesInterface
             if ($logIfNot) {
                 LoggerWrapper::info(
                     $exception,
-                    empty($logCategory) ? null : [LoggerWrapper::OPT_CATEGORY => $logCategory]
+                    empty($logCategory) ? [] : [LoggerWrapper::OPT_CATEGORY => $logCategory]
                 );
             }
 
@@ -134,9 +134,15 @@ class HelperReflection implements ConstantsDataTypesInterface
 
     public static function getActionsFromControllerFile(string $pathController): array
     {
+        $fileContent = \file_get_contents($pathController);
+
+        if (!$fileContent) {
+            return [];
+        }
+
         \preg_match_all(
             '/(function) ([a-zA-Z]+)(Action)\(/',
-            \file_get_contents($pathController),
+            $fileContent,
             $matches
         );
 

@@ -24,11 +24,11 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
     {
         $number = (int)$number;
 
-        while (\strlen($number) < $digits) {
+        while (\strlen((string)$number) < $digits) {
             $number = '0' . $number;
         }
 
-        return $number;
+        return (string)$number;
     }
 
     /**
@@ -125,7 +125,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         bool $unique = false
     ): array
     {
-        if (null === $str) {
+        if ('' === $str) {
             return [];
         }
 

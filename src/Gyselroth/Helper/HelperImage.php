@@ -87,13 +87,17 @@ class HelperImage
 
         $save = (($maxWidth / $maxHeight) < ($sourceWidth / $sourceHeight))
             ? \imagecreatetruecolor(
-                $sourceWidth / ($sourceWidth / $maxWidth),
-                $sourceHeight / ($sourceWidth / $maxWidth)
+                (int)$sourceWidth / (int)($sourceWidth / $maxWidth),
+                (int)$sourceHeight / (int)($sourceWidth / $maxWidth)
             )
             : \imagecreatetruecolor(
-                $sourceWidth / ($sourceHeight / $maxHeight),
-                $sourceHeight / ($sourceHeight / $maxHeight)
+                (int)$sourceWidth / (int)($sourceHeight / $maxHeight),
+                (int)$sourceHeight / (int)($sourceHeight / $maxHeight)
             );
+
+        if (!$save) {
+            return false;
+        }
 
         \imagecopyresampled(
             $save,
@@ -141,6 +145,10 @@ class HelperImage
         $type = \strtolower(\pathinfo($pathImage, PATHINFO_EXTENSION));
 
         $imageContents = \file_get_contents($pathImage);
+
+        if (!$imageContents) {
+            return '';
+        }
 
         $encoded = 'data:image/' . $type . ';base64,' . \base64_encode($imageContents);
 
@@ -198,13 +206,17 @@ class HelperImage
 
         $size = \getimagesize($imageFilename);
 
+        if (!$size) {
+            return false;
+        }
+
         $cropWidth  = $size[0] - $widthSubtrahend;
         $cropHeight = $size[1] - $heightSubtrahend;
 
         $imageCopy  = \imagecreatefrompng($imageFilename);
         $imageNew   = \imagecreatetruecolor($cropWidth, $cropHeight);
 
-        if (false === $imageNew) {
+        if (false === $imageNew || false === $imageCopy) {
             LoggerWrapper::warning(
                 'HelperImage::saveTransparentImage - imagecreatetruecolor failed',
                 [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
@@ -242,6 +254,10 @@ class HelperImage
         $pathScaledImage = $pathTmpWithoutExtension . '_scaled.' . $extension;
 
         $fileHandle = \fopen($pathTmpImage, 'wb+');
+
+        if(!$fileHandle){
+            throw new FileException('Failed open image: ' . $pathTmpImage);
+        }
 
         \fwrite($fileHandle, $imageData);
         \fclose($fileHandle);

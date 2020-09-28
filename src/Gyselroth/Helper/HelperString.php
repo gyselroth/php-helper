@@ -512,7 +512,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         $letters = \range('a', 'z');
 
         if ($characterIndex <= 25) {
-            return $letters[$characterIndex];
+            return (string)$letters[$characterIndex];
         }
 
         $dividend       = $characterIndex + 1;
@@ -896,7 +896,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      *
      * @param  string    $str
      * @param  bool      $convertToInt
-     * @return int|string
+     * @return int|string|null
      */
     public static function removeNonNumericChars(string $str, bool $convertToInt = false)
     {
@@ -949,7 +949,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      */
     public static function mb_str_split(string $string): array
     {
-        return HelperPreg::mb_str_split($string);
+        return HelperPreg::mb_str_split($string)?: [];
     }
 
     /**
