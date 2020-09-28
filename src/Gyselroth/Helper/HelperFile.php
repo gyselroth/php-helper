@@ -110,6 +110,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     public static function getGlobalTmpPath($createIfNotExists = false): string
     {
         $path = self::getRootPath() . '/tmp';
+
         if ($createIfNotExists
             && !\is_dir($path)
             && !\mkdir($path)
