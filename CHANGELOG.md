@@ -5,8 +5,10 @@ Version 0.3.00 - Not released yet
 ---------------------------------
 * Extract HtmlPurifier filters into separate dependency
 * Remove wrapper methods from HelperString redirecting to HelperDate 
+* Remove wrapper methods from HelperString redirecting to HelperFile 
 * Remove wrapper methods from HelperString redirecting to HelperNumeric 
 * Remove wrapper methods from HelperString redirecting to HelperPreg 
+* Remove wrapper methods from HelperString redirecting to HelperSanitize 
 * Remove wrapper methods from HelperString redirecting to HelperXml 
 
 Version 0.2.21 - Released 2020/09/28

@@ -305,11 +305,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         return \strlen($str) > \strlen(utf8_decode($str));
     }
 
-    public static function sanitizeFilename(string $filename): string
-    {
-        return HelperFile::sanitizeFilename($filename);
-    }
-
     /**
      * Reduce all repetitions of the given character(s) inside the given string to a single occurrence
      *
@@ -795,15 +790,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             : $single;
     }
 
-    /**
-     * @param  string $str
-     * @return string|null   Given string w/o characters that are not a-z / A-Z / 0-9
-     */
-    public static function filterAlphaNumeric(string $str) : ?string
-    {
-        return HelperSanitize::filterAlphaNumeric($str);
-    }
-
     public static function replaceSpecialCharacters(string $str, bool $toLower = true): string
     {
         $replacePairs = [
@@ -830,27 +816,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         }
 
         return \strtr($str, $replacePairs);
-    }
-
-    public static function validateString(
-        string $str,
-        bool $allowCharacters = true,
-        bool $allowUmlauts = false,
-        bool $allowDigits = false,
-        bool $allowWhiteSpace = false,
-        bool $allowSpace = false,
-        string $allowedSpecialCharacters = ''
-    ): bool
-    {
-        return HelperSanitize::validateString(
-            $str,
-            $allowCharacters,
-            $allowUmlauts,
-            $allowDigits,
-            $allowWhiteSpace,
-            $allowSpace,
-            $allowedSpecialCharacters
-        );
     }
 
     /**
