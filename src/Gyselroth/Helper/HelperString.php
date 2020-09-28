@@ -300,11 +300,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         return \str_replace(["\n", "\r", "'"], ['', '', '"'], $string);
     }
 
-    public static function isXml(string $str): bool
-    {
-        return HelperXml::isValidXml($str);
-    }
-
     public static function isUtf8(string $str): bool
     {
         return \strlen($str) > \strlen(utf8_decode($str));

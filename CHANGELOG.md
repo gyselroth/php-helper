@@ -7,6 +7,7 @@ Version 0.3.00 - Not released yet
 * Remove wrapper methods from HelperString redirecting to HelperDate 
 * Remove wrapper methods from HelperString redirecting to HelperNumeric 
 * Remove wrapper methods from HelperString redirecting to HelperPreg 
+* Remove wrapper methods from HelperString redirecting to HelperXml 
 
 Version 0.2.21 - Released 2020/09/28
 ------------------------------------
