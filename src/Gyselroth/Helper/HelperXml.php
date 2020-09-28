@@ -13,6 +13,7 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\XmlException;
 use Gyselroth\Helper\Interfaces\ConstantsXmlInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 class HelperXml implements ConstantsXmlInterface
 {

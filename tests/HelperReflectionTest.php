@@ -18,7 +18,7 @@ class HelperReflectionTest extends HelperTestCase
 {
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionExceptionInvalidType
      */
     public function testGetTypeCasted(): void
@@ -55,7 +55,7 @@ class HelperReflectionTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionExceptionInvalidType
      * @expectedException \Gyselroth\Helper\Exception\ReflectionExceptionInvalidType
      */
@@ -86,7 +86,7 @@ class HelperReflectionTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionException
      */
     public function testEnsureIsClass(): void
@@ -97,7 +97,7 @@ class HelperReflectionTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionException
      * @expectedException \Gyselroth\Helper\Exception\ReflectionException
      * @expectedExceptionMessage Tried to construct undefined class.
@@ -109,7 +109,7 @@ class HelperReflectionTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionException
      * @expectedException \Gyselroth\Helper\Exception\ReflectionException
      * @expectedExceptionMessage Class not defined: 'NotAClass12345'.
@@ -149,7 +149,7 @@ class HelperReflectionTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction
      */
     public function testCallUserFunctionMethod(): void
@@ -159,7 +159,7 @@ class HelperReflectionTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction
      * @expectedException \Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction
      */

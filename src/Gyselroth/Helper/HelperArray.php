@@ -13,6 +13,7 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\ArrayException;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 class HelperArray implements ConstantsDataTypesInterface
 {
@@ -651,7 +652,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  string $functionName E.g. 'strtolower', 'strtoupper', 'ucfirst', etc.
      * @return array
      * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Exception
      */
     public static function strSplManipulate(array $arr, string $functionName): array

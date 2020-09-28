@@ -12,6 +12,7 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 class HelperJson implements ConstantsDataTypesInterface
 {

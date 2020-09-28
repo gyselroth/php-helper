@@ -15,6 +15,7 @@ use Gyselroth\Helper\Exception\ReflectionException;
 use Gyselroth\Helper\Exception\ReflectionExceptionInvalidType;
 use Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 /**
  * @todo create new vendor-package "helper-zf1"

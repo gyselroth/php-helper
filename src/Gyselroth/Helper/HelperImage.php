@@ -12,6 +12,7 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\FileException;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 /**
  * Image helper methods

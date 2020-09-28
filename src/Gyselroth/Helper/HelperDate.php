@@ -13,6 +13,7 @@ namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\DateException;
 use Gyselroth\Helper\Interfaces\ConstantsUnitsOfTimeInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 use Zend_Date;
 
 class HelperDate implements ConstantsUnitsOfTimeInterface

@@ -395,13 +395,15 @@ class HelperStringTest extends HelperTestCase
     /**
      * Test: HelperString::getRandomString
      * @throws \InvalidArgumentException
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Exception
      */
     public function testGetRandomString(): void
     {
         $this->assertEquals(12, \strlen(HelperString::getRandomString(12)));
+
         $this->assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[\d]+)/', HelperString::getRandomString()));
+
         $this->assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[A-Z]+)(?=.*?[\.\-\?&\$]+)/', HelperString::getRandomString(12, true, true, false, '.-?&$')));
     }
 

@@ -12,6 +12,7 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Interfaces\ConstantsHttpInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 /**
  * Server/Client helpers: Environment settings, MVC, AJAX

@@ -13,6 +13,7 @@
 namespace Gyselroth\Helper;
 
 use Gyselroth\Helper\Exception\ZipException;
+use Gyselroth\HelperLog\LoggerWrapper;
 use ZipArchive;
 
 class HelperZip

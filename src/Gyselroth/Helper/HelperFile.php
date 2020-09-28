@@ -19,6 +19,7 @@ use Gyselroth\Helper\Exception\FileExceptionInvalidPath;
 use Gyselroth\Helper\Exception\FileExceptionPathNotFound;
 use Gyselroth\Helper\Interfaces\ConstantsFileTypesInterface;
 use Gyselroth\Helper\Interfaces\ConstantsMimeTypesInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInterface
 {

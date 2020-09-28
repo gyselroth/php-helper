@@ -221,7 +221,7 @@ class HelperDateTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Zend_Date_Exception
      */
     public function testGetDateDiff(): void

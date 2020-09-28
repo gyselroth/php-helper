@@ -15,6 +15,7 @@ use Gyselroth\Helper\Exception\PregExceptionEmptyExpression;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
 use Gyselroth\Helper\Interfaces\ConstantsEntitiesOfStrings;
 use Gyselroth\Helper\Interfaces\ConstantsOperatorsInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
 class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInterface, ConstantsEntitiesOfStrings
 {

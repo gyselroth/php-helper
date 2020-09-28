@@ -3,7 +3,6 @@ gyselroth Helper Library
 
 Version 0.2.20 - Released 2020/09/28
 ---------------------------------
-* Declare and use types more strict
 * Added method: HelperArray::sortAssociative()
 * Added method: HelperDate::renderIso8601Date()
 * Added method: HelperDate::toZendDate()
@@ -16,6 +15,8 @@ Version 0.2.20 - Released 2020/09/28
 * Added ZF1 reflection method: getPhpDocDescriptionOfControllerAction()
 * Added ZF1 reflection method: getRequestParamsOfControllerAction()
 * Added ZF1 reflection method: getSourceCodeOfControllerAction()
+* Declare and use types more strict
+* Extract and use loggerWrapper from external package instead of built-in
 
 Version 0.2.19 - Released 2020/04/02
 ------------------------------------

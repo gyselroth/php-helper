@@ -550,7 +550,7 @@ class HelperArrayTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testStrSplManipulateStrToUpper(): void
     {
@@ -560,7 +560,7 @@ class HelperArrayTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testStrSplManipulateStrToLower(): void
     {
@@ -570,7 +570,7 @@ class HelperArrayTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testStrSplManipulateUcFirst(): void
     {
@@ -580,7 +580,7 @@ class HelperArrayTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testStrSplManipulateStrRev(): void
     {

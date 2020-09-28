@@ -125,7 +125,7 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testWrite(): void
     {
@@ -140,7 +140,7 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testWriteAppendMode(): void
     {
@@ -156,7 +156,7 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testWriteJson(): void
     {
@@ -273,7 +273,7 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testGetUploadFileInfo(): void
     {
@@ -282,7 +282,7 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testValidateUploadFileOk(): void
     {
@@ -291,18 +291,20 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testValidateUploadFileMissingName(): void
     {
         $uploadedFileInfo = $this->uploadedFileInfo;
+
         unset($uploadedFileInfo['name']);
+
         $this->assertSame('Name der Datei wurde nicht empfangen', HelperFile::validateUploadFile($uploadedFileInfo, []));
     }
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testValidateUploadFileTooLarge(): void
     {
@@ -311,7 +313,7 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testValidateUploadFileNotAllowed(): void
     {
@@ -320,19 +322,23 @@ class HelperFileTest extends HelperTestCase
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\Helper\Exception\LoggerException
+     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      */
     public function testValidateUploadFileErrors(): void
     {
         $uploadedFileInfo = $this->uploadedFileInfo;
         $uploadedFileInfo['error'] = UPLOAD_ERR_NO_FILE;
         $this->assertSame('No file sent.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+
         $uploadedFileInfo['error'] = UPLOAD_ERR_FORM_SIZE;
         $this->assertSame('Exceeded filesize limit.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+
         $uploadedFileInfo['error'] = UPLOAD_ERR_INI_SIZE;
         $this->assertSame('Exceeded filesize limit.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+
         $uploadedFileInfo['error'] = 123456789;
         $this->assertSame('Unknown errors.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+
         $uploadedFileInfo['size'] = 0;
         $this->assertSame('File is empty', HelperFile::validateUploadFile($uploadedFileInfo, []));
     }
