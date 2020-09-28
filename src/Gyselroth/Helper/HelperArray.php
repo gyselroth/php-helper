@@ -18,6 +18,9 @@ class HelperArray implements ConstantsDataTypesInterface
 {
     public const LOG_CATEGORY = 'arrayhelper';
 
+    public const SORT_MODE_ASCENDING  = 'asc';
+    public const SORT_MODE_DESCENDING = 'desc';
+
     private const CASTABLE_TYPES = [
         self::DATA_TYPE_BOOL,
         self::DATA_TYPE_FLOAT,
@@ -1295,5 +1298,20 @@ class HelperArray implements ConstantsDataTypesInterface
     public static function isIterable($var): bool
     {
         return \is_iterable($var);
+    }
+
+    public static function sortAssociative(array $items, ?string $sortingMode): array
+    {
+        if (null === $sortingMode) {
+            return $items;
+        }
+
+        if (self::SORT_MODE_ASCENDING === $sortingMode) {
+            \asort($items);
+        } else {
+            \arsort($items);
+        }
+
+        return $items;
     }
 }
