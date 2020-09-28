@@ -91,6 +91,7 @@ class HelperArrayTest extends HelperTestCase
 
         // Test: convert mixed (int and numeric string) array to array of int
         $result = HelperArray::intVal([1, '2', 3]);
+
         $this->assertThat(
             $result,
             new IsType('array')
@@ -103,16 +104,19 @@ class HelperArrayTest extends HelperTestCase
 
         // Test option: array-unique
         $result = HelperArray::intVal([1, '2', 2, 3, 2], true);
+
         $this->assertThat(
             $result,
             new IsType('array')
         );
+
         $this->assertNotEmpty($result);
         $this->assertCount(3, $result);
         $this->assertEquals(6, array_sum($result));
 
         // Test options: 1) array-unique and 2) convert non-numerical to 0
         $result = HelperArray::intVal([1, 'x', '2', 2, 3, 2], true, true);
+
         $this->assertThat(
             $result,
             new IsType('array')
@@ -130,27 +134,34 @@ class HelperArrayTest extends HelperTestCase
             '2' => ['test1' => '1', 'test2' => '2', 'test3' => '3'],
             '3' => ['test1' => '1', 'test2' => '2', 'test3' => '3']
         ];
+
         $keys  = ['test2', 'test3'];
+
         $this->assertThat(
             HelperArray::castSubColumn($array, $keys)['1']['test2'],
             new IsType('int')
         );
+
         $this->assertThat(
             HelperArray::castSubColumn($array, $keys)['1']['test3'],
             new IsType('int')
         );
+
         $this->assertThat(
             HelperArray::castSubColumn($array, $keys)['2']['test2'],
             new IsType('int')
         );
+
         $this->assertThat(
             HelperArray::castSubColumn($array, $keys)['2']['test3'],
             new IsType('int')
         );
+
         $this->assertThat(
             HelperArray::castSubColumn($array, $keys)['3']['test2'],
             new IsType('int')
         );
+
         $this->assertThat(
             HelperArray::castSubColumn($array, $keys)['3']['test3'],
             new IsType('int')
@@ -183,10 +194,11 @@ class HelperArrayTest extends HelperTestCase
             2    => ['a' => 1, 'b' => 2],
             'x'  => ['a' => 'ant', 'b' => 'bear', 'c' => 'chameleon', 'd' => 'dolphin', 'e' => 'elephant']
         ];
+
         $this->assertSame(
             ['a' => 'ant', 'b' => 'bear', 'c' => 'chameleon', 'd' => 'dolphin', 'e' => 'elephant'],
-            HelperArray::getItemByKeyValue($array, 'e', 'elephant'))
-        ;
+            HelperArray::getItemByKeyValue($array, 'e', 'elephant')
+        );
 
         $array = [
             '1'  => [],
@@ -194,10 +206,12 @@ class HelperArrayTest extends HelperTestCase
             'x'  => ['a' => 11, 'b' => '2', 'c' => 33, 'd' => 44, 'e' => 55],
             2    => ['a' => 1, 'b' => 2],
         ];
+
         $this->assertSame(
             ['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5],
             HelperArray::getItemByKeyValue($array, 'b', '2', false)
         );
+
         $this->assertSame(
             ['a' => 11, 'b' => '2', 'c' => 33, 'd' => 44, 'e' => 55],
             HelperArray::getItemByKeyValue($array, 'b', '2', true)
@@ -214,6 +228,7 @@ class HelperArrayTest extends HelperTestCase
             'x'  => ['a' => 11, 'b' => '2', 'c' => 33, 'd' => 44, 'e' => 55],
             2    => ['a' => 1, 'b' => 2],
         ];
+
         $this->assertSame('x', HelperArray::searchValueInMultidimensionalArray('2', 'b', $array));
 
         $this->assertNull(HelperArray::searchValueInMultidimensionalArray('z', 'z', $array));
@@ -231,8 +246,14 @@ class HelperArrayTest extends HelperTestCase
                 '22' => ['221' => ['2211' => 'value2211'], '222' => ['2221' => 'value2221']]
             ]
         ];
+
         $this->assertSame('value1221', HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1221'));
-        $this->assertSame('{"1221":"value1221"}', json_encode(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122')));
+
+        $this->assertSame(
+            '{"1221":"value1221"}',
+            json_encode(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122'))
+        );
+
         $this->assertFalse(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220'));
         $this->assertTrue(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220', true));
     }
@@ -253,15 +274,21 @@ class HelperArrayTest extends HelperTestCase
                 'id2' => "500"
             ]
         ];
-        $this->assertSame('{"200":{"id":"200","id2":"700"},"100":{"id":"100","id2":"1000"},"300":{"id":"300","id2":"500"}}',
-            json_encode(HelperArray::keysFromIDs($array)));
-        $this->assertSame('{"500":{"id":"300","id2":"500"},"700":{"id":"200","id2":"700"},"1000":{"id":"100","id2":"1000"}}',
-            json_encode(HelperArray::keysFromIDs($array, 'id2', true)));
+        $this->assertSame(
+            '{"200":{"id":"200","id2":"700"},"100":{"id":"100","id2":"1000"},"300":{"id":"300","id2":"500"}}',
+            json_encode(HelperArray::keysFromIDs($array))
+        );
+
+        $this->assertSame(
+            '{"500":{"id":"300","id2":"500"},"700":{"id":"200","id2":"700"},"1000":{"id":"100","id2":"1000"}}',
+            json_encode(HelperArray::keysFromIDs($array, 'id2', true))
+        );
     }
 
     public function testKeysExist(): void
     {
         $array = ['key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3'];
+
         $this->assertTrue(HelperArray::keysExist($array, ['key1', 'key2', 'key3']));
         $this->assertTrue(HelperArray::keysExist($array, ['key1', 'key3']));
         $this->assertFalse(HelperArray::keysExist($array, ['key1', 'key', 'key3']));
@@ -275,7 +302,9 @@ class HelperArrayTest extends HelperTestCase
                 'id3' => ['id' => ['id' => 'value1211'], 'id4' => ['id' => 'value1221']]
             ]
         ];
+
         HelperArray::replaceInKeys('id', 'newid', $array);
+
         $this->assertSame(
             '{"newid":{"newid":{"newid":{"newid":"value1111"},"newid2":{"newid":"value1121"}},"newid3":{"newid":{"newid":"value1211"},"newid4":{"newid":"value1221"}}}}',
             json_encode($array)
