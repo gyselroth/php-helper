@@ -505,9 +505,9 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      *            repeated as many times as there are modulo "wrap-arounds")
      *
      * @param  int $characterIndex
-     * @return string|null
+     * @return string
      */
-    public static function toAlpha(int $characterIndex): ?string
+    public static function toAlpha(int $characterIndex): string
     {
         $letters = \range('a', 'z');
 
