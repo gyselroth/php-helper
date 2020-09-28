@@ -3,6 +3,7 @@ gyselroth Helper Library
 
 Version 0.2.20 - Not released yet
 ---------------------------------
+* Declare and use types more strict
 * Added method: HelperArray::sortAssociative()
 * Added method: HelperDate::renderIso8601Date()
 * Added method: HelperDate::toZendDate()
