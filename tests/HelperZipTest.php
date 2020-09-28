@@ -104,6 +104,7 @@ class HelperZipTest extends HelperTestCase
     {
         $path = __DIR__ . '/Fixtures/data/files/zip';
         $pathTmp = HelperFile::getGlobalTmpPath(true);
+
         $this->assertFalse(HelperZip::zip($path, $pathTmp));
     }
 
@@ -113,6 +114,8 @@ class HelperZipTest extends HelperTestCase
      */
     public function testUnZip(): void
     {
+        $this->markTestSkipped();
+
 //        $path = __DIR__ . '/Fixtures/data/files/unzip/to-be-unzipped.zip';
 //        $pathToCompare = __DIR__ . '/Fixtures/data/files/unzip/unzipped';
 //        $pathTmp = HelperFile::getGlobalTmpPath(true);
