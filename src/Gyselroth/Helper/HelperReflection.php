@@ -16,6 +16,18 @@ use Gyselroth\Helper\Exception\ReflectionExceptionInvalidType;
 use Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction;
 use Gyselroth\Helper\Interfaces\ConstantsDataTypesInterface;
 
+/**
+ * @todo create new vendor-package "helper-zf1-reflection"
+ *
+ * getControllerActionsByModule()
+ * getDbModelByEntity()
+ * getAllLogCategories()
+ * getSortedSearchResultsByQuery()
+ * getRequestParamsOfControllerAction()
+ * getSourceCodeOfControllerAction()
+ * getPhpDocDescriptionOfControllerAction()
+ */
+
 class HelperReflection implements ConstantsDataTypesInterface
 {
     public const LOG_CATEGORY = 'reflectionhelper';
@@ -239,12 +251,124 @@ class HelperReflection implements ConstantsDataTypesInterface
         return $class . '::' . $function . '()';
     }
 
+    public static function getPhpDocDescriptionOfControllerAction(string $pathControllerFile, ?string $action): string
+    {
+        if (!\file_exists($pathControllerFile)) {
+            return '';
+        }
+
+        $sourceCode = \file_get_contents($pathControllerFile);
+
+        $offsetActionDeclaration = false === $sourceCode
+            ? false
+            : \stripos($sourceCode, ' function ' . $action . 'Action');
+
+        if (false === $offsetActionDeclaration || false === $sourceCode) {
+            return '';
+        }
+
+        $codeBeforeActionDeclaration = \substr($sourceCode, 0, $offsetActionDeclaration);
+
+        $commentBlocks  = \explode('/**', $codeBeforeActionDeclaration);
+        $phpDocOfAction = \array_pop($commentBlocks);
+
+        if (null === $phpDocOfAction) {
+            return '';
+        }
+
+        $firstLineOfPhpDoc = \explode("\n", $phpDocOfAction)[1];
+
+        $description = \trim($firstLineOfPhpDoc, '* ');
+
+        /** @noinspection SubStrUsedAsStrPosInspection */
+        return '@' === $description[0]
+        || '$' === $description[0]
+            ? ''
+            : $description;
+    }
+
     /**
-     * @todo create new vendor-package "helper-zf1" (or "helper-in2"?) from methods ( or more):
+     * Get source code of controller action w/o leading Doc-comments
      *
-     * getControllerActionsByModule()
-     * getDbModelByEntity()
-     * getAllLogCategories()
-     * getSortedSearchResultsByQuery()
+     * @param  string $action
+     * @param  string  $phpFileSource
+     * @return string
      */
+    public static function getSourceCodeOfControllerAction(?string $action, string $phpFileSource): string
+    {
+        $offsetActionDeclaration = \stripos($phpFileSource, ' function ' . $action . 'Action');
+
+        if (false === $offsetActionDeclaration) {
+            return '';
+        }
+
+        $functionPhp = \substr($phpFileSource, $offsetActionDeclaration);
+        $functionPhp = \explode('public function', $functionPhp)[0];
+        $functionPhp = \trim($functionPhp);
+
+        while (!HelperString::endsWith($functionPhp, '}')) {
+            $lines = \explode("\n", $functionPhp);
+            \array_pop($lines);
+            $functionPhp = \trim(\implode("\n", $lines));
+        }
+
+        return $functionPhp;
+    }
+
+    public static function getRequestParamsOfControllerAction(string $pathControllerFile, ?string $action): array
+    {
+        $sourceCode = \file_get_contents($pathControllerFile);
+
+        $actionCode = $sourceCode
+            ? self::getSourceCodeOfControllerAction($action, $sourceCode)
+            : '';
+
+        if ('' === $actionCode) {
+            return [];
+        }
+
+        // 1. Extract request-params given like: $this->_request->getParam('<parameterName'>)
+        \preg_match_all('/_request->getParam\(\'([a-z0-9_]+)\'\)/i', $actionCode, $matches);
+
+        $requestParams = $matches[1];
+
+        // 2. Extract request-params given like: $this->_request->getPost('<parameterName'>)
+        \preg_match_all('/_request->getPost\(\'([a-z0-9_]+)\'\)/i', $actionCode, $matches);
+
+        $requestParams = \array_merge($requestParams, $matches[1]);
+
+        // 3. Find variable that array of request-params is filled-into, extract parameter names out of it
+        \preg_match_all('/(\\$[a-z0-9_]+)\s*=\s*\\$this->_request->getParams\(\);/i', $actionCode, $matches);
+
+        if (isset($matches[1][0])) {
+            $requestParamsVariable = $matches[1][0];
+
+            // 3.1. Find params taken out of request-params array variable
+            \preg_match_all('/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i', $actionCode, $matches);
+
+            if ([] !== $matches[1]) {
+                $requestParams = \array_merge($requestParams, $matches[1]);
+            }
+        }
+
+        // 4. Find variable that array of request-post is filled-into, extract parameter names out of it
+        \preg_match_all('/(\\$[a-z0-9_]+)\s*=\s*\\$this->_request->getPost\(\);/i', $actionCode, $matches);
+
+        if (isset($matches[1][0])) {
+            $requestParamsVariable = $matches[1][0];
+
+            // 4.1. Find params taken out of request-post array variable
+            \preg_match_all('/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i', $actionCode, $matches);
+
+            if ([] !== $matches[1]) {
+                $requestParams = \array_merge($requestParams, $matches[1]);
+            }
+        }
+
+        $requestParams = \array_unique($requestParams);
+
+        \sort($requestParams);
+
+        return $requestParams;
+    }
 }
