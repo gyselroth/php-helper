@@ -139,12 +139,17 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
+     * @param string|null $locale
      * @return string
      * @throws \Zend_Date_Exception
      */
-    public static function getCurrentDate(): string
+    public static function getCurrentDate(?string $locale = null): string
     {
-        return (new \Zend_Date())->toString(self::FORMAT_DATE_ZF1_WEEKDAY_LONG_DAY_MONTH_YEAR);
+        return null === $locale
+            ? (new \Zend_Date())->toString(self::FORMAT_DATE_ZF1_WEEKDAY_LONG_DAY_MONTH_YEAR)
+            : (new \Zend_Date(
+                new Zend_Locale($locale)
+              ))->toString('EEEE, dd. MMMM y');
     }
 
     /**
@@ -1014,5 +1019,34 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     public static function renderTimerangeHumanReadable($dateStart, $dateEnd, ?string $locale = null): string
     {
         return HelperTimerange::renderTimerangeHumanReadable($dateStart, $dateEnd, $locale);
+    }
+
+    /**
+     * @param int|null $timestamp   If null: use time()
+     * @return string format: yyyy-mm-ddThh:mm:00Z (ISO 8601)
+     */
+    public static function renderIso8601Date(?int $timestamp = null): string
+    {
+        if (null === $timestamp) {
+            $timestamp = \time();
+        }
+
+        return \date('Y-m-d', $timestamp) . 'T' . \date('H:i', $timestamp) . ':00Z';
+    }
+
+    /**
+     * @param string|integer|Zend_Date|array $date
+     * @return Zend_Date
+     * @throws \Zend_Date_Exception
+     */
+    public static function toZendDate($date): \Zend_Date
+    {
+        $zendDate = new \Zend_Date();
+
+        if (isset($date)) {
+            $zendDate->set($date);
+        }
+
+        return $zendDate;
     }
 }
