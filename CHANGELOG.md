@@ -9,9 +9,13 @@ Version 0.2.20 - Not released yet
 * Added method: HelperDate::toZendDate()
 * Added method: HelperServerClient::addToSessionArray()
 * Added method: HelperServerClient::getRequestScheme()
+* Added method: HelperString::compressHtml()
+* Added method: HelperString::isBase64encodedString()
+* Added method: HelperString::isHexadecimalHash()
+* Added method: HelperString::lowerFirstAndLast()
+* Added ZF1 reflection method: getPhpDocDescriptionOfControllerAction()
 * Added ZF1 reflection method: getRequestParamsOfControllerAction()
 * Added ZF1 reflection method: getSourceCodeOfControllerAction()
-* Added ZF1 reflection method: getPhpDocDescriptionOfControllerAction()
 
 Version 0.2.19 - Released 2020/04/02
 ------------------------------------

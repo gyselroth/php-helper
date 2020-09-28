@@ -1016,4 +1016,49 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             $string
         );
     }
+
+    /**
+     * Make both, first and last char of given string lowercase
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function lowerFirstAndLast(string $str): string
+    {
+        $str = \strrev($str);
+        $str = \lcfirst($str);
+        $str = \strrev($str);
+
+        return \lcfirst($str);
+    }
+
+    public static function isBase64encodedString(string $str): bool
+    {
+        return false !== \base64_decode($str);
+    }
+
+    public static function isHexadecimalHash(string $str, int $minLen = 0): bool
+    {
+        return (0 === $minLen || \strlen($str) >= $minLen)
+            && '' === \preg_replace('/[0-9a-f]/i', '', $str);
+    }
+
+    public static function compressHtml(string $html): string
+    {
+        $search = [
+            '/\>[^\S ]+/s',      // strip whitespaces after tags, except space
+            '/[^\S ]+\</s',      // strip whitespaces before tags, except space
+            '/(\s)+/s',          // shorten multiple whitespace sequences
+            '/<!--(.|\s)*?-->/'  // remove HTML comments
+        ];
+
+        $replace = [
+            '>',
+            '<',
+            '\\1',
+            ''
+        ];
+
+        return \preg_replace($search, $replace, $html);
+    }
 }
