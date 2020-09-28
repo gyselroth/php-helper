@@ -871,17 +871,6 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     }
 
     /**
-     * @param  int|string $number
-     * @param  int        $digits
-     * @return string
-     * @deprecated
-     */
-    public static function formatAmountDigits($number, int $digits): string
-    {
-        return HelperNumeric::formatAmountDigits($number, $digits);
-    }
-
-    /**
      * @todo  add option/method(s) to allow also dateTime and/or time
      * @param  string $str
      * @param  string $delimiter

@@ -4,6 +4,7 @@ gyselroth Helper Library
 Version 0.3.00 - Not released yet
 ---------------------------------
 * Extract HtmlPurifier filters into separate dependency
+* Remove wrapper methods from HelperString redirecting to HelperNumeric 
 * Remove wrapper methods from HelperString redirecting to HelperPreg 
 
 Version 0.2.21 - Released 2020/09/28
