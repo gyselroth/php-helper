@@ -223,4 +223,29 @@ class HelperServerClient implements ConstantsHttpInterface
             $_SESSION[$sessionKey] = [$value];
         }
     }
+
+    public static function getRequestScheme(
+        bool $isProductionEnvironment,
+        bool $isStageEnvironment,
+        bool $productionUsesHttps = true,
+        bool $stageUsesHttps = true
+    ): string
+    {
+        if ((
+                $isProductionEnvironment
+                && $productionUsesHttps
+            )
+            || (
+                $isStageEnvironment
+                && $stageUsesHttps
+            )
+        ) {
+            return 'https';
+        }
+
+        return isset($_SERVER['REQUEST_SCHEME'])
+        && 'http' === $_SERVER['REQUEST_SCHEME']
+            ? 'http'
+            : 'https';
+    }
 }
