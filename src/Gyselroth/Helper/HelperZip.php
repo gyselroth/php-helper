@@ -54,7 +54,7 @@ class HelperZip
         bool $overwrite = false,
         string $pathFiles = '',
         $writeResultFileToSourceFilesPath = true,
-        $deleteFilesWhenDone = true
+        $deleteFilesWhenDone = false
     )
     {
         if (!self::isExtensionInstalled()) {
