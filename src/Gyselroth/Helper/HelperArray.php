@@ -1315,4 +1315,22 @@ class HelperArray implements ConstantsDataTypesInterface
 
         return $items;
     }
+
+    /**
+     * Variadic function that checks if any of the given keys exist in array
+     * @param array    $arrayToCheck
+     * @param string[] $keysToCheck Variadic parameter accepts any number of strings e.g isAnyKeySet([], 'foo', 'bar', 'foobar')
+     * @return bool
+     * @deprecated
+     */
+    public static function isAnyKeySet(array $arrayToCheck, string ...$keysToCheck): bool
+    {
+        foreach($keysToCheck as $key) {
+            if(isset($arrayToCheck[$key])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
