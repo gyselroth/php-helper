@@ -10,6 +10,7 @@ Version 0.3.00 - Not released yet
 * Remove wrapper methods from HelperString redirecting to HelperPreg 
 * Remove wrapper methods from HelperString redirecting to HelperSanitize 
 * Remove wrapper methods from HelperString redirecting to HelperXml 
+* Add method: HelperArray::isAnyKeySet()
 
 Version 0.2.21 - Released 2020/09/28
 ------------------------------------
