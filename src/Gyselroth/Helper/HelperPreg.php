@@ -113,6 +113,7 @@ class HelperPreg
             if ($offsetLhs < $offsetCurrentRhs) {
                 $offsetRhs = $offsetCurrentRhs;
                 $matchRhs  = $matchCurrentRhs;
+
                 break;
             }
         }

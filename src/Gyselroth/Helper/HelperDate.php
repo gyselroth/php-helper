@@ -114,11 +114,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         );
     }
 
-    /**
-     * @param  string $str
-     * @param  bool   $withSeconds
-     * @return bool
-     */
     public static function isTimeString(string $str, bool $withSeconds = true): bool
     {
         return false !== \DateTime::createFromFormat(
@@ -324,7 +319,14 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
         return [
             'array'     => $dateParts,
-            'timestamp' => \mktime(0, 0, 0, (int)$dateParts[1], (int)$dateParts[2], (int)$dateParts[0])
+            'timestamp' => \mktime(
+                0,
+                0,
+                0,
+                (int)$dateParts[1],
+                (int)$dateParts[2],
+                (int)$dateParts[0]
+            )
         ];
     }
 
@@ -422,7 +424,13 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             && !\is_numeric($timestamp)
         ) {
             // Convert time string like '14:00' or '14:00:00' to sum of seconds
-            $timestamp      = self::getSumSecondsOfTimeString($timestamp, true, true, $isCurrentDate);
+            $timestamp      = self::getSumSecondsOfTimeString(
+                $timestamp,
+                true,
+                true,
+                $isCurrentDate
+            );
+
             $isMilliSeconds = false;
         }
 
@@ -802,7 +810,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         if ($dates) {
             foreach ($dates as $item) {
                 if (empty($closest)
-                    || \abs($searchDate - $closest) > \abs($item - $searchDate)) {
+                    || \abs($searchDate - $closest) > \abs($item - $searchDate)
+                ) {
                     $closest = $item;
                 }
             }
