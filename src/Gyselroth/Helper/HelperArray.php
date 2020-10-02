@@ -147,13 +147,13 @@ class HelperArray implements ConstantsDataTypesInterface
             : (int)$array;
     }
 
-    public static function trim(array $strings, bool $allowEmpty = false): array
+    public static function trim(array $strings, bool $isEmptyAllowed = false): array
     {
         $trimmed = [];
 
         foreach ($strings as $string) {
             if (!empty($string)
-                || $allowEmpty
+                || $isEmptyAllowed
             ) {
                 $trimmed[] = \trim($string);
             }
@@ -892,29 +892,29 @@ class HelperArray implements ConstantsDataTypesInterface
     /**
      * Sort entries by value of item w/ given key
      *
-     * @param  array  $a
-     * @param  array  $b
-     * @param  string $key
-     * @param  bool   $strict
+     * @param array  $array1
+     * @param array  $array2
+     * @param string $key
+     * @param bool   $isStrict
      * @return int
      */
     public static function sortByKey(
-        array $a,
-        array $b,
+        array $array1,
+        array $array2,
         string $key = 'time',
-        bool $strict = false
+        bool $isStrict = false
     ): int
     {
-        if (!$strict) {
+        if (!$isStrict) {
             /** @noinspection TypeUnsafeComparisonInspection */
-            if ($a[$key] == $b[$key]) {
+            if ($array1[$key] == $array2[$key]) {
                 return 0;
             }
-        } elseif ($a[$key] === $b[$key]) {
+        } elseif ($array1[$key] === $array2[$key]) {
             return 0;
         }
 
-        return $a[$key] > $b[$key] ? -1 : 1;
+        return $array1[$key] > $array2[$key] ? -1 : 1;
     }
 
     public static function arrayStrPos(array $needles, string $haystack): bool

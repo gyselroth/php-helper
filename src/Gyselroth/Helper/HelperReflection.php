@@ -79,7 +79,9 @@ class HelperReflection implements ConstantsDataTypesInterface
         } catch (\Exception $exception) {
             $trace = \debug_backtrace();
 
-            throw new ReflectionException($exception->getMessage() . ' Caller: ' . \print_r($trace[1], true));
+            throw new ReflectionException(
+                $exception->getMessage() . ' Caller: ' . \print_r($trace[1], true)
+            );
         }
 
         return $object;
@@ -366,13 +368,17 @@ class HelperReflection implements ConstantsDataTypesInterface
         }
 
         // 4. Find variable that array of request-post is filled-into, extract parameter names out of it
-        \preg_match_all('/(\\$[a-z0-9_]+)\s*=\s*\\$this->_request->getPost\(\);/i', $actionCode, $matches);
+        \preg_match_all(
+            '/(\\$[a-z0-9_]+)\s*=\s*\\$this->_request->getPost\(\);/i', $actionCode, $matches
+        );
 
         if (isset($matches[1][0])) {
             $requestParamsVariable = $matches[1][0];
 
             // 4.1. Find params taken out of request-post array variable
-            \preg_match_all('/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i', $actionCode, $matches);
+            \preg_match_all(
+                '/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i', $actionCode, $matches
+            );
 
             if ([] !== $matches[1]) {
                 $requestParams = \array_merge($requestParams, $matches[1]);

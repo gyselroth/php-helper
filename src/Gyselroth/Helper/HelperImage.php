@@ -41,7 +41,9 @@ class HelperImage
         if ($extensionByMimeType !== \strtolower($extensionInFilename)) {
             $filePathIncorrect = $imageFilePath;
 
-            $imageFilePath = \str_replace('.' . $extensionInFilename, '.' . $extensionByMimeType, $imageFilePath);
+            $imageFilePath = \str_replace(
+                '.' . $extensionInFilename, '.' . $extensionByMimeType, $imageFilePath
+            );
 
             if (!\rename($filePathIncorrect, $imageFilePath)) {
                 throw new FileException("Failed to rename $filePathIncorrect to $imageFilePath");
@@ -137,7 +139,7 @@ class HelperImage
         if (!\file_exists($pathImage)) {
             LoggerWrapper::warning(
                 "HelperImage::encodeBase64 - File not found $pathImage",
-                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $$pathImage]
+                [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY, LoggerWrapper::OPT_PARAMS => $pathImage]
             );
 
             return '';
