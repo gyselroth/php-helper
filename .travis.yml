@@ -1,9 +1,15 @@
 language: php
+
 php:
     - 7.4
+
+branches:
+  only:
+    - master
+
 before_script:
-    - sudo apt install php-pear    
-    - pear install PHP_CodeSniffer
+    # TODO install dependencies, e.g. imagick
+    - composer install
+
 script:
-#    - composer install
     - phpcs --standard=PSR2
