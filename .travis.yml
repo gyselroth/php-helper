@@ -9,7 +9,7 @@ branches:
 
 before_install:
     - sudo apt update
-    - sudo apt install php7-imagick
+    - sudo apt install php-imagick
 
 before_script:
     - composer install
