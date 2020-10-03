@@ -7,8 +7,10 @@ branches:
   only:
     - master
 
+before_install:
+    - sudo apt install php-imagick
+
 before_script:
-    # TODO install dependencies, e.g. imagick
     - composer install
 
 script:
