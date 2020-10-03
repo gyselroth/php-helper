@@ -10,7 +10,8 @@ before_install:
   - sudo make install
   - cd ..
   - printf "\n" | pecl install imagick-beta;
-before_script:
-    - composer install
+#before_script:
+#    
 script:
+    - composer install
     - phpcs --standard=PSR2
