@@ -1,10 +1,13 @@
 language: php
 php:
     - 7.4
+env:
+    - NO_INTERACTION=1
+    - REPORT_EXIT_STATUS=1    
 before_script:
     - pecl install imagick
     - composer self-update
     - composer install --prefer-source --no-interaction --dev
 script:
 #    - phpunit
-    - ./vendor/bin/phpcs
+    - yes '' | pecl install imagick
