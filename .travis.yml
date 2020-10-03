@@ -1,9 +1,6 @@
 language: php
 php:
     - 7.4
-env:
-    - NO_INTERACTION=1
-    - REPORT_EXIT_STATUS=1    
 before_install:
     sudo apt-get -y --reinstall install imagemagick
 #    printf "\n" | pecl install imagick-beta
