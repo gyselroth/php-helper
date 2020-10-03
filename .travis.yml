@@ -4,10 +4,13 @@ php:
 env:
     - NO_INTERACTION=1
     - REPORT_EXIT_STATUS=1    
+before_install:
+    sudo apt-get -y --reinstall install imagemagick
+#    printf "\n" | pecl install imagick-beta
 before_script:
-    - pecl install imagick
+#    - pecl install imagick
     - composer self-update
     - composer install --prefer-source --no-interaction --dev
 script:
 #    - phpunit
-    - yes '' | pecl install imagick
+    - phpcs --standard=PSR2
