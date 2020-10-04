@@ -101,9 +101,11 @@ class HelperZip
             $overwrite = false;
         }
 
-        $result = $zip->open($destinationFile, $overwrite
-            ? \ZipArchive::OVERWRITE
-            : \ZipArchive::CREATE | \ZipArchive::OVERWRITE
+        $result = $zip->open(
+            $destinationFile, 
+            $overwrite
+                ? \ZipArchive::OVERWRITE
+                : \ZipArchive::CREATE | \ZipArchive::OVERWRITE
         );
 
         if (!$result) {
