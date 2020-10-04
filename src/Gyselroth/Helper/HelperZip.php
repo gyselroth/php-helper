@@ -102,7 +102,7 @@ class HelperZip
         }
 
         $result = $zip->open(
-            $destinationFile, 
+            $destinationFile,
             $overwrite
                 ? \ZipArchive::OVERWRITE
                 : \ZipArchive::CREATE | \ZipArchive::OVERWRITE
@@ -215,11 +215,10 @@ class HelperZip
                 $file = \str_replace('\\', DIRECTORY_SEPARATOR, $file);
 
                 if (\in_array(
-                        \substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
-                        $pathDots,
+                    \substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
+                    $pathDots,
                     true
-                    )
-                ) {
+                )) {
                     // Ignore "." and ".." folders
                     continue;
                 }
