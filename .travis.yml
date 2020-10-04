@@ -19,13 +19,22 @@ branches:
   only:
     - master
 
-
 before_install:
+  # execute all of the commands which need to be executed 
+  # before installing dependencies
     - sudo apt update
-    - sudo apt install php-imagick
+#    - sudo apt install php-imagick
+    - sudo apt install php7.4-cli php7.4-mysql php7.4-gd php7.4-imagick
 
+install:
+  # install all of the dependencies you need here
+  - composer install
+  
 before_script:
-    - composer install
+    # execute all of the commands which need to be executed 
+    # before running actual tests
 
 script:
+    # execute all of the commands which 
+    # should make the build pass or fail
     - phpcs --standard=PSR2 $(find ./ -name 'src/*.php')
