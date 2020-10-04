@@ -23,8 +23,6 @@ before_install:
   # execute all of the commands which need to be executed 
   # before installing dependencies
     - sudo apt update
-    - sudo apt-add-repository ppa:ondrej/php
-    - sudo apt update
     - sudo apt install php-imagick
     - sudo systemctl restart php7.4-fpm
 
