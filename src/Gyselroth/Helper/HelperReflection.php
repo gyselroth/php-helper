@@ -369,7 +369,9 @@ class HelperReflection implements ConstantsDataTypesInterface
 
         // 4. Find variable that array of request-post is filled-into, extract parameter names out of it
         \preg_match_all(
-            '/(\\$[a-z0-9_]+)\s*=\s*\\$this->_request->getPost\(\);/i', $actionCode, $matches
+            '/(\\$[a-z0-9_]+)\s*=\s*\\$this->_request->getPost\(\);/i',
+            $actionCode,
+            $matches
         );
 
         if (isset($matches[1][0])) {
