@@ -379,7 +379,9 @@ class HelperReflection implements ConstantsDataTypesInterface
 
             // 4.1. Find params taken out of request-post array variable
             \preg_match_all(
-                '/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i', $actionCode, $matches
+                '/\\' . $requestParamsVariable . '\[\'([a-z0-9_]+)\'\]/i',
+                $actionCode,
+                $matches
             );
 
             if ([] !== $matches[1]) {
