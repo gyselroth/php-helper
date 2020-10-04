@@ -2,6 +2,7 @@ PHP Helper
 ==========
 
 [![Build Status](https://travis-ci.org/gyselroth/php-helper.svg?branch=master)](https://travis-ci.org/gyselroth/php-helper)
+[![GitHub license](https://img.shields.io/badge/license-apache_2.0-blue.svg)](https://raw.githubusercontent.com/gyselroth/php-helper/master/LICENSE)
 
 PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) 
 and common data structures (e.g. HTML, ZIP, XML etc.).
