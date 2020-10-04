@@ -132,7 +132,7 @@ class HelperHtml
         \preg_match_all(self::PATTERN_ATTRIBUTE_WIDTH, $html, $widths);
         \preg_match_all(self::PATTERN_ATTRIBUTE_HEIGHT, $html, $heights);
 
-        foreach ($widths[0] as $index=>$width) {
+        foreach ($widths[0] as $index => $width) {
             $html = \str_replace(
                 $width,
                 'width:'
@@ -143,7 +143,7 @@ class HelperHtml
             );
         }
 
-        foreach ($heights[0] as $index=>$height) {
+        foreach ($heights[0] as $index => $height) {
             $html = \str_replace(
                 $height,
                 'height:'
