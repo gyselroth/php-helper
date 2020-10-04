@@ -1,7 +1,7 @@
-PHP Helper Library
-==================
+PHP Helper
+==========
 
-Collection of PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) 
+PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) 
 and common data structures (e.g. HTML, ZIP, XML etc.).
 
 
@@ -24,7 +24,7 @@ and common data structures (e.g. HTML, ZIP, XML etc.).
 Features
 --------
 
-Contains helpers for conversion-/modification-, validation-, extraction-/search-, and many more for:
+Provides helpers for conversion-/modification-, validation-, extraction-/search-, and many more for:
 
 * Date/Time handling
 * File I/O
@@ -49,8 +49,7 @@ frameworks.
 Minimum Requirements
 --------------------
 
-* PHP7.1-frm with extensions: php7.1-fpm, openssl, php7.1-xml
-* Build-tools: git, composer
+* See [composer.json](https://github.com/gyselroth/php-helper/blob/master/composer.json)
 
 
 Installation
