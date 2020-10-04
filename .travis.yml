@@ -24,6 +24,12 @@ before_install:
   # before installing dependencies
     - sudo apt update
     - sudo apt install php-imagick
+    - pecl channel-update pecl.php.net
+    - yes | pecl install imagick
+    
+    # install phpcs (remove after composer.lock update / use vendor package than)
+    # see also: https://github.com/squizlabs/PHP_CodeSniffer
+    - sudo apt install php-codesniffer
 
 install:
   # install all of the dependencies you need here
@@ -36,4 +42,5 @@ before_script:
 script:
     # execute all of the commands which 
     # should make the build pass or fail
-    - phpcs --standard=PSR2 $(find ./ -name 'src/*.php')
+    # - ./vendor/bin/phpcs --standard=PSR2 $(find ./ -name 'src/*.php')
+    - phpcs --standard=PSR2 $(find ./src -name '*.php')
