@@ -1321,12 +1321,11 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param array    $arrayToCheck
      * @param string[] $keysToCheck Variadic parameter accepts any number of strings e.g isAnyKeySet([], 'foo', 'bar', 'foobar')
      * @return bool
-     * @deprecated
      */
     public static function isAnyKeySet(array $arrayToCheck, string ...$keysToCheck): bool
     {
-        foreach($keysToCheck as $key) {
-            if(isset($arrayToCheck[$key])) {
+        foreach($keysToCheck as $keyToCheck) {
+            if(isset($arrayToCheck[$keyToCheck])) {
                 return true;
             }
         }
