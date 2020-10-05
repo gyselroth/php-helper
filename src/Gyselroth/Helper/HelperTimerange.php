@@ -66,9 +66,8 @@ class HelperTimerange
             $locale
         );
 
-        return $dateStart->get(
-            \Zend_Date::DATE_LONG) . ' '
-            . HelperString::translate('bis') . ' '
+        return $dateStart->get(\Zend_Date::DATE_LONG) 
+            . ' ' . HelperString::translate('bis') . ' '
             . $dateEnd->get(\Zend_Date::DATE_LONG);
     }
 

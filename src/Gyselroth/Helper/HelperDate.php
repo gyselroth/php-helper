@@ -145,7 +145,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             ? (new \Zend_Date())->toString(self::FORMAT_DATE_ZF1_WEEKDAY_LONG_DAY_MONTH_YEAR)
             : (new \Zend_Date(
                 new Zend_Locale($locale)
-              ))->toString('EEEE, dd. MMMM y');
+            ))->toString('EEEE, dd. MMMM y');
     }
 
     /**
@@ -160,7 +160,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
                 'year'  => \substr($date, 0, 4),
                 'month' => \substr($date, 5, 2),
                 'day'   => \substr($date, 8, 2)
-            ], self::DEFAULT_LOCALE
+            ],
+            self::DEFAULT_LOCALE
         );
     }
 
@@ -518,8 +519,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $weekDigit = $date->toValue(\Zend_Date::WEEKDAY_DIGIT);
 
-        if (
-            (0 === $weekDigit || 6 === $weekDigit)
+        if ((0 === $weekDigit || 6 === $weekDigit)
             && (!$showSaturday || !$showSunday)
         ) {
             // Sunday
@@ -889,7 +889,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             \str_replace(
                 ['am', 'pm'],
                 ['', ''],
-                \strtolower($dateStr))
+                \strtolower($dateStr)
+            )
         );
     }
 

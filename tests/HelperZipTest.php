@@ -50,7 +50,7 @@ class HelperZipTest extends HelperTestCase
             \unlink($pathDestinationFile);
         }
 
-        HelperZip::zipFiles($files, $pathDestinationFile, false, $path, false, false);
+        HelperZip::zipFiles($files, $pathDestinationFile, false, $path, false);
 
         $this->assertFileExists($pathDestinationFile);
         $this->assertGreaterThan(0, \filesize($pathDestinationFile));

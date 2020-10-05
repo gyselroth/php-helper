@@ -22,5 +22,5 @@ interface ConstantsEntitiesOfStrings
     public const CHAR_TYPE_NUMBER      = 2;
     public const CHAR_TYPE_SPECIAL     = 3;
 
-    public CONST UMLAUTS = ['ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß'];
+    public const UMLAUTS = ['ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß'];
 }

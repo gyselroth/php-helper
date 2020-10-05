@@ -54,7 +54,7 @@ class HelperZip
         bool $overwrite = false,
         string $pathFiles = '',
         $writeResultFileToSourceFilesPath = true,
-        $deleteFilesWhenDone = true
+        $deleteFilesWhenDone = false
     )
     {
         if (!self::isExtensionInstalled()) {
@@ -101,9 +101,11 @@ class HelperZip
             $overwrite = false;
         }
 
-        $result = $zip->open($destinationFile, $overwrite
-            ? \ZipArchive::OVERWRITE
-            : \ZipArchive::CREATE | \ZipArchive::OVERWRITE
+        $result = $zip->open(
+            $destinationFile,
+            $overwrite
+                ? \ZipArchive::OVERWRITE
+                : \ZipArchive::CREATE | \ZipArchive::OVERWRITE
         );
 
         if (!$result) {
@@ -213,11 +215,10 @@ class HelperZip
                 $file = \str_replace('\\', DIRECTORY_SEPARATOR, $file);
 
                 if (\in_array(
-                        \substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
-                        $pathDots,
+                    \substr($file, \strrpos($file, DIRECTORY_SEPARATOR) + 1),
+                    $pathDots,
                     true
-                    )
-                ) {
+                )) {
                     // Ignore "." and ".." folders
                     continue;
                 }

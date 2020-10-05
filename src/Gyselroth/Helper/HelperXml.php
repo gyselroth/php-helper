@@ -28,7 +28,8 @@ class HelperXml implements ConstantsXmlInterface
     public static function isValidXml(string $str): bool
     {
         return (bool)\simplexml_load_string(
-            $str, 'SimpleXmlElement',
+            $str,
+            'SimpleXmlElement',
             LIBXML_NOERROR + LIBXML_ERR_FATAL + LIBXML_ERR_NONE
         );
     }
@@ -146,7 +147,7 @@ class HelperXml implements ConstantsXmlInterface
         bool $includeWarnings = false
     ): string
     {
-        $renderErrorMessage = static function($error, $message) {
+        $renderErrorMessage = static function ($error, $message) {
             return "<strong><br/>\n"
                 . $message
                 . \trim($error->message) . ' on line <strong>' . $error->line

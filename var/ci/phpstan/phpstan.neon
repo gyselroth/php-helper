@@ -17,7 +17,6 @@ parameters:
         - /srv/www/trunk/.idea/
         - /srv/www/trunk/tests/
         - /srv/www/trunk/var/
-        - /srv/www/trunk/var/
         - /srv/www/trunk/vendor/
 
     ignoreErrors:
