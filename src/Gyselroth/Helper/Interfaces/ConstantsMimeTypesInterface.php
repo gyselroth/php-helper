@@ -34,9 +34,12 @@ interface ConstantsMimeTypesInterface
     public const MIME_TYPE_MS_WORD       = 'application/msword';
 
     // DOCX
-    public const MIME_TYPE_VND_OPEN_XML_WORD = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    public const MIME_TYPE_VND_OPEN_XML_WORD =
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
     // XLSX
-    public const MIME_TYPE_VND_OPEN_XML_SPREADSHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    public const MIME_TYPE_VND_OPEN_XML_SPREADSHEET =
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
     public const MIME_TYPE_STREAM = 'application/octet-stream';
 }

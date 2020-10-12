@@ -43,9 +43,10 @@ class HelperArray implements ConstantsDataTypesInterface
      * Check whether given array is associative (has string keys, is not numerically indexed)
      *
      * @param  array $array
-     * @param  bool  $allowStringEnumeratedKeys     Allow string-based keys, that correspond to a zero-based enumeration?
+     * @param  bool  $allowStringEnumeratedKeys Allow string-based keys, corresponding to zero-based enumeration?
      * @return bool
-     * @note   Only the 1st level of items is checked. For multi-level checking: iterate over all levels (or extend this method)
+     * @note   Only the 1st level of items is checked.
+     * @note   For multi-level checking: iterate over all levels (or extend this method)
      */
     public static function isAssociative(array $array, bool $allowStringEnumeratedKeys = false): bool
     {
@@ -229,13 +230,16 @@ class HelperArray implements ConstantsDataTypesInterface
     }
 
     /**
+     * Get value on sub level(s), identified by given keys, or full array if no keys given.
+     * Returns false if a given key doesn't exist
+     *
      * @param  array                $array
      * @param  string               $keyOnLevel0
      * @param  string               $keyOnLevel1
      * @param  string               $keyOnLevel2
      * @param  string               $keyOnLevel3
      * @param  bool|string|array $default
-     * @return array|bool|float|int|string|object    Value on sub level(s), identified by given keys, or full array if no keys given. False if a given key doesn't exist
+     * @return array|bool|float|int|string|object
      */
     public static function getValueByKeyFromSubArrays(
         array $array,
@@ -383,7 +387,7 @@ class HelperArray implements ConstantsDataTypesInterface
         /**
          * @note  The returned array will be associative, possibly with "gaps" in the otherwise numerically
          *        ordered keys (i.e. 1,2,4,...).
-         *        When using the array in JavaScript, it's data type might be converted to object (to preserve the keys)
+         *        When using the array in JavaScript, it's data type might be converted to object (to preserve keys)
          *        instead of array.
          *        If usage of the result requires an un-associative array, use array_values() upon the array.
          */
@@ -688,9 +692,12 @@ class HelperArray implements ConstantsDataTypesInterface
     /**
      * Reduce array to items w/ given keys, optionally: Exclude items with given filter values
      *
+     * Example: $excludes being: ['id' => 500, 'label' => 'me not']
+     *          Excludes all items having 'id' == 500 or 'label' == 'me not'
+     *
      * @param  array $keys
      * @param  array $array
-     * @param  array $excludes e.g. ['id' => 500, 'label' => 'me not'] - will exclude all items having 'id' == 500 or 'label' == 'me not'
+     * @param  array $excludes
      * @param  bool  $strict
      * @return array
      */
@@ -1025,7 +1032,7 @@ class HelperArray implements ConstantsDataTypesInterface
     }
 
     /**
-     * Merges non existing items like array_merge, but if a key exists, then the values will be merged as array.
+     * Merges non existing items like array_merge, but if a key exists, then the values will be merged as array
      *
      * @param array $array
      * @param array $extension
@@ -1310,7 +1317,7 @@ class HelperArray implements ConstantsDataTypesInterface
     /**
      * Variadic function that checks if any of the given keys exist in array
      * @param array    $arrayToCheck
-     * @param string[] $keysToCheck Variadic parameter accepts any number of strings e.g isAnyKeySet([], 'foo', 'bar', 'foobar')
+     * @param string[] $keysToCheck Variadic parameter accepts any number of strings
      * @return bool
      */
     public static function isAnyKeySet(array $arrayToCheck, string ...$keysToCheck): bool

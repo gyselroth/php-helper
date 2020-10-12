@@ -34,10 +34,11 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
     /**
      * Find successive sub-string offsets
+     * Return as associative array ['needle1' => $offset1, 'needle2' => ...] (default) or as indexed array
      *
      * @param  string $haystack
      * @param  array  $needles
-     * @param  bool   $associative Return as associative array ['needle1' => $offset1, 'needle2' => ...] (default) or as indexed array?
+     * @param  bool   $associative
      * @return array|false          Array w/ found offset of each needle or false if none is contained in $haystack
      */
     public static function strPosConsecutive(string $haystack, array $needles, bool $associative = true)

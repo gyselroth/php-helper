@@ -461,7 +461,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     }
 
     /**
-     * Sort given files by "depth", that is: list less "deep" files first, sort files of identical depth alphabetically.
+     * Sort given files by "depth", that is: list less "deep" files first, sort files of identical depth alphabetically
      * Eg: 'foo.js', 'foo.bar.js', 'foo.baz.js', 'foo.bar.baz.js'
      *
      * @param  array $files
@@ -703,8 +703,8 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      * Validate upload file and evoke given callback functions upon it
      *
      * @param  array  $file
-     * @param  array  $callbackFileExists Callback function configuration (containing 'model' and 'functionName') - function to check for pre-existing file
-     * @param  array  $callbackCreateFile Callback function configuration (containing 'model' and 'functionName') - function to save posted file
+     * @param  array  $callbackFileExists callback to check for pre-existing file (containing 'model', 'functionName')
+     * @param  array  $callbackCreateFile callback to save posted file (containing 'model' and 'functionName')
      * @param  string $fileNamePrefix
      * @param  array  $allowedTypes       Array of allowed MIME types, e.g: 'text/plain', 'application/pdf', ...
      * @param  int    $maximumFileSize    Max. size / -1 for unlimited size

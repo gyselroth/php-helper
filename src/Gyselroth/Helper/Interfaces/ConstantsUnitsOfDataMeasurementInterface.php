@@ -15,8 +15,10 @@ interface ConstantsUnitsOfDataMeasurementInterface
 {
     // Byte sizes
     public const BYTES_KILOBYTE    = 1024;
+
     // 1 MB = 1024 * 1024 bytes
     public const BYTES_MEGABYTE    = 1048576;
+
     // 1 GB = 1024 * 1024 * 1024 bytes
     public const BYTES_GIGABYTE    = 1073741824;
 
