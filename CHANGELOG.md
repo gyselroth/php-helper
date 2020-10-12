@@ -1,8 +1,8 @@
 gyselroth Helper Library
 ========================
 
-Version 1.0.0 - Not released yet
---------------------------------
+Version 1.0.0 - Released 2020/10/12
+-----------------------------------
 * (breaking) Correct (was not fully uppercase) constant casing: ConstantsHttpInterface::HTTP_STATUS_CODE_GATEWAY_TIMEOUT
 * (breaking) Correct (was using underscores) method name: HelperArray::keysRecursive()
 * (breaking) Correct (was using underscores) method name: HelperPreg::pregMatchAllWithOffsets()
