@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class ReflectionExceptionUndefinedFunction extends \Exception {
+class ReflectionExceptionUndefinedFunction extends \Exception
+{
 }

@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class ReflectionExceptionInvalidType extends \Exception {
+class ReflectionExceptionInvalidType extends \Exception
+{
 }

@@ -45,8 +45,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         bool $sort = true,
         bool $makeUnique = false,
         bool $onlyPositive = false
-    ): string
-    {
+    ): string {
         $array = \array_unique($array);
 
         $integers = [];
@@ -84,8 +83,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         string $delimiter = ',',
         bool $excludeNullValues = true,
         bool $unique = false
-    ): array
-    {
+    ): array {
         if (null === $str) {
             return [];
         }
@@ -123,8 +121,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         string $delimiter = ',',
         bool $excludeNullValues = true,
         bool $unique = false
-    ): array
-    {
+    ): array {
         if ('' === $str) {
             return [];
         }

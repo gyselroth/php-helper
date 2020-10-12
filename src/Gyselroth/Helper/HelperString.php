@@ -27,7 +27,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @return     array|false
      * @deprecated use instead: strposConsecutive()
      */
-    public static function strPosMultiple(string $haystack, array $needles) {
+    public static function strPosMultiple(string $haystack, array $needles)
+    {
         return self::strPosConsecutive($haystack, $needles);
     }
 
@@ -201,8 +202,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         string $str,
         int $offsetNeedle = 0,
         bool $excludeNeedle = false
-    ): string
-    {
+    ): string {
         if ($offsetNeedle > \strlen($str)) {
             return $str;
         }
@@ -218,8 +218,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         string $str,
         int $offsetNeedle = 0,
         bool $excludeNeedle = false
-    ): string
-    {
+    ): string {
         if ($offsetNeedle > \strlen($str)) {
             return $str;
         }
@@ -345,7 +344,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
         return \preg_replace_callback(
             '/-([a-z])/',
-            static function($c) {
+            static function ($c) {
                 return \strtoupper($c[1]);
             },
             $string
@@ -362,7 +361,8 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         $string = \preg_replace(
             '/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/',
             $glue . '$0',
-            \lcfirst($camelString));
+            \lcfirst($camelString)
+        );
 
         return null === $string
             ? ''
@@ -388,8 +388,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         bool $containNumbers = true,
         string $specialChars = '',
         bool $eachSpecialCharOnlyOnce = true
-    ): string
-    {
+    ): string {
         $str    = '';
         $offset = 0;
 
@@ -470,8 +469,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public static function getRandomLetter(
         bool $upperCase = false,
         string $pool = 'abcdefghijklmnopqrstuvwxyz'
-    ): string
-    {
+    ): string {
         if (1 === \strlen($pool)) {
             return $upperCase ? \strtoupper($pool) : $pool;
         }
@@ -565,8 +563,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         $conditionValue,
         $operatorString = null,
         bool $strict = false
-    ): ?bool
-    {
+    ): ?bool {
         switch ($operatorString) {
             case self::OPERATOR_LESS_THAN:
                 return $value < $conditionValue;
@@ -665,7 +662,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
         $serialized = \preg_replace_callback(
             '#\\s*\\["(.*?)"\\]\\s*=>#',
-            static function($match) {
+            static function ($match) {
                 return 's:' . \strlen($match[1]) . ':\"' . $match[1] . '\"';
             },
             $serialized
@@ -677,7 +674,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
 
         $serialized = \preg_replace_callback(
             '#object\\((.*?)\\).*?\\((\\d+)\\)\\s*{\\s*;#',
-            static function($match) {
+            static function ($match) {
                 return 'O:'
                     . \strlen($match[1]) . ':\"'
                     . $match[1] . '\":'

@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class FileExceptionFailedTransfer extends \Exception {
+class FileExceptionFailedTransfer extends \Exception
+{
 }

@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class DateException extends \Exception {
+class DateException extends \Exception
+{
 }

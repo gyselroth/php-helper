@@ -51,7 +51,7 @@ class HelperPreg
             $str = \substr($str, $offset);
         }
 
-        \preg_match ($needlePattern, $str, $matches, PREG_OFFSET_CAPTURE);
+        \preg_match($needlePattern, $str, $matches, PREG_OFFSET_CAPTURE);
 
         if (0 === $offset) {
             return $matches[0][1] ?? -1;
@@ -84,8 +84,7 @@ class HelperPreg
         string $patternLhs,
         string $patternRhs,
         string $replacement
-    ): string
-    {
+    ): string {
         // Find consecutive offsets of left- and right-hand-side patterns
         $matchesLhs = self::preg_match_all_with_offsets($patternLhs, $str);
 

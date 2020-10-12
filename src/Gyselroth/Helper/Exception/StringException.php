@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class StringException extends \Exception {
+class StringException extends \Exception
+{
 }

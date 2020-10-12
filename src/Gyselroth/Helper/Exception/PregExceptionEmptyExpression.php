@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class PregExceptionEmptyExpression extends PregException {
+class PregExceptionEmptyExpression extends PregException
+{
 }

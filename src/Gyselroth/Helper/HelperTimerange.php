@@ -66,7 +66,7 @@ class HelperTimerange
             $locale
         );
 
-        return $dateStart->get(\Zend_Date::DATE_LONG) 
+        return $dateStart->get(\Zend_Date::DATE_LONG)
             . ' ' . HelperString::translate('bis') . ' '
             . $dateEnd->get(\Zend_Date::DATE_LONG);
     }
@@ -107,8 +107,7 @@ class HelperTimerange
         $startRange2,
         $endRange2,
         bool $allowTouching = true
-    ): bool
-    {
+    ): bool {
         // Ensure all times are UNIX timestamps
         $startRange1 = HelperDate::getUnixTimestampFromDate($startRange1);
         $endRange1   = HelperDate::getUnixTimestampFromDate($endRange1);

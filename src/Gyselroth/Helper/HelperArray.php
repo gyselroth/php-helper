@@ -85,7 +85,8 @@ class HelperArray implements ConstantsDataTypesInterface
     {
         return [] !== \array_filter(
             \array_keys($array),
-            'is_string');
+            'is_string'
+        );
     }
 
     /**
@@ -98,8 +99,7 @@ class HelperArray implements ConstantsDataTypesInterface
         $array,
         bool $makeItemsUnique = false,
         bool $convertNonNumericValuesToZero = false
-    ): array
-    {
+    ): array {
         if (!\is_array($array)) {
             if (\is_numeric($array)) {
                 return [(int)$array];
@@ -244,8 +244,7 @@ class HelperArray implements ConstantsDataTypesInterface
         string $keyOnLevel2 = '',
         string $keyOnLevel3 = '',
         $default = false
-    )
-    {
+    ) {
         $hasKeyOnLevel0 = '' !== $keyOnLevel0;
         $hasKeyOnLevel1 = $hasKeyOnLevel0 && '' !== $keyOnLevel1;
         $hasKeyOnLevel2 = $hasKeyOnLevel1 && '' !== $keyOnLevel2;
@@ -362,8 +361,7 @@ class HelperArray implements ConstantsDataTypesInterface
         $idsList,
         string $filterPrefix = '',
         string $prefixGlue = '_'
-    ): array
-    {
+    ): array {
         $relatedIdsWithPrefix = \is_array($idsList) ? $idsList : \explode(',', $idsList);
         $relatedIds           = [];
 
@@ -586,8 +584,7 @@ class HelperArray implements ConstantsDataTypesInterface
         $key,
         $check,
         int $sort = SORT_NATURAL
-    ): array
-    {
+    ): array {
         $specialCharacter = [];
         $stringBeginsWith = [];
         $string           = [];
@@ -702,8 +699,7 @@ class HelperArray implements ConstantsDataTypesInterface
         array $array,
         array $excludes = [],
         bool $strict = false
-    ): array
-    {
+    ): array {
         $values = [];
 
         foreach ($keys as $key) {
@@ -753,10 +749,8 @@ class HelperArray implements ConstantsDataTypesInterface
             foreach ($currentArray as $currentArrayKey => $currentArrayValue) {
                 if ($arrayIndex === 0) {
                     $data[$currentArrayKey][] = $currentArrayValue;
-                } elseif (
-                    $arrayIndex === 1
-                    && (
-                        isset($data[$currentArrayKey][0])
+                } elseif ($arrayIndex === 1
+                    && (isset($data[$currentArrayKey][0])
                         && !empty($data[$currentArrayKey][0])
                     )
                 ) {
@@ -878,8 +872,7 @@ class HelperArray implements ConstantsDataTypesInterface
         string $wrapLhs = "'",
         string $wrapRhs = "'",
         string $glue = ','
-    ): string
-    {
+    ): string {
         $itemsWrapped = [];
 
         foreach ($items as $item) {
@@ -903,8 +896,7 @@ class HelperArray implements ConstantsDataTypesInterface
         array $array2,
         string $key = 'time',
         bool $isStrict = false
-    ): int
-    {
+    ): int {
         if (!$isStrict) {
             /** @noinspection TypeUnsafeComparisonInspection */
             if ($array1[$key] == $array2[$key]) {
@@ -1201,8 +1193,7 @@ class HelperArray implements ConstantsDataTypesInterface
         bool $allowWhiteSpace = false,
         bool $allowSpace = false,
         string $allowedSpecialCharacters = ''
-    ): void
-    {
+    ): void {
         foreach ($array as &$value) {
             if (\is_array($value)) {
                 self::sanitize(
@@ -1324,8 +1315,8 @@ class HelperArray implements ConstantsDataTypesInterface
      */
     public static function isAnyKeySet(array $arrayToCheck, string ...$keysToCheck): bool
     {
-        foreach($keysToCheck as $keyToCheck) {
-            if(isset($arrayToCheck[$keyToCheck])) {
+        foreach ($keysToCheck as $keyToCheck) {
+            if (isset($arrayToCheck[$keyToCheck])) {
                 return true;
             }
         }

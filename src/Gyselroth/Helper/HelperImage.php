@@ -42,7 +42,9 @@ class HelperImage
             $filePathIncorrect = $imageFilePath;
 
             $imageFilePath = \str_replace(
-                '.' . $extensionInFilename, '.' . $extensionByMimeType, $imageFilePath
+                '.' . $extensionInFilename,
+                '.' . $extensionByMimeType,
+                $imageFilePath
             );
 
             if (!\rename($filePathIncorrect, $imageFilePath)) {
@@ -61,8 +63,7 @@ class HelperImage
         int $maxWidth,
         int $maxHeight,
         int $quality = 100
-    ): bool
-    {
+    ): bool {
         $extension = \strtolower(\pathinfo($sourcePath, PATHINFO_EXTENSION));
 
         $imageResource = '' === $sourcePath
@@ -105,7 +106,10 @@ class HelperImage
         \imagecopyresampled(
             $save,
             $imageResource,
-            0, 0, 0, 0,
+            0,
+            0,
+            0,
+            0,
             \imagesx($save),
             \imagesy($save),
             $sourceWidth,
@@ -249,8 +253,7 @@ class HelperImage
         int $maxHeight,
         string $extension = HelperFile::FILE_ENDING_JPEG,
         int $quality = 100
-    ): string
-    {
+    ): string {
         $pathTmpWithoutExtension = APPLICATION_PATH . '/../../tmp/' . \uniqid('img_', false);
 
         $pathTmpImage    = $pathTmpWithoutExtension . '.' . $extension;
@@ -258,7 +261,7 @@ class HelperImage
 
         $fileHandle = \fopen($pathTmpImage, 'wb+');
 
-        if(!$fileHandle){
+        if (!$fileHandle) {
             throw new FileException('Failed open image: ' . $pathTmpImage);
         }
 

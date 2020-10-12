@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Exception;
 
-class ImageException extends \Exception {
+class ImageException extends \Exception
+{
 }

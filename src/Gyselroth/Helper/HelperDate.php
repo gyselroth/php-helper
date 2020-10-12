@@ -104,8 +104,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         $digitsInPart2 = 2,
         $digitsInPart3 = 2,
         $separator = '-'
-    ): bool
-    {
+    ): bool {
         return (bool)\preg_match(
             '/\d{' . $digitsInPart1 . '}' . $separator
             . '\d{' . $digitsInPart2 . '}' . $separator
@@ -298,8 +297,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         string $formatYear = 'Y',
         string $formatMonth = 'n',
         string $formatDay = 'j'
-    ): array
-    {
+    ): array {
         /** @noinspection CallableParameterUseCaseInTypeContextInspection */
         $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
 
@@ -379,8 +377,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         string $delimiter = ':',
         bool $includeMinutes = true,
         bool $includeSeconds = true
-    ): array
-    {
+    ): array {
         if (\is_numeric($timeStr)) {
             $timeStr = self::getTimeString($timeStr);
         } elseif (empty($timeStr) || false === \strpos($timeStr, $delimiter)) {
@@ -419,8 +416,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         bool $isMilliSeconds = false,
         bool $includeSeconds = true,
         bool $isCurrentDate = false
-    ): string
-    {
+    ): string {
         if (\is_string($timestamp)
             && !\is_numeric($timestamp)
         ) {
@@ -452,7 +448,8 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             ? \mktime(
                 $timeParts[self::DATE_TIME_PART_HOUR],
                 $timeParts['minutes'],
-                \array_key_exists('seconds', $timeParts) ? $timeParts['seconds'] : 0)
+                \array_key_exists('seconds', $timeParts) ? $timeParts['seconds'] : 0
+            )
             :
             $timeParts[self::DATE_TIME_PART_HOUR]
             * self::SECONDS_HOUR + $timeParts['minutes']
@@ -485,8 +482,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         bool $includeMinutes = true,
         bool $includeSeconds = true,
         bool $isCurrentDate = false
-    ): int
-    {
+    ): int {
         return self::getSumSecondsOfTimeParts(
             self::getTimeStringParts($timeStr, ':', $includeMinutes, $includeSeconds),
             $isCurrentDate

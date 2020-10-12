@@ -14,5 +14,6 @@ namespace Gyselroth\Helper\Exception;
 /**
  * Perl regular expression exception
  */
-class PregException extends \Exception {
+class PregException extends \Exception
+{
 }

@@ -147,8 +147,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         bool $prefixWithDateTime = true,
         bool $generateUniquePostfix = true,
         string $fileExtension = ''
-    ): string
-    {
+    ): string {
         $prefix = $prefixWithDateTime ? \date('Ymd-His') : '';
 
         $filename = $leadStr .
@@ -189,8 +188,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         string $filename,
         array $forbiddenChars = [],
         array $replacementChars = []
-    ): string
-    {
+    ): string {
         $filename = \str_replace(DIRECTORY_SEPARATOR, '', $filename);
 
         if (empty($filename)) {
@@ -242,7 +240,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             $content = \json_encode($content);
         }
 
-        if(!$content){
+        if (!$content) {
             return false;
         }
 
@@ -259,7 +257,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
 
         $handle = \fopen($filePath, 'wb');
 
-        if(!$handle){
+        if (!$handle) {
             return false;
         }
 
@@ -290,8 +288,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         bool $recursive = false,
         string $leadString = '',
         bool $namesOnly = false
-    ): array
-    {
+    ): array {
         if (!\is_dir($path)) {
             return [];
         }
@@ -304,7 +301,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         /** @noinspection ReturnFalseInspection */
         $files = \scandir($path);
 
-        if(!$files) {
+        if (!$files) {
             return [];
         }
 
@@ -336,8 +333,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         string $ext = '',
         bool $recursive = false,
         string $leadString = ''
-    ): array
-    {
+    ): array {
         $filesFiltered = self::scanDir($path, $ext, $recursive, $leadString);
         \natsort($filesFiltered);
 
@@ -613,8 +609,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         array $uploadFile,
         array $allowedTypes,
         $maximumFileSize = 2000000
-    ): string
-    {
+    ): string {
         if (!isset($uploadFile['name'])) {
             // @todo throw exception
             return HelperString::translate('Name der Datei wurde nicht empfangen');
@@ -670,8 +665,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         array $allowedTypes = [],
         $maximumFileSize = 3000000,
         string $storageFilename = ''
-    ): string
-    {
+    ): string {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         $message = self::validateUploadFile($_FILES['userfile'], $allowedTypes, $maximumFileSize);
 
@@ -720,8 +714,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         $fileNamePrefix = '',
         array $allowedTypes = [],
         $maximumFileSize = -1
-    ): string
-    {
+    ): string {
         $filename = $fileNamePrefix . $file['name'];
 
         $callbackModelFileExists        = $callbackFileExists['model'];
@@ -793,7 +786,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
             $res = true;
 
             /** @noinspection ForeachSourceInspection */
-            foreach($filename as $filenameSingle) {
+            foreach ($filename as $filenameSingle) {
                 $res = $res && self::deleteIfExists($filenameSingle, $path);
             }
 
@@ -890,8 +883,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         string $path,
         bool $makeWritableIfNot = true,
         bool $createIfNotExists = true
-    ): bool
-    {
+    ): bool {
         if ($createIfNotExists
             && !\is_dir($path)
         ) {
@@ -953,8 +945,7 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
         string $fileName,
         string $fileStoredIn,
         string $pathTmp
-    ): void
-    {
+    ): void {
         \move_uploaded_file($fileStoredIn, $pathTmp . DIRECTORY_SEPARATOR . $fileName);
     }
 

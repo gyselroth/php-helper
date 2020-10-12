@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class FileExceptionPathNotFound extends \Exception {
+class FileExceptionPathNotFound extends \Exception
+{
 }

@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class FileExceptionInvalidFile extends \Exception {
+class FileExceptionInvalidFile extends \Exception
+{
 }

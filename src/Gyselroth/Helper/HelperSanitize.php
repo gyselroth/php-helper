@@ -62,8 +62,7 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         bool $allowWhiteSpace = false,
         bool $allowSpace = false,
         string $allowedSpecialCharacters = ''
-    ): bool
-    {
+    ): bool {
         $regExpression = '';
 
         if ($allowCharacters) {
@@ -95,8 +94,7 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         string $filename,
         bool $toLower = true,
         bool $specialCharsToAscii = true
-    ): string
-    {
+    ): string {
         // Convert space to hyphen, remove single- and double- quotes
         $filename = \str_replace([' ', '\'', '"'], ['-', '', ''], $filename);
 
@@ -137,8 +135,7 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         bool $allowWhiteSpace = false,
         bool $allowSpace = false,
         string $allowedSpecialCharacters = ''
-    ): bool
-    {
+    ): bool {
         $regExpression = '';
 
         if ($allowCharacters) {
@@ -185,8 +182,7 @@ class HelperSanitize implements ConstantsEntitiesOfStrings
         bool $allowWhiteSpace = false,
         bool $allowSpace = false,
         string $allowedSpecialCharacters = ''
-    ): bool
-    {
+    ): bool {
         return self::sanitizeString(
             $str,
             $allowCharacters,

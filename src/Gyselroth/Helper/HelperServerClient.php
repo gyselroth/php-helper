@@ -67,8 +67,8 @@ class HelperServerClient implements ConstantsHttpInterface
             // Requesting servers timestamp is later than timestamp of this machine
             case -1:
                 $diff = (int)$requestTime->get(
-                    \Zend_Date::TIMESTAMP) - (int)$now->get(\Zend_Date::TIMESTAMP
-                    );
+                    \Zend_Date::TIMESTAMP
+                ) - (int)$now->get(\Zend_Date::TIMESTAMP);
 
                 $modificationTime->add($diff, \Zend_Date::TIMESTAMP);
                 break;
@@ -176,8 +176,7 @@ class HelperServerClient implements ConstantsHttpInterface
     public static function prepareAjaxResponseData(
         array $data,
         array $indexesToUnset = ['model', 'controller', 'action', 'school']
-    ): array
-    {
+    ): array {
         if (empty($data)) {
             return $data;
         }
@@ -232,8 +231,7 @@ class HelperServerClient implements ConstantsHttpInterface
         bool $isStageEnvironment,
         bool $productionUsesHttps = true,
         bool $stageUsesHttps = true
-    ): string
-    {
+    ): string {
         if ((
                 $isProductionEnvironment
                 && $productionUsesHttps

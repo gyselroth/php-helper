@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class XmlException extends \Exception {
+class XmlException extends \Exception
+{
 }

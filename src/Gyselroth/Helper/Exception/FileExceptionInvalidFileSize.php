@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class FileExceptionInvalidFileSize extends \Exception {
+class FileExceptionInvalidFileSize extends \Exception
+{
 }

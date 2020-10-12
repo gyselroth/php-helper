@@ -47,8 +47,7 @@ class HelperXml implements ConstantsXmlInterface
         array $levels,
         array $excludeTagNames = [],
         array $excludeTagTypes = []
-    ): array
-    {
+    ): array {
         $tags = self::getTagsFromXml($xml);
 
         return
@@ -72,8 +71,7 @@ class HelperXml implements ConstantsXmlInterface
         array $excludeTagNames,
         array $excludeTagTypes,
         $nodes
-    ): array
-    {
+    ): array {
         $nodesFiltered = [];
         $excludeTagNames = \array_map('strtoupper', $excludeTagNames);
 
@@ -105,8 +103,7 @@ class HelperXml implements ConstantsXmlInterface
         array $levels,
         array $excludeTagNames = [],
         array $excludeTagTypes = []
-    ):int
-    {
+    ):int {
         return \count(
             self::getNodes($xml, $levels, $excludeTagNames, $excludeTagTypes)
         );
@@ -125,8 +122,7 @@ class HelperXml implements ConstantsXmlInterface
         array $excludeTagNames,
         array $excludeTagTypes,
         $nodes
-    ): int
-    {
+    ): int {
         return \count(
             self::getItemsInArrayOfNodes($levels, $excludeTagNames, $excludeTagTypes, $nodes)
         );
@@ -145,8 +141,7 @@ class HelperXml implements ConstantsXmlInterface
         bool $includeFatal = true,
         bool $includeErrors = false,
         bool $includeWarnings = false
-    ): string
-    {
+    ): string {
         $renderErrorMessage = static function ($error, $message) {
             return "<strong><br/>\n"
                 . $message
@@ -198,8 +193,7 @@ class HelperXml implements ConstantsXmlInterface
         string $pathXsd,
         string $xmlVersion = '1.0',
         string $xmlEncoding = 'UTF-8'
-    )
-    {
+    ) {
         if (!\file_exists($pathXml)) {
             throw new XmlException('Failed loading XML file: ' . $pathXml);
         }

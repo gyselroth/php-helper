@@ -188,8 +188,7 @@ class HelperHtml
         bool $allowVideo = false,
         bool $escapeDoubleQuotes = false,
         ?array $allowedUriSchemes = null
-    ): string
-    {
+    ): string {
         $config = HTMLPurifier_Config::createDefault();
 
         if ($enableTargetBlank) {

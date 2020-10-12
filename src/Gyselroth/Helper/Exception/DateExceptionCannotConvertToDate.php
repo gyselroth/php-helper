@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class DateExceptionCannotConvertToDate extends DateException {
+class DateExceptionCannotConvertToDate extends DateException
+{
 }

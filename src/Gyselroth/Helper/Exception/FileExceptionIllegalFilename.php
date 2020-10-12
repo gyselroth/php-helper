@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class FileExceptionIllegalFilename extends \Exception {
+class FileExceptionIllegalFilename extends \Exception
+{
 }

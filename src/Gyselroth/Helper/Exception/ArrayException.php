@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class ArrayException extends \Exception {
+class ArrayException extends \Exception
+{
 }

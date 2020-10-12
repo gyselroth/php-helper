@@ -38,8 +38,7 @@ class HelperMongoDB
         string $fileName,
         string $tmpFileName,
         bool $doReplaceSpaceByUnderscore = true
-    ): bool
-    {
+    ): bool {
         if ($doReplaceSpaceByUnderscore) {
             $fileName = \str_replace(' ', '_', $fileName);
         }

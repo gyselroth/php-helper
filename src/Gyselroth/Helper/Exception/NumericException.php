@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class NumericException extends \Exception {
+class NumericException extends \Exception
+{
 }

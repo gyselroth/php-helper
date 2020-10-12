@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class OperationFailedException extends \Exception {
+class OperationFailedException extends \Exception
+{
 }

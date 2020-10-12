@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class ZipException extends \Exception {
+class ZipException extends \Exception
+{
 }

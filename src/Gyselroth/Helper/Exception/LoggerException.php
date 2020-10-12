@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class LoggerException extends \Exception {
+class LoggerException extends \Exception
+{
 }

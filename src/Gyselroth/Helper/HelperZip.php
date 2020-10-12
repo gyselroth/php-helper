@@ -55,8 +55,7 @@ class HelperZip
         string $pathFiles = '',
         $writeResultFileToSourceFilesPath = true,
         $deleteFilesWhenDone = false
-    )
-    {
+    ) {
         if (!self::isExtensionInstalled()) {
             return false;
         }
@@ -147,8 +146,7 @@ class HelperZip
         string $pathUnzipped,
         string $destinationFilename,
         bool $deleteUnzipped = false
-    )
-    {
+    ) {
         if (!self::isExtensionInstalled()) {
             return false;
         }
@@ -274,8 +272,7 @@ class HelperZip
         string $pathArchive,
         string $pathDestination,
         bool $ensureDestinationFilePermission = false
-    ): bool
-    {
+    ): bool {
         if (!\is_file($pathArchive)) {
             LoggerWrapper::error(
                 'ZIP archive does NOT exist: ' . $pathArchive,
@@ -344,8 +341,7 @@ class HelperZip
         string $pathArchive,
         string $filenameOrFilePath,
         bool $reduceToBasename = false
-    )
-    {
+    ) {
         if (!self::isExtensionInstalled()) {
             return false;
         }
@@ -353,7 +349,8 @@ class HelperZip
         $zip = new \ZipArchive;
 
         if (!$zip->open($pathArchive)) {
-            LoggerWrapper::error('Failed opening ZIP archive: ' . $pathArchive,
+            LoggerWrapper::error(
+                'Failed opening ZIP archive: ' . $pathArchive,
                 [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
             );
 

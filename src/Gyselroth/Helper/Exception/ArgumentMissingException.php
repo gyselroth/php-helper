@@ -11,5 +11,6 @@
 
 namespace Gyselroth\Helper\Exception;
 
-class ArgumentMissingException extends \Exception {
+class ArgumentMissingException extends \Exception
+{
 }
