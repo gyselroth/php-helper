@@ -86,7 +86,7 @@ class HelperPreg
         string $replacement
     ): string {
         // Find consecutive offsets of left- and right-hand-side patterns
-        $matchesLhs = self::preg_match_all_with_offsets($patternLhs, $str);
+        $matchesLhs = self::pregMatchAllWithOffsets($patternLhs, $str);
 
         if ([] === $matchesLhs) {
             return $str;
@@ -99,7 +99,7 @@ class HelperPreg
             return $str;
         }
 
-        $offsetsRhs = self::preg_match_all_with_offsets($patternRhs, $str);
+        $offsetsRhs = self::pregMatchAllWithOffsets($patternRhs, $str);
 
         if ([] === $offsetsRhs) {
             return $str;
@@ -170,7 +170,7 @@ class HelperPreg
      * @param  string $string
      * @return array<int, string>|false
      */
-    public static function mb_str_split(string $string)
+    public static function mbStrSplit(string $string)
     {
         return \preg_split('/(?<!^)(?!$)/u', $string);
     }
@@ -181,7 +181,7 @@ class HelperPreg
      * @return array    Keys: Offsets of matches, Values: matches
      * @todo add argument: $offset
      */
-    public static function preg_match_all_with_offsets(string $pattern, string $string): array
+    public static function pregMatchAllWithOffsets(string $pattern, string $string): array
     {
         \preg_match_all($pattern, $string, $matches);
 

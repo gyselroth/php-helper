@@ -617,7 +617,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * @param  array $arr
      * @return array
      */
-    public static function keys_recursive(array $arr): array
+    public static function keysRecursive(array $arr): array
     {
         $iterator = new \RecursiveIteratorIterator(
             new \RecursiveArrayIterator($arr),

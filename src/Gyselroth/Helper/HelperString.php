@@ -593,7 +593,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
     public static function containsAnyOf(string $str, $needles): bool
     {
         if (!\is_array($needles)) {
-            $needles = HelperPreg::mb_str_split($needles);
+            $needles = HelperPreg::mbStrSplit($needles);
         }
 
         /** @noinspection ForeachSourceInspection */
@@ -613,7 +613,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param  string $str
      * @return string
      */
-    public static function serialize_dump(string $str): string
+    public static function serializeDump(string $str): string
     {
         /** @noinspection ReturnFalseInspection */
         if (false === \strpos($str, "\n")) {
@@ -701,9 +701,9 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param  string $str
      * @return array|bool|float|int|Object|string
      */
-    public static function unVar_dump(string $str)
+    public static function unVarDump(string $str)
     {
-        $serialized = self::serialize_dump($str);
+        $serialized = self::serializeDump($str);
 
         /** @noinspection UnserializeExploitsInspection */
         return \unserialize($serialized);
@@ -718,7 +718,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
      * @param string $string
      * @return array|boolean|float|integer|object|string
      */
-    public static function mb_unserialize(string $string)
+    public static function mbUnserialize(string $string)
     {
         // special handling for asterisk wrapped in zero bytes
         $string = \str_replace("\0*\0", "*\0", $string);

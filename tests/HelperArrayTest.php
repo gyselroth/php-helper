@@ -534,7 +534,7 @@ class HelperArrayTest extends HelperTestCase
             'b' => ['a' => 1, 'b' => 2, 'c' => 3],
             'c' => ['d' => 1, 'e' => 2, 'f' => 3]
         ];
-        $this->assertSame('a,b,c,d,e,f', implode(',', HelperArray::keys_recursive($array)));
+        $this->assertSame('a,b,c,d,e,f', implode(',', HelperArray::keysRecursive($array)));
     }
 
     public function testAddKeysToSubArray(): void

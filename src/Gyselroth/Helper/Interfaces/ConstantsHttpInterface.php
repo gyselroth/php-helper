@@ -136,7 +136,7 @@ interface ConstantsHttpInterface
     public const HTTP_STATUS_CODE_METHOD_NOT_IMPLEMENTED          = 501;
     public const HTTP_STATUS_CODE_BAD_GATEWAY                     = 502;
     public const HTTP_STATUS_CODE_SERVICE_TEMPORARILY_UNAVAILABLE = 503;
-    public const HTTP_STATUS_CODE_Gateway_TIMEOUT                 = 504;
+    public const HTTP_STATUS_CODE_GATEWAY_TIMEOUT                 = 504;
     public const HTTP_STATUS_CODE_HTTP_VERSION_NOT_SUPPORTED      = 505;
     public const HTTP_STATUS_CODE_VARIANT_ALSO_NEGOTIATES         = 506;
     public const HTTP_STATUS_CODE_INSUFFICIENT_STORAGE            = 507;

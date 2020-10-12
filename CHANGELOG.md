@@ -1,8 +1,15 @@
 gyselroth Helper Library
 ========================
 
-Version 0.3.0 - Not released yet
+Version 1.0.0 - Not released yet
 --------------------------------
+* (breaking) Correct (was not fully uppercase) constant casing: ConstantsHttpInterface::HTTP_STATUS_CODE_GATEWAY_TIMEOUT
+* (breaking) Correct (was using underscores) method name: HelperArray::keysRecursive()
+* (breaking) Correct (was using underscores) method name: HelperPreg::pregMatchAllWithOffsets()
+* (breaking) Correct (was using underscores) method name: HelperPreg::mbStrSplit()
+* (breaking) Correct (was using underscores) method name: HelperString::serializeDump()
+* (breaking) Correct (was using underscores) method name: HelperString::unVarDump()
+* (breaking) Correct (was using underscores) method name: HelperString::mbUnserialize()
 * Extract HtmlPurifier filters into separate dependency
 * Remove wrapper methods from HelperString redirecting to HelperDate 
 * Remove wrapper methods from HelperString redirecting to HelperFile 
