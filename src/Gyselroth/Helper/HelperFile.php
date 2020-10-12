@@ -363,32 +363,37 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
      */
     public static function scanDirRecursive(string $path, string $ext = '', string $leadString = ''): array
     {
+        $handle = \opendir($path);
+
+        if (!$handle) {
+            return [];
+        }
+
         $items = [];
 
-        if ($handle = \opendir($path)) {
-            while (false !== ($file = \readdir($handle))) {
-                $pathFile = $path . DIRECTORY_SEPARATOR . $file;
+        while (false !== ($file = \readdir($handle))) {
+            $pathFile = $path . DIRECTORY_SEPARATOR . $file;
 
-                if (0 === \preg_match('/^(^\.)/', $file)) {
-                    if (\is_dir($pathFile)) {
-                        /** @noinspection SlowArrayOperationsInLoopInspection */
-                        $items = \array_merge(
-                            $items,
-                            self::scanDirRecursive($pathFile, $ext, $leadString)
-                        );
-                    } elseif (!$ext || HelperString::endsWith($pathFile, $ext)
-                        && (
-                            empty($leadString)
-                            || HelperString::startsWith(\basename($pathFile), $leadString)
-                        )
-                    ) {
-                        $items[] = \preg_replace('/\/\//', DIRECTORY_SEPARATOR, $pathFile);
-                    }
+            if (0 === \preg_match('/^(^\.)/', $file)) {
+                $hasLeadString = '' !== $leadString;
+
+                if (\is_dir($pathFile)) {
+                    /** @noinspection SlowArrayOperationsInLoopInspection */
+                    $items = \array_merge(
+                        $items,
+                        self::scanDirRecursive($pathFile, $ext, $leadString)
+                    );
+                } elseif (!$ext || HelperString::endsWith($pathFile, $ext)
+                    && (!$hasLeadString
+                        || HelperString::startsWith(\basename($pathFile), $leadString)
+                    )
+                ) {
+                    $items[] = \preg_replace('/\/\//', DIRECTORY_SEPARATOR, $pathFile);
                 }
             }
-
-            \closedir($handle);
         }
+
+        \closedir($handle);
 
         return $items;
     }
