@@ -11,9 +11,11 @@
 
 namespace Gyselroth\Helper;
 
+use Gyselroth\Helper\Interfaces\ConstantsCountryCodes;
 use Gyselroth\Helper\Interfaces\ConstantsUnitsOfDataMeasurementInterface;
+use Gyselroth\HelperLog\LoggerWrapper;
 
-class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
+class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface, ConstantsCountryCodes
 {
     /**
      * @param  int|string $number
@@ -197,5 +199,33 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface
         $entityIds = \array_filter(\explode(',', $ids));
 
         return \implode(',', $entityIds);
+    }
+
+    /**
+     * @param int $amount
+     * @param string $iso3166CountryCode
+     * @param int $amountDigitsAfterDecimalSeparator
+     * @return string
+     * @throws \Exception
+     */
+    public static function formatMoney(
+        int $amount,
+        string $iso3166CountryCode = self::COUNTRY_CODE_SWITZERLAND,
+        int $amountDigitsAfterDecimalSeparator = 3
+    ): string {
+        $iso3166CountryCode = \strtolower($iso3166CountryCode);
+
+        switch ($iso3166CountryCode) {
+            case self::COUNTRY_CODE_GERMANY:
+                return \number_format($amount, $amountDigitsAfterDecimalSeparator, ',', '.');
+            case self::COUNTRY_CODE_SWITZERLAND:
+                return \number_format($amount, $amountDigitsAfterDecimalSeparator, '.', "'");
+            case self::COUNTRY_CODE_UNITED_STATES:
+                return \number_format($amount, $amountDigitsAfterDecimalSeparator, '.', ',');
+            default:
+                LoggerWrapper::warning('formatMoney() called w/ unhandled country code: ' . $iso3166CountryCode);
+
+                return $amount;
+        }
     }
 }

@@ -18,6 +18,9 @@ Version 1.0.0 - Not released yet
 * Remove wrapper methods from HelperString redirecting to HelperSanitize 
 * Remove wrapper methods from HelperString redirecting to HelperXml 
 * Add method: HelperArray::isAnyKeySet()
+* Add method: HelperNumeric::formatMoney()
+* Add method: HelperSql::replaceSelectAllFieldsWithFields()
+* Add method: HelperString::concatIfNotEmpty()
 * Update method: HelperZip::zipFiles() set default value of argument $deleteFilesWhenDone to false
 
 Version 0.2.21 - Released 2020/09/28

@@ -119,4 +119,23 @@ class HelperSql
 
         return \implode(', ', $additionalColumnsSql);
     }
+
+    /**
+     * @param  string $fields   e.g. 'TableA.ColumnA As ColumnA, TableB.ColumnB As ColumnB'
+     * @param  string $sql      e.g. 'SELECT * FROM...'
+     * @return string|null      e.g. 'SELECT TableA.ColumnA As ColumnA, TableB.ColumnB As ColumnB FROM...'
+     */
+    public static function replaceSelectAllFieldsWithFields(string $fields, string $sql): ?string
+    {
+        $replace = false === \stripos($sql, 'DISTINCT')
+            ? 'SELECT '
+            : 'SELECT DISTINCT ';
+
+        return \preg_replace(
+            '/^\s*(SELECT|select|SELECT DISTINCT|select distinct)\s*\*\s*/',
+            $replace . $fields . ' ',
+            $sql,
+            1
+        );
+    }
 }

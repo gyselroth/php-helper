@@ -585,6 +585,13 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
         }
     }
 
+    public static function concatIfNotEmpty(string $str, string $addendum = ' OR '): string
+    {
+        return '' !== $str
+            ? $str . $addendum
+            : $str;
+    }
+
     /**
      * @param  string       $str
      * @param  array|string $needles
