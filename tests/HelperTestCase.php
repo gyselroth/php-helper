@@ -18,8 +18,8 @@ use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
 class HelperTestCase extends TestCase {
-
     protected string $_pathToLogfile = __DIR__ . '/tmp/app.log';
+
     protected $_logMock;
 
     /** @var LoggerWrapper|null  */
@@ -30,7 +30,8 @@ class HelperTestCase extends TestCase {
      */
     protected function setUp(): void
     {
-        self::emptyTempFolder();
+        $this->emptyTempFolder();
+
         /** @noinspection PhpUnhandledExceptionInspection */
         /** @noinspection PhpParamsInspection */
         $this->_logger = new LoggerWrapper($this->_setUpLogger(), true, '.');
@@ -38,7 +39,8 @@ class HelperTestCase extends TestCase {
 
     protected function tearDown(): void
     {
-        self::emptyTempFolder();
+        $this->emptyTempFolder();
+
         if (\is_object($this->_logger)) {
             /** @noinspection PhpUndefinedMethodInspection */
             /** @noinspection ImplicitMagicMethodCallInspection */
@@ -50,7 +52,8 @@ class HelperTestCase extends TestCase {
     private function emptyTempFolder(): void
     {
         $tmpPath = HelperFile::getGlobalTmpPath();
-        if (is_dir($tmpPath)) {
+
+        if (\is_dir($tmpPath)) {
             HelperFile::rmdirRecursive($tmpPath);
         }
     }
