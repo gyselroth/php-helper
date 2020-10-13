@@ -15,9 +15,9 @@ use Gyselroth\Helper\HelperJson;
 
 class HelperJsonTest extends HelperTestCase
 {
-    private $array = [];
+    private array $array = [];
 
-    private $jsonEncoded;
+    private string $jsonEncoded;
 
     protected function setUp(): void
     {
