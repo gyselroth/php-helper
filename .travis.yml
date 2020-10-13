@@ -31,7 +31,7 @@ before_install:
   - sudo apt install php-codesniffer
 
 install:
-  # install all of the dependencies you need here
+  # install all of the dependencies you need hereK
   - composer install
 
 before_script:
@@ -53,4 +53,5 @@ script:
   - which php  # output used PHP binary
   - php --version  # check travis's PHP version: should be >= 7.4 for strict declared types of properties
   - phpcs --standard=PSR2 $(find ./src -name '*.php')
-  - php vendor/bin/phpunit tests/
+#  - php vendor/bin/phpunit tests/
+  - sudo /home/travis/.phpenv/shims/php vendor/bin/phpunit tests/
