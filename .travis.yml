@@ -32,7 +32,7 @@ before_install:
 
 install:
   # install all of the dependencies you need here
-  - composer install --no-interaction
+  - composer install
 
 before_script:
   # execute all of the commands which need to be executed
