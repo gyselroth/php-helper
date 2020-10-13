@@ -38,14 +38,6 @@ before_script:
   # execute all of the commands which need to be executed
   # before running actual tests
   - phpenv config-rm xdebug.ini || return 0  # disable xdebug for faster execution
-#  - sudo chmod 777 -R vendor
-#  - sudo chmod 777 vendor/phpunit/phpunit
-#  - sudo chmod 777 vendor/phpunit/phpunit/phpunit && chmod +x vendor/phpunit/phpunit/phpunit
-#  - sudo chmod 777 -R tests
-#  - mkdir tests/tmp
-#  - sudo chmod 777 tests/tmp
-#  - sudo chown -R `whoami` tests/
-#  - sudo chmod 777 -R /home/travis/build/gyselroth/php-helper/
 
 script:
   # execute all of the commands which
@@ -53,5 +45,5 @@ script:
   - which php  # output used PHP binary
   - php --version  # check travis's PHP version: should be >= 7.4 for strict declared types of properties
   - phpcs --standard=PSR2 $(find ./src -name '*.php')
-#  - php vendor/bin/phpunit tests/
+  # run phpunit via sudo: otherwise fails w/ "Permission Denied" errors
   - sudo /home/travis/.phpenv/shims/php vendor/bin/phpunit tests/
