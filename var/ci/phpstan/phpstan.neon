@@ -1,5 +1,4 @@
 parameters:
-    bootstrap: /srv/www/trunk/var/ci/phpstan/phpstan-bootstrap.php
     level: max
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
@@ -7,16 +6,12 @@ parameters:
     paths:
         - %rootDir%/../../..
 
-    autoload_files:
-        - /srv/www/trunk/vendor/autoload.php
-
-    autoload_directories:
-        - %rootDir%/../../..
-
     excludes_analyse:
-        - /srv/www/trunk/.idea/
-        - /srv/www/trunk/tests/
-        - /srv/www/trunk/var/
-        - /srv/www/trunk/vendor/
+        - ../../../.idea/
+        - ../../../var/
+        - ../../../vendor/
+
+    scanFiles:
+      - ../../../vendor/gyselroth/html-purifier-filters/src/Gyselroth/htmlPurifierFilters/IframeFilter.php
 
     ignoreErrors:

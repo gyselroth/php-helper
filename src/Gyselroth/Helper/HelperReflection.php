@@ -180,6 +180,7 @@ class HelperReflection implements ConstantsDataTypesInterface
      * @param  string $funcRefString function reference
      * @return array|bool|int|string|Object|null
      * @throws ReflectionExceptionUndefinedFunction
+     * @throws \Exception
      * @note   Additional arbitrary arguments required by called methods can be passed as additional arguments
      */
     public static function callUserFunction(string $funcRefString)
@@ -194,8 +195,7 @@ class HelperReflection implements ConstantsDataTypesInterface
         }
 
         if (false !== \strpos($funcRefString, '::')) {
-            $funcRefParts = \explode('::', $funcRefString);
-            $callback = $funcRefParts;
+            $callback = \explode('::', $funcRefString);
         } else {
             LoggerWrapper::info('HelperReflection::callUserFunction() called function instead of method.');
 
