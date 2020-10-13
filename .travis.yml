@@ -45,6 +45,7 @@ before_script:
   - mkdir tests/tmp
   - sudo chmod 777 tests/tmp
   - sudo chown -R `whoami` tests/
+  - sudo chmod 777 -R /home/travis/build/gyselroth/php-helper/
 
 script:
   # execute all of the commands which
