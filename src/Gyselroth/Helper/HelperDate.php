@@ -11,8 +11,8 @@
 
 namespace Gyselroth\Helper;
 
-require_once __DIR__ . '/../../../vendor/shardj/zf1-future/library/Zend/Date.php';
-require_once __DIR__ . '/../../../vendor/shardj/zf1-future/library/Zend/Locale.php';
+//require_once __DIR__ . '/../../../vendor/shardj/zf1-future/library/Zend/Date.php';
+//require_once __DIR__ . '/../../../vendor/shardj/zf1-future/library/Zend/Locale.php';
 
 use Gyselroth\Helper\Exception\DateException;
 use Gyselroth\Helper\Interfaces\ConstantsUnitsOfTimeInterface;
