@@ -205,6 +205,7 @@ class HelperHtml
         if ($allowVideo) {
             // Allow video: only if URL is from YouTube or Vimeo
             $config->set('HTML.SafeIframe', true);
+
             // Allow fullScreen for videos, with custom HTML purifier filter
             $config->set('Filter.Custom', [new IframeFilter()]);
 

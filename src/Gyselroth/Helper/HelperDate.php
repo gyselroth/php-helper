@@ -11,10 +11,14 @@
 
 namespace Gyselroth\Helper;
 
+require_once __DIR__ . '/../../../vendor/shardj/zf1-future/library/Zend/Date.php';
+require_once __DIR__ . '/../../../vendor/shardj/zf1-future/library/Zend/Locale.php';
+
 use Gyselroth\Helper\Exception\DateException;
 use Gyselroth\Helper\Interfaces\ConstantsUnitsOfTimeInterface;
 use Gyselroth\HelperLog\LoggerWrapper;
 use Zend_Date;
+use Zend_Locale;
 
 class HelperDate implements ConstantsUnitsOfTimeInterface
 {
@@ -631,7 +635,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
             $diffWeeks++;
         }
 
-        $startWeek = \date('W', $fromWeekStart);
+        $startWeek = \date('W', (int)$fromWeekStart);
 
         return [
             'startWeek' => $startWeek,
@@ -787,11 +791,11 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
 
     /**
      * @param  string|int $year 4-digit year
-     * @return string|false
+     * @return string
      */
-    public static function getAgeByBirthYear($year)
+    public static function getAgeByBirthYear($year): string
     {
-        return \date('Y') - $year;
+        return (string)((int)\date('Y') - (int)$year);
     }
 
     /**
@@ -915,16 +919,13 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         return $utcDate->toString($format);
     }
 
-    /**
-     * @param  string $date
-     * @param  string $delimiter
-     * @return array|string
-     */
-    public static function convertDelimitedDateString($date, $delimiter = '-')
+    public static function convertDelimitedDateString(string $date, string $delimiter = '-'): string
     {
         $dateParts = \explode($delimiter, $date);
 
-        return $dateParts[2] . '.' . $dateParts[1] . '.' . $dateParts[0];
+        return (false === $dateParts || \count($dateParts) < 3)
+            ? ''
+            : $dateParts[2] . '.' . $dateParts[1] . '.' . $dateParts[0];
     }
 
     public static function getZendDatePartByType(?string $type): string
@@ -1057,7 +1058,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     {
         $zendDate = new \Zend_Date();
 
-        if (isset($date)) {
+        if (!empty($date)) {
             $zendDate->set($date);
         }
 

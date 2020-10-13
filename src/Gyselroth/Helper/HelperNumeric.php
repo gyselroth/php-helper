@@ -225,7 +225,7 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface, Constan
             default:
                 LoggerWrapper::warning('formatMoney() called w/ unhandled country code: ' . $iso3166CountryCode);
 
-                return $amount;
+                return (string)$amount;
         }
     }
 }

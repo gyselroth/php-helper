@@ -41,17 +41,38 @@ class HelperReflection implements ConstantsDataTypesInterface
      */
     public static function getTypeCasted($value, string $destinationType)
     {
+        $isValueArray = \is_array($value);
+
         switch ($destinationType) {
             case self::DATA_TYPE_ARRAY:
                 return (array)$value;
             case self::DATA_TYPE_BOOL:
+                if ($isValueArray) {
+                    return [] === $value;
+                }
+
                 return (bool)$value;
             case self::DATA_TYPE_FLOAT:
+                if ($isValueArray) {
+                    return 0;
+                }
+
+                /** @var bool|float|int|string $value */
                 return (float)$value;
             case self::DATA_TYPE_INT:
             case self::DATA_TYPE_INT_SHORT:
+                if ($isValueArray) {
+                    return [] === $value ? 0 : 1;
+                }
+
+                /** @var bool|float|int|string $value */
                 return (int)$value;
             case self::DATA_TYPE_STRING:
+                if ($isValueArray) {
+                    return \print_r($value, true);
+                }
+
+                /** @var bool|float|int|string $value */
                 return (string)$value;
             default:
                 LoggerWrapper::warning(

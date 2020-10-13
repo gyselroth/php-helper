@@ -560,10 +560,10 @@ class HelperFile implements ConstantsFileTypesInterface, ConstantsMimeTypesInter
     /**
      * @param  array $uploadFile
      * @param  int   $options
-     * @return string
+     * @return string|false
      * @throws \Exception
      */
-    public static function getUploadFileInfo(array $uploadFile, int $options = FILEINFO_NONE): string
+    public static function getUploadFileInfo(array $uploadFile, int $options = FILEINFO_NONE)
     {
         if (FILEINFO_MIME_TYPE === $options) {
             $extension = \strtolower(\pathinfo($uploadFile['name'], PATHINFO_EXTENSION));

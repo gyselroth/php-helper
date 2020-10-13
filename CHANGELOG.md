@@ -5,6 +5,7 @@ Version 1.0.1 - Released 2020/10/13
 -----------------------------------
 * Bugfix: Correct moved method call within HelperHtml::resizeStyles()
 * Correct and add unit tests to travis/ci inspection
+* Improve strict declarations and resp. distinct handling of types
 
 Version 1.0.0 - Released 2020/10/12
 -----------------------------------

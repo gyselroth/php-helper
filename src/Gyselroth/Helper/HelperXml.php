@@ -220,40 +220,56 @@ class HelperXml implements ConstantsXmlInterface
      */
     public static function debugPrint($dom, string $key = ''): void
     {
-        $class = \get_class($dom);
+        if (\is_object($dom)) {
+            $class = \get_class($dom);
 
-        if (self::DOM_CLASS_ELEMENT === $class) {
-            $tempDom = new \DOMDocument();
-            $node    = $tempDom->importNode($dom, true);
-            $tempDom->appendChild($node);
+            if (self::DOM_CLASS_ELEMENT === $class) {
+                $tempDom = new \DOMDocument();
 
-            echo $tempDom->saveXML();
-        } elseif (self::DOM_CLASS_NODE_LIST === $class) {
-            // Print-out nodeList XML
-            $tempDom = new \DOMDocument();
+                $node = $tempDom->importNode($dom, true);
 
-            foreach ($dom as $node) {
-                $tempDom->appendChild($tempDom->importNode($node, true));
+                $tempDom->appendChild($node);
+
+                echo $tempDom->saveXML();
+
+                return;
             }
 
-            echo $tempDom->saveXML();
-        } elseif (\is_array($dom)) {
+            if (self::DOM_CLASS_NODE_LIST === $class) {
+                // Print-out nodeList XML
+                $tempDom = new \DOMDocument();
+
+                if (\is_iterable($dom)) {
+                    foreach ($dom as $node) {
+                        $tempDom->appendChild($tempDom->importNode($node, true));
+                    }
+                }
+
+                echo $tempDom->saveXML();
+
+                return;
+            }
+        }
+
+        if (\is_array($dom)) {
             // Print-out all DOMDocuments in array
             foreach ($dom as $domKey => $domDocumentItem) {
                 self::debugPrint($domDocumentItem, $domKey);
             }
-        } else {
-            // Print-out DOMDocument
-            if (!empty($key)) {
-                echo "\n\n"
-                    . \str_repeat('.', 80)
-                    . "\n\n$key\n"
-                    . \str_repeat('-', \strlen($key))
-                    . "\n\n";
-            }
 
-            echo $dom->saveXML();
+            return;
         }
+
+        // Print-out DOMDocument
+        if (!empty($key)) {
+            echo "\n\n"
+                . \str_repeat('.', 80)
+                . "\n\n$key\n"
+                . \str_repeat('-', \strlen($key))
+                . "\n\n";
+        }
+
+        echo $dom->saveXML();
     }
 
     /**
@@ -322,14 +338,13 @@ class HelperXml implements ConstantsXmlInterface
     /**
      * Convert given XML node to PHP array
      *
-     * @param  \SimpleXMLElement|countable $node
+     * @param  \SimpleXMLElement $node
      * @return array
      */
     public static function xmlNodeToArray($node): array
     {
         $nodeValues = [];
 
-        // Loop over all child elements
         foreach ($node->children() as $key => $child) {
             if (0 === \count($child->children())) {
                 // If this is the only value for this key
@@ -350,7 +365,7 @@ class HelperXml implements ConstantsXmlInterface
     }
 
     /**
-     * @param  \SimpleXMLElement|countable $node
+     * @param  \SimpleXMLElement $node
      * @return bool
      */
     public static function hasChildrenWithIdenticalName($node): bool

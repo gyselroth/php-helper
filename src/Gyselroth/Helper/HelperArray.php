@@ -372,8 +372,8 @@ class HelperArray implements ConstantsDataTypesInterface
         foreach ($relatedIdsWithPrefix as $relatedId) {
             $parts = \explode($prefixGlue, \trim($relatedId));
 
-            if (empty($filterPrefix)
-                || $parts[0] === $filterPrefix
+            if (false !== $parts
+                && ('' === $filterPrefix || $parts[0] === $filterPrefix)
             ) {
                 $relatedIds[] = (int)$parts[1];
             }
@@ -955,7 +955,7 @@ class HelperArray implements ConstantsDataTypesInterface
      */
     public static function set(array &$array, $key, $value)
     {
-        if (null === $key) {
+        if ('' === $key) {
             /** @noinspection UselessReturnInspection */
             return $array = $value;
         }
@@ -986,7 +986,7 @@ class HelperArray implements ConstantsDataTypesInterface
      * Get an item from an array using "dot" notation
      *
      * @param  \ArrayAccess|array                     $array
-     * @param  int|string                             $key
+     * @param  int|string|null                        $key
      * @param  array|float|int|resource|string|Object $default
      * @return array|float|int|resource|string|Object
      */
@@ -996,7 +996,7 @@ class HelperArray implements ConstantsDataTypesInterface
             return $default instanceof \Closure ? $default() : $default;
         }
 
-        if (null === $key) {
+        if (null === $key || '' === $key) {
             return $array;
         }
 
@@ -1134,9 +1134,7 @@ class HelperArray implements ConstantsDataTypesInterface
             return $array;
         }
 
-        if (!\is_array($column)
-            && !\is_iterable($column)
-        ) {
+        if (!\is_iterable($column)) {
             $column = (array)$column;
         }
 
@@ -1184,10 +1182,17 @@ class HelperArray implements ConstantsDataTypesInterface
         \usort(
             $array,
             static function ($a, $b) use ($dateColumnKey) {
-                $dateA = \DateTime::createFromFormat('d.m.Y', $a[$dateColumnKey])->format('Ymd');
-                $dateB = \DateTime::createFromFormat('d.m.Y', $b[$dateColumnKey])->format('Ymd');
+                $dateTimeA = \DateTime::createFromFormat('d.m.Y', $a[$dateColumnKey]);
+                $dateTimeB = \DateTime::createFromFormat('d.m.Y', $b[$dateColumnKey]);
 
-                return $dateA - $dateB;
+                if (false === $dateTimeA || false === $dateTimeB) {
+                    return 0;
+                }
+
+                $dateA = $dateTimeA->format('Ymd');
+                $dateB = $dateTimeB->format('Ymd');
+
+                return (int)$dateA - (int)$dateB;
             }
         );
     }
@@ -1212,7 +1217,7 @@ class HelperArray implements ConstantsDataTypesInterface
                     $allowSpace,
                     $allowedSpecialCharacters
                 );
-            } elseif (!HelperString::validateString(
+            } elseif (!HelperSanitize::validateString(
                 $value,
                 $allowCharacters,
                 $allowUmlauts,
@@ -1316,8 +1321,9 @@ class HelperArray implements ConstantsDataTypesInterface
 
     /**
      * Variadic function that checks if any of the given keys exist in array
-     * @param array    $arrayToCheck
-     * @param string[] $keysToCheck Variadic parameter accepts any number of strings
+     *
+     * @param array $arrayToCheck
+     * @param string $keysToCheck,... Variadic parameter accepts any number of strings
      * @return bool
      */
     public static function isAnyKeySet(array $arrayToCheck, string ...$keysToCheck): bool

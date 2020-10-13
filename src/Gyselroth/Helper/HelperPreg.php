@@ -95,7 +95,7 @@ class HelperPreg
         $offsetLhs  = \array_keys($matchesLhs)[0];
         $matchLhs   = $matchesLhs[$offsetLhs] ?: '';
 
-        if ($matchLhs === '') {
+        if ('' === $matchLhs) {
             return $str;
         }
 
@@ -118,8 +118,7 @@ class HelperPreg
         }
 
         // Perform regular removal using obtained LHS and RHS matches
-        if ('' === $matchLhs
-            || -1 === $offsetRhs
+        if (-1 === $offsetRhs
             || '' === $matchRhs
         ) {
             return $str;

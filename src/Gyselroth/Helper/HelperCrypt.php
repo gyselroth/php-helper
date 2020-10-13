@@ -63,11 +63,14 @@ class HelperCrypt
             throw new ArgumentMissingException('Empty crypt key not allowed');
         }
 
+        $length = \openssl_cipher_iv_length(self::OPEN_SSL_CIPHER);
+
+        if (false === $length) {
+            throw new OperationFailedException('IV generation for encryption failed');
+        }
+
         /** @noinspection CryptographicallySecureRandomnessInspection */
-        $initVector = \openssl_random_pseudo_bytes(
-            \openssl_cipher_iv_length(self::OPEN_SSL_CIPHER),
-            $isStrong
-        );
+        $initVector = \openssl_random_pseudo_bytes($length, $isStrong);
 
         if (false === $isStrong
             || false === $initVector
@@ -98,7 +101,12 @@ class HelperCrypt
             ? HelperString::urlSafeB64Decode($encrypted)
             : $encrypted;
 
-        $ivLength   = \openssl_cipher_iv_length(self::OPEN_SSL_CIPHER);
+        $ivLength = \openssl_cipher_iv_length(self::OPEN_SSL_CIPHER);
+
+        if (false === $ivLength) {
+            return '';
+        }
+
         $initVector = \substr($encrypted, 0, $ivLength);
         $encrypted  = \substr($encrypted, $ivLength);
 
@@ -126,6 +134,8 @@ class HelperCrypt
             ? \gzdeflate(Json::encode($data), 9)
             : Json::encode($data);
 
-        return HelperString::urlSafeB64encode($string);
+        return '' === $string || false === $string
+            ? ''
+            : HelperString::urlSafeB64encode($string);
     }
 }

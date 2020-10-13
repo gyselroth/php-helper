@@ -603,6 +603,10 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             $needles = HelperPreg::mbStrSplit($needles);
         }
 
+        if (!\is_iterable($needles)) {
+            return false;
+        }
+
         /** @noinspection ForeachSourceInspection */
         foreach ($needles as $needle) {
             /** @noinspection ReturnFalseInspection */
@@ -892,7 +896,7 @@ class HelperString implements ConstantsDataTypesInterface, ConstantsOperatorsInt
             && '' === \preg_replace('/[0-9a-f]/i', '', $str);
     }
 
-    public static function compressHtml(string $html): string
+    public static function compressHtml(string $html): ?string
     {
         $search = [
             '/\>[^\S ]+/s',      // strip whitespaces after tags, except space

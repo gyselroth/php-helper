@@ -24,7 +24,7 @@ before_install:
   - sudo apt update
   - sudo apt install php-imagick
   - pecl channel-update pecl.php.net
-  #  - yes | pecl install imagick
+  - yes | pecl install imagick
 
   # install phpcs (remove after composer.lock update / use vendor package than)
   # see also: https://github.com/squizlabs/PHP_CodeSniffer

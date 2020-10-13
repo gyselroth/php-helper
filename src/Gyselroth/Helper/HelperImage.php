@@ -33,10 +33,19 @@ class HelperImage
     {
         $extensionInFilename = \pathinfo($imageFilePath, PATHINFO_EXTENSION);
 
-        $extensionByMimeType = \explode(
-            '/',
-            \mime_content_type($imageFilePath)
-        )[1];
+        $contentMime = \mime_content_type($imageFilePath);
+
+        if (false === $contentMime) {
+            throw new FileException("Failed to retrieve MIME type");
+        }
+
+        $contentMimeParts = \explode('/', $contentMime);
+
+        if (\count($contentMimeParts) < 2) {
+            throw new FileException("Failed to retrieve MIME type");
+        }
+
+        $extensionByMimeType = $contentMimeParts[1];
 
         if ($extensionByMimeType !== \strtolower($extensionInFilename)) {
             $filePathIncorrect = $imageFilePath;
@@ -82,12 +91,13 @@ class HelperImage
             \imagefilledrectangle($imageResource, 0, 0, $maxWidth, $maxHeight, $white);
         }
 
-        $sourceWidth  = \imagesx($imageResource);
-        $sourceHeight = \imagesy($imageResource);
+        $sourceWidth = \imagesx($imageResource);
 
-        if (false === $sourceHeight || false === $sourceWidth) {
+        if (0 === (int)$sourceWidth) {
             return false;
         }
+
+        $sourceHeight = \imagesy($imageResource);
 
         $save = (($maxWidth / $maxHeight) < ($sourceWidth / $sourceHeight))
             ? \imagecreatetruecolor(
@@ -318,10 +328,15 @@ class HelperImage
             if (false === $hasSecondCheckedMime) {
                 $requestedMimeType = $mimeType;
 
-                $mimeType = \explode(
-                    '/',
-                    \mime_content_type($sourcePath)
-                )[1];
+                $contentMime = \mime_content_type($sourcePath);
+
+                if (false !== $contentMime) {
+                    $contentMimeParts = \explode('/', $contentMime);
+
+                    if (count($contentMimeParts) > 1) {
+                        $mimeType = $contentMimeParts[1];
+                    }
+                }
 
                 LoggerWrapper::warning(
                     'HelperImage::imageCreateByFormat - Obtaining image data failed.'
