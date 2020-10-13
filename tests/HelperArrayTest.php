@@ -16,7 +16,7 @@ use PHPUnit\Framework\Constraint\IsType;
 
 class HelperArrayTest extends HelperTestCase
 {
-    public array $data = [
+    public $data = [
         'Brief_Anrede'             => 'Sehr geehrter Herr Foo, sehr geehrte Frau Bar-Baz',
         'Brief_Bezeichner'         => '5112398 1003 Joeline Doe',
         'Brief_Datum'              => ' 7. February 2018',

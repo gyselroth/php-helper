@@ -27,6 +27,7 @@ class HelperXmlTest extends HelperTestCase
     public function testGetNodes(): void
     {
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock.xml');
+
         $this->assertSame(6, count(HelperXml::getNodes($xml, [1])));
         $this->assertSame(2, count(HelperXml::getNodes($xml, [1], [], ['cdata'])));
         $this->assertSame(4, count(HelperXml::getNodes($xml, [], ['note'], ['cdata'])));
@@ -97,6 +98,7 @@ class HelperXmlTest extends HelperTestCase
     {
         $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
         $xsdPath = __DIR__ . '/Fixtures/data/xml/mock.xsd';
+
         $this->assertTrue(is_a(HelperXml::validate($xmlPath, $xsdPath), 'DOMDocument'));
     }
 
@@ -117,6 +119,7 @@ class HelperXmlTest extends HelperTestCase
     {
         $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
         $xsdPath = __DIR__ . '/Fixtures/data/xml/invalid_mock.xsd';
+
         $this->assertFalse(HelperXml::validate($xmlPath, $xsdPath));
     }
 
@@ -128,6 +131,7 @@ class HelperXmlTest extends HelperTestCase
     {
         $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
         $xsdPath = __DIR__ . '/invalid/path/to/mock.xsd';
+
         HelperXml::validate($xmlPath, $xsdPath);
     }
 
@@ -139,28 +143,38 @@ class HelperXmlTest extends HelperTestCase
     {
         $xmlPath = __DIR__ . '/invalid/path/to/mock.xml';
         $xsdPath = __DIR__ . '/Fixtures/data/xml/mock.xsd';
+
         HelperXml::validate($xmlPath, $xsdPath);
     }
 
     public function testDebugPrint(): void
     {
         $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
+
         $xml = new \DOMDocument('1.0', 'UTF-8');
         $xml->load($xmlPath);
+
         ob_start();
+
         HelperXml::debugPrint($xml);
+
         $debugPrint = ob_end_clean();
+
         $this->assertTrue($debugPrint == file_get_contents($xmlPath));
     }
 
     public function testStrReplaceNodeValues(): void
     {
         $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
+
         $xml = new \DOMDocument('1.0', 'UTF-8');
         $xml->load($xmlPath);
+
         $xmlPath2 = __DIR__ . '/Fixtures/data/xml/mock2.xml';
+
         $xml2 = new \DOMDocument('1.0', 'UTF-8');
         $xml2->load($xmlPath2);
+
         $this->assertEquals($xml2, HelperXml::strReplaceNodeValues(['Gyselroth','Ewald','Reminder','I am'],['Philippe','Kay','Confirmation','He is'], $xml));
     }
 
@@ -182,6 +196,7 @@ class HelperXmlTest extends HelperTestCase
     {
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock3.xml');
         $xml2 = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock.xml');
+
         $this->assertEquals($xml2, HelperXml::formatXmlString($xml));
     }
 
@@ -189,6 +204,7 @@ class HelperXmlTest extends HelperTestCase
     {
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock.xml');
         $xmlArray = HelperXml::xmlNodeToArray(simplexml_load_string($xml));
+
         $this->assertSame('Gyselroth',                  $xmlArray['to']);
         $this->assertSame('I am currently testing.',    $xmlArray['body']);
     }
