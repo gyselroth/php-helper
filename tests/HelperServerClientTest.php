@@ -17,32 +17,32 @@ class HelperServerClientTest extends HelperTestCase
 {
     public function testGetHost(): void
     {
-        $this->markTestSkipped('Always dependent on environment.');
+        self::markTestSkipped('Always dependent on environment.');
     }
 
     public function testGetDiffOfRequestAndLocalTime(): void
     {
-        $this->markTestSkipped('Always dependent on environment.');
+        self::markTestSkipped('Always dependent on environment.');
     }
 
     public function testGetInstalledFonts(): void
     {
-        $this->markTestSkipped('Always dependent on environment.');
+        self::markTestSkipped('Always dependent on environment.');
     }
 
     public function testGetRequestUrl(): void
     {
-        $this->markTestSkipped('Always dependent on environment.');
+        self::markTestSkipped('Always dependent on environment.');
     }
 
     public function testGetClientIP(): void
     {
-        $this->markTestSkipped('Always dependent on environment.');
+        self::markTestSkipped('Always dependent on environment.');
     }
 
     public function testIsClientWindows(): void
     {
-        $this->markTestSkipped('Always dependent on environment.');
+        self::markTestSkipped('Always dependent on environment.');
     }
 
     public function testPrepareAjaxResponseData(): void
@@ -52,15 +52,19 @@ class HelperServerClientTest extends HelperTestCase
             'key2' => ['values21', 'values22'],
             'key3' => ['values31', 'values32']
         ];
+
         $dataUnset = $data;
+
         unset($dataUnset['key2']);
-        $this->assertEmpty(HelperServerClient::prepareAjaxResponseData([]));
-        $this->assertEquals($dataUnset, HelperServerClient::prepareAjaxResponseData($data, ['key2', 'key4']));
+
+        self::assertEmpty(HelperServerClient::prepareAjaxResponseData([]));
+        self::assertEquals($dataUnset, HelperServerClient::prepareAjaxResponseData($data, ['key2', 'key4']));
     }
 
     public function testGetUriParts(): void
     {
-        $this->assertEmpty(HelperServerClient::getUriParts('http://de.wikipedia.org/wiki/Uniform_Resource_Identifier'));
+        self::assertEmpty(HelperServerClient::getUriParts('http://de.wikipedia.org/wiki/Uniform_Resource_Identifier'));
+
         $parts = [
             'http://nobody:password@example.org:8080/cgi-bin',
             'http',
@@ -69,6 +73,7 @@ class HelperServerClientTest extends HelperTestCase
             'example.org',
             '8080/cgi-bin'
         ];
-        $this->assertEquals($parts, HelperServerClient::getUriParts('http://nobody:password@example.org:8080/cgi-bin'));
+
+        self::assertEquals($parts, HelperServerClient::getUriParts('http://nobody:password@example.org:8080/cgi-bin'));
     }
 }

@@ -44,7 +44,7 @@ class HelperFileTest extends HelperTestCase
 
     public function testGetMimes(): void
     {
-        $this->assertThat(
+        self::assertThat(
             HelperFile::MIMES,
             new IsType('array')
         );
@@ -55,7 +55,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testGetUniqueFilename(): void
     {
-        $this->assertRegExp('/\d{8}-\d{6}[a-z0-9]{13}/', HelperFile::getUniqueFilename());
+        self::assertRegExp('/\d{8}-\d{6}[a-z0-9]{13}/', HelperFile::getUniqueFilename());
     }
 
     /**
@@ -63,7 +63,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testGetUniqueFilenameNoPrefix(): void
     {
-        $this->assertRegExp('/\d{8}-\d{6}/', HelperFile::getUniqueFilename('', true, false));
+        self::assertRegExp('/\d{8}-\d{6}/', HelperFile::getUniqueFilename('', true, false));
     }
 
     /**
@@ -71,7 +71,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testGetUniqueFilenameLeadString(): void
     {
-        $this->assertRegExp('/test\d{8}-\d{6}[a-z0-9]{13}/', HelperFile::getUniqueFilename('test'));
+        self::assertRegExp('/test\d{8}-\d{6}[a-z0-9]{13}/', HelperFile::getUniqueFilename('test'));
     }
 
     /**
@@ -79,7 +79,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testGetUniqueFilenameWithFileEndingNoDatePrefix(): void
     {
-        $this->assertRegExp('/[a-z0-9]{13}\.zip/', HelperFile::getUniqueFilename('', false, true, 'zip'));
+        self::assertRegExp('/[a-z0-9]{13}\.zip/', HelperFile::getUniqueFilename('', false, true, 'zip'));
     }
 
     public function testEnsureFilenamesStartWithPath(): void
@@ -89,7 +89,7 @@ class HelperFileTest extends HelperTestCase
 
         $path = '/test/path/to';
 
-        $this->assertEquals($filesExpected, HelperFile::ensureFilenamesStartWithPath($files, $path));
+        self::assertEquals($filesExpected, HelperFile::ensureFilenamesStartWithPath($files, $path));
     }
 
     /**
@@ -97,7 +97,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateFilenameWithPath(): void
     {
-        $this->assertSame('testfile.png', HelperFile::validateFilename('test/file.png'));
+        self::assertSame('testfile.png', HelperFile::validateFilename('test/file.png'));
     }
 
     /**
@@ -105,7 +105,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateFilenameForbiddenCharEqualReplacements(): void
     {
-        $this->assertSame('long filename.png',
+        self::assertSame('long filename.png',
             HelperFile::validateFilename('long2fil3n *ame.png', ['2', '3', ' *'], [' ', 'e', '']));
     }
 
@@ -114,7 +114,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateFilenameForbiddenCharUnequalReplacements(): void
     {
-        $this->assertSame('long filename.png',
+        self::assertSame('long filename.png',
             HelperFile::validateFilename('long filename.png', [' ', 'e'], ['']));
     }
 
@@ -138,7 +138,7 @@ class HelperFileTest extends HelperTestCase
 
         HelperFile::write($pathFile, 'test');
 
-        $this->assertFileEquals($pathFileExpected, $pathFile);
+        self::assertFileEquals($pathFileExpected, $pathFile);
 
         if (is_file($pathFile)) {
             unlink($pathFile);
@@ -157,7 +157,7 @@ class HelperFileTest extends HelperTestCase
         copy($pathFileTemplate, $pathFile);
         HelperFile::write($pathFile, 'file', 'a');
 
-        $this->assertStringEqualsFile($pathFile, 'testfile');
+        self::assertStringEqualsFile($pathFile, 'testfile');
 
         if (\is_file($pathFile)) {
             \unlink($pathFile);
@@ -179,7 +179,7 @@ class HelperFileTest extends HelperTestCase
 
         HelperFile::writeJson($pathFile, $array);
 
-        $this->assertStringEqualsFile($pathFile, '{"testkey":"value","testkey2":"value2"}');
+        self::assertStringEqualsFile($pathFile, '{"testkey":"value","testkey2":"value2"}');
 
         if (\is_file($pathFile)) {
             \unlink($pathFile);
@@ -199,13 +199,13 @@ class HelperFileTest extends HelperTestCase
 
         HelperFile::writeCsv($data, $header, $pathFile);
 
-        $this->assertStringEqualsFile(
+        self::assertStringEqualsFile(
             $pathFile,
             "Name,Beschäftigung,Firma\nKay,Fulltime,Gyselroth\nEwald,Parttime,Gyselroth\n",
             'Writing a csv file appends an empty new line.');
 
-        if (is_file($pathFile)) {
-            unlink($pathFile);
+        if (\is_file($pathFile)) {
+            \unlink($pathFile);
         }
     }
 
@@ -213,8 +213,8 @@ class HelperFileTest extends HelperTestCase
 //    {
 //        $path = __DIR__ . '/Fixtures/data/files/unzip';
 //        $array = HelperFile::scanDir($path, 'zip');
-//        $this->assertCount(1, $array);
-//        $this->assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $array[0]);
+//        self::assertCount(1, $array);
+//        self::assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $array[0]);
 //    }
 
 //    public function testScanDirRecursive(): void
@@ -222,28 +222,28 @@ class HelperFileTest extends HelperTestCase
 //        $path = __DIR__ . '/Fixtures/data/files/unzip';
 //        $array = HelperFile::scanDir($path, '', true);
 //
-//        $this->assertContains('/data/files/unzip/unzipped/01.pdf', $array);
+//        self::assertContains('/data/files/unzip/unzipped/01.pdf', $array);
 //
-//        $this->assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $array[9]);
+//        self::assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $array[9]);
 //    }
 
     public function testScanDirFindsFiles(): void
     {
         $files = HelperFile::scanDir(__DIR__ . '/Fixtures/data/files/unzip', '', true);
 
-        $this->assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $files[0]);
+        self::assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $files[0]);
     }
 
     public function testScanDirRecursiveFindsCorrectAmount(): void
     {
-        $this->assertCount(
+        self::assertCount(
             9,
             HelperFile::scanDir(__DIR__ . '/Fixtures/data/files/zip', '', true));
     }
 
     public function testScanDirByVersionPrefixAndNaturallySort(): void
     {
-        $this->markTestSkipped('Purpose of function unclear');
+        self::markTestSkipped('Purpose of function unclear');
     }
 
     public function testChmodRecursive(): void
@@ -261,9 +261,9 @@ class HelperFileTest extends HelperTestCase
         HelperFile::chmodRecursive($path);
 
         if ($file) {
-            $this->assertFileIsWritable($file);
+            self::assertFileIsWritable($file);
         } else {
-            $this->assertFileNotIsWritable($file);
+            self::assertFileNotIsWritable($file);
         }
 
         HelperFile::chmodRecursive($path, '0600');
@@ -275,7 +275,7 @@ class HelperFileTest extends HelperTestCase
 
     public function testCopyDirectory(): void
     {
-        $this->markTestIncomplete();
+        self::markTestIncomplete();
     }
 
     public function testSortByDepth(): void
@@ -283,7 +283,7 @@ class HelperFileTest extends HelperTestCase
         $files = ['intranet.test.js', 'intranet.test.sub.js', 'intranet.js', 'intranet.othertest.js'];
         $sortedFiles = ['intranet.js', 'intranet.othertest.js', 'intranet.test.js', 'intranet.test.sub.js'];
 
-        $this->assertEquals($sortedFiles, HelperFile::sortByDepth($files));
+        self::assertEquals($sortedFiles, HelperFile::sortByDepth($files));
     }
 
     public function testGetDirectoryInfo(): void
@@ -295,7 +295,7 @@ class HelperFileTest extends HelperTestCase
             'size' => 36864
         ];
 
-        $this->assertEquals($expected, HelperFile::getDirectoryInfo($path));
+        self::assertEquals($expected, HelperFile::getDirectoryInfo($path));
     }
 
     /**
@@ -304,7 +304,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testGetUploadFileInfo(): void
     {
-        $this->assertSame('PDF document, version 1.4', HelperFile::getUploadFileInfo($this->uploadedFileInfo));
+        self::assertSame('PDF document, version 1.4', HelperFile::getUploadFileInfo($this->uploadedFileInfo));
     }
 
     /**
@@ -313,7 +313,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateUploadFileOk(): void
     {
-        $this->assertSame('', HelperFile::validateUploadFile($this->uploadedFileInfo, ['application/pdf']));
+        self::assertSame('', HelperFile::validateUploadFile($this->uploadedFileInfo, ['application/pdf']));
     }
 
     /**
@@ -326,7 +326,7 @@ class HelperFileTest extends HelperTestCase
 
         unset($uploadedFileInfo['name']);
 
-        $this->assertSame('Name der Datei wurde nicht empfangen', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame('Name der Datei wurde nicht empfangen', HelperFile::validateUploadFile($uploadedFileInfo, []));
     }
 
     /**
@@ -335,7 +335,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateUploadFileTooLarge(): void
     {
-        $this->assertSame('Die Datei ist zu gross', HelperFile::validateUploadFile($this->uploadedFileInfo, [], 12091));
+        self::assertSame('Die Datei ist zu gross', HelperFile::validateUploadFile($this->uploadedFileInfo, [], 12091));
     }
 
     /**
@@ -344,7 +344,7 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateUploadFileNotAllowed(): void
     {
-        $this->assertSame('Dateityp ist nicht erlaubt', HelperFile::validateUploadFile($this->uploadedFileInfo, ['image/png', 'image/jpg']));
+        self::assertSame('Dateityp ist nicht erlaubt', HelperFile::validateUploadFile($this->uploadedFileInfo, ['image/png', 'image/jpg']));
     }
 
     /**
@@ -355,29 +355,29 @@ class HelperFileTest extends HelperTestCase
     {
         $uploadedFileInfo = $this->uploadedFileInfo;
         $uploadedFileInfo['error'] = UPLOAD_ERR_NO_FILE;
-        $this->assertSame('No file sent.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame('No file sent.', HelperFile::validateUploadFile($uploadedFileInfo, []));
 
         $uploadedFileInfo['error'] = UPLOAD_ERR_FORM_SIZE;
-        $this->assertSame('Exceeded filesize limit.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame('Exceeded filesize limit.', HelperFile::validateUploadFile($uploadedFileInfo, []));
 
         $uploadedFileInfo['error'] = UPLOAD_ERR_INI_SIZE;
-        $this->assertSame('Exceeded filesize limit.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame('Exceeded filesize limit.', HelperFile::validateUploadFile($uploadedFileInfo, []));
 
         $uploadedFileInfo['error'] = 123456789;
-        $this->assertSame('Unknown errors.', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame('Unknown errors.', HelperFile::validateUploadFile($uploadedFileInfo, []));
 
         $uploadedFileInfo['size'] = 0;
-        $this->assertSame('File is empty', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame('File is empty', HelperFile::validateUploadFile($uploadedFileInfo, []));
     }
 
     public function testStoreUploadFile(): void
     {
-        $this->markTestIncomplete('Simulate actual file upload');
+        self::markTestIncomplete('Simulate actual file upload');
     }
 
     public function testUpload(): void
     {
-        $this->markTestSkipped('Function only used once, procedure unclear');
+        self::markTestSkipped('Function only used once, procedure unclear');
     }
 
     public function testUnlinkFiles(): void
@@ -392,8 +392,8 @@ class HelperFileTest extends HelperTestCase
         HelperFile::copyDirectory($pathCopy, $path);
         HelperFile::unlinkFiles($path, ['01.pdf', '03.txt']);
 
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '01.pdf');
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.txt');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '01.pdf');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.txt');
     }
 
     public function testDeleteFilesInDirectory(): void
@@ -408,8 +408,8 @@ class HelperFileTest extends HelperTestCase
         HelperFile::copyDirectory($pathCopy, $path);
         HelperFile::deleteFilesInDirectory($path . DIRECTORY_SEPARATOR . '03.*');
 
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.pdf');
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.txt');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.pdf');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.txt');
     }
 
     /**
@@ -433,21 +433,21 @@ class HelperFileTest extends HelperTestCase
         HelperFile::copyDirectory($pathCopy, $path);
         HelperFile::copyDirectory($pathCopy, $subPath);
 
-        $this->assertFalse(HelperFile::deleteIfExists($path . DIRECTORY_SEPARATOR . 'asdfasdf.pdf'));
+        self::assertFalse(HelperFile::deleteIfExists($path . DIRECTORY_SEPARATOR . 'asdfasdf.pdf'));
 
         HelperFile::deleteIfExists($path . DIRECTORY_SEPARATOR . '01.pdf');
 
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '01.pdf');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '01.pdf');
 
         HelperFile::deleteIfExists(['03.pdf', '02.txt'], $path);
 
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.pdf');
-        $this->assertFileNotExists($path . DIRECTORY_SEPARATOR . '02.txt');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '03.pdf');
+        self::assertFileNotExists($path . DIRECTORY_SEPARATOR . '02.txt');
 
         HelperFile::deleteIfExists($path);
 
-        $this->assertDirectoryNotExists($subPath);
-        $this->assertDirectoryNotExists($path);
+        self::assertDirectoryNotExists($subPath);
+        self::assertDirectoryNotExists($path);
     }
 
     public function testRmdirRecursive(): void
@@ -475,9 +475,9 @@ class HelperFileTest extends HelperTestCase
         HelperFile::copyDirectory($pathCopy, $subPath);
         HelperFile::rmdirRecursive([$path, $secondPath]);
 
-        $this->assertDirectoryNotExists($subPath);
-        $this->assertDirectoryNotExists($path);
-        $this->assertDirectoryNotExists($secondPath);
+        self::assertDirectoryNotExists($subPath);
+        self::assertDirectoryNotExists($path);
+        self::assertDirectoryNotExists($secondPath);
     }
 
     /**
@@ -485,12 +485,12 @@ class HelperFileTest extends HelperTestCase
      */
     public function testSendFileHeaders(): void
     {
-        $this->markTestSkipped('Only testable when xdebug installed: $headers = xdebug_get_headers()');
+        self::markTestSkipped('Only testable when xdebug installed: $headers = xdebug_get_headers()');
     }
 
     public function testCalcBytesSize(): void
     {
-        $this->markTestSkipped('Already tested in HelperNumericTest');
+        self::markTestSkipped('Already tested in HelperNumericTest');
     }
 
     /**
@@ -500,8 +500,8 @@ class HelperFileTest extends HelperTestCase
     {
         $path = HelperFile::getGlobalTmpPath(true) . DIRECTORY_SEPARATOR . 'writable';
 
-        $this->assertTrue(HelperFile::isDirectoryWritable($path, false, true));
-        $this->assertDirectoryExists($path);
+        self::assertTrue(HelperFile::isDirectoryWritable($path, false, true));
+        self::assertDirectoryExists($path);
     }
 
     /**
@@ -510,17 +510,18 @@ class HelperFileTest extends HelperTestCase
      */
     public function testIsDirectoryWritableException(): void
     {
-        $this->assertFalse(HelperFile::isDirectoryWritable('/fasdfas/vggdfgff', true, false));
+        self::assertFalse(HelperFile::isDirectoryWritable('/fasdfas/vggdfgff', true, false));
     }
 
     public function testSanitizeFilename(): void
     {
         $input  = "thIs__wøn't--BÊ thë_såme \n filename Æfter replaÇing&prÕcessing_thiš...file";
         $output1 = 'this_wont-b-the_same-filename-fter-replaing-and-prcessing_this.file';
-        $this->assertSame($output1, HelperFile::sanitizeFilename($input));
+
+        self::assertSame($output1, HelperFile::sanitizeFilename($input));
 
         $output2 = 'thIs_wont-BE-the_same-filename-After-replaCing-and-prOcessing_this.file';
-        $this->assertSame($output2, HelperFile::sanitizeFilename($input, false));
+        self::assertSame($output2, HelperFile::sanitizeFilename($input, false));
     }
 
     public function testGetBasenames(): void
@@ -548,16 +549,16 @@ class HelperFileTest extends HelperTestCase
             'it.pdf'
         ];
 
-        $this->assertEquals($basenamesUnique, HelperFile::getBasenames($filePaths));
-        $this->assertEquals($basenames, HelperFile::getBasenames($filePaths, false));
+        self::assertEquals($basenamesUnique, HelperFile::getBasenames($filePaths));
+        self::assertEquals($basenames, HelperFile::getBasenames($filePaths, false));
     }
 
     public function testEnsurePathEndsWithDirectorySeparator(): void
     {
-        $this->assertSame('/this/is/a/path/', HelperFile::ensurePathEndsWithDirectorySeparator('/this/is/a/path'));
-        $this->assertSame('/this/is/a/path/', HelperFile::ensurePathEndsWithDirectorySeparator('/this/is/a/path/'));
-        $this->markTestIncomplete('Next assertion skipped: HelperFile::ensurePathEndsWithDirectorySeparator(\'\') returns \'\' instead of \'/\'');
-        $this->assertSame('/', HelperFile::ensurePathEndsWithDirectorySeparator(''), 'Should return \'/\'');
+        self::assertSame('/this/is/a/path/', HelperFile::ensurePathEndsWithDirectorySeparator('/this/is/a/path'));
+        self::assertSame('/this/is/a/path/', HelperFile::ensurePathEndsWithDirectorySeparator('/this/is/a/path/'));
+        self::markTestIncomplete('Next assertion skipped: HelperFile::ensurePathEndsWithDirectorySeparator(\'\') returns \'\' instead of \'/\'');
+        self::assertSame('/', HelperFile::ensurePathEndsWithDirectorySeparator(''), 'Should return \'/\'');
     }
 
     public function testScanFilesystem(): void
@@ -600,7 +601,7 @@ class HelperFileTest extends HelperTestCase
             $path . '/multipage-portrait.pdf'
         ];
 
-        $this->assertEquals($filesystem, HelperFile::scanFilesystem($path));
-        $this->assertEquals($filesystemWildcard, HelperFile::scanFilesystem($path, '*.pdf'));
+        self::assertEquals($filesystem, HelperFile::scanFilesystem($path));
+        self::assertEquals($filesystemWildcard, HelperFile::scanFilesystem($path, '*.pdf'));
     }
 }

@@ -26,7 +26,7 @@ class HelperZipTest extends HelperTestCase
      */
     public function testZipFiles(): void
     {
-        $this->markTestIncomplete('@todo: Review and correct test and rel. method');
+        self::markTestIncomplete('@todo: Review and correct test and rel. method');
 
 //        $path  = __DIR__ . '/Fixtures/data/files/zip';
 //
@@ -54,14 +54,14 @@ class HelperZipTest extends HelperTestCase
 //
 //        HelperZip::zipFiles($files, $pathDestinationFile, false, $path, false);
 //
-//        $this->assertFileExists($pathDestinationFile);
-//        $this->assertGreaterThan(0, \filesize($pathDestinationFile));
+//        self::assertFileExists($pathDestinationFile);
+//        self::assertGreaterThan(0, \filesize($pathDestinationFile));
 //
 //        $pathUnzip = $pathTmp . DIRECTORY_SEPARATOR . 'unzip';
 //
 //        HelperZip::unzip($pathDestinationFile, $pathUnzip);
 //
-//        $this->assertFileEquals($path, $pathUnzip);
+//        self::assertFileEquals($path, $pathUnzip);
 //
 //        if (\file_exists($pathDestinationFile)) {
 //            // Clean up
@@ -90,8 +90,8 @@ class HelperZipTest extends HelperTestCase
 
         HelperZip::zip($path, $pathDestinationFile, false);
 
-        $this->assertFileExists($pathDestinationFile);
-        $this->assertGreaterThan(0, filesize($pathDestinationFile));
+        self::assertFileExists($pathDestinationFile);
+        self::assertGreaterThan(0, filesize($pathDestinationFile));
 
         if (file_exists($pathDestinationFile)) {
             unlink($pathDestinationFile);
@@ -107,7 +107,7 @@ class HelperZipTest extends HelperTestCase
         $path = __DIR__ . '/Fixtures/data/files/zip';
         $pathTmp = HelperFile::getGlobalTmpPath(true);
 
-        $this->assertFalse(HelperZip::zip($path, $pathTmp));
+        self::assertFalse(HelperZip::zip($path, $pathTmp));
     }
 
     /**
@@ -116,7 +116,7 @@ class HelperZipTest extends HelperTestCase
      */
     public function testUnZip(): void
     {
-        $this->markTestSkipped();
+        self::markTestSkipped();
 
 //        $path = __DIR__ . '/Fixtures/data/files/unzip/to-be-unzipped.zip';
 //        $pathToCompare = __DIR__ . '/Fixtures/data/files/unzip/unzipped';
@@ -130,7 +130,7 @@ class HelperZipTest extends HelperTestCase
 //        HelperZip::unzip($path, $pathDestinationFolder);
 //
         // @todo correct assertion: must compare directory contents, not file-contents
-//        $this->assertFileEquals($pathToCompare, $pathDestinationFolder);
+//        self::assertFileEquals($pathToCompare, $pathDestinationFolder);
 //
 //        if (is_dir($pathDestinationFolder)) {
 //            HelperFile::rmdirRecursive($pathDestinationFolder);
@@ -143,9 +143,9 @@ class HelperZipTest extends HelperTestCase
      */
     public function testGetContainedFileContents(): void
     {
-        $this->markTestIncomplete('@todo: Review and correct test and rel. method');
+        self::markTestIncomplete('@todo: Review and correct test and rel. method');
 
-//        $this->assertStringEqualsFile(
+//        self::assertStringEqualsFile(
 //            __DIR__ . '/Fixtures/data/files/unzip/unzipped/03.txt',
 //            HelperZip::getContainedFileContents(
 //                __DIR__ . '/Fixtures/data/files/unzip/to-be-unzipped.zip',
@@ -155,10 +155,10 @@ class HelperZipTest extends HelperTestCase
 
     public function testGetFilepathInZip(): void
     {
-        $this->markTestIncomplete('@todo: Review and correct test and rel. method');
+        self::markTestIncomplete('@todo: Review and correct test and rel. method');
 
 //        $path = __DIR__ . '/Fixtures/data/files/unzip/to-be-unzipped.zip';
 //        $expectedFile = __DIR__ . '/Fixtures/data/files/unzip/unzipped/03.txt';
-//        $this->assertStringEqualsFile($expectedFile, HelperZip::getContainedFileContents($path, 'to-be-unzipped/03.txt', false));
+//        self::assertStringEqualsFile($expectedFile, HelperZip::getContainedFileContents($path, 'to-be-unzipped/03.txt', false));
     }
 }

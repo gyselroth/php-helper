@@ -18,14 +18,14 @@ class HelperStringTest extends HelperTestCase
 {
     public function testGetStringBetween(): void
     {
-        $this->assertEquals('miny',         HelperString::getStringBetween('eeny meeny miny moe', 'meeny', 'moe'));
+        self::assertEquals('miny',         HelperString::getStringBetween('eeny meeny miny moe', 'meeny', 'moe'));
 
-        $this->assertSame('quick',          HelperString::getStringBetween('the quick brown fox', 'the', 'brown', true));
-        $this->assertSame('quick brown',    HelperString::getStringBetween('the quick brown fox', 'the', 'fox', true));
-        $this->assertSame(' quick ',        HelperString::getStringBetween('the quick brown fox', 'the', 'brown', false));
-        $this->assertSame('',               HelperString::getStringBetween('the quick brown fox', 'brown', '', true));
-        $this->assertSame('',               HelperString::getStringBetween('the quick brown fox', '', 'quick', true));
-        $this->assertSame('',               HelperString::getStringBetween('the quick brown fox', '', '', true));
+        self::assertSame('quick',          HelperString::getStringBetween('the quick brown fox', 'the', 'brown', true));
+        self::assertSame('quick brown',    HelperString::getStringBetween('the quick brown fox', 'the', 'fox', true));
+        self::assertSame(' quick ',        HelperString::getStringBetween('the quick brown fox', 'the', 'brown', false));
+        self::assertSame('',               HelperString::getStringBetween('the quick brown fox', 'brown', '', true));
+        self::assertSame('',               HelperString::getStringBetween('the quick brown fox', '', 'quick', true));
+        self::assertSame('',               HelperString::getStringBetween('the quick brown fox', '', '', true));
     }
 
     /**
@@ -33,14 +33,14 @@ class HelperStringTest extends HelperTestCase
      */
     public function testStartsWith(): void
     {
-        $this->assertTrue(HelperString::startsWith('abcdcba', ''));
-        $this->assertTrue(HelperString::startsWith('abcdcba', 'a'));
+        self::assertTrue(HelperString::startsWith('abcdcba', ''));
+        self::assertTrue(HelperString::startsWith('abcdcba', 'a'));
 
-        $this->assertNotTrue(HelperString::startsWith('abcdcba', 'b'));
+        self::assertNotTrue(HelperString::startsWith('abcdcba', 'b'));
 
-//        $this->assertTrue(HelperString::startsWith('abcdcba', ['b', 'c', 'a', 'd', 'a']));
+//        self::assertTrue(HelperString::startsWith('abcdcba', ['b', 'c', 'a', 'd', 'a']));
 
-//        $this->assertNotTrue(HelperString::startsWith('abcdcba', ['b', 'c', 'f', 'd', 'g']));
+//        self::assertNotTrue(HelperString::startsWith('abcdcba', ['b', 'c', 'f', 'd', 'g']));
     }
 
     /**
@@ -48,14 +48,14 @@ class HelperStringTest extends HelperTestCase
      */
     public function testEndsWith(): void
     {
-        $this->assertTrue(HelperString::endsWith('abcdcba', ''));
-        $this->assertTrue(HelperString::endsWith('abcdcba', 'a'));
+        self::assertTrue(HelperString::endsWith('abcdcba', ''));
+        self::assertTrue(HelperString::endsWith('abcdcba', 'a'));
 
-        $this->assertNotTrue(HelperString::endsWith('abcdcba', 'b'));
+        self::assertNotTrue(HelperString::endsWith('abcdcba', 'b'));
 
-        $this->assertTrue(HelperString::endsWith('abcdcba', ['b', 'c', 'a', 'd', 'a']));
+        self::assertTrue(HelperString::endsWith('abcdcba', ['b', 'c', 'a', 'd', 'a']));
 
-        $this->assertNotTrue(HelperString::endsWith('abcdcba', ['b', 'c', 'f', 'd', 'g']));
+        self::assertNotTrue(HelperString::endsWith('abcdcba', ['b', 'c', 'f', 'd', 'g']));
     }
 
     /**
@@ -63,15 +63,15 @@ class HelperStringTest extends HelperTestCase
      */
     public function testReplaceFirst(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet,  sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::replaceFirst('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 'consetetur'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, e sadipscing elitr, sed diam nonumy conseteture eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::replaceFirst('Lorem ipsum dolor sit amet, conseteture sadipscing elitr, sed diam nonumy conseteture eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 'consetetur'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, test sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::replaceFirst('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 'consetetur', 'test'));
     }
@@ -81,15 +81,15 @@ class HelperStringTest extends HelperTestCase
      */
     public function testReplaceLast(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::replaceLast('consetetur', '', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, conseteture sadipscing elitr, sed diam nonumy e eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::replaceLast('consetetur', '', 'Lorem ipsum dolor sit amet, conseteture sadipscing elitr, sed diam nonumy conseteture eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy test eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::replaceLast('consetetur', 'test', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'));
     }
@@ -99,38 +99,41 @@ class HelperStringTest extends HelperTestCase
      */
     public function testWrap(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'leftside->TOBEWRAPPED<-rightside',
             HelperString::wrap('TOBEWRAPPED', 'leftside->', '<-rightside', false));
 
-        $this->assertEquals(
+        self::assertEquals(
             'leftside->leftside->TOBEWRAPPED<-rightside<-rightside',
             HelperString::wrap('leftside->TOBEWRAPPED<-rightside', 'leftside->', '<-rightside', false));
 
-        $this->assertEquals(
+        self::assertEquals(
             'leftside->TOBEWRAPPED<-rightside',
             HelperString::wrap('TOBEWRAPPED', 'leftside->', '<-rightside'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'leftside->TOBEWRAPPED<-rightside',
             HelperString::wrap('leftside->TOBEWRAPPED<-rightside', 'leftside->','<-rightside'));
     }
 
     public function testRemoveBetweenLhsNotGiven(): void
     {
-        $this->assertEquals('brave new world', HelperString::removeAllBetween('brave new world', 'happy', 'earth'));
+        self::assertEquals('brave new world', HelperString::removeAllBetween('brave new world', 'happy', 'earth'));
     }
+
     public function testRemoveBetweenRhsNotGiven(): void
     {
-        $this->assertEquals('brave new world', HelperString::removeAllBetween('brave new world', 'brave', 'earth'));
+        self::assertEquals('brave new world', HelperString::removeAllBetween('brave new world', 'brave', 'earth'));
     }
+
     public function testRemoveBetweenRemoveDelimiters(): void
     {
-        $this->assertEquals('its a over there', HelperString::removeAllBetween('its a brave new world over there', 'brave', ' world '));
+        self::assertEquals('its a over there', HelperString::removeAllBetween('its a brave new world over there', 'brave', ' world '));
     }
+
     public function testRemoveBetweenKeepDelimiters(): void
     {
-        $this->assertEquals('its a brave world over there', HelperString::removeAllBetween('its a brave new world over there', 'brave', ' world', false));
+        self::assertEquals('its a brave world over there', HelperString::removeAllBetween('its a brave new world over there', 'brave', ' world', false));
     }
 
     /**
@@ -138,8 +141,9 @@ class HelperStringTest extends HelperTestCase
      */
     public function testUnwrap(): void
     {
-        $this->assertEquals('TOBEUNWRAPPED', HelperString::unwrap('leftside->TOBEUNWRAPPED<-rightside', 'leftside->', '<-rightside'));
-        $this->assertEquals('leftside->TOBEUNWRAPPED<-rightside', HelperString::unwrap('leftside->TOBEUNWRAPPED<-rightside', 'rightside->', '<-leftside'));
+        self::assertEquals('TOBEUNWRAPPED', HelperString::unwrap('leftside->TOBEUNWRAPPED<-rightside', 'leftside->', '<-rightside'));
+
+        self::assertEquals('leftside->TOBEUNWRAPPED<-rightside', HelperString::unwrap('leftside->TOBEUNWRAPPED<-rightside', 'rightside->', '<-leftside'));
     }
 
     /**
@@ -147,19 +151,19 @@ class HelperStringTest extends HelperTestCase
      */
     public function testRemoveAllBefore(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::removeAllBefore('consetetur', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::removeAllBefore('consetetur', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 30));
 
-//        $this->assertEquals(
+//        self::assertEquals(
 //            ' ut labore et dolore magna aliquyam erat, sed diam voluptua.',
 //            HelperString::removeAllBefore('invidunt', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', null, true));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::removeAllBefore('consetetur', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 500));
     }
@@ -169,19 +173,19 @@ class HelperStringTest extends HelperTestCase
      */
     public function testRemoveAllAfter(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur',
             HelperString::removeAllAfter('consetetur', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur',
             HelperString::removeAllAfter('consetetur', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 30));
 
-//        $this->assertEquals(
+//        self::assertEquals(
 //            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor '
 //            HelperString::removeAllAfter('invidunt', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', null, true));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::removeAllAfter('consetetur', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 500));
     }
@@ -191,11 +195,11 @@ class HelperStringTest extends HelperTestCase
      */
     public function testStrPosMultiple(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             json_encode(['consectetur' => 0, 'magna' => 127, ' ' => 5]),
             json_encode(HelperString::strPosConsecutive('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', ['consectetur', 'magna', ' '])));
 
-        $this->assertEquals(
+        self::assertEquals(
             json_encode(false),
             json_encode(HelperString::strPosConsecutive('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', ['consecteture', 'magnam', 1])));
     }
@@ -205,7 +209,7 @@ class HelperStringTest extends HelperTestCase
      */
     public function testFormatJsonCompatible(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem "ipsum" dolor sit amet, consetetur sadipscing elitr. Sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
             HelperString::formatJsonCompatible("Lorem 'ipsum' dolor sit amet, consetetur sadipscing elitr. \nSed diam nonumy consetetur eirmod tempor invidunt ut labore\r et dolore magna aliquyam erat, sed diam voluptua."));
     }
@@ -215,9 +219,9 @@ class HelperStringTest extends HelperTestCase
      */
     public function testIsUtf8(): void
     {
-        $this->assertTrue(HelperString::isUtf8('äöü€'));
+        self::assertTrue(HelperString::isUtf8('äöü€'));
 
-        $this->assertNotTrue(HelperString::isUtf8('aouE'));
+        self::assertNotTrue(HelperString::isUtf8('aouE'));
     }
 
     /**
@@ -225,11 +229,11 @@ class HelperStringTest extends HelperTestCase
      */
     public function testReduceCharRepetitions(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit aAmet, consetetur sssssadipscing elitr, sed diam nonumyBb consetetur eirmod tempor invidunt.',
             HelperString::reduceCharRepetitions('Lorem ipsum dolor sit aAAAmet, consetetur sssssadipscing elitr, sed diam nonumyBbBb consetetur eirmod tempor invidunt.....', ['.', 'A', 'Bb']));
 
-        $this->assertEquals(
+        self::assertEquals(
             'Lorem ipsum dolor sit amet, consetetur sadipscing eliTr, sed diam nonumy consetetur eirmod tempor invidunt.',
             HelperString::reduceCharRepetitions('Lorem ipsum dolor sit amet, consetetur sadipscing eliTTTTTTr, sed diam nonumy consetetur eirmod tempor invidunt.', 'T'));
     }
@@ -239,8 +243,8 @@ class HelperStringTest extends HelperTestCase
      */
     public function testToCamelCase(): void
     {
-        $this->assertEquals('toCamel-Case', HelperString::toCamelCase('to-camel--case'));
-        $this->assertEquals('ToCamel-Case', HelperString::toCamelCase('to-camel--case', true));
+        self::assertEquals('toCamel-Case', HelperString::toCamelCase('to-camel--case'));
+        self::assertEquals('ToCamel-Case', HelperString::toCamelCase('to-camel--case', true));
     }
 
     /**
@@ -248,8 +252,8 @@ class HelperStringTest extends HelperTestCase
      */
     public function testGetPathFromCamelCase(): void
     {
-        $this->assertEquals('to-camel--case', HelperString::getPathFromCamelCase('toCamel-Case'));
-        $this->assertEquals('to=camel-=case', HelperString::getPathFromCamelCase('toCamel-Case', '='));
+        self::assertEquals('to-camel--case', HelperString::getPathFromCamelCase('toCamel-Case'));
+        self::assertEquals('to=camel-=case', HelperString::getPathFromCamelCase('toCamel-Case', '='));
     }
 
     /**
@@ -257,12 +261,12 @@ class HelperStringTest extends HelperTestCase
      */
     public function testContainsAnyOf(): void
     {
-        $this->assertTrue(HelperString::containsAnyOf('a', 'a'));
-        $this->assertTrue(HelperString::containsAnyOf('abc', 'b'));
-        $this->assertTrue(HelperString::containsAnyOf('abc', 'xyza'));
+        self::assertTrue(HelperString::containsAnyOf('a', 'a'));
+        self::assertTrue(HelperString::containsAnyOf('abc', 'b'));
+        self::assertTrue(HelperString::containsAnyOf('abc', 'xyza'));
 
-        $this->assertNotTrue(HelperString::containsAnyOf('', 'd'));
-        $this->assertNotTrue(HelperString::containsAnyOf('abc', 'd'));
+        self::assertNotTrue(HelperString::containsAnyOf('', 'd'));
+        self::assertNotTrue(HelperString::containsAnyOf('abc', 'd'));
     }
 
 //    /**
@@ -270,15 +274,15 @@ class HelperStringTest extends HelperTestCase
 //     */
 //    public function testPregMatchAllWithOffsets(): void
 //    {
-//        $this->assertEquals(
+//        self::assertEquals(
 //            json_encode([2 => 'a', 10 => 'a', 21 => 'a', 25 => 'a', 30 => 'a', 35 => 'a', 40 => 'a']),
 //            json_encode(HelperString::preg_match_all_with_offsets('/a/', 'Fraticinidas velum, tanquam flavum adiurator.')));
 //
-//        $this->assertEquals(
+//        self::assertEquals(
 //            json_encode([11 => 's9', 14 => 'v9', 42 => 'm9']),
 //            json_encode(HelperString::preg_match_all_with_offsets('/[a-z]9/', 'Fraticinidas9 v9 el-1 um2, tanquam 9 flavum9 adiurator39.')));
 //
-//        $this->assertEquals(
+//        self::assertEquals(
 //            json_encode([1 => 'raticinidas9', 14 => 'v9', 37 => 'flavum9']),
 //            json_encode(HelperString::preg_match_all_with_offsets('/[a-z]+9/', 'Fraticinidas9 v9 el-1 um2, tanquam 9 flavum9 adiurator39.')));
 //    }
@@ -291,11 +295,11 @@ class HelperStringTest extends HelperTestCase
      */
     public function testGetRandomString(): void
     {
-        $this->assertEquals(12, \strlen(HelperString::getRandomString(12)));
+        self::assertEquals(12, \strlen(HelperString::getRandomString(12)));
 
-        $this->assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[\d]+)/', HelperString::getRandomString()));
+        self::assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[\d]+)/', HelperString::getRandomString()));
 
-        $this->assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[A-Z]+)(?=.*?[\.\-\?&\$]+)/', HelperString::getRandomString(12, true, true, false, '.-?&$')));
+        self::assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[A-Z]+)(?=.*?[\.\-\?&\$]+)/', HelperString::getRandomString(12, true, true, false, '.-?&$')));
     }
 
     /**
@@ -303,8 +307,8 @@ class HelperStringTest extends HelperTestCase
      */
     public function testGetRandomLetter(): void
     {
-        $this->assertEquals(1, preg_match('/[a-z]/', HelperString::getRandomLetter()));
-        $this->assertEquals(1, preg_match('/[A-E]+|[0-3]+/', HelperString::getRandomLetter(true, 'acbed0123')));
+        self::assertEquals(1, preg_match('/[a-z]/', HelperString::getRandomLetter()));
+        self::assertEquals(1, preg_match('/[A-E]+|[0-3]+/', HelperString::getRandomLetter(true, 'acbed0123')));
     }
 
     /**
@@ -312,8 +316,8 @@ class HelperStringTest extends HelperTestCase
      */
     public function testToAlpha(): void
     {
-        $this->assertEquals('d', HelperString::toAlpha(3));
-        $this->assertEquals('bym', HelperString::toAlpha(2012 + 2));
+        self::assertEquals('d', HelperString::toAlpha(3));
+        self::assertEquals('bym', HelperString::toAlpha(2012 + 2));
     }
 
     /**
@@ -321,7 +325,7 @@ class HelperStringTest extends HelperTestCase
      */
     public function testUrlSafeB64encode(): void
     {
-        $this->assertEquals('aGFsbG8.', HelperString::urlSafeB64encode('hallo'));
+        self::assertEquals('aGFsbG8.', HelperString::urlSafeB64encode('hallo'));
     }
 
     /**
@@ -329,8 +333,8 @@ class HelperStringTest extends HelperTestCase
      */
     public function testUrlSafeB64Decode(): void
     {
-        $this->assertEquals('hallo', HelperString::urlSafeB64Decode('aGFsbG8.'));
-        $this->assertEquals('hallo', HelperString::urlSafeB64Decode('aGFsbG8..'));
+        self::assertEquals('hallo', HelperString::urlSafeB64Decode('aGFsbG8.'));
+        self::assertEquals('hallo', HelperString::urlSafeB64Decode('aGFsbG8..'));
     }
 
     /**
@@ -338,20 +342,20 @@ class HelperStringTest extends HelperTestCase
      */
     public function testCompareValuesByComparisonOperators(): void
     {
-        $this->assertNotTrue(HelperString::compareValuesByComparisonOperators('test', 'Test', 'eq'));
+        self::assertNotTrue(HelperString::compareValuesByComparisonOperators('test', 'Test', 'eq'));
 
-        $this->assertTrue(HelperString::compareValuesByComparisonOperators('test', 0, 'eq'));
+        self::assertTrue(HelperString::compareValuesByComparisonOperators('test', 0, 'eq'));
 
-        $this->assertNotTrue(HelperString::compareValuesByComparisonOperators('123', 0, 'eq'));
+        self::assertNotTrue(HelperString::compareValuesByComparisonOperators('123', 0, 'eq'));
 
-        $this->assertTrue(HelperString::compareValuesByComparisonOperators('test', 'test2', 'lt'));
-        $this->assertTrue(HelperString::compareValuesByComparisonOperators('0123', 123, 'eq'));
+        self::assertTrue(HelperString::compareValuesByComparisonOperators('test', 'test2', 'lt'));
+        self::assertTrue(HelperString::compareValuesByComparisonOperators('0123', 123, 'eq'));
 
-        $this->assertNotTrue(HelperString::compareValuesByComparisonOperators('0123', 123, 'eq', true));
+        self::assertNotTrue(HelperString::compareValuesByComparisonOperators('0123', 123, 'eq', true));
 
-        $this->assertTrue(HelperString::compareValuesByComparisonOperators('25H', 25, 'eq'));
-        $this->assertTrue(HelperString::compareValuesByComparisonOperators(true, 0, 'gt'));
-        $this->assertTrue(HelperString::compareValuesByComparisonOperators(24, 22));
+        self::assertTrue(HelperString::compareValuesByComparisonOperators('25H', 25, 'eq'));
+        self::assertTrue(HelperString::compareValuesByComparisonOperators(true, 0, 'gt'));
+        self::assertTrue(HelperString::compareValuesByComparisonOperators(24, 22));
     }
 
 //    /**
@@ -359,20 +363,20 @@ class HelperStringTest extends HelperTestCase
 //     */
 //    public function testMbStrSplit(): void
 //    {
-//        $this->assertEquals(['t','3',' ','_','e','0','s','t'], HelperString::mbStrSplit('t3 _e0st'));
+//        self::assertEquals(['t','3',' ','_','e','0','s','t'], HelperString::mbStrSplit('t3 _e0st'));
 //    }
 
     public function testTranslate(): void
     {
-        $this->assertSame('test', HelperString::translate('test'));
-        $this->assertSame('This is 1 test', HelperString::translate('This is %d %s', [1, 'test']));
+        self::assertSame('test', HelperString::translate('test'));
+        self::assertSame('This is 1 test', HelperString::translate('This is %d %s', [1, 'test']));
     }
 
     public function testTranslatePlural(): void
     {
-        $this->assertSame('Single', HelperString::translatePlural('Single', 'Plural', -1));
-        $this->assertSame('Single', HelperString::translatePlural('Single', 'Plural', 1));
-        $this->assertSame('Plural', HelperString::translatePlural('Single', 'Plural', 0));
-        $this->assertSame('Plural', HelperString::translatePlural('Single', 'Plural', 2));
+        self::assertSame('Single', HelperString::translatePlural('Single', 'Plural', -1));
+        self::assertSame('Single', HelperString::translatePlural('Single', 'Plural', 1));
+        self::assertSame('Plural', HelperString::translatePlural('Single', 'Plural', 0));
+        self::assertSame('Plural', HelperString::translatePlural('Single', 'Plural', 2));
     }
 }

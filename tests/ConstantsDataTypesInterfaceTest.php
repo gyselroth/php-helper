@@ -17,6 +17,6 @@ class ConstantsDataTypesInterfaceTest extends HelperTestCase implements Constant
 {
     public function testAutoload(): void
     {
-        $this->assertSame('array', self::DATA_TYPE_ARRAY);
+        self::assertSame('array', self::DATA_TYPE_ARRAY);
     }
 }

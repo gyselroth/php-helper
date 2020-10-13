@@ -31,23 +31,27 @@ class HelperReflectionTest extends HelperTestCase
         $intShort = (int) 1;
         $string = 'string';
 
-        $this->assertThat(
+        self::assertThat(
             HelperReflection::getTypeCasted('1', 'bool'),
             new IsType('bool')
         );
-        $this->assertThat(
+
+        self::assertThat(
             HelperReflection::getTypeCasted('1', 'array'),
             new IsType('array')
         );
-        $this->assertThat(
+
+        self::assertThat(
             HelperReflection::getTypeCasted('1', 'int'),
             new IsType('int')
         );
-        $this->assertThat(
+
+        self::assertThat(
             HelperReflection::getTypeCasted('1', 'integer'),
             new IsType('integer')
         );
-        $this->assertThat(
+
+        self::assertThat(
             HelperReflection::getTypeCasted('1', 'string'),
             new IsType('string')
         );
@@ -69,7 +73,7 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testConstructObject(): void
     {
-        $this->assertThat(
+        self::assertThat(
             HelperReflection::constructObject('Gyselroth\Helper\HelperReflection'),
             new IsType('object')
         );
@@ -91,8 +95,7 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testEnsureIsClass(): void
     {
-        $this->assertTrue(HelperReflection::ensureIsClass('Gyselroth\Helper\HelperReflection'));
-
+        self::assertTrue(HelperReflection::ensureIsClass('Gyselroth\Helper\HelperReflection'));
     }
 
     /**
@@ -121,12 +124,12 @@ class HelperReflectionTest extends HelperTestCase
 
     public function testGetControllerFilenames(): void
     {
-        $this->markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
+        self::markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
     }
 
     public function testGetActionsFromControllerFile(): void
     {
-        $this->markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
+        self::markTestSkipped('Used function HelperFile::scanDirRecursive() already tested in HelperFileTest');
 
 //        $actions = [
 //            'index',
@@ -135,7 +138,7 @@ class HelperReflectionTest extends HelperTestCase
 //            'ajaxGetDailySchedule'
 //        ];
 //        $path = __DIR__ . '/Fixtures/data/files/TimetableScheduleController.php';
-//        $this->assertEquals($actions, HelperReflection::getActionsFromControllerFile($path));
+//        self::assertEquals($actions, HelperReflection::getActionsFromControllerFile($path));
     }
 
     /**
@@ -144,7 +147,7 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionFunction(): void
     {
-        $this->assertSame('string', HelperReflection::callUserFunction('\print_r', 'string', true));
+        self::assertSame('string', HelperReflection::callUserFunction('\print_r', 'string', true));
     }
 
     /**
@@ -154,7 +157,7 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionMethod(): void
     {
-        $this->assertTrue(HelperReflection::callUserFunction('\Gyselroth\Helper\HelperString::startsWith', 'string', 's'));
+        self::assertTrue(HelperReflection::callUserFunction('\Gyselroth\Helper\HelperString::startsWith', 'string', 's'));
     }
 
     /**
@@ -173,7 +176,7 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionArray(): void
     {
-        $this->assertTrue(HelperReflection::callUserFunctionArray('\Gyselroth\Helper\HelperString::startsWith', ['string', 's']));
+        self::assertTrue(HelperReflection::callUserFunctionArray('\Gyselroth\Helper\HelperString::startsWith', ['string', 's']));
     }
 
     /**
@@ -187,29 +190,30 @@ class HelperReflectionTest extends HelperTestCase
 
     public function testIsFunctionReferenceFunction(): void
     {
-        $this->assertTrue(HelperReflection::isFunctionReference('\print_r'));
+        self::assertTrue(HelperReflection::isFunctionReference('\print_r'));
     }
 
     public function testIsFunctionReferenceMethod(): void
     {
-        $this->assertTrue(HelperReflection::isFunctionReference('\Gyselroth\Helper\HelperString::startsWith'));
+        self::assertTrue(HelperReflection::isFunctionReference('\Gyselroth\Helper\HelperString::startsWith'));
     }
 
     public function testGetConstantFromPhpClassFile(): void
     {
-        $this->markTestSkipped('Method not used.');
+        self::markTestSkipped('Method not used.');
     }
 
     public function testGetCallingMethodName(): void
     {
         $callingMethodNameWithClass = 'Tests\HelperReflectionTest::testGetCallingMethodName';
         $callingMethodName = 'testGetCallingMethodName';
-        $this->assertSame($callingMethodNameWithClass, HelperReflection::getCallingMethodName());
-        $this->assertSame($callingMethodName, HelperReflection::getCallingMethodName(false));
+
+        self::assertSame($callingMethodNameWithClass, HelperReflection::getCallingMethodName());
+        self::assertSame($callingMethodName, HelperReflection::getCallingMethodName(false));
     }
 
     public function testGetCallee(): void
     {
-        $this->assertSame('PHPUnit\Framework\TestCase::runTest()', HelperReflection::getCallee());
+        self::assertSame('PHPUnit\Framework\TestCase::runTest()', HelperReflection::getCallee());
     }
 }

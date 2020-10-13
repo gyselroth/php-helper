@@ -33,7 +33,7 @@ class HelperJsonTest extends HelperTestCase
      */
     public function testDecodeEmpty(): void
     {
-        $this->assertEmpty(HelperJson::decode(''));
+        self::assertEmpty(HelperJson::decode(''));
     }
 
     /**
@@ -41,7 +41,7 @@ class HelperJsonTest extends HelperTestCase
      */
     public function testDecodeArray(): void
     {
-        $this->assertEquals($this->array, HelperJson::decode($this->jsonEncoded));
+        self::assertEquals($this->array, HelperJson::decode($this->jsonEncoded));
     }
 
     /**
@@ -50,7 +50,8 @@ class HelperJsonTest extends HelperTestCase
     public function testDecodeObject(): void
     {
         $object = (object) $this->array;
-        $this->assertEquals($object, HelperJson::decode($this->jsonEncoded, 0));
+
+        self::assertEquals($object, HelperJson::decode($this->jsonEncoded, 0));
     }
 
     /**
@@ -58,16 +59,16 @@ class HelperJsonTest extends HelperTestCase
      */
     public function testDecodeInvalid(): void
     {
-        $this->assertEmpty(HelperJson::decode("{'key':'value'}"));
+        self::assertEmpty(HelperJson::decode("{'key':'value'}"));
     }
 
     public function testEnsureIsJsonTrue(): void
     {
-        $this->assertSame($this->jsonEncoded, HelperJson::ensureIsJson($this->jsonEncoded));
+        self::assertSame($this->jsonEncoded, HelperJson::ensureIsJson($this->jsonEncoded));
     }
 
     public function testEnsureIsJsonFalse(): void
     {
-        $this->assertSame('HTML Code (expected JSON)', HelperJson::ensureIsJson('<!DOCTYPE'));
+        self::assertSame('HTML Code (expected JSON)', HelperJson::ensureIsJson('<!DOCTYPE'));
     }
 }
