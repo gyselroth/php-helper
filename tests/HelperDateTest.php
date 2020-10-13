@@ -20,21 +20,27 @@ class HelperDateTest extends HelperTestCase
     public function testIsDateTimeString(): void
     {
         self::assertFalse(HelperDate::isDateTimeString('2017-4-2 12:03'));
+
         self::assertTrue(HelperDate::isDateTimeString('2017-4-2 12:03:12'));
+
         self::assertTrue(HelperDate::isDateTimeString('3.9.01 09:12', 'j.n.y H:i'));
     }
 
     public function testIsDateString(): void
     {
         self::assertTrue(HelperDate::isDateString('31-12-2017', '-', true));
+
         self::assertFalse(HelperDate::isDateString('24-3-2017'));
+
         self::assertTrue(HelperDate::isDateString('24.3.2017', '.', true));
+
         self::assertFalse(HelperDate::isDateString('03-24-2017 12:05'));
     }
 
     public function testIsTimeString(): void
     {
         self::assertTrue(HelperDate::isTimeString('3:02:02'));
+
         self::assertTrue(HelperDate::isTimeString('12:02', false));
     }
 
@@ -45,12 +51,30 @@ class HelperDateTest extends HelperTestCase
     public function testGetCurrentDate(): void
     {
         $weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-        $months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+        $months = [
+            'Januar',
+            'Februar',
+            'März',
+            'April',
+            'Mai',
+            'Juni',
+            'Juli',
+            'August',
+            'September',
+            'Oktober',
+            'November',
+            'Dezember'
+        ];
 
         $locale = new \Zend_Locale();
 
-        if ($locale->getLanguage() === 'de') {
-            $string = $weekdays[\date('w')] . ', ' . \date('d.') . ' ' . $months[\date('n') - 1] . ' ' . \date('Y');
+        if ('de' === $locale->getLanguage()) {
+            $string =
+                $weekdays[\date('w')]
+                . ', ' . \date('d.')
+                . ' ' . $months[\date('n') - 1]
+                . ' ' . \date('Y');
         } else {
             $string = \date('l, d. F Y');
         }
@@ -101,10 +125,25 @@ class HelperDateTest extends HelperTestCase
      */
     public function testGetDateFromUnixTimestamp(): void
     {
-        self::assertSame('10:20:20', HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_TIME_MYSQL));
-        self::assertEquals('1498645220000', HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_TIMESTAMP_JAVASCRIPT));
-        self::assertSame('Wed, 28. June 2017', HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR));
-        self::assertSame('Wednesday, 28. June 2017', HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_WEEKDAY_LONG_DAY_MONTH_YEAR));
+        self::assertSame(
+            '10:20:20',
+            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_TIME_MYSQL)
+        );
+
+        self::assertEquals(
+            '1498645220000',
+            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_TIMESTAMP_JAVASCRIPT)
+        );
+
+        self::assertSame(
+            'Wed, 28. June 2017',
+            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR)
+        );
+
+        self::assertSame(
+            'Wednesday, 28. June 2017',
+            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_WEEKDAY_LONG_DAY_MONTH_YEAR)
+        );
     }
 
     /**
@@ -117,8 +156,15 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetDateTime(): void
     {
-        self::assertSame('{"date":"2017-06-28 10:20:20.000000","timezone_type":1,"timezone":"+00:00"}', json_encode(HelperDate::getDateTime(1498645220)));
-        self::assertSame('{"date":"2017-06-28 12:20:20.000000","timezone_type":3,"timezone":"UTC"}', json_encode(HelperDate::getDateTime('28.6.2017, 12:20:20')));
+        self::assertSame(
+            '{"date":"2017-06-28 10:20:20.000000","timezone_type":1,"timezone":"+00:00"}',
+            json_encode(HelperDate::getDateTime(1498645220))
+        );
+
+        self::assertSame(
+            '{"date":"2017-06-28 12:20:20.000000","timezone_type":3,"timezone":"UTC"}',
+            json_encode(HelperDate::getDateTime('28.6.2017, 12:20:20'))
+        );
     }
 
     public function testGetDateStringFromDateTimeString(): void
@@ -133,16 +179,30 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetDateParts(): void
     {
-        self::assertSame('{"year":"2017","month":"6","day":"28"}', json_encode(HelperDate::getDateParts(1498645220)));
+        self::assertSame(
+            '{"year":"2017","month":"6","day":"28"}',
+            json_encode(HelperDate::getDateParts(1498645220))
+        );
 
         self::markTestIncomplete('@todo: Review and correct test and rel. method');
-//        self::assertSame('{"year":"17","month":"6","day":"28"}', json_encode(HelperDate::getDateParts('28.6.2017', 'y', 'n', 'd')));
+
+//        self::assertSame(
+//          '{"year":"17","month":"6","day":"28"}',
+//          json_encode(HelperDate::getDateParts('28.6.2017', 'y', 'n', 'd'))
+//        );
     }
 
     public function testGetDatePartsAtStartOfDay(): void
     {
-        self::assertSame('{"array":["1994","05","22","12","20","15"],"timestamp":769564800}', json_encode(HelperDate::getDatePartsAtStartOfDay('1994-05-22-12-20-15')));
-        self::assertSame('{"array":["1994","05","22"],"timestamp":769564800}', json_encode(HelperDate::getDatePartsAtStartOfDay('1994-05-22')));
+        self::assertSame(
+            '{"array":["1994","05","22","12","20","15"],"timestamp":769564800}',
+            json_encode(HelperDate::getDatePartsAtStartOfDay('1994-05-22-12-20-15'))
+        );
+
+        self::assertSame(
+            '{"array":["1994","05","22"],"timestamp":769564800}',
+            json_encode(HelperDate::getDatePartsAtStartOfDay('1994-05-22'))
+        );
     }
 
     public function testGetTimestampStartOfDay(): void
@@ -161,14 +221,23 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetTimeStringParts(): void
     {
-        self::assertSame('{"hour":12,"minutes":5,"seconds":12}', json_encode(HelperDate::getTimeStringParts('12:05:12')));
-        self::assertSame('{"hour":12,"minutes":5}', json_encode(HelperDate::getTimeStringParts('12:05')));
+        self::assertSame(
+            '{"hour":12,"minutes":5,"seconds":12}',
+            json_encode(HelperDate::getTimeStringParts('12:05:12'))
+        );
+
+        self::assertSame(
+            '{"hour":12,"minutes":5}',
+            json_encode(HelperDate::getTimeStringParts('12:05'))
+        );
     }
 
     public function testGetTimeString(): void
     {
         self::assertSame('10:20:20', HelperDate::getTimeString(1498645220800, true));
+
         self::assertSame('10:20:20', HelperDate::getTimeString(1498645220));
+
         self::assertSame('12:20', HelperDate::getTimeString('12:20:20', false, false, true));
     }
 
@@ -237,7 +306,12 @@ class HelperDateTest extends HelperTestCase
     public function testGetDateDiff(): void
     {
         self::assertEquals('2', HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220)));
-        self::assertEquals('27', HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220), 'hour'));
+
+        self::assertEquals(
+            '27',
+            HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220), 'hour')
+        );
+
         self::assertNull(HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220), 'minute'));
     }
 
@@ -274,14 +348,18 @@ class HelperDateTest extends HelperTestCase
     public function testGetMonthNameByNumber(): void
     {
         self::assertSame('März', HelperDate::getMonthNameByNumber(3));
+
         self::assertSame('Mär', HelperDate::getMonthNameByNumber(3, true));
+
         self::assertSame('Mai', HelperDate::getMonthNameByNumber(strtotime('12.5.2017')));
     }
 
     public function testGetWeekdayNameByNumber(): void
     {
         self::assertSame('Dienstag', HelperDate::getWeekdayNameByNumber(2));
+
         self::assertSame('Di', HelperDate::getWeekdayNameByNumber(2, true));
+
         self::assertSame('Freitag', HelperDate::getWeekdayNameByNumber(strtotime('12.5.2017')));
     }
 
@@ -291,6 +369,7 @@ class HelperDateTest extends HelperTestCase
     public function testGetIcsDateFromDateString(): void
     {
         self::assertSame('20170512', HelperDate::getIcsDateFromDateString('12.5.2017'));
+
         self::assertSame('20170512T123456', HelperDate::getIcsDateFromDateString('12.5.2017 12:34:56', true));
 
         $this->expectException('Gyselroth\Helper\Exception\DateException');
@@ -309,13 +388,18 @@ class HelperDateTest extends HelperTestCase
     public function testGetTimestampFirstDayOfCalendarWeek(): void
     {
         self::assertSame(1483315200, HelperDate::getTimestampFirstDayOfCalendarWeek(1, 2017));
+
         self::assertSame(1485129600, HelperDate::getTimestampFirstDayOfCalendarWeek(4, 17));
+
         self::assertSame(1452470400, HelperDate::getTimestampFirstDayOfCalendarWeek(2, 2016));
     }
 
     public function testGetAgeByBirthYear(): void
     {
-        self::markTestSkipped('Result dependent on current year: the formula needed to test this is the same as the function being tested');
+        self::markTestSkipped(
+            'Result dependent on current year: the formula needed to test this is the same'
+            . ' as the function being tested'
+        );
     }
 
     public function testGetClosestDate(): void
@@ -342,20 +426,31 @@ class HelperDateTest extends HelperTestCase
 //        self::assertSame('30. Dezember 2016 bis 3. Januar 2017',
 //            HelperDate::renderTimerangeHumanReadable('30.12.2016', '3.1.2017'));
 
-//        self::assertSame('12. April 2017 bis 15. April 2017', HelperDate::renderTimerangeHumanReadable('12.4.2017', '15.4.2017', 'de'));
-//        self::assertSame('December 30, 2016 until January 3, 2017', HelperDate::renderTimerangeHumanReadable('30.12.2016', '3.1.2017', 'en'), '"bis" is not being translated to English');
+//        self::assertSame(
+//          '12. April 2017 bis 15. April 2017',
+//          HelperDate::renderTimerangeHumanReadable('12.4.2017', '15.4.2017', 'de')
+//        );
+
+//        self::assertSame(
+//          'December 30, 2016 until January 3, 2017',
+//          HelperDate::renderTimerangeHumanReadable('30.12.2016', '3.1.2017', 'en'),
+//          '"bis" is not being translated to English'
+//        );
     }
 
     public function testRemoveMeridiem(): void
     {
         self::assertSame('2', HelperDate::removeMeridiem('2pm'));
+
         self::assertSame('2', HelperDate::removeMeridiem('2 pm'));
+
         self::assertSame('12', HelperDate::removeMeridiem('12 am'));
     }
 
     public function testEnsureTimeStringHasSeconds(): void
     {
         self::assertSame('12:34:00', HelperDate::ensureTimeStringHasSeconds('12:34'));
+
         self::assertSame('12:34:56', HelperDate::ensureTimeStringHasSeconds('12:34:56'));
     }
 
@@ -366,18 +461,27 @@ class HelperDateTest extends HelperTestCase
     public function testConvertDateToUTC(): void
     {
         self::assertSame('20170512T000000', HelperDate::convertDateToUTC('12.5.2017'));
-        self::assertSame('2017-05-12 12:34:56', HelperDate::convertDateToUTC(strtotime('12.5.2017 12:34:56'), 'yyyy-MM-dd HH:mm:ss'));
+
+        self::assertSame(
+            '2017-05-12 12:34:56',
+            HelperDate::convertDateToUTC(
+                strtotime('12.5.2017 12:34:56'),
+                'yyyy-MM-dd HH:mm:ss'
+            )
+        );
     }
 
     public function testConvertDelimitedDateString(): void
     {
         self::assertSame('2017.5.12', HelperDate::convertDelimitedDateString('12-5-2017'));
+
         self::assertSame('2017.5.12', HelperDate::convertDelimitedDateString('12"5"2017', '"'));
     }
 
     public function testGetZendDatePartByType(): void
     {
         self::assertSame('mm', HelperDate::getZendDatePartByType('minUte'));
+
         self::assertSame('U', HelperDate::getZendDatePartByType('nothing'));
     }
 

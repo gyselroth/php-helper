@@ -159,6 +159,10 @@ class HelperZipTest extends HelperTestCase
 
 //        $path = __DIR__ . '/Fixtures/data/files/unzip/to-be-unzipped.zip';
 //        $expectedFile = __DIR__ . '/Fixtures/data/files/unzip/unzipped/03.txt';
-//        self::assertStringEqualsFile($expectedFile, HelperZip::getContainedFileContents($path, 'to-be-unzipped/03.txt', false));
+//
+//        self::assertStringEqualsFile(
+//          $expectedFile,
+//          HelperZip::getContainedFileContents($path, 'to-be-unzipped/03.txt', false)
+//        );
     }
 }

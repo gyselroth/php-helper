@@ -40,7 +40,9 @@ class HelperNumericTest extends HelperTestCase
     public function testIntExplode(): void
     {
         self::assertSame(json_encode(HelperNumeric::intExplode('3-5-1-4-2-2', '-')), '[3,5,1,4,2,2]');
-//        self::assertSame(json_encode(HelperNumeric::intExplode(null)), '[]');
+
+        //        self::assertSame(json_encode(HelperNumeric::intExplode(null)), '[]');
+
         self::assertSame(json_encode(HelperNumeric::intExplode('')), '[0]');
     }
 
@@ -50,8 +52,10 @@ class HelperNumericTest extends HelperTestCase
     public function testFloatExplode(): void
     {
         self::assertSame(json_encode(HelperNumeric::floatExplode('3.3-5-1.5-4-2-2', '-')), '[3.3,5,1.5,4,2,2]');
+
         self::assertSame(json_encode(HelperNumeric::floatExplode('3.3-5-1.5-4-2-2', '.')), '[3,3,5]');
-//        self::assertSame(json_encode(HelperNumeric::floatExplode(null, '.', false)), '[]');
+
+        //        self::assertSame(json_encode(HelperNumeric::floatExplode(null, '.', false)), '[]');
     }
 
     /**
@@ -60,7 +64,9 @@ class HelperNumericTest extends HelperTestCase
     public function testCalcBytesSize(): void
     {
         self::assertSame(json_encode(HelperNumeric::calcBytesSize(234)), '{"size":234,"unit":"B"}');
+
         self::assertSame(json_encode(HelperNumeric::calcBytesSize(1150)), '{"size":1.1,"unit":"KB"}');
+
         self::assertSame(json_encode(HelperNumeric::calcBytesSize(4500000)), '{"size":4.4,"unit":"MB"}');
     }
 }

@@ -182,7 +182,11 @@ class HelperArrayTest extends HelperTestCase
 //    public function testTrim()
 //    {
 //        self::assertSame(HelperArray::trim(['10 ', '', ' df '], true), ['10', '', 'df']);
-//        self::assertSame(HelperArray::trim([10, '', ' d f ']), [10, 'd f'], 'PHP trim function makes string out of int.');
+
+//        self::assertSame(
+//          HelperArray::trim([10, '', ' d f ']), [10, 'd f'],
+//          'PHP trim function makes string out of int.'
+//        );
 //    }
 
     public function testGetItemByKeyValue(): void
@@ -255,6 +259,7 @@ class HelperArrayTest extends HelperTestCase
         );
 
         self::assertFalse(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220'));
+
         self::assertTrue(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220', true));
     }
 
@@ -307,7 +312,8 @@ class HelperArrayTest extends HelperTestCase
         HelperArray::replaceInKeys('id', 'newid', $array);
 
         self::assertSame(
-            '{"newid":{"newid":{"newid":{"newid":"value1111"},"newid2":{"newid":"value1121"}},"newid3":{"newid":{"newid":"value1211"},"newid4":{"newid":"value1221"}}}}',
+            '{"newid":{"newid":{"newid":{"newid":"value1111"},"newid2":{"newid":"value1121"}},'
+            . '"newid3":{"newid":{"newid":"value1211"},"newid4":{"newid":"value1221"}}}}',
             json_encode($array)
         );
     }
@@ -353,9 +359,20 @@ class HelperArrayTest extends HelperTestCase
 
     public function testGetArrayFromRelatedIdsList(): void
     {
-        self::assertSame('[1234,2,293,33]', json_encode(HelperArray::getArrayFromRelatedIdsList(['id_1234', 'lp_2L30', 'id_293', 'po_33'])));
-        self::assertSame('[1234,2,293,33]', json_encode(HelperArray::getArrayFromRelatedIdsList('id_1234,lp_2L30,id_293,po_33')));
-        self::assertSame('[1234,293]', json_encode(HelperArray::getArrayFromRelatedIdsList('id.1234,lp.230,id.293,po.33,id.1234', 'id', '.')));
+        self::assertSame(
+            '[1234,2,293,33]',
+            json_encode(HelperArray::getArrayFromRelatedIdsList(['id_1234', 'lp_2L30', 'id_293', 'po_33']))
+        );
+
+        self::assertSame(
+            '[1234,2,293,33]',
+            json_encode(HelperArray::getArrayFromRelatedIdsList('id_1234,lp_2L30,id_293,po_33'))
+        );
+
+        self::assertSame(
+            '[1234,293]',
+            json_encode(HelperArray::getArrayFromRelatedIdsList('id.1234,lp.230,id.293,po.33,id.1234', 'id', '.'))
+        );
     }
 
     public function testRemoveItemsByValue(): void
@@ -387,7 +404,8 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         self::assertSame('{"key2":{"subkey1":"3","subkey2":"2","subkey3":"1"}}',
-            json_encode(HelperArray::removeItemsByValues($array, ['1', '2'], 'subkey1')));
+            json_encode(HelperArray::removeItemsByValues($array, ['1', '2'], 'subkey1'))
+        );
     }
 
     public function testConvertDataTypesOfQueryResult(): void
@@ -414,12 +432,15 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         self::assertSame(
-            '[{"roomId":15,"subjectId":"substitution","subjectShortNameUntis":["holiday","test1","test2"],"subjectMappingId":[1,2,3,4]},{"roomId":16,"subjectId":"substitution","subjectShortNameUntis":["holiday","test3","test4"],"subjectMappingId":[5,6,7,8]}]',
+            '[{"roomId":15,"subjectId":"substitution","subjectShortNameUntis":["holiday","test1","test2"],'
+            . '"subjectMappingId":[1,2,3,4]},{"roomId":16,"subjectId":"substitution","'
+            . 'subjectShortNameUntis":["holiday","test3","test4"],"subjectMappingId":[5,6,7,8]}]',
             json_encode(HelperArray::convertDataTypesOfQueryResult($array, $dataTypes))
         );
     }
 
-    // @todo: Kay: can not be tested yet, because the convertArrayDataByTypes() function should be changed to the suggested solution or similar.
+    // @todo  can not be tested yet, because the convertArrayDataByTypes()
+    //        function should be changed to the suggested solution or similar.
     /*
     public function testConvertArrayDataByTypes()
     {
@@ -483,8 +504,15 @@ class HelperArrayTest extends HelperTestCase
             ]
         ];
 
-        self::assertSame('[{"value":"1","type":"3"},{"value":"2","type":"3"}]', json_encode(HelperArray::arrayUniqueByKey($array, 'value')));
-        self::assertSame('[{"value":"1","type":"3"},{"value":"1","type":"0"}]', json_encode(HelperArray::arrayUniqueByKey($array, 'type')));
+        self::assertSame(
+            '[{"value":"1","type":"3"},{"value":"2","type":"3"}]',
+            json_encode(HelperArray::arrayUniqueByKey($array, 'value'))
+        );
+
+        self::assertSame(
+            '[{"value":"1","type":"3"},{"value":"1","type":"0"}]',
+            json_encode(HelperArray::arrayUniqueByKey($array, 'type'))
+        );
     }
 
     public function testArrayMultidimensionalSortByKey(): void
@@ -505,10 +533,17 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         HelperArray::arrayMultidimensionalSortByKey($array, 'type');
-        self::assertSame('[{"value":"3","type":"1"},{"value":"2","type":"2"},{"value":"1","type":"3"}]', json_encode($array));
+        self::assertSame(
+            '[{"value":"3","type":"1"},{"value":"2","type":"2"},{"value":"1","type":"3"}]',
+            json_encode($array)
+        );
 
         HelperArray::arrayMultidimensionalSortByKey($array, 'value', SORT_DESC);
-        self::assertSame('[{"value":"3","type":"1"},{"value":"2","type":"2"},{"value":"1","type":"3"}]', json_encode($array));
+
+        self::assertSame(
+            '[{"value":"3","type":"1"},{"value":"2","type":"2"},{"value":"1","type":"3"}]',
+            json_encode($array)
+        );
     }
 
     // @todo: Daniel: can not be tested because the purpose of arrayMultidimensionalSortByKeyAndCheck() is unclear
@@ -532,11 +567,15 @@ class HelperArrayTest extends HelperTestCase
 
         self::assertSame(json_encode(HelperArray::arrayMultidimensionalSortByKeyAndCheck($array, 'value',
             'int', SORT_DESC)),
-            '[{"value":["int",0,4],"type":["._-\"","*------*"]},{"value":[2,5,1],"type":["int",0,4]},{"value":["._-\"","*------*"],"type":[2,5,1]}]');
+            '[{"value":["int",0,4],"type":["._-\"","*------*"]},{"value":[2,5,1],"type":["int",0,4]},'
+            . '{"value":["._-\"","*------*"],"type":[2,5,1]}]'
+        );
 
         self::assertSame(json_encode(HelperArray::arrayMultidimensionalSortByKeyAndCheck($array, 'type',
             0)),
-            '[{"value":["int",0,4],"type":["._-\"","*------*"]},{"value":[2,5,1],"type":["int",0,4]},{"value":["._-\"","*------*"],"type":[2,5,1]}]');
+            '[{"value":["int",0,4],"type":["._-\"","*------*"]},{"value":[2,5,1],"type":["int",0,4]},'
+            . '{"value":["._-\"","*------*"],"type":[2,5,1]}]'
+        );
     }
     */
 
@@ -559,8 +598,13 @@ class HelperArrayTest extends HelperTestCase
             'key3' => ['index5' => 'value5', 'index6' => 'value6']
         ];
 
-        self::assertSame('{"index1":{"key1":"value1"},"index2":{"key1":"value2"},"index3":{"key2":"value3"},"index4":{"key2":"value4"}}',
-            json_encode(HelperArray::addKeysToSubArray($array, ['key1', 'key2'])));
+        self::assertSame(
+            '{"index1":{"key1":"value1"},'
+            . '"index2":{"key1":"value2"},'
+            . '"index3":{"key2":"value3"},'
+            . '"index4":{"key2":"value4"}}',
+            json_encode(HelperArray::addKeysToSubArray($array, ['key1', 'key2']))
+        );
     }
 
     /**
@@ -569,8 +613,13 @@ class HelperArrayTest extends HelperTestCase
      */
     public function testStrSplManipulateStrToUpper(): void
     {
-        self::assertSame(['AETHERES', 'CAELOS', 'DEMOLITIONE', 'EXSUL', 'HAMBURGUM', 'NAVIS', 'NOMEN', 'VENTUS'],
-            HelperArray::strSplManipulate(['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'], 'strtoupper'));
+        self::assertSame(
+            ['AETHERES', 'CAELOS', 'DEMOLITIONE', 'EXSUL', 'HAMBURGUM', 'NAVIS', 'NOMEN', 'VENTUS'],
+            HelperArray::strSplManipulate(
+                ['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'],
+                'strtoupper'
+            )
+        );
     }
 
     /**
@@ -579,8 +628,13 @@ class HelperArrayTest extends HelperTestCase
      */
     public function testStrSplManipulateStrToLower(): void
     {
-        self::assertSame(['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'],
-            HelperArray::strSplManipulate(['AETHERES', 'CAELOS', 'DEMOLITIONE', 'EXSUL', 'HAMBURGUM', 'NAVIS', 'NOMEN', 'VENTUS'], 'strtolower'));
+        self::assertSame(
+            ['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'],
+            HelperArray::strSplManipulate(
+                ['AETHERES', 'CAELOS', 'DEMOLITIONE', 'EXSUL', 'HAMBURGUM', 'NAVIS', 'NOMEN', 'VENTUS'],
+                'strtolower'
+            )
+        );
     }
 
     /**
@@ -589,8 +643,13 @@ class HelperArrayTest extends HelperTestCase
      */
     public function testStrSplManipulateUcFirst(): void
     {
-        self::assertSame(['Aetheres', 'Caelos', 'Demolitione', 'Exsul', 'Hamburgum', 'Navis', 'Nomen', 'Ventus'],
-            HelperArray::strSplManipulate(['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'], 'ucfirst'));
+        self::assertSame(
+            ['Aetheres', 'Caelos', 'Demolitione', 'Exsul', 'Hamburgum', 'Navis', 'Nomen', 'Ventus'],
+            HelperArray::strSplManipulate(
+                ['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'],
+                'ucfirst'
+            )
+        );
     }
 
     /**
@@ -600,7 +659,11 @@ class HelperArrayTest extends HelperTestCase
     public function testStrSplManipulateStrRev(): void
     {
         self::assertSame(['serehtea', 'soleac', 'enoitilomed', 'lusxe', 'mugrubmah', 'sivan', 'nemon', 'sutnev'],
-            HelperArray::strSplManipulate(['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'], 'strrev'));
+            HelperArray::strSplManipulate(
+                ['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'],
+                'strrev'
+            )
+        );
     }
 
     // @todo: Cannot be tested because $value in getValuesByKeys() is not an array
@@ -685,8 +748,13 @@ class HelperArrayTest extends HelperTestCase
             'n.'      => 'n sollte.'
         ];
 
-        self::assertSame('Dies ist ein Test, wobei der String stückweise ersetzt werden sollte.',
-            HelperArray::strReplaceAssociative('Dies ist ein Test. Der String sollte stückweise ersetzt werden.', $array));
+        self::assertSame(
+            'Dies ist ein Test, wobei der String stückweise ersetzt werden sollte.',
+            HelperArray::strReplaceAssociative(
+                'Dies ist ein Test. Der String sollte stückweise ersetzt werden.',
+                $array
+            )
+        );
     }
 
     public function testImplodeWrapped(): void
@@ -694,6 +762,7 @@ class HelperArrayTest extends HelperTestCase
         $array = [1, 2, '3', '4'];
 
         self::assertSame("'1','2','3','4'", HelperArray::implodeWrapped($array));
+
         self::assertSame('<1>.<2>.<3>.<4>', HelperArray::implodeWrapped($array, '<', '>', '.'));
     }
 
@@ -713,8 +782,11 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         self::assertSame(0, HelperArray::sortByKey($array1, $array2));
+
         self::assertSame(1, HelperArray::sortByKey($array1, $array2, $key = 'key2', true));
+
         self::assertSame(1, HelperArray::sortByKey($array1, $array2, $key = 'key3'));
+
         self::assertSame(-1, HelperArray::sortByKey($array1, $array2, $key = 'key4'));
     }
 
@@ -730,6 +802,7 @@ class HelperArrayTest extends HelperTestCase
         $haystack = 'Teststring zum Überprüfen der Funktion.';
 
         self::assertTrue(HelperArray::arrayStrPos($needles1, $haystack));
+
         self::assertFalse(HelperArray::arrayStrPos($needles2, $haystack));
     }
 
@@ -742,8 +815,10 @@ class HelperArrayTest extends HelperTestCase
             ['key1' => 7, 'key2' => 8]
         ];
 
-        self::assertSame('{"2":{"key1":1,"key2":2},"4":{"key1":3,"key2":4},"test":{"key1":5,"key2":"test"},"8":{"key1":7,"key2":8}}',
-            json_encode(HelperArray::reIndexByKey($rows, 'key2')));
+        self::assertSame(
+            '{"2":{"key1":1,"key2":2},"4":{"key1":3,"key2":4},"test":{"key1":5,"key2":"test"},"8":{"key1":7,"key2":8}}',
+            json_encode(HelperArray::reIndexByKey($rows, 'key2'))
+        );
     }
 
     public function testSet(): void
@@ -761,10 +836,18 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         HelperArray::set($array, 'key3.key3_2.key3_2_1', '8');
-        self::assertSame('{"key1":1,"key2":2,"key3":{"key3_1":3,"key3_2":{"key3_2_1":"8"}},"key4":5}', json_encode($array));
+
+        self::assertSame(
+            '{"key1":1,"key2":2,"key3":{"key3_1":3,"key3_2":{"key3_2_1":"8"}},"key4":5}',
+            json_encode($array)
+        );
 
         HelperArray::set($array, 'key3.key3_2.key3_2_1.5', '8');
-        self::assertSame('{"key1":1,"key2":2,"key3":{"key3_1":3,"key3_2":{"key3_2_1":{"5":"8"}}},"key4":5}', json_encode($array));
+
+        self::assertSame(
+            '{"key1":1,"key2":2,"key3":{"key3_1":3,"key3_2":{"key3_2_1":{"5":"8"}}},"key4":5}',
+            json_encode($array)
+        );
     }
 
     public function testGet(): void
@@ -785,14 +868,18 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         self::assertSame(4, HelperArray::get($array, 'key3.key3_2.key3_2_1'));
+
         self::assertSame(4, HelperArray::get($object, 'key3.key3_2.key3_2_1'));
+
         self::assertSame('not found', HelperArray::get($array, 'key3.key3_3', 'not found'));
     }
 
     public function testIsAccessible(): void
     {
         include_once __DIR__ . '/Fixtures/data/interfaces/ArrayAccess.php';
+
         $object = new Object_ArrayAccess();
+
         $array  = [
             'key1' => 1,
             'key2' => 2,
@@ -801,6 +888,7 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         self::assertTrue(HelperArray::isAccessible($array));
+
         self::assertTrue(HelperArray::isAccessible($object));
     }
 
@@ -818,16 +906,23 @@ class HelperArrayTest extends HelperTestCase
         ];
 
         self::assertTrue(HelperArray::keyExists($array, 'key2'));
+
         self::assertTrue(HelperArray::keyExists($object, 'key2'));
+
         self::assertFalse(HelperArray::keyExists($array, 'key5'));
     }
 
     public function testHasStringKeys(): void
     {
         self::assertTrue(HelperArray::hasStringKeys(['a' => 0, 'b' => 1]));
-//        self::assertTrue(HelperArray::hasStringKeys(['0' => 'a', '1' => 'b']), 'Should be true since \'0\' and \'1\' are strings');
+
+//        self::assertTrue(
+//          HelperArray::hasStringKeys(['0' => 'a', '1' => 'b']),
+//          'Should be true since \'0\' and \'1\' are strings'
+//        );
 
         self::assertFalse(HelperArray::hasStringKeys([]));
+
         self::assertFalse(HelperArray::hasStringKeys([0, 1, 2]));
 
         self::assertFalse(HelperArray::hasStringKeys([0 => [1 => 'b']]));

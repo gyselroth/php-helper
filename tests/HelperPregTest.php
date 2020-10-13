@@ -13,7 +13,6 @@ namespace Tests;
 
 use Gyselroth\Helper\Exception\PregExceptionEmptyExpression;
 use Gyselroth\Helper\HelperPreg;
-use Gyselroth\Helper\HelperString;
 
 class HelperPregTest extends HelperTestCase
 {
@@ -24,11 +23,13 @@ class HelperPregTest extends HelperTestCase
     {
         self::assertEquals(
             '1213421231.',
-            HelperPreg::removeNonNumericChars('12 1Lorem ipsum dolor sit a3met421231.'));
+            HelperPreg::removeNonNumericChars('12 1Lorem ipsum dolor sit a3met421231.')
+        );
 
         self::assertEquals(
             1213421231,
-            HelperPreg::removeNonNumericChars('12 1Lorem ipsum dolor sit a3met421231.', true));
+            HelperPreg::removeNonNumericChars('12 1Lorem ipsum dolor sit a3met421231.', true)
+        );
     }
 
     /**
@@ -41,16 +42,24 @@ class HelperPregTest extends HelperTestCase
 //        self::assertTrue(HelperString::startsNumeric('4m2'));
 
         self::assertNotTrue(HelperPreg::startsNumeric(' 3m'));
+
         self::assertNotTrue(HelperPreg::startsNumeric('.3m'));
+
         self::assertNotTrue(HelperPreg::startsNumeric('-3m'));
     }
 
     public function testPregRemoveAllBetween(): void
     {
-        $res = HelperPreg::pregRemoveBetween('lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la/i');
+        $res = HelperPreg::pregRemoveBetween(
+            'lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la/i'
+        );
+
         self::assertEquals('lalala jo brolo,cka lacka bro luck!', $res);
 
-        $res = HelperPreg::pregRemoveBetween('lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la[a-z\s]*l/i');
+        $res = HelperPreg::pregRemoveBetween(
+            'lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la[a-z\s]*l/i'
+        );
+
         self::assertEquals('lalala jo brolo,uck!', $res);
     }
 

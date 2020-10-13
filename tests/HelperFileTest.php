@@ -326,7 +326,10 @@ class HelperFileTest extends HelperTestCase
 
         unset($uploadedFileInfo['name']);
 
-        self::assertSame('Name der Datei wurde nicht empfangen', HelperFile::validateUploadFile($uploadedFileInfo, []));
+        self::assertSame(
+            'Name der Datei wurde nicht empfangen',
+            HelperFile::validateUploadFile($uploadedFileInfo, [])
+        );
     }
 
     /**
@@ -335,7 +338,10 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateUploadFileTooLarge(): void
     {
-        self::assertSame('Die Datei ist zu gross', HelperFile::validateUploadFile($this->uploadedFileInfo, [], 12091));
+        self::assertSame(
+            'Die Datei ist zu gross',
+            HelperFile::validateUploadFile($this->uploadedFileInfo, [], 12091)
+        );
     }
 
     /**
@@ -344,7 +350,10 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateUploadFileNotAllowed(): void
     {
-        self::assertSame('Dateityp ist nicht erlaubt', HelperFile::validateUploadFile($this->uploadedFileInfo, ['image/png', 'image/jpg']));
+        self::assertSame(
+            'Dateityp ist nicht erlaubt',
+            HelperFile::validateUploadFile($this->uploadedFileInfo, ['image/png', 'image/jpg'])
+        );
     }
 
     /**
@@ -556,8 +565,14 @@ class HelperFileTest extends HelperTestCase
     public function testEnsurePathEndsWithDirectorySeparator(): void
     {
         self::assertSame('/this/is/a/path/', HelperFile::ensurePathEndsWithDirectorySeparator('/this/is/a/path'));
+
         self::assertSame('/this/is/a/path/', HelperFile::ensurePathEndsWithDirectorySeparator('/this/is/a/path/'));
-        self::markTestIncomplete('Next assertion skipped: HelperFile::ensurePathEndsWithDirectorySeparator(\'\') returns \'\' instead of \'/\'');
+
+        self::markTestIncomplete(
+            'Next assertion skipped: HelperFile::ensurePathEndsWithDirectorySeparator(\'\')'
+            . ' returns \'\' instead of \'/\''
+        );
+
         self::assertSame('/', HelperFile::ensurePathEndsWithDirectorySeparator(''), 'Should return \'/\'');
     }
 

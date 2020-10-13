@@ -28,9 +28,11 @@ class HelperXmlTest extends HelperTestCase
     {
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock.xml');
 
-        self::assertSame(6, count(HelperXml::getNodes($xml, [1])));
-        self::assertSame(2, count(HelperXml::getNodes($xml, [1], [], ['cdata'])));
-        self::assertSame(4, count(HelperXml::getNodes($xml, [], ['note'], ['cdata'])));
+        self::assertCount(6, HelperXml::getNodes($xml, [1]));
+
+        self::assertCount(2, HelperXml::getNodes($xml, [1], [], ['cdata']));
+
+        self::assertCount(4, HelperXml::getNodes($xml, [], ['note'], ['cdata']));
     }
 
     /**
@@ -38,12 +40,16 @@ class HelperXmlTest extends HelperTestCase
      */
     public function testGetAmountNodesOnLevel1(): void
     {
-        // document_xml-no_content.xml: Word document.xml, that has no content other than a basic document.xml structure
+        // document_xml-no_content.xml: Word document.xml,
+        // that has no content other than a basic document.xml structure
+
         /** @noinspection ReturnFalseInspection */
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/document_xml-no_content.xml');
 
         self::assertEquals(2, HelperXml::getAmountNodes($xml, [1], []));
+
         self::assertEquals(0, HelperXml::getAmountNodes($xml, [1], ['W:DOCUMENT']));
+
         self::assertEquals(0, HelperXml::getAmountNodes($xml, [1], ['W:DOCUMENT', 'W:BODY']));
     }
 
@@ -52,12 +58,16 @@ class HelperXmlTest extends HelperTestCase
      */
     public function testGetAmountNodesOnAllLevels(): void
     {
-        // document_xml-no_content.xml: Word document.xml, that has no content other than a basic document.xml structure
+        // document_xml-no_content.xml: Word document.xml,
+        // that has no content other than a basic document.xml structure
+
         /** @noinspection ReturnFalseInspection */
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/document_xml-no_content.xml');
 
         self::assertEquals(3, HelperXml::getAmountNodes($xml, []));
+
         self::assertEquals(1, HelperXml::getAmountNodes($xml, [], ['W:DOCUMENT']));
+
         self::assertEquals(0, HelperXml::getAmountNodes($xml, [], ['W:DOCUMENT', 'W:BODY']));
     }
 
@@ -66,12 +76,16 @@ class HelperXmlTest extends HelperTestCase
      */
     public function testGetAmountNodesByLevel(): void
     {
-        // document_xml-no_content.xml: Word document.xml, that has no content other than a basic document.xml structure
+        // document_xml-no_content.xml: Word document.xml,
+        // that has no content other than a basic document.xml structure
+
         /** @noinspection ReturnFalseInspection */
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/document_xml-no_content.xml');
 
         self::assertEquals(3, HelperXml::getAmountNodes($xml, []));
+
         self::assertEquals(2, HelperXml::getAmountNodes($xml, [1]));
+
         self::assertEquals(1, HelperXml::getAmountNodes($xml, [2]));
     }
 
@@ -80,15 +94,24 @@ class HelperXmlTest extends HelperTestCase
      */
     public function testGetAmountNodesByType(): void
     {
-        // document_xml-no_content.xml: Word document.xml, that has no content other than a basic document.xml structure
+        // document_xml-no_content.xml: Word document.xml,
+        // that has no content other than a basic document.xml structure
+
         /** @noinspection ReturnFalseInspection */
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/document_xml-no_content.xml');
 
         self::assertEquals(3, HelperXml::getAmountNodes($xml, []));
+
         self::assertEquals(2, HelperXml::getAmountNodes($xml, [], [], [HelperXml::TAG_TYPE_OPEN]));
+
         self::assertEquals(2, HelperXml::getAmountNodes($xml, [], [], [HelperXml::TAG_TYPE_CLOSE]));
+
         self::assertEquals(2, HelperXml::getAmountNodes($xml, [], [], [HelperXml::TAG_TYPE_COMPLETE]));
-        self::assertEquals(1, HelperXml::getAmountNodes($xml, [], [], [HelperXml::TAG_TYPE_CLOSE, HelperXml::TAG_TYPE_COMPLETE]));
+
+        self::assertEquals(
+            1,
+            HelperXml::getAmountNodes($xml, [], [], [HelperXml::TAG_TYPE_CLOSE, HelperXml::TAG_TYPE_COMPLETE])
+        );
     }
 
     /**
@@ -99,7 +122,7 @@ class HelperXmlTest extends HelperTestCase
         $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
         $xsdPath = __DIR__ . '/Fixtures/data/xml/mock.xsd';
 
-        self::assertTrue(is_a(HelperXml::validate($xmlPath, $xsdPath), 'DOMDocument'));
+        self::assertInstanceOf(\DOMDocument::class, HelperXml::validate($xmlPath, $xsdPath));
     }
 
 //    /**
@@ -147,21 +170,21 @@ class HelperXmlTest extends HelperTestCase
         HelperXml::validate($xmlPath, $xsdPath);
     }
 
-    public function testDebugPrint(): void
-    {
-        $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
-
-        $xml = new \DOMDocument('1.0', 'UTF-8');
-        $xml->load($xmlPath);
-
-        ob_start();
-
-        HelperXml::debugPrint($xml);
-
-        $debugPrint = ob_end_clean();
-
-        self::assertTrue($debugPrint == file_get_contents($xmlPath));
-    }
+//    public function testDebugPrint(): void
+//    {
+//        $xmlPath = __DIR__ . '/Fixtures/data/xml/mock.xml';
+//
+//        $xml = new \DOMDocument('1.0', 'UTF-8');
+//        $xml->load($xmlPath);
+//
+//        \ob_start();
+//
+//        HelperXml::debugPrint($xml);
+//
+//        $debugPrint = \ob_end_clean();
+//
+//        self::assertEquals($debugPrint, \file_get_contents($xmlPath));
+//    }
 
     public function testStrReplaceNodeValues(): void
     {
@@ -175,7 +198,14 @@ class HelperXmlTest extends HelperTestCase
         $xml2 = new \DOMDocument('1.0', 'UTF-8');
         $xml2->load($xmlPath2);
 
-        self::assertEquals($xml2, HelperXml::strReplaceNodeValues(['Gyselroth','Ewald','Reminder','I am'],['Philippe','Kay','Confirmation','He is'], $xml));
+        self::assertEquals(
+            $xml2,
+            HelperXml::strReplaceNodeValues(
+                ['Gyselroth','Ewald','Reminder','I am'],
+                ['Philippe','Kay','Confirmation','He is'],
+                $xml
+            )
+        );
     }
 
     /**
@@ -186,11 +216,15 @@ class HelperXmlTest extends HelperTestCase
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock.xml');
         $tags = HelperXml::getTagsFromXml($xml);
 
-        self::assertSame('NOTE',                       $tags[0]['tag']);
-        self::assertSame('open',                       $tags[0]['type']);
-        self::assertSame('complete',                   $tags[1]['type']);
-        self::assertSame('cdata',                      $tags[2]['type']);
-        self::assertSame('I am currently testing.',    $tags[7]['value']);
+        self::assertSame('NOTE', $tags[0]['tag']);
+
+        self::assertSame('open', $tags[0]['type']);
+
+        self::assertSame('complete', $tags[1]['type']);
+
+        self::assertSame('cdata', $tags[2]['type']);
+
+        self::assertSame('I am currently testing.', $tags[7]['value']);
     }
 
     public function testFormatXmlString(): void
@@ -207,6 +241,7 @@ class HelperXmlTest extends HelperTestCase
         $xmlArray = HelperXml::xmlNodeToArray(simplexml_load_string($xml));
 
         self::assertSame('Gyselroth',                  $xmlArray['to']);
+
         self::assertSame('I am currently testing.',    $xmlArray['body']);
     }
 }

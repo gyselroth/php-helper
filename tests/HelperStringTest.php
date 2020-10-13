@@ -21,10 +21,15 @@ class HelperStringTest extends HelperTestCase
         self::assertEquals('miny',         HelperString::getStringBetween('eeny meeny miny moe', 'meeny', 'moe'));
 
         self::assertSame('quick',          HelperString::getStringBetween('the quick brown fox', 'the', 'brown', true));
+
         self::assertSame('quick brown',    HelperString::getStringBetween('the quick brown fox', 'the', 'fox', true));
+
         self::assertSame(' quick ',        HelperString::getStringBetween('the quick brown fox', 'the', 'brown', false));
+
         self::assertSame('',               HelperString::getStringBetween('the quick brown fox', 'brown', '', true));
+
         self::assertSame('',               HelperString::getStringBetween('the quick brown fox', '', 'quick', true));
+
         self::assertSame('',               HelperString::getStringBetween('the quick brown fox', '', '', true));
     }
 
@@ -210,8 +215,12 @@ class HelperStringTest extends HelperTestCase
     public function testFormatJsonCompatible(): void
     {
         self::assertEquals(
-            'Lorem "ipsum" dolor sit amet, consetetur sadipscing elitr. Sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            HelperString::formatJsonCompatible("Lorem 'ipsum' dolor sit amet, consetetur sadipscing elitr. \nSed diam nonumy consetetur eirmod tempor invidunt ut labore\r et dolore magna aliquyam erat, sed diam voluptua."));
+            'Lorem "ipsum" dolor sit amet, consetetur sadipscing elitr. Sed diam nonumy consetetur eirmod tempor'
+            . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            HelperString::formatJsonCompatible(
+                "Lorem 'ipsum' dolor sit amet, consetetur sadipscing elitr. \nSed diam nonumy consetetur eirmod"
+                . " tempor invidunt ut labore\r et dolore magna aliquyam erat, sed diam voluptua.")
+        );
     }
 
     /**
@@ -230,12 +239,23 @@ class HelperStringTest extends HelperTestCase
     public function testReduceCharRepetitions(): void
     {
         self::assertEquals(
-            'Lorem ipsum dolor sit aAmet, consetetur sssssadipscing elitr, sed diam nonumyBb consetetur eirmod tempor invidunt.',
-            HelperString::reduceCharRepetitions('Lorem ipsum dolor sit aAAAmet, consetetur sssssadipscing elitr, sed diam nonumyBbBb consetetur eirmod tempor invidunt.....', ['.', 'A', 'Bb']));
+            'Lorem ipsum dolor sit aAmet, consetetur sssssadipscing elitr, sed diam nonumyBb consetetur eirmod tempor'
+            . ' invidunt.',
+            HelperString::reduceCharRepetitions(
+                'Lorem ipsum dolor sit aAAAmet, consetetur sssssadipscing elitr, sed diam nonumyBbBb consetetur eirmod'
+                . ' tempor invidunt.....',
+                ['.', 'A', 'Bb']
+            )
+        );
 
         self::assertEquals(
-            'Lorem ipsum dolor sit amet, consetetur sadipscing eliTr, sed diam nonumy consetetur eirmod tempor invidunt.',
-            HelperString::reduceCharRepetitions('Lorem ipsum dolor sit amet, consetetur sadipscing eliTTTTTTr, sed diam nonumy consetetur eirmod tempor invidunt.', 'T'));
+            'Lorem ipsum dolor sit amet, consetetur sadipscing eliTr, sed diam nonumy consetetur eirmod tempor'
+            . ' invidunt.',
+            HelperString::reduceCharRepetitions(
+                'Lorem ipsum dolor sit amet, consetetur sadipscing eliTTTTTTr, sed diam nonumy consetetur eirmod tempor'
+                . ' invidunt.', 'T'
+            )
+        );
     }
 
     /**
@@ -244,6 +264,7 @@ class HelperStringTest extends HelperTestCase
     public function testToCamelCase(): void
     {
         self::assertEquals('toCamel-Case', HelperString::toCamelCase('to-camel--case'));
+
         self::assertEquals('ToCamel-Case', HelperString::toCamelCase('to-camel--case', true));
     }
 
@@ -253,6 +274,7 @@ class HelperStringTest extends HelperTestCase
     public function testGetPathFromCamelCase(): void
     {
         self::assertEquals('to-camel--case', HelperString::getPathFromCamelCase('toCamel-Case'));
+
         self::assertEquals('to=camel-=case', HelperString::getPathFromCamelCase('toCamel-Case', '='));
     }
 
@@ -262,10 +284,13 @@ class HelperStringTest extends HelperTestCase
     public function testContainsAnyOf(): void
     {
         self::assertTrue(HelperString::containsAnyOf('a', 'a'));
+
         self::assertTrue(HelperString::containsAnyOf('abc', 'b'));
+
         self::assertTrue(HelperString::containsAnyOf('abc', 'xyza'));
 
         self::assertNotTrue(HelperString::containsAnyOf('', 'd'));
+
         self::assertNotTrue(HelperString::containsAnyOf('abc', 'd'));
     }
 
@@ -276,11 +301,20 @@ class HelperStringTest extends HelperTestCase
 //    {
 //        self::assertEquals(
 //            json_encode([2 => 'a', 10 => 'a', 21 => 'a', 25 => 'a', 30 => 'a', 35 => 'a', 40 => 'a']),
-//            json_encode(HelperString::preg_match_all_with_offsets('/a/', 'Fraticinidas velum, tanquam flavum adiurator.')));
+//            json_encode(
+//              HelperString::preg_match_all_with_offsets('/a/', 'Fraticinidas velum, tanquam flavum adiurator.')
+//            )
+//        );
 //
 //        self::assertEquals(
 //            json_encode([11 => 's9', 14 => 'v9', 42 => 'm9']),
-//            json_encode(HelperString::preg_match_all_with_offsets('/[a-z]9/', 'Fraticinidas9 v9 el-1 um2, tanquam 9 flavum9 adiurator39.')));
+//            json_encode(
+//              HelperString::preg_match_all_with_offsets(
+//                  '/[a-z]9/',
+//                  'Fraticinidas9 v9 el-1 um2, tanquam 9 flavum9 adiurator39.'
+//              )
+//            )
+//        );
 //
 //        self::assertEquals(
 //            json_encode([1 => 'raticinidas9', 14 => 'v9', 37 => 'flavum9']),
@@ -297,9 +331,12 @@ class HelperStringTest extends HelperTestCase
     {
         self::assertEquals(12, \strlen(HelperString::getRandomString(12)));
 
-        self::assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[\d]+)/', HelperString::getRandomString()));
+        self::assertRegExp('/^(?=.*?[a-z]+)(?=.*?[\d]+)/', HelperString::getRandomString());
 
-        self::assertEquals(1, preg_match('/^(?=.*?[a-z]+)(?=.*?[A-Z]+)(?=.*?[\.\-\?&\$]+)/', HelperString::getRandomString(12, true, true, false, '.-?&$')));
+        self::assertRegExp(
+            '/^(?=.*?[a-z]+)(?=.*?[A-Z]+)(?=.*?[\.\-\?&\$]+)/',
+            HelperString::getRandomString(12, true, true, false, '.-?&$')
+        );
     }
 
     /**
@@ -307,8 +344,9 @@ class HelperStringTest extends HelperTestCase
      */
     public function testGetRandomLetter(): void
     {
-        self::assertEquals(1, preg_match('/[a-z]/', HelperString::getRandomLetter()));
-        self::assertEquals(1, preg_match('/[A-E]+|[0-3]+/', HelperString::getRandomLetter(true, 'acbed0123')));
+        self::assertRegExp('/[a-z]/', HelperString::getRandomLetter());
+
+        self::assertRegExp('/[A-E]+|[0-3]+/', HelperString::getRandomLetter(true, 'acbed0123'));
     }
 
     /**
@@ -354,7 +392,9 @@ class HelperStringTest extends HelperTestCase
         self::assertNotTrue(HelperString::compareValuesByComparisonOperators('0123', 123, 'eq', true));
 
         self::assertTrue(HelperString::compareValuesByComparisonOperators('25H', 25, 'eq'));
+
         self::assertTrue(HelperString::compareValuesByComparisonOperators(true, 0, 'gt'));
+
         self::assertTrue(HelperString::compareValuesByComparisonOperators(24, 22));
     }
 
@@ -375,8 +415,11 @@ class HelperStringTest extends HelperTestCase
     public function testTranslatePlural(): void
     {
         self::assertSame('Single', HelperString::translatePlural('Single', 'Plural', -1));
+
         self::assertSame('Single', HelperString::translatePlural('Single', 'Plural', 1));
+
         self::assertSame('Plural', HelperString::translatePlural('Single', 'Plural', 0));
+
         self::assertSame('Plural', HelperString::translatePlural('Single', 'Plural', 2));
     }
 }

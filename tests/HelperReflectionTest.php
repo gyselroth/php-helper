@@ -157,7 +157,9 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionMethod(): void
     {
-        self::assertTrue(HelperReflection::callUserFunction('\Gyselroth\Helper\HelperString::startsWith', 'string', 's'));
+        self::assertTrue(
+            HelperReflection::callUserFunction('\Gyselroth\Helper\HelperString::startsWith', 'string', 's')
+        );
     }
 
     /**
@@ -176,7 +178,12 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionArray(): void
     {
-        self::assertTrue(HelperReflection::callUserFunctionArray('\Gyselroth\Helper\HelperString::startsWith', ['string', 's']));
+        self::assertTrue(
+            HelperReflection::callUserFunctionArray(
+                '\Gyselroth\Helper\HelperString::startsWith',
+                ['string', 's']
+            )
+        );
     }
 
     /**
@@ -185,7 +192,10 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionArrayException(): void
     {
-        HelperReflection::callUserFunctionArray('\Gyselroth\Helper\HelperReflection::nonExistingFunction12345', ['argument1', 'argument2']);
+        HelperReflection::callUserFunctionArray(
+            '\Gyselroth\Helper\HelperReflection::nonExistingFunction12345',
+            ['argument1', 'argument2']
+        );
     }
 
     public function testIsFunctionReferenceFunction(): void
@@ -209,6 +219,7 @@ class HelperReflectionTest extends HelperTestCase
         $callingMethodName = 'testGetCallingMethodName';
 
         self::assertSame($callingMethodNameWithClass, HelperReflection::getCallingMethodName());
+
         self::assertSame($callingMethodName, HelperReflection::getCallingMethodName(false));
     }
 
