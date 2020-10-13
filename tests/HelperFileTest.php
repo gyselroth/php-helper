@@ -227,12 +227,12 @@ class HelperFileTest extends HelperTestCase
 //        self::assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $array[9]);
 //    }
 
-    public function testScanDirFindsFiles(): void
-    {
-        $files = HelperFile::scanDir(__DIR__ . '/Fixtures/data/files/unzip', '', true);
-
-        self::assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $files[0]);
-    }
+//    public function testScanDirFindsFiles(): void
+//    {
+//        $files = HelperFile::scanDir(__DIR__ . '/Fixtures/data/files/unzip', '', true);
+//
+//        self::assertStringEndsWith('/data/files/unzip/to-be-unzipped.zip', $files[0]);
+//    }
 
     public function testScanDirRecursiveFindsCorrectAmount(): void
     {
