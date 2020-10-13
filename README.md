@@ -1,9 +1,15 @@
 PHP Helper
 ==========
 
+[![Latest Stable Version](https://poser.pugx.org/gyselroth/php-helper/v)](//packagist.org/packages/gyselroth/php-helper)
 [![Build Status](https://travis-ci.org/gyselroth/php-helper.svg?branch=master)](https://travis-ci.org/gyselroth/php-helper)
 [![CodeFactor](https://www.codefactor.io/repository/github/gyselroth/php-helper/badge/master)](https://www.codefactor.io/repository/github/gyselroth/php-helper/overview/master)
 [![GitHub license](https://img.shields.io/badge/license-apache_2.0-blue.svg)](https://raw.githubusercontent.com/gyselroth/php-helper/master/LICENSE)
+
+
+[![Total Downloads](https://poser.pugx.org/gyselroth/php-helper/downloads)](//packagist.org/packages/gyselroth/php-helper)
+[![Monthly Downloads](https://poser.pugx.org/gyselroth/php-helper/d/monthly)](//packagist.org/packages/gyselroth/php-helper)
+[![Daily Downloads](https://poser.pugx.org/gyselroth/php-helper/d/daily)](//packagist.org/packages/gyselroth/php-helper)
 
 PHP helper methods upon primitive data types (Array, Float, Integer, String, etc.) 
 and common data structures (e.g. HTML, ZIP, XML etc.).
