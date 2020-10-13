@@ -59,64 +59,6 @@ class HelperStringTest extends HelperTestCase
     }
 
     /**
-     * @throws PregExceptionEmptyExpression
-     */
-    public function testPregStrPosFoundNoOffset(): void
-    {
-        $offset = HelperString::pregStrPos('pess sunt planetas 123 de neuter ratione.', '/pla[a-z]+\s\d+/i');
-        $this->assertEquals(10, $offset);
-
-        $offset = HelperString::pregStrPos('pess sunt planetas 123 de neuter ratione.', '/\d+/i');
-        $this->assertEquals(19, $offset);
-    }
-
-    /**
-     * @throws PregExceptionEmptyExpression
-     */
-    public function testPregStrPosNotFoundNoOffset(): void
-    {
-        $offset = HelperString::pregStrPos('pess sunt planetas 123 de neuter ratione.', '/xxx[a-z]+/i');
-        $this->assertEquals(-1, $offset);
-    }
-
-    /**
-     * @throws PregExceptionEmptyExpression
-     */
-    public function testPregStrPosNotFoundEmptyHaystackNoOffset(): void
-    {
-        $offset = HelperString::pregStrPos('', '/xxx[a-z]+/i');
-        $this->assertEquals(-1, $offset);
-    }
-
-    public function testPregStrPosNotFoundEmptyPatternNoOffset(): void
-    {
-        $caught = false;
-        try {
-            HelperString::pregStrPos('', '');
-        } catch (PregExceptionEmptyExpression $e) {
-            $caught = true;
-        }
-
-        $this->assertTrue($caught);
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \Exception
-     */
-    public function testPregStrPosFoundWithOffset(): void
-    {
-        $offset = HelperString::pregStrPos('hey hey jo hey chacka lacka', '/hey/i', 3);
-        $this->assertEquals(4, $offset);
-
-        $offset = HelperString::pregStrPos('hey hey jo hey chacka lacka', '/hey/i', 8);
-        $this->assertEquals(11, $offset);
-
-        $offset = HelperString::pregStrPos('hey hey jo hey chacka lacka', '/acka/i', 18);
-        $this->assertEquals(23, $offset);
-    }
-
-    /**
      * Test: HelperString::replaceFirst
      */
     public function testReplaceFirst(): void
@@ -191,15 +133,6 @@ class HelperStringTest extends HelperTestCase
         $this->assertEquals('its a brave world over there', HelperString::removeAllBetween('its a brave new world over there', 'brave', ' world', false));
     }
 
-    public function testPregRemoveAllBetween(): void
-    {
-        $res = HelperString::pregRemoveBetween('lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la/i');
-        $this->assertEquals('lalala jo brolo,cka lacka bro luck!', $res);
-
-        $res = HelperString::pregRemoveBetween('lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la[a-z\s]*l/i');
-        $this->assertEquals('lalala jo brolo,uck!', $res);
-    }
-
     /**
      * Test: HelperString::unwrap
      */
@@ -254,20 +187,6 @@ class HelperStringTest extends HelperTestCase
     }
 
     /**
-     * Test: HelperString::startsNumeric
-     */
-    public function testStartsNumeric(): void
-    {
-        $this->assertNotTrue(HelperString::startsNumeric('m32'));
-
-//        $this->assertTrue(HelperString::startsNumeric('4m2'));
-
-        $this->assertNotTrue(HelperString::startsNumeric(' 3m'));
-        $this->assertNotTrue(HelperString::startsNumeric('.3m'));
-        $this->assertNotTrue(HelperString::startsNumeric('-3m'));
-    }
-
-    /**
      * Test: HelperString::strposMultiple
      */
     public function testStrPosMultiple(): void
@@ -279,34 +198,6 @@ class HelperStringTest extends HelperTestCase
         $this->assertEquals(
             json_encode(false),
             json_encode(HelperString::strPosConsecutive('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', ['consecteture', 'magnam', 1])));
-    }
-
-    /**
-     * Test: HelperString::removeNumericChars
-     */
-    public function testRemoveNumericChars(): void
-    {
-        $this->assertEquals(
-            'Lorem ipsum dolor sit amet.',
-            HelperString::removeNumericChars('12 1Lorem ipsum dolor sit a3met421231.'));
-
-        $this->assertEquals(
-            ' Lorem ipsum dolor sit amet.',
-            HelperString::removeNumericChars('12 1Lorem ipsum dolor sit a3met421231.', false));
-    }
-
-    /**
-     * Test: HelperString::removeNonNumericChars
-     */
-    public function testRemoveNonNumericChars(): void
-    {
-        $this->assertEquals(
-            '1213421231.',
-            HelperString::removeNonNumericChars('12 1Lorem ipsum dolor sit a3met421231.'));
-
-        $this->assertEquals(
-            1213421231,
-            HelperString::removeNonNumericChars('12 1Lorem ipsum dolor sit a3met421231.', true));
     }
 
     /**

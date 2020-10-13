@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 1.0.1 - Released 2020/10/13
+-----------------------------------
+* Bugfix: Correct moved method call within HelperHtml::resizeStyles()
+* Correct and add unit tests to travis/ci inspection
+
 Version 1.0.0 - Released 2020/10/12
 -----------------------------------
 * (breaking) Correct (was not fully uppercase) constant casing: ConstantsHttpInterface::HTTP_STATUS_CODE_GATEWAY_TIMEOUT

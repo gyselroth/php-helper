@@ -136,7 +136,7 @@ class HelperHtml
             $html = \str_replace(
                 $width,
                 'width:'
-                . ($widthFactor * (int)HelperString::removeNonNumericChars($width))
+                . ($widthFactor * (int)HelperPreg::removeNonNumericChars($width))
                 . $widths[3][$index]
                 . ';',
                 $html
@@ -147,7 +147,7 @@ class HelperHtml
             $html = \str_replace(
                 $height,
                 'height:'
-                . ($heightFactor * (int)HelperString::removeNonNumericChars($height))
+                . ($heightFactor * (int)HelperPreg::removeNonNumericChars($height))
                 . $heights[3][$index]
                 . ';',
                 $html
