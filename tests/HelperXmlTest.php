@@ -240,8 +240,8 @@ class HelperXmlTest extends HelperTestCase
         $xml = file_get_contents(__DIR__ . '/Fixtures/data/xml/mock.xml');
         $xmlArray = HelperXml::xmlNodeToArray(simplexml_load_string($xml));
 
-        self::assertSame('Gyselroth',                  $xmlArray['to']);
+        self::assertSame('Gyselroth', $xmlArray['to']);
 
-        self::assertSame('I am currently testing.',    $xmlArray['body']);
+        self::assertSame('I am currently testing.', $xmlArray['body']);
     }
 }

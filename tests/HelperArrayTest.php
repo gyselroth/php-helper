@@ -86,8 +86,10 @@ class HelperArrayTest extends HelperTestCase
 
     public function testIntVal(): void
     {
-        self::assertSame(array_values([10, 1, -2, 0, 2, 3]),
-            array_values(HelperArray::intVal(['10', 1, -2, 0, 1, 2, 3, 1], true)));
+        self::assertSame(
+            array_values([10, 1, -2, 0, 2, 3]),
+            array_values(HelperArray::intVal(['10', 1, -2, 0, 1, 2, 3, 1], true))
+        );
 
         // Test: convert mixed (int and numeric string) array to array of int
         $result = HelperArray::intVal([1, '2', 3]);
@@ -175,8 +177,10 @@ class HelperArrayTest extends HelperTestCase
 
     public function testIntImplode(): void
     {
-        self::assertSame('10,1,-2,0,2,3',
-            HelperArray::intImplode(['10', 1, -2, 0, 1, 2, 3, 1]));
+        self::assertSame(
+            '10,1,-2,0,2,3',
+            HelperArray::intImplode(['10', 1, -2, 0, 1, 2, 3, 1])
+        );
     }
 
 //    public function testTrim()
@@ -379,8 +383,10 @@ class HelperArrayTest extends HelperTestCase
     {
         $array = ['key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3'];
 
-        self::assertSame('{"key1":"value1","key3":"value3"}',
-            json_encode(HelperArray::removeItemsByValue($array, ['value2'])));
+        self::assertSame(
+            '{"key1":"value1","key3":"value3"}',
+            json_encode(HelperArray::removeItemsByValue($array, ['value2']))
+        );
     }
 
     public function testRemoveItemsByValues(): void
@@ -403,7 +409,8 @@ class HelperArrayTest extends HelperTestCase
             ]
         ];
 
-        self::assertSame('{"key2":{"subkey1":"3","subkey2":"2","subkey3":"1"}}',
+        self::assertSame(
+            '{"key2":{"subkey1":"3","subkey2":"2","subkey3":"1"}}',
             json_encode(HelperArray::removeItemsByValues($array, ['1', '2'], 'subkey1'))
         );
     }
@@ -658,7 +665,8 @@ class HelperArrayTest extends HelperTestCase
      */
     public function testStrSplManipulateStrRev(): void
     {
-        self::assertSame(['serehtea', 'soleac', 'enoitilomed', 'lusxe', 'mugrubmah', 'sivan', 'nemon', 'sutnev'],
+        self::assertSame(
+            ['serehtea', 'soleac', 'enoitilomed', 'lusxe', 'mugrubmah', 'sivan', 'nemon', 'sutnev'],
             HelperArray::strSplManipulate(
                 ['aetheres', 'caelos', 'demolitione', 'exsul', 'hamburgum', 'navis', 'nomen', 'ventus'],
                 'strrev'
@@ -718,8 +726,10 @@ class HelperArrayTest extends HelperTestCase
     {
         $csv = "1,2,3,4\r\r5,6,7,8\n9,10 test,test,12\r13,14,15,test 2";
 
-        self::assertSame('[["1","2","3","4"],["5","6","7","8"],["9","10 test","test","12"],["13","14","15","test 2"]]',
-            json_encode(HelperArray::getArrayFromCsvInRows($csv)));
+        self::assertSame(
+            '[["1","2","3","4"],["5","6","7","8"],["9","10 test","test","12"],["13","14","15","test 2"]]',
+            json_encode(HelperArray::getArrayFromCsvInRows($csv))
+        );
     }
 
     public function testSubstrKeys(): void
@@ -732,11 +742,15 @@ class HelperArrayTest extends HelperTestCase
             'key5' => 'value5'
         ];
 
-        self::assertSame('{"y1":"value1","y2":{"subkey1":"value2"},"y3":"value3","y4":"value4","y5":"value5"}',
-            json_encode(HelperArray::substrKeys($array, 2, 2)));
+        self::assertSame(
+            '{"y1":"value1","y2":{"subkey1":"value2"},"y3":"value3","y4":"value4","y5":"value5"}',
+            json_encode(HelperArray::substrKeys($array, 2, 2))
+        );
 
-        self::assertSame('{"1":"value1","2":{"subkey1":"value2"},"3":"value3","4":"value4","5":"value5"}',
-            json_encode(HelperArray::substrKeys($array, 3, false)));
+        self::assertSame(
+            '{"1":"value1","2":{"subkey1":"value2"},"3":"value3","4":"value4","5":"value5"}',
+            json_encode(HelperArray::substrKeys($array, 3, false))
+        );
     }
 
     public function testStrReplaceAssociative(): void

@@ -17,7 +17,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
-class HelperTestCase extends TestCase {
+class HelperTestCase extends TestCase
+{
     protected $_pathToLogfile = __DIR__ . '/tmp/app.log';
 
     protected $_logMock;
@@ -73,4 +74,3 @@ class HelperTestCase extends TestCase {
             ->pushHandler(new StreamHandler($path, $logLevel));
     }
 }
-

@@ -105,8 +105,10 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateFilenameForbiddenCharEqualReplacements(): void
     {
-        self::assertSame('long filename.png',
-            HelperFile::validateFilename('long2fil3n *ame.png', ['2', '3', ' *'], [' ', 'e', '']));
+        self::assertSame(
+            'long filename.png',
+            HelperFile::validateFilename('long2fil3n *ame.png', ['2', '3', ' *'], [' ', 'e', ''])
+        );
     }
 
     /**
@@ -114,8 +116,10 @@ class HelperFileTest extends HelperTestCase
      */
     public function testValidateFilenameForbiddenCharUnequalReplacements(): void
     {
-        self::assertSame('long filename.png',
-            HelperFile::validateFilename('long filename.png', [' ', 'e'], ['']));
+        self::assertSame(
+            'long filename.png',
+            HelperFile::validateFilename('long filename.png', [' ', 'e'], [''])
+        );
     }
 
     /**
@@ -202,7 +206,8 @@ class HelperFileTest extends HelperTestCase
         self::assertStringEqualsFile(
             $pathFile,
             "Name,Beschäftigung,Firma\nKay,Fulltime,Gyselroth\nEwald,Parttime,Gyselroth\n",
-            'Writing a csv file appends an empty new line.');
+            'Writing a csv file appends an empty new line.'
+        );
 
         if (\is_file($pathFile)) {
             \unlink($pathFile);
@@ -238,7 +243,8 @@ class HelperFileTest extends HelperTestCase
     {
         self::assertCount(
             9,
-            HelperFile::scanDir(__DIR__ . '/Fixtures/data/files/zip', '', true));
+            HelperFile::scanDir(__DIR__ . '/Fixtures/data/files/zip', '', true)
+        );
     }
 
     public function testScanDirByVersionPrefixAndNaturallySort(): void

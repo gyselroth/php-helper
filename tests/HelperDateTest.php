@@ -243,36 +243,44 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetSumSecondsOfTimeParts(): void
     {
-        self::assertEquals('44420',
+        self::assertEquals(
+            '44420',
             HelperDate::getSumSecondsOfTimeParts([
             'hour'    => '12',
             'minutes' => '20',
             'seconds' => '20'
-        ]));
+            ])
+        );
 
-        self::assertEquals(44420 + strtotime('today'),
-            HelperDate::getSumSecondsOfTimeParts([
-            'hour'    => '12',
-            'minutes' => '20',
-            'seconds' => '20'
-        ], true));
+            self::assertEquals(
+                44420 + strtotime('today'),
+                HelperDate::getSumSecondsOfTimeParts([
+                'hour'    => '12',
+                'minutes' => '20',
+                'seconds' => '20'
+                ], true)
+            );
     }
 
     public function testGetSumMinutesOfTimeParts(): void
     {
-        self::assertEquals('740',
+        self::assertEquals(
+            '740',
             round(HelperDate::getSumMinutesOfTimeParts([
             'hour'    => '12',
             'minutes' => '20',
             'seconds' => '20'
-        ])));
+            ]))
+        );
 
-        self::assertEquals(round((44420 + strtotime('today')) / 60),
-            round(HelperDate::getSumMinutesOfTimeParts([
-            'hour'    => '12',
-            'minutes' => '20',
-            'seconds' => '20'
-        ], true)));
+            self::assertEquals(
+                round((44420 + strtotime('today')) / 60),
+                round(HelperDate::getSumMinutesOfTimeParts([
+                'hour'    => '12',
+                'minutes' => '20',
+                'seconds' => '20'
+                ], true))
+            );
     }
 
     public function testGetSumSecondsOfTimeString(): void
@@ -341,8 +349,10 @@ class HelperDateTest extends HelperTestCase
 //        self::assertSame(2, HelperDate::getDaysBetween(strtotime('31.12.2016 12:00'),
 //            strtotime('2.1.2017 0:00')), 'Should be 2, since new days start at 0:00');
 
-        self::assertSame(2, HelperDate::getDaysBetween(strtotime('31.12.2016 12:00'),
-            strtotime('2.1.2017 0:01')));
+        self::assertSame(2, HelperDate::getDaysBetween(
+            strtotime('31.12.2016 12:00'),
+            strtotime('2.1.2017 0:01')
+        ));
     }
 
     public function testGetMonthNameByNumber(): void

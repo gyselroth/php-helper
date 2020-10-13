@@ -51,13 +51,17 @@ class HelperPregTest extends HelperTestCase
     public function testPregRemoveAllBetween(): void
     {
         $res = HelperPreg::pregRemoveBetween(
-            'lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la/i'
+            'lalala jo brolo, bro chacka lacka lacka bro luck!',
+            '/\sbro\s/i',
+            '/la/i'
         );
 
         self::assertEquals('lalala jo brolo,cka lacka bro luck!', $res);
 
         $res = HelperPreg::pregRemoveBetween(
-            'lalala jo brolo, bro chacka lacka lacka bro luck!', '/\sbro\s/i', '/la[a-z\s]*l/i'
+            'lalala jo brolo, bro chacka lacka lacka bro luck!',
+            '/\sbro\s/i',
+            '/la[a-z\s]*l/i'
         );
 
         self::assertEquals('lalala jo brolo,uck!', $res);

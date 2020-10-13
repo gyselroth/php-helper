@@ -56,7 +56,8 @@ class HelperHtmlTest extends HelperTestCase
             HelperHtml::stripHtmlTags(
                 '<p>As<br> ndfghdf  <a href="/02gas" title="P">gsg5e</a><sup id="dfsg"'
                 . ' class="hd">as</sup></p><ul><li>Aasd</li><li>Obflk</li></ul>'
-        ));
+            )
+        );
     }
 
     public function testHtml2plaintext(): void
@@ -64,8 +65,8 @@ class HelperHtmlTest extends HelperTestCase
         self::assertSame(
             "As\n ndfghdf gsg5eas\n - Aasd\n - Obflk",
             HelperHtml::html2plaintext('<p>As<br> ndfghdf  <a href="/02gas" title="P">gsg5e</a><sup id="dfsg"'
-                . ' class="hd">as</sup></p><ul><li>Aasd</li><li>Obflk</li></ul>'
-        ));
+                . ' class="hd">as</sup></p><ul><li>Aasd</li><li>Obflk</li></ul>')
+        );
     }
 
     public function testResizeStyles(): void

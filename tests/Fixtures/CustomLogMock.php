@@ -13,16 +13,16 @@ namespace Tests\Fixtures;
 
 class CustomLogMock
 {
-	private $_pathToLogfile;
+    private $_pathToLogfile;
 
-	public function __construct(string $pathToLogfile)
-	{
-		$this->_pathToLogfile = $pathToLogfile;
-	}
+    public function __construct(string $pathToLogfile)
+    {
+        $this->_pathToLogfile = $pathToLogfile;
+    }
 
     public function log(string $message, int $priority, array $options)
     {
-    	$message .= " [priority: $priority]" . (!empty($options) ? ' [options: ' . implode(', ', $options) . ']' : '');
-    	file_put_contents($this->_pathToLogfile, $message, FILE_APPEND);
+        $message .= " [priority: $priority]" . (!empty($options) ? ' [options: ' . implode(', ', $options) . ']' : '');
+        file_put_contents($this->_pathToLogfile, $message, FILE_APPEND);
     }
 }
