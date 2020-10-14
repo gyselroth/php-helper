@@ -22,7 +22,8 @@ class HelperImage
     public const LOG_CATEGORY = 'imaging';
 
     /**
-     * Detect whether given file extension of image file does not match it's MIME type, rename resp. file when necessary
+     * Detect whether given file extension of image file does not match it's MIME type,
+     * rename resp. file when necessary
      *
      * @param string $imageFilePath
      * @param string $imageFileExtension
@@ -143,9 +144,9 @@ class HelperImage
 
     /**
      * @param string $pathImage
-     * @param bool $getImgTag Get img tag or just the image data?
+     * @param bool $getImgTag   Get img tag or just image data?
      * @param string $alt
-     * @return string            Base64 encoded data of given image file
+     * @return string           Base64 encoded data of given image file
      * @throws \Exception
      */
     public static function encodeBase64(string $pathImage, bool $getImgTag = false, string $alt = ''): string
@@ -210,8 +211,11 @@ class HelperImage
      * @return bool
      * @throws \Exception
      */
-    public static function cropImage($imageFilename, $widthSubtrahend = 0, $heightSubtrahend = 0): bool
-    {
+    public static function cropImage(
+        string $imageFilename,
+        int $widthSubtrahend = 0,
+        int $heightSubtrahend = 0
+    ): bool {
         if (!\file_exists($imageFilename)) {
             LoggerWrapper::error(
                 "Tried to crop non-existing image file: $imageFilename",

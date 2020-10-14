@@ -195,14 +195,15 @@ class HelperReflection implements ConstantsDataTypesInterface
         }
 
         if (false !== \strpos($funcRefString, '::')) {
-            $callback = \explode('::', $funcRefString);
-        } else {
-            LoggerWrapper::info('HelperReflection::callUserFunction() called function instead of method.');
+            $function = \explode('::', $funcRefString);
+            /** @var callable $function */
 
-            $callback = $funcRefString;
+            return \call_user_func_array($function, $funcArgs);
         }
 
-        return \call_user_func_array($callback, $funcArgs);
+        LoggerWrapper::info('HelperReflection::callUserFunction() called function instead of method.');
+
+        return \is_callable($funcRefString) ? $funcRefString($funcArgs) : null;
     }
 
     /**
@@ -220,6 +221,7 @@ class HelperReflection implements ConstantsDataTypesInterface
         }
 
         $funcRefParts = \explode('::', $funcRefString);
+        /** @var callable $funcRefParts */
 
         return \call_user_func_array($funcRefParts, $funcArgs);
     }
