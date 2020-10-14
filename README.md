@@ -90,7 +90,7 @@ php-helper is continuously checked regarding it's stability, code quality and st
 | Tool                                                              | Description                                                                    |
 | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | [Travis CI](https://travis-ci.org/)                               | Hosted continuous integration service used to build and test software projects |
-| [PHPSTan](https://phpstan.org/)                                   | PHP Static Analyser                                                            |
+| [PHPSTan](https://phpstan.org/)                                   | PHP Static Analyzer                                                            |
 | [PHPUnit](https://phpunit.de/)                                    | The PHP Testing Framework                                                      |
 | [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)   | Detect violations of defined coding standard (PSR-2)                           |
 | [https://www.codefactor.io/dashboard](https://www.codefactor.io/) | Automated Code Review for git                                                  |
