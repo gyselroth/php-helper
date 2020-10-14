@@ -23,8 +23,10 @@ and common data structures (e.g. HTML, ZIP, XML etc.).
 * [Installation](#installation)
   * [For use within your application](#for-use-within-your-application)
   * [Standalone-installation / For developing on the php-helper package](#standalone-installation--for-developing-the-php-helper-package)
-* [Running Tests](#running-tests)
-* [Running phpstan](#running-phpstan)
+* [Continuous Integration](#continuous-integration)
+  + [Check Code Standards](#check-code-standards)
+  + [Run Unit Tests](#run-unit-tests)
+  + [Static Analysis](#static-analysis)
 * [Contributing](#contributing)
 * [History](#history)
 * [Author and License](#author-and-license)
@@ -80,17 +82,41 @@ sudo mv composer.phar /usr/local/bin/composer
 composer install
 ```
 
+Continuous Integration
+------------------------
 
-Running Tests
--------------
+php-helper is continuously checked regarding it's stability, code quality and standards using these third party tools:
 
+| Tool                                                              | Description                                                                    |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Travis CI](https://travis-ci.org/)                               | Hosted continuous integration service used to build and test software projects |
+| [PHPSTan](https://phpstan.org/)                                   | PHP Static Analyser                                                            |
+| [PHPUnit](https://phpunit.de/)                                    | The PHP Testing Framework                                                      |
+| [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)   | Detect violations of defined coding standard (PSR-2)                           |
+| [https://www.codefactor.io/dashboard](https://www.codefactor.io/) | Automated Code Review for git                                                  |
+
+Thanks a lot!
+
+
+### Check Code Standards
+
+```sh
+phpcs --standard=PSR2 $(find ./src -name '*.php')
+```
+
+### Run Unit Tests
+
+```sh
+vendor/bin/phpunit tests/
+```
+
+or:   
 ```sh
 composer test
 ```
 
 
-Running phpstan
----------------
+### Static Analysis
 
 ```sh
  vendor/bin/phpstan analyse /srv/www/trunk/src -c /srv/www/trunk/var/ci/phpstan/phpstan.neon
