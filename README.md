@@ -93,7 +93,7 @@ php-helper is continuously checked regarding it's stability, code quality and st
 | [PHPSTan](https://phpstan.org/)                                   | PHP Static Analyzer                                                            |
 | [PHPUnit](https://phpunit.de/)                                    | The PHP Testing Framework                                                      |
 | [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)   | Detect violations of defined coding standard (PSR-2)                           |
-| [https://www.codefactor.io/dashboard](https://www.codefactor.io/) | Automated Code Review for git                                                  |
+| [CodeFactor](https://www.codefactor.io/)                          | Automated Code Review for git                                                  |
 
 Thanks a lot!
 
