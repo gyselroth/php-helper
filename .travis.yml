@@ -47,3 +47,4 @@ script:
   - phpcs --standard=PSR2 $(find ./src -name '*.php')
   # run phpunit via sudo: otherwise fails w/ "Permission Denied" errors
   - sudo /home/travis/.phpenv/shims/php vendor/bin/phpunit tests/
+  - vendor/bin/phpstan analyse src -c var/ci/phpstan/phpstan.neon

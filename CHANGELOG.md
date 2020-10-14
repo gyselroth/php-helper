@@ -1,6 +1,11 @@
 gyselroth Helper Library
 ========================
 
+Version 1.0.2 - Released 2020/10/14
+-----------------------------------
+* Resolve all known issues of static analysis
+* Add PHPStan static analysis to to travis/ci inspection
+
 Version 1.0.1 - Released 2020/10/13
 -----------------------------------
 * Bugfix: Correct moved method call within HelperHtml::resizeStyles()

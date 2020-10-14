@@ -19,4 +19,11 @@ parameters:
     dynamicConstantNames:
         - APPLICATION_PATH
 
+    universalObjectCratesClasses:
+        - DOMNode
+
     ignoreErrors:
+        - '#^Call to an undefined method DOMNode#'
+        - '#^Call to an undefined method DOMDocument|DOMElement|DOMNodeList#'
+        - '#^Call to method .* on an unknown class MongoDb_Contents#'
+        - '#^Instantiated class MongoDb_Contents not found#'

@@ -286,8 +286,10 @@ class HelperReflection implements ConstantsDataTypesInterface
         return $class . '::' . $function . '()';
     }
 
-    public static function getPhpDocDescriptionOfControllerAction(string $pathControllerFile, ?string $action): string
-    {
+    public static function getPhpDocDescriptionOfControllerAction(
+        string $pathControllerFile,
+        ?string $action
+    ): string {
         if (!\file_exists($pathControllerFile)) {
             return '';
         }

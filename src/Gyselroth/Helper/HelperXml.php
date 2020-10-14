@@ -215,8 +215,8 @@ class HelperXml implements ConstantsXmlInterface
     /**
      * Print out given DOMDocument nodes
      *
-     * @param  \DOMDocument|\DOMNodeList|\DomElement|array $dom
-     * @param  string                                      $key
+     * @param  \DOMDocument|\DomElement|\DomNode|\DOMNodeList|array $dom
+     * @param  string   $key
      */
     public static function debugPrint($dom, string $key = ''): void
     {
