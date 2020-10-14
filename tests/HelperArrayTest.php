@@ -88,7 +88,9 @@ class HelperArrayTest extends HelperTestCase
     {
         self::assertSame(
             array_values([10, 1, -2, 0, 2, 3]),
-            array_values(HelperArray::intVal(['10', 1, -2, 0, 1, 2, 3, 1], true))
+            array_values(
+                HelperArray::intVal(['10', 1, -2, 0, 1, 2, 3, 1], true)
+            )
         );
 
         // Test: convert mixed (int and numeric string) array to array of int
@@ -100,8 +102,11 @@ class HelperArrayTest extends HelperTestCase
         );
 
         self::assertNotEmpty($result);
+
         self::assertCount(3, $result);
+
         self::assertEquals(2, $result[1]);
+
         self::assertEquals(6, array_sum($result));
 
         // Test option: array-unique
@@ -113,7 +118,9 @@ class HelperArrayTest extends HelperTestCase
         );
 
         self::assertNotEmpty($result);
+
         self::assertCount(3, $result);
+
         self::assertEquals(6, array_sum($result));
 
         // Test options: 1) array-unique and 2) convert non-numerical to 0
@@ -125,7 +132,9 @@ class HelperArrayTest extends HelperTestCase
         );
 
         self::assertNotEmpty($result);
+
         self::assertCount(4, $result);
+
         self::assertEquals(6, array_sum($result));
     }
 
@@ -225,7 +234,9 @@ class HelperArrayTest extends HelperTestCase
             HelperArray::getItemByKeyValue($array, 'b', '2', true)
         );
 
-        self::assertNull(HelperArray::getItemByKeyValue($array, 'z', 'z'));
+        self::assertNull(
+            HelperArray::getItemByKeyValue($array, 'z', 'z')
+        );
     }
 
     public function testSearchValueInMultidimensionalArray(): void
@@ -237,9 +248,14 @@ class HelperArrayTest extends HelperTestCase
             2    => ['a' => 1, 'b' => 2],
         ];
 
-        self::assertSame('x', HelperArray::searchValueInMultidimensionalArray('2', 'b', $array));
+        self::assertSame(
+            'x',
+            HelperArray::searchValueInMultidimensionalArray('2', 'b', $array)
+        );
 
-        self::assertNull(HelperArray::searchValueInMultidimensionalArray('z', 'z', $array));
+        self::assertNull(
+            HelperArray::searchValueInMultidimensionalArray('z', 'z', $array)
+        );
     }
 
     public function testGetValueByKeyFromSubArrays(): void
@@ -255,16 +271,23 @@ class HelperArrayTest extends HelperTestCase
             ]
         ];
 
-        self::assertSame('value1221', HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1221'));
+        self::assertSame(
+            'value1221',
+            HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1221')
+        );
 
         self::assertSame(
             '{"1221":"value1221"}',
             json_encode(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122'))
         );
 
-        self::assertFalse(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220'));
+        self::assertFalse(
+            HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220')
+        );
 
-        self::assertTrue(HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220', true));
+        self::assertTrue(
+            HelperArray::getValueByKeyFromSubArrays($array, '1', '12', '122', '1220', true)
+        );
     }
 
     public function testKeysFromIDs(): void
@@ -300,7 +323,9 @@ class HelperArrayTest extends HelperTestCase
         $array = ['key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3'];
 
         self::assertTrue(HelperArray::keysExist($array, ['key1', 'key2', 'key3']));
+
         self::assertTrue(HelperArray::keysExist($array, ['key1', 'key3']));
+
         self::assertFalse(HelperArray::keysExist($array, ['key1', 'key', 'key3']));
     }
 
@@ -331,14 +356,24 @@ class HelperArrayTest extends HelperTestCase
             ]
         ];
 
-        self::assertTrue(HelperArray::inArrayRecursive(1121, $array));
-        self::assertFalse(HelperArray::inArrayRecursive(1121, $array, true));
+        self::assertTrue(
+            HelperArray::inArrayRecursive(1121, $array)
+        );
+
+        self::assertFalse(
+            HelperArray::inArrayRecursive(1121, $array, true)
+        );
     }
 
     public function testIsMultiDimensional(): void
     {
-        self::assertTrue(HelperArray::isMultiDimensional(['t' => ['e' => 's'], ['t']]));
-        self::assertFalse(HelperArray::isMultiDimensional(['t' => 'e']));
+        self::assertTrue(
+            HelperArray::isMultiDimensional(['t' => ['e' => 's'], ['t']])
+        );
+
+        self::assertFalse(
+            HelperArray::isMultiDimensional(['t' => 'e'])
+        );
     }
 
     public function testFlatten(): void
@@ -365,17 +400,23 @@ class HelperArrayTest extends HelperTestCase
     {
         self::assertSame(
             '[1234,2,293,33]',
-            json_encode(HelperArray::getArrayFromRelatedIdsList(['id_1234', 'lp_2L30', 'id_293', 'po_33']))
+            json_encode(HelperArray::getArrayFromRelatedIdsList(
+                ['id_1234', 'lp_2L30', 'id_293', 'po_33']
+            ))
         );
 
         self::assertSame(
             '[1234,2,293,33]',
-            json_encode(HelperArray::getArrayFromRelatedIdsList('id_1234,lp_2L30,id_293,po_33'))
+            json_encode(HelperArray::getArrayFromRelatedIdsList(
+                'id_1234,lp_2L30,id_293,po_33'
+            ))
         );
 
         self::assertSame(
             '[1234,293]',
-            json_encode(HelperArray::getArrayFromRelatedIdsList('id.1234,lp.230,id.293,po.33,id.1234', 'id', '.'))
+            json_encode(HelperArray::getArrayFromRelatedIdsList(
+                'id.1234,lp.230,id.293,po.33,id.1234', 'id', '.'
+            ))
         );
     }
 
@@ -411,7 +452,13 @@ class HelperArrayTest extends HelperTestCase
 
         self::assertSame(
             '{"key2":{"subkey1":"3","subkey2":"2","subkey3":"1"}}',
-            json_encode(HelperArray::removeItemsByValues($array, ['1', '2'], 'subkey1'))
+            json_encode(
+                HelperArray::removeItemsByValues(
+                    $array,
+                    ['1', '2'],
+                    'subkey1'
+                )
+            )
         );
     }
 
@@ -553,7 +600,7 @@ class HelperArrayTest extends HelperTestCase
         );
     }
 
-    // @todo: Daniel: can not be tested because the purpose of arrayMultidimensionalSortByKeyAndCheck() is unclear
+    // @todo: can not be tested because the purpose of arrayMultidimensionalSortByKeyAndCheck() is unclear
     /*
     public function testArrayMultidimensionalSortByKeyAndCheck()
     {
@@ -689,8 +736,16 @@ class HelperArrayTest extends HelperTestCase
         self::assertSame(json_encode(HelperArray::getValuesByKeys(['key1', 'key2', 'key5'], $array,
             ['subkey2' => '2'], false)), '{"key1":"value1","key5":"value5"}');
 
-        self::assertSame(json_encode(HelperArray::getValuesByKeys(['key1', 'key2', 'key5'], $array,
-            ['subkey2' => '2'], true)), '{"key1":"value1","key2":{"subkey1":"value2.1","subkey2":2},"key5":"value5"}');
+        self::assertSame(
+            json_encode(
+              HelperArray::getValuesByKeys(
+                ['key1', 'key2', 'key5'],
+                $array,
+                ['subkey2' => '2'], true
+              )
+            ),
+            '{"key1":"value1","key2":{"subkey1":"value2.1","subkey2":2},"key5":"value5"}'
+        );
     }
     */
 
@@ -712,7 +767,11 @@ class HelperArrayTest extends HelperTestCase
 //            3      => 5
 //        ];
 //
-//        self::assertSame(HelperArray::changeKeyName($array_old,'TEST', 'test'), $array_new, 'Order of array changed');
+//        self::assertSame(
+//          HelperArray::changeKeyName($array_old,'TEST', 'test'),
+//          $array_new,
+//          'Order of array changed'
+//        );
 //    }
 
     public function testGetCsvFromArray(): void
@@ -985,11 +1044,25 @@ class HelperArrayTest extends HelperTestCase
 
         $keys  = ['test2', 'test3'];
 
-        self::assertNotEmpty(HelperArray::castSubColumn($array, $keys, ''));
-        self::assertNotEmpty(HelperArray::castSubColumn($array, $keys, 'null'));
-        self::assertNotEmpty(HelperArray::castSubColumn($array, $keys, 'array'));
-        self::assertNotEmpty(HelperArray::castSubColumn($array, $keys, 'object'));
-        self::assertNotEmpty(HelperArray::castSubColumn($array, $keys, '123abc'));
+        self::assertNotEmpty(
+            HelperArray::castSubColumn($array, $keys, '')
+        );
+
+        self::assertNotEmpty(
+            HelperArray::castSubColumn($array, $keys, 'null')
+        );
+
+        self::assertNotEmpty(
+            HelperArray::castSubColumn($array, $keys, 'array')
+        );
+
+        self::assertNotEmpty(
+            HelperArray::castSubColumn($array, $keys, 'object')
+        );
+
+        self::assertNotEmpty(
+            HelperArray::castSubColumn($array, $keys, '123abc')
+        );
 
         self::assertThat(
             HelperArray::castSubColumn($array, $keys)['1']['test2'],
@@ -1110,7 +1183,5 @@ class HelperArrayTest extends HelperTestCase
             HelperArray::castSubColumn($array, $keys, 'string')['3']['test3'],
             new IsType('string')
         );
-
-
     }
 }

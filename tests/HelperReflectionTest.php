@@ -11,8 +11,14 @@
 
 namespace Tests;
 
+use Exception;
+use Gyselroth\Helper\Exception\ReflectionException;
+use Gyselroth\Helper\Exception\ReflectionExceptionInvalidType;
+use Gyselroth\Helper\Exception\ReflectionExceptionUndefinedFunction;
 use Gyselroth\Helper\HelperReflection;
+use Gyselroth\HelperLog\Exception\LoggerException;
 use PHPUnit\Framework\Constraint\IsType;
+use stdClass;
 
 class HelperReflectionTest extends HelperTestCase
 {
@@ -24,7 +30,7 @@ class HelperReflectionTest extends HelperTestCase
     public function testGetTypeCasted(): void
     {
         $array = [];
-        $object = new \stdClass();
+        $object = new stdClass();
         $bool = true;
         $float = (float) 1.0;
         $int = (integer) 1;
@@ -147,7 +153,10 @@ class HelperReflectionTest extends HelperTestCase
      */
     public function testCallUserFunctionFunction(): void
     {
-        self::assertSame('string', HelperReflection::callUserFunction('\print_r', 'string', true));
+        self::assertSame(
+            'string',
+            HelperReflection::callUserFunction('\print_r', 'string', true)
+        );
     }
 
     /**
@@ -158,7 +167,11 @@ class HelperReflectionTest extends HelperTestCase
     public function testCallUserFunctionMethod(): void
     {
         self::assertTrue(
-            HelperReflection::callUserFunction('\Gyselroth\Helper\HelperString::startsWith', 'string', 's')
+            HelperReflection::callUserFunction(
+                '\Gyselroth\Helper\HelperString::startsWith',
+                'string',
+                's'
+            )
         );
     }
 

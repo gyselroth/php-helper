@@ -17,14 +17,25 @@ class HelperHtmlTest extends HelperTestCase
 {
     public function testDecodeHtmlSpecialChars(): void
     {
-        self::assertSame('&"<>', HelperHtml::decodeHtmlSpecialChars('&amp;&quot;&lt;&gt;'));
+        self::assertSame(
+            '&"<>',
+            HelperHtml::decodeHtmlSpecialChars('&amp;&quot;&lt;&gt;')
+        );
     }
 
     public function testContainsEncodedHtmlSpecialChars(): void
     {
-        self::assertFalse(HelperHtml::containsEncodedHtmlSpecialChars('amp;&'));
-        self::assertFalse(HelperHtml::containsEncodedHtmlSpecialChars('&Gt;'));
-        self::assertTrue(HelperHtml::containsEncodedHtmlSpecialChars('Stringbeforehtmlchar&quot;;'));
+        self::assertFalse(
+            HelperHtml::containsEncodedHtmlSpecialChars('amp;&')
+        );
+
+        self::assertFalse(
+            HelperHtml::containsEncodedHtmlSpecialChars('&Gt;')
+        );
+
+        self::assertTrue(
+            HelperHtml::containsEncodedHtmlSpecialChars('Stringbeforehtmlchar&quot;;')
+        );
     }
 
     public function testBr2nl(): void
@@ -85,12 +96,16 @@ class HelperHtmlTest extends HelperTestCase
 
     public function testUmlautsToHtmlEntities(): void
     {
-        self::assertSame('&auml;&ouml;&uuml;&Auml;&Ouml;&Uuml;', HelperHtml::umlautsToHtmlEntities('äöüÄÖÜ'));
+        self::assertSame(
+            '&auml;&ouml;&uuml;&Auml;&Ouml;&Uuml;',
+            HelperHtml::umlautsToHtmlEntities('äöüÄÖÜ')
+        );
     }
 
     public function testGetCleanedHtml(): void
     {
         self::markTestSkipped('Function different from helper function in IN2');
+
 //        $html = file_get_contents(__DIR__ . '/Fixtures/data/files/htmlPurifierTest.html');
 //        self::assertSame('', HelperHtml::getCleanedHtml($html, true, true, true, true, true));
     }
@@ -115,7 +130,10 @@ class HelperHtmlTest extends HelperTestCase
 
         $dump = \ob_get_clean();
 
-        self::assertSame($cleanDump, HelperHtml::formatArrayDump($dump));
+        self::assertSame(
+            $cleanDump,
+            HelperHtml::formatArrayDump($dump)
+        );
     }
 
     public function testRenderTableHead(): void

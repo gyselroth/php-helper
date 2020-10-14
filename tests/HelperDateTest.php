@@ -19,29 +19,47 @@ class HelperDateTest extends HelperTestCase
 {
     public function testIsDateTimeString(): void
     {
-        self::assertFalse(HelperDate::isDateTimeString('2017-4-2 12:03'));
+        self::assertFalse(
+            HelperDate::isDateTimeString('2017-4-2 12:03')
+        );
 
-        self::assertTrue(HelperDate::isDateTimeString('2017-4-2 12:03:12'));
+        self::assertTrue(
+            HelperDate::isDateTimeString('2017-4-2 12:03:12')
+        );
 
-        self::assertTrue(HelperDate::isDateTimeString('3.9.01 09:12', 'j.n.y H:i'));
+        self::assertTrue(
+            HelperDate::isDateTimeString('3.9.01 09:12', 'j.n.y H:i')
+        );
     }
 
     public function testIsDateString(): void
     {
-        self::assertTrue(HelperDate::isDateString('31-12-2017', '-', true));
+        self::assertTrue(
+            HelperDate::isDateString('31-12-2017', '-', true)
+        );
 
-        self::assertFalse(HelperDate::isDateString('24-3-2017'));
+        self::assertFalse(
+            HelperDate::isDateString('24-3-2017')
+        );
 
-        self::assertTrue(HelperDate::isDateString('24.3.2017', '.', true));
+        self::assertTrue(
+            HelperDate::isDateString('24.3.2017', '.', true)
+        );
 
-        self::assertFalse(HelperDate::isDateString('03-24-2017 12:05'));
+        self::assertFalse(
+            HelperDate::isDateString('03-24-2017 12:05')
+        );
     }
 
     public function testIsTimeString(): void
     {
-        self::assertTrue(HelperDate::isTimeString('3:02:02'));
+        self::assertTrue(
+            HelperDate::isTimeString('3:02:02')
+        );
 
-        self::assertTrue(HelperDate::isTimeString('12:02', false));
+        self::assertTrue(
+            HelperDate::isTimeString('12:02', false)
+        );
     }
 
     /**
@@ -50,7 +68,15 @@ class HelperDateTest extends HelperTestCase
      */
     public function testGetCurrentDate(): void
     {
-        $weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+        $weekdays = [
+            'Sonntag',
+            'Montag',
+            'Dienstag',
+            'Mittwoch',
+            'Donnerstag',
+            'Freitag',
+            'Samstag'
+        ];
 
         $months = [
             'Januar',
@@ -90,6 +116,7 @@ class HelperDateTest extends HelperTestCase
     {
         // Test: convert date-string to UNIX timestamp
         $dateString = '2015-12-31';
+
         $result = HelperDate::getUnixTimestampFromDate($dateString);
 
         self::assertThat(
@@ -98,10 +125,15 @@ class HelperDateTest extends HelperTestCase
         );
 
         self::assertGreaterThan(0, $result);
-        self::assertEquals(strtotime($dateString), $result);
+
+        self::assertEquals(
+            \strtotime($dateString),
+            $result
+        );
 
         // Test: convert dateTime-string to UNIX timestamp
         $dateString = '2015-12-31 12:30:00';
+
         $result = HelperDate::getUnixTimestampFromDate($dateString);
 
         self::assertThat(
@@ -110,13 +142,20 @@ class HelperDateTest extends HelperTestCase
         );
 
         self::assertGreaterThan(0, $result);
-        self::assertEquals(strtotime($dateString), $result);
+
+        self::assertEquals(
+            \strtotime($dateString),
+            $result
+        );
 
         // Test: convert Zend object to UNIX timestamp
         $date = new Zend_Date();
         $timestamp = $date->toValue();
 
-        self::assertSame($timestamp, HelperDate::getUnixTimestampFromDate($date));
+        self::assertSame(
+            $timestamp,
+            HelperDate::getUnixTimestampFromDate($date)
+        );
     }
 
     /**
@@ -127,22 +166,34 @@ class HelperDateTest extends HelperTestCase
     {
         self::assertSame(
             '10:20:20',
-            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_TIME_MYSQL)
+            HelperDate::getDateFromUnixTimestamp(
+                1498645220,
+                HelperDate::INDEX_FORMAT_TIME_MYSQL
+            )
         );
 
         self::assertEquals(
             '1498645220000',
-            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_TIMESTAMP_JAVASCRIPT)
+            HelperDate::getDateFromUnixTimestamp(
+                1498645220,
+                HelperDate::INDEX_FORMAT_TIMESTAMP_JAVASCRIPT
+            )
         );
 
         self::assertSame(
             'Wed, 28. June 2017',
-            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR)
+            HelperDate::getDateFromUnixTimestamp(
+                1498645220,
+                HelperDate::INDEX_FORMAT_WEEKDAY_SHORT_DAY_MONTH_YEAR
+            )
         );
 
         self::assertSame(
             'Wednesday, 28. June 2017',
-            HelperDate::getDateFromUnixTimestamp(1498645220, HelperDate::INDEX_FORMAT_WEEKDAY_LONG_DAY_MONTH_YEAR)
+            HelperDate::getDateFromUnixTimestamp(
+                1498645220,
+                HelperDate::INDEX_FORMAT_WEEKDAY_LONG_DAY_MONTH_YEAR
+            )
         );
     }
 
@@ -151,7 +202,10 @@ class HelperDateTest extends HelperTestCase
      */
     public function testGetMySqlDateTimeFromDate(): void
     {
-        self::assertSame('2017-06-28 10:20:20', HelperDate::getMySqlDateTimeFromDate(1498645220));
+        self::assertSame(
+            '2017-06-28 10:20:20',
+            HelperDate::getMySqlDateTimeFromDate(1498645220)
+        );
     }
 
     public function testGetDateTime(): void
@@ -169,12 +223,18 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetDateStringFromDateTimeString(): void
     {
-        self::assertSame('2017-05-02', HelperDate::getDateStringFromDateTimeString('2017-05-02 12:20:20'));
+        self::assertSame(
+            '2017-05-02',
+            HelperDate::getDateStringFromDateTimeString('2017-05-02 12:20:20')
+        );
     }
 
     public function testGetTimeStringFromDateTimeString(): void
     {
-        self::assertSame('12:20:20', HelperDate::getTimeStringFromDateTimeString('2017-05-02 12:20:20'));
+        self::assertSame(
+            '12:20:20',
+            HelperDate::getTimeStringFromDateTimeString('2017-05-02 12:20:20')
+        );
     }
 
     public function testGetDateParts(): void
@@ -234,11 +294,20 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetTimeString(): void
     {
-        self::assertSame('10:20:20', HelperDate::getTimeString(1498645220800, true));
+        self::assertSame(
+            '10:20:20',
+            HelperDate::getTimeString(1498645220800, true)
+        );
 
-        self::assertSame('10:20:20', HelperDate::getTimeString(1498645220));
+        self::assertSame(
+            '10:20:20',
+            HelperDate::getTimeString(1498645220)
+        );
 
-        self::assertSame('12:20', HelperDate::getTimeString('12:20:20', false, false, true));
+        self::assertSame(
+            '12:20',
+            HelperDate::getTimeString('12:20:20', false, false, true)
+        );
     }
 
     public function testGetSumSecondsOfTimeParts(): void
@@ -285,17 +354,26 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetSumSecondsOfTimeString(): void
     {
-        self::assertEquals('44420', HelperDate::getSumSecondsOfTimeString('12:20:20'));
+        self::assertEquals(
+            '44420',
+            HelperDate::getSumSecondsOfTimeString('12:20:20')
+        );
     }
 
     public function testGetSumMinutesOfTimeString(): void
     {
-        self::assertEquals('740', round(HelperDate::getSumMinutesOfTimeString('12:20:20')));
+        self::assertEquals(
+            '740',
+            round(HelperDate::getSumMinutesOfTimeString('12:20:20'))
+        );
     }
 
     public function testGetWeekdayNumberFromTimestamp(): void
     {
-        self::assertEquals('3', HelperDate::getWeekdayNumberFromTimestamp(1498645220));
+        self::assertEquals(
+            '3',
+            HelperDate::getWeekdayNumberFromTimestamp(1498645220)
+        );
     }
 
     /**
@@ -303,24 +381,35 @@ class HelperDateTest extends HelperTestCase
      */
     public function testGetMondayOfWeek(): void
     {
-        self::assertEquals('26.06.2017', HelperDate::getMondayOfWeek('2017-01-07')->toString('dd.MM.Y'));
+        self::assertEquals(
+            '26.06.2017',
+            HelperDate::getMondayOfWeek('2017-01-07')->toString('dd.MM.Y')
+        );
     }
 
     /**
      * @throws \Exception
-     * @throws \Gyselroth\HelperLog\Exception\LoggerException
      * @throws \Zend_Date_Exception
      */
     public function testGetDateDiff(): void
     {
-        self::assertEquals('2', HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220)));
+        self::assertEquals(
+            '2',
+            HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220))
+        );
 
         self::assertEquals(
             '27',
             HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220), 'hour')
         );
 
-        self::assertNull(HelperDate::getDateDiff(new Zend_Date(1498645220), new Zend_Date(1498745220), 'minute'));
+        self::assertNull(
+            HelperDate::getDateDiff(
+                new Zend_Date(1498645220),
+                new Zend_Date(1498745220),
+                'minute'
+            )
+        );
     }
 
     public function testGetWeeksBetween(): void
@@ -349,10 +438,13 @@ class HelperDateTest extends HelperTestCase
 //        self::assertSame(2, HelperDate::getDaysBetween(strtotime('31.12.2016 12:00'),
 //            strtotime('2.1.2017 0:00')), 'Should be 2, since new days start at 0:00');
 
-        self::assertSame(2, HelperDate::getDaysBetween(
-            strtotime('31.12.2016 12:00'),
-            strtotime('2.1.2017 0:01')
-        ));
+        self::assertSame(
+            2,
+            HelperDate::getDaysBetween(
+                strtotime('31.12.2016 12:00'),
+                strtotime('2.1.2017 0:01')
+            )
+        );
     }
 
     public function testGetMonthNameByNumber(): void
@@ -378,9 +470,15 @@ class HelperDateTest extends HelperTestCase
      */
     public function testGetIcsDateFromDateString(): void
     {
-        self::assertSame('20170512', HelperDate::getIcsDateFromDateString('12.5.2017'));
+        self::assertSame(
+            '20170512',
+            HelperDate::getIcsDateFromDateString('12.5.2017')
+        );
 
-        self::assertSame('20170512T123456', HelperDate::getIcsDateFromDateString('12.5.2017 12:34:56', true));
+        self::assertSame(
+            '20170512T123456',
+            HelperDate::getIcsDateFromDateString('12.5.2017 12:34:56', true)
+        );
 
         $this->expectException('Gyselroth\Helper\Exception\DateException');
 
@@ -392,16 +490,28 @@ class HelperDateTest extends HelperTestCase
      */
     public function testGetIcsDateTimeFromDateString(): void
     {
-        self::assertSame('20170512T123456', HelperDate::getIcsDateTimeFromDateString('12.5.2017 12:34:56'));
+        self::assertSame(
+            '20170512T123456',
+            HelperDate::getIcsDateTimeFromDateString('12.5.2017 12:34:56')
+        );
     }
 
     public function testGetTimestampFirstDayOfCalendarWeek(): void
     {
-        self::assertSame(1483315200, HelperDate::getTimestampFirstDayOfCalendarWeek(1, 2017));
+        self::assertSame(
+            1483315200,
+            HelperDate::getTimestampFirstDayOfCalendarWeek(1, 2017)
+        );
 
-        self::assertSame(1485129600, HelperDate::getTimestampFirstDayOfCalendarWeek(4, 17));
+        self::assertSame(
+            1485129600,
+            HelperDate::getTimestampFirstDayOfCalendarWeek(4, 17)
+        );
 
-        self::assertSame(1452470400, HelperDate::getTimestampFirstDayOfCalendarWeek(2, 2016));
+        self::assertSame(
+            1452470400,
+            HelperDate::getTimestampFirstDayOfCalendarWeek(2, 2016)
+        );
     }
 
     public function testGetAgeByBirthYear(): void
@@ -414,7 +524,10 @@ class HelperDateTest extends HelperTestCase
 
     public function testGetClosestDate(): void
     {
-        self::assertSame(4, HelperDate::getClosestDate(5, [2, 1, 10, 9, 8, 4]));
+        self::assertSame(
+            4,
+            HelperDate::getClosestDate(5, [2, 1, 10, 9, 8, 4])
+        );
     }
 
     public function testGetDateShifted(): void
@@ -423,7 +536,6 @@ class HelperDateTest extends HelperTestCase
     }
 
     /**
-     * @throws \Zend_Date_Exception
      */
     public function testRenderTimerangeHumanReadable(): void
     {
@@ -459,9 +571,15 @@ class HelperDateTest extends HelperTestCase
 
     public function testEnsureTimeStringHasSeconds(): void
     {
-        self::assertSame('12:34:00', HelperDate::ensureTimeStringHasSeconds('12:34'));
+        self::assertSame(
+            '12:34:00',
+            HelperDate::ensureTimeStringHasSeconds('12:34')
+        );
 
-        self::assertSame('12:34:56', HelperDate::ensureTimeStringHasSeconds('12:34:56'));
+        self::assertSame(
+            '12:34:56',
+            HelperDate::ensureTimeStringHasSeconds('12:34:56')
+        );
     }
 
     /**
@@ -483,16 +601,28 @@ class HelperDateTest extends HelperTestCase
 
     public function testConvertDelimitedDateString(): void
     {
-        self::assertSame('2017.5.12', HelperDate::convertDelimitedDateString('12-5-2017'));
+        self::assertSame(
+            '2017.5.12',
+            HelperDate::convertDelimitedDateString('12-5-2017')
+        );
 
-        self::assertSame('2017.5.12', HelperDate::convertDelimitedDateString('12"5"2017', '"'));
+        self::assertSame(
+            '2017.5.12',
+            HelperDate::convertDelimitedDateString('12"5"2017', '"')
+        );
     }
 
     public function testGetZendDatePartByType(): void
     {
-        self::assertSame('mm', HelperDate::getZendDatePartByType('minUte'));
+        self::assertSame(
+            'mm',
+            HelperDate::getZendDatePartByType('minUte')
+        );
 
-        self::assertSame('U', HelperDate::getZendDatePartByType('nothing'));
+        self::assertSame(
+            'U',
+            HelperDate::getZendDatePartByType('nothing')
+        );
     }
 
     public function testGetCurrentWeekAndYear(): void

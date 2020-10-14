@@ -203,7 +203,17 @@ class HelperReflection implements ConstantsDataTypesInterface
 
         LoggerWrapper::info('HelperReflection::callUserFunction() called function instead of method.');
 
-        return \is_callable($funcRefString) ? $funcRefString($funcArgs) : null;
+        if (!\is_callable($funcRefString)) {
+            LoggerWrapper::warning(
+                'HelperReflection::callUserFunction() failed calling function: ' . $funcRefString
+            );
+
+            return null;
+        }
+
+        /** @var callable $funcRefString */
+
+        return \call_user_func_array($funcRefString, $funcArgs);
     }
 
     /**

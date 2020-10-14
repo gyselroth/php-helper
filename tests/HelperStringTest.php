@@ -18,19 +18,39 @@ class HelperStringTest extends HelperTestCase
 {
     public function testGetStringBetween(): void
     {
-        self::assertEquals('miny', HelperString::getStringBetween('eeny meeny miny moe', 'meeny', 'moe'));
+        self::assertEquals(
+            'miny',
+            HelperString::getStringBetween('eeny meeny miny moe', 'meeny', 'moe')
+        );
 
-        self::assertSame('quick', HelperString::getStringBetween('the quick brown fox', 'the', 'brown', true));
+        self::assertSame('quick',
+            HelperString::getStringBetween('the quick brown fox', 'the', 'brown', true)
+        );
 
-        self::assertSame('quick brown', HelperString::getStringBetween('the quick brown fox', 'the', 'fox', true));
+        self::assertSame(
+            'quick brown',
+            HelperString::getStringBetween('the quick brown fox', 'the', 'fox', true)
+        );
 
-        self::assertSame(' quick ', HelperString::getStringBetween('the quick brown fox', 'the', 'brown', false));
+        self::assertSame(
+            ' quick ',
+            HelperString::getStringBetween('the quick brown fox', 'the', 'brown', false)
+        );
 
-        self::assertSame('', HelperString::getStringBetween('the quick brown fox', 'brown', '', true));
+        self::assertSame(
+            '',
+            HelperString::getStringBetween('the quick brown fox', 'brown', '', true)
+        );
 
-        self::assertSame('', HelperString::getStringBetween('the quick brown fox', '', 'quick', true));
+        self::assertSame(
+            '',
+            HelperString::getStringBetween('the quick brown fox', '', 'quick', true)
+        );
 
-        self::assertSame('', HelperString::getStringBetween('the quick brown fox', '', '', true));
+        self::assertSame(
+            '',
+            HelperString::getStringBetween('the quick brown fox', '', '', true)
+        );
     }
 
     /**
@@ -39,6 +59,7 @@ class HelperStringTest extends HelperTestCase
     public function testStartsWith(): void
     {
         self::assertTrue(HelperString::startsWith('abcdcba', ''));
+
         self::assertTrue(HelperString::startsWith('abcdcba', 'a'));
 
         self::assertNotTrue(HelperString::startsWith('abcdcba', 'b'));
@@ -54,6 +75,7 @@ class HelperStringTest extends HelperTestCase
     public function testEndsWith(): void
     {
         self::assertTrue(HelperString::endsWith('abcdcba', ''));
+
         self::assertTrue(HelperString::endsWith('abcdcba', 'a'));
 
         self::assertNotTrue(HelperString::endsWith('abcdcba', 'b'));
@@ -69,18 +91,34 @@ class HelperStringTest extends HelperTestCase
     public function testReplaceFirst(): void
     {
         self::assertEquals(
-            'Lorem ipsum dolor sit amet,  sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            HelperString::replaceFirst('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 'consetetur')
+            'Lorem ipsum dolor sit amet,  sadipscing elitr, sed diam nonumy consetetur eirmod tempor'
+            . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            HelperString::replaceFirst(
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor'
+                . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+                'consetetur'
+            )
         );
 
         self::assertEquals(
-            'Lorem ipsum dolor sit amet, e sadipscing elitr, sed diam nonumy conseteture eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            HelperString::replaceFirst('Lorem ipsum dolor sit amet, conseteture sadipscing elitr, sed diam nonumy conseteture eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 'consetetur')
+            'Lorem ipsum dolor sit amet, e sadipscing elitr, sed diam nonumy conseteture eirmod tempor'
+            . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            HelperString::replaceFirst(
+                'Lorem ipsum dolor sit amet, conseteture sadipscing elitr, sed diam nonumy conseteture eirmod tempor'
+                . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+                'consetetur'
+            )
         );
 
         self::assertEquals(
-            'Lorem ipsum dolor sit amet, test sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            HelperString::replaceFirst('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.', 'consetetur', 'test')
+            'Lorem ipsum dolor sit amet, test sadipscing elitr, sed diam nonumy consetetur eirmod tempor'
+            . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            HelperString::replaceFirst(
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor'
+                . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+                'consetetur',
+                'test'
+            )
         );
     }
 
@@ -90,8 +128,14 @@ class HelperStringTest extends HelperTestCase
     public function testReplaceLast(): void
     {
         self::assertEquals(
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-            HelperString::replaceLast('consetetur', '', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.')
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy  eirmod tempor'
+            . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
+            HelperString::replaceLast(
+                'consetetur',
+                '',
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy consetetur eirmod tempor'
+                . ' invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+            )
         );
 
         self::assertEquals(

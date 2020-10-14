@@ -26,6 +26,7 @@ class HelperJsonTest extends HelperTestCase
             'value1',
             'value2'
         ];
+
         $this->jsonEncoded = '{"key1":["subvalue1","subvalue2"],"0":"value1","1":"value2"}';
     }
 
@@ -42,7 +43,10 @@ class HelperJsonTest extends HelperTestCase
      */
     public function testDecodeArray(): void
     {
-        self::assertEquals($this->array, HelperJson::decode($this->jsonEncoded));
+        self::assertEquals(
+            $this->array,
+            HelperJson::decode($this->jsonEncoded)
+        );
     }
 
     /**
@@ -52,7 +56,10 @@ class HelperJsonTest extends HelperTestCase
     {
         $object = (object) $this->array;
 
-        self::assertEquals($object, HelperJson::decode($this->jsonEncoded, 0));
+        self::assertEquals(
+            $object,
+            HelperJson::decode($this->jsonEncoded, 0)
+        );
     }
 
     /**
@@ -65,11 +72,17 @@ class HelperJsonTest extends HelperTestCase
 
     public function testEnsureIsJsonTrue(): void
     {
-        self::assertSame($this->jsonEncoded, HelperJson::ensureIsJson($this->jsonEncoded));
+        self::assertSame(
+            $this->jsonEncoded,
+            HelperJson::ensureIsJson($this->jsonEncoded)
+        );
     }
 
     public function testEnsureIsJsonFalse(): void
     {
-        self::assertSame('HTML Code (expected JSON)', HelperJson::ensureIsJson('<!DOCTYPE'));
+        self::assertSame(
+            'HTML Code (expected JSON)',
+            HelperJson::ensureIsJson('<!DOCTYPE')
+        );
     }
 }

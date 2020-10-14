@@ -57,13 +57,21 @@ class HelperServerClientTest extends HelperTestCase
 
         unset($dataUnset['key2']);
 
-        self::assertEmpty(HelperServerClient::prepareAjaxResponseData([]));
-        self::assertEquals($dataUnset, HelperServerClient::prepareAjaxResponseData($data, ['key2', 'key4']));
+        self::assertEmpty(
+            HelperServerClient::prepareAjaxResponseData([])
+        );
+
+        self::assertEquals(
+            $dataUnset,
+            HelperServerClient::prepareAjaxResponseData($data, ['key2', 'key4'])
+        );
     }
 
     public function testGetUriParts(): void
     {
-        self::assertEmpty(HelperServerClient::getUriParts('http://de.wikipedia.org/wiki/Uniform_Resource_Identifier'));
+        self::assertEmpty(
+            HelperServerClient::getUriParts('http://de.wikipedia.org/wiki/Uniform_Resource_Identifier')
+        );
 
         $parts = [
             'http://nobody:password@example.org:8080/cgi-bin',
@@ -74,6 +82,9 @@ class HelperServerClientTest extends HelperTestCase
             '8080/cgi-bin'
         ];
 
-        self::assertEquals($parts, HelperServerClient::getUriParts('http://nobody:password@example.org:8080/cgi-bin'));
+        self::assertEquals(
+            $parts,
+            HelperServerClient::getUriParts('http://nobody:password@example.org:8080/cgi-bin')
+        );
     }
 }
