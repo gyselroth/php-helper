@@ -3,15 +3,20 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+
     paths:
         - %rootDir%/../../..
 
     excludes_analyse:
-        - ../../../.idea/
-        - ../../../var/
-        - ../../../vendor/
+        - .idea/
+        - var/
+        - vendor/
+        - ../../../Gyselroth/Helper/HelperMongoDB.php
 
     scanFiles:
       - ../../../vendor/gyselroth/html-purifier-filters/src/Gyselroth/htmlPurifierFilters/IframeFilter.php
+
+    dynamicConstantNames:
+        - APPLICATION_PATH
 
     ignoreErrors:

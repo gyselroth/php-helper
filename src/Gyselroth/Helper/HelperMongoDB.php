@@ -43,7 +43,11 @@ class HelperMongoDB
             $fileName = \str_replace(' ', '_', $fileName);
         }
 
-        return (bool)(new MongoDb_Contents())->storeFile($fileName, \file_get_contents($tmpFileName));
+        return (bool)(new MongoDb_Contents())
+            ->storeFile(
+                $fileName,
+                \file_get_contents($tmpFileName)
+            );
     }
 
     /**
@@ -83,6 +87,9 @@ class HelperMongoDB
      */
     public static function createFile(string $fileName, string $tmpFileName): bool
     {
-        return (bool)(new MongoDb_Contents())->storeFile($fileName, \file_get_contents($tmpFileName));
+        return (bool)(new MongoDb_Contents())->storeFile(
+            $fileName,
+            \file_get_contents($tmpFileName)
+        );
     }
 }

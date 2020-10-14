@@ -264,7 +264,11 @@ class HelperImage
         string $extension = HelperFile::FILE_ENDING_JPEG,
         int $quality = 100
     ): string {
-        $pathTmpWithoutExtension = APPLICATION_PATH . '/../../tmp/' . \uniqid('img_', false);
+        $applicationPath = \defined('APPLICATION_PATH')
+            ? \constant('APPLICATION_PATH')
+            : __DIR__ . '/../../../../../../src/application/';
+
+        $pathTmpWithoutExtension = $applicationPath . '/../../tmp/' . \uniqid('img_', false);
 
         $pathTmpImage    = $pathTmpWithoutExtension . '.' . $extension;
         $pathScaledImage = $pathTmpWithoutExtension . '_scaled.' . $extension;
@@ -294,6 +298,28 @@ class HelperImage
     }
 
     /**
+     * @param string $sourcePath
+     * @param string $mimeType
+     * @return false|resource
+     */
+    public static function createImageResourceByMimeType(string $sourcePath, string $mimeType)
+    {
+        switch ($mimeType) {
+            case HelperFile::FILE_ENDING_BMP:
+                return \imagecreatefrombmp($sourcePath);
+            case HelperFile::FILE_ENDING_GIF:
+                return \imagecreatefromgif($sourcePath);
+            case HelperFile::FILE_ENDING_PNG:
+                return \imagecreatefrompng($sourcePath);
+            case HelperFile::FILE_ENDING_JPEG:
+                // no-break
+            case HelperFile::FILE_ENDING_JPG:
+            default:
+                return \imagecreatefromjpeg($sourcePath);
+        }
+    }
+
+    /**
      * Obtain image data from given filename and MIME, on failure: retry w/ correct MIME if detectable
      *
      * @param string $sourcePath
@@ -303,52 +329,30 @@ class HelperImage
      */
     public static function imageCreateByFormat(string $sourcePath, string $mimeType)
     {
-        $hasSecondCheckedMime = false;
+        $imageResource = self::createImageResourceByMimeType($sourcePath, $mimeType);
 
-        while (true) {
-            switch ($mimeType) {
-                case HelperFile::FILE_ENDING_BMP:
-                    $res = \imagecreatefrombmp($sourcePath);
-                    break;
-                case HelperFile::FILE_ENDING_GIF:
-                    $res = \imagecreatefromgif($sourcePath);
-                    break;
-                case HelperFile::FILE_ENDING_PNG:
-                    $res = \imagecreatefrompng($sourcePath);
-                    break;
-                default:
-                    $res = \imagecreatefromjpeg($sourcePath);
-                    break;
-            }
+        if (false !== $imageResource) {
+            return $imageResource;
+        }
 
-            if (false !== $res) {
-                return $res;
-            }
+        $requestedMimeType = $mimeType;
+        $contentMime = \mime_content_type($sourcePath);
 
-            if (false === $hasSecondCheckedMime) {
-                $requestedMimeType = $mimeType;
+        if (false !== $contentMime) {
+            $contentMimeParts = \explode('/', $contentMime);
 
-                $contentMime = \mime_content_type($sourcePath);
+            if (count($contentMimeParts) > 1) {
+                $mimeType = $contentMimeParts[1];
 
-                if (false !== $contentMime) {
-                    $contentMimeParts = \explode('/', $contentMime);
-
-                    if (count($contentMimeParts) > 1) {
-                        $mimeType = $contentMimeParts[1];
-                    }
-                }
-
-                LoggerWrapper::warning(
-                    'HelperImage::imageCreateByFormat - Obtaining image data failed.'
-                    . "Requested MIME was: $requestedMimeType - retrying w/ detected MIME type: $mimeType",
-                    [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
-                );
-
-                $hasSecondCheckedMime = true;
-            } else {
-                return $res;
+                return self::createImageResourceByMimeType($sourcePath, $mimeType);
             }
         }
+
+        LoggerWrapper::warning(
+            'HelperImage::imageCreateByFormat - Obtaining image data failed.'
+            . "Requested MIME was: $requestedMimeType - retrying w/ detected MIME type: $mimeType",
+            [LoggerWrapper::OPT_CATEGORY => self::LOG_CATEGORY]
+        );
 
         return false;
     }

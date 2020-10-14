@@ -189,6 +189,19 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
+     * @param  int|\Zend_Date $timestamp
+     * @return int
+     */
+    public static function getTimestampFromIntOrZendDate($timestamp): int
+    {
+        $timestamp = self::getUnixTimestampFromDate($timestamp);
+
+        return \is_object($timestamp)
+            ? (int)($timestamp->toString(null))
+            : (int)$timestamp;
+    }
+
+    /**
      * Render date in given format from given UNIX timestamp
      *
      * @param  int|\Zend_Date $timestamp
@@ -198,7 +211,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
      */
     public static function getDateFromUnixTimestamp($timestamp, $format = self::INDEX_FORMAT_TIMESTAMP_UNIX)
     {
-        $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
+        $timestamp = self::getTimestampFromIntOrZendDate($timestamp);
 
         switch ($format) {
             case self::INDEX_FORMAT_DATE_PHP:
@@ -227,20 +240,19 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
                 /** @noinspection ReturnFalseInspection */
                 return \date(self::FORMAT_DATE_ZF1_WEEKDAY_SHORT_DAY_MONTH_YEAR, $timestamp);
             case self::INDEX_FORMAT_WEEKDAY_LONG_DAY_MONTH_YEAR:
-                $date = new \Zend_Date($timestamp);
-
-                return
-                    $date->toString(\Zend_Date::WEEKDAY) . ', '
-                  . $date->toString(\Zend_Date::DAY) . '. '
-                  . $date->toString(\Zend_Date::MONTH_NAME) . ' '
-                  . $date->toString(\Zend_Date::YEAR);
+                return (new \Zend_Date($timestamp))->toString(
+                    \Zend_Date::WEEKDAY . ', '
+                    . \Zend_Date::DAY . '. '
+                    . \Zend_Date::MONTH_NAME . ' '
+                    . \Zend_Date::YEAR
+                );
             case self::INDEX_FORMAT_TIMESTAMP_UNIX:
             default:
                 // No change
                 break;
         }
 
-        return $timestamp;
+        return (string)$timestamp;
     }
 
     /**
@@ -290,7 +302,7 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
     }
 
     /**
-     * @param  int    $timestamp   If non-integer (UNIX timestamp) given: Detect type and parse into UNIX timestamp
+     * @param  int    $timestamp
      * @param  string $formatYear  Default: 'Y' = 4-digits
      * @param  string $formatMonth Default: 'n' = digit(s) w/o leading 0
      * @param  string $formatDay   Default: 'j' = digitI(s) w/o leading 0
@@ -302,9 +314,6 @@ class HelperDate implements ConstantsUnitsOfTimeInterface
         string $formatMonth = 'n',
         string $formatDay = 'j'
     ): array {
-        /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-        $timestamp = (int)self::getUnixTimestampFromDate($timestamp);
-
         return [
             self::DATE_TIME_PART_YEAR => \date($formatYear, $timestamp),
             'month'                   => \date($formatMonth, $timestamp),
