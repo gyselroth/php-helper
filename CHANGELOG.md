@@ -1,6 +1,10 @@
 gyselroth Helper Library
 ========================
 
+Version 1.0.3 - Released 2020/11/05
+-----------------------------------
+* Hotfix: Fix HtmlHelper::getCleanedHtml() failure
+
 Version 1.0.2 - Released 2020/10/14
 -----------------------------------
 * Resolve all known issues of static analysis
