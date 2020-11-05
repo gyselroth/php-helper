@@ -535,7 +535,7 @@ class HelperArray implements ConstantsDataTypesInterface
     }
 
     /**
-     * Collect unique values of given given key from sub-arrays in given array into new array
+     * Collect unique values of given key from sub-arrays in given array into new array
      *
      * @param  array  $array
      * @param  int|string $key
