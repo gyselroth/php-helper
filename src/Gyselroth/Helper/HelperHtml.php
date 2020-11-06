@@ -136,7 +136,8 @@ namespace Gyselroth\Helper {
          * @param string $html
          * @param int|float $widthFactor
          * @param int|float $heightFactor
-         * @return string Given HTML w/ inline style like "width:(\d)+px" and "height:(\d)+px" multiplied by given factors
+         * @return string Given HTML w/ inline style like
+         *                "width:(\d)+px" and "height:(\d)+px" multiplied by given factors
          */
         public static function resizeStyles(string $html, $widthFactor = 1, $heightFactor = 1): string
         {
@@ -199,8 +200,7 @@ namespace Gyselroth\Helper {
             bool $allowVideo = false,
             bool $escapeDoubleQuotes = false,
             ?array $allowedUriSchemes = null
-        ): string
-        {
+        ): string {
             $config = HTMLPurifier_Config::createDefault();
 
             if ($enableTargetBlank) {

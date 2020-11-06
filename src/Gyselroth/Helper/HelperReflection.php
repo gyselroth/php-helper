@@ -319,7 +319,7 @@ class HelperReflection implements ConstantsDataTypesInterface
         $commentBlocks  = \explode('/**', $codeBeforeActionDeclaration);
         $phpDocOfAction = \array_pop($commentBlocks);
 
-        if (null === $phpDocOfAction) {
+        if (empty($phpDocOfAction)) {
             return '';
         }
 
