@@ -202,14 +202,14 @@ class HelperNumeric implements ConstantsUnitsOfDataMeasurementInterface, Constan
     }
 
     /**
-     * @param int $amount
+     * @param float $amount
      * @param string $iso3166CountryCode
      * @param int $amountDigitsAfterDecimalSeparator
      * @return string
      * @throws \Exception
      */
     public static function formatMoney(
-        int $amount,
+        float $amount,
         string $iso3166CountryCode = self::COUNTRY_CODE_SWITZERLAND,
         int $amountDigitsAfterDecimalSeparator = 3
     ): string {

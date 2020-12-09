@@ -1,6 +1,10 @@
 gyselroth Helper Library
 ========================
 
+Version 1.0.4 - Released 2020/12/09
+-----------------------------------
+* Bugfix: NumericHelper::formatMoney() - use float argument
+
 Version 1.0.3 - Released 2020/11/05
 -----------------------------------
 * Hotfix: Fix HtmlHelper::getCleanedHtml() failure
